@@ -4,6 +4,7 @@ import type {
   EnrichedStation,
   ModelResults,
   PredictionRow,
+  RegionType,
   StationMetadata,
   ValidationPredictionRow,
 } from '../types/data'
@@ -29,24 +30,42 @@ async function tryFetchJson(url: string): Promise<unknown | null> {
   }
 }
 
-export async function loadRiverIntelligenceData(): Promise<
+export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Promise<
   { success: true; payload: AppDataPayload } | { success: false; error: string; missingField?: string; file?: string }
 > {
   let isDemo = false
-  let metaRaw = await tryFetchText('/data/station_metadata.csv')
-  let predRaw = await tryFetchText('/data/predictions.csv')
-  let valRaw = await tryFetchText('/data/validation_predictions.csv')
-  let modelRaw = await tryFetchJson('/data/model_results.json')
+  const isPrototype = region === 'india'
 
-  if (!metaRaw || !predRaw || !valRaw || !modelRaw) {
+  let metaRaw: string | null = null
+  let predRaw: string | null = null
+  let valRaw: string | null = null
+  let modelRaw: unknown | null = null
+  let prefix = ''
+
+  if (region === 'usa') {
+    metaRaw = await tryFetchText('/data/station_metadata.csv')
+    predRaw = await tryFetchText('/data/predictions.csv')
+    valRaw = await tryFetchText('/data/validation_predictions.csv')
+    modelRaw = await tryFetchJson('/data/model_results.json')
+
+    if (!metaRaw || !predRaw || !valRaw || !modelRaw) {
+      isDemo = true
+      prefix = '/demo/usa/'
+      metaRaw = await tryFetchText('/demo/usa/station_metadata.csv')
+      predRaw = await tryFetchText('/demo/usa/predictions.csv')
+      valRaw = await tryFetchText('/demo/usa/validation_predictions.csv')
+      modelRaw = await tryFetchJson('/demo/usa/model_results.json')
+    } else {
+      prefix = '/data/'
+    }
+  } else {
     isDemo = true
-    metaRaw = await tryFetchText('/demo/station_metadata.csv')
-    predRaw = await tryFetchText('/demo/predictions.csv')
-    valRaw = await tryFetchText('/demo/validation_predictions.csv')
-    modelRaw = await tryFetchJson('/demo/model_results.json')
+    prefix = '/demo/india/'
+    metaRaw = await tryFetchText('/demo/india/station_metadata.csv')
+    predRaw = await tryFetchText('/demo/india/predictions.csv')
+    valRaw = await tryFetchText('/demo/india/validation_predictions.csv')
+    modelRaw = await tryFetchJson('/demo/india/model_results.json')
   }
-
-  const prefix = isDemo ? '/demo/' : '/data/'
 
   if (!metaRaw) {
     return { success: false, error: `Could not load ${prefix}station_metadata.csv`, file: 'station_metadata.csv' }
@@ -177,7 +196,9 @@ export async function loadRiverIntelligenceData(): Promise<
   return {
     success: true,
     payload: {
+      region,
       isDemo,
+      isPrototype,
       stations,
       metadataMap,
       predictions,
@@ -186,4 +207,3 @@ export async function loadRiverIntelligenceData(): Promise<
     },
   }
 }
-

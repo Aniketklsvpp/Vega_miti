@@ -1,0 +1,117 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "United States", "iso_a3": "USA", "hasData": true, "status": "active" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-124.7, 48.4], [-124.2, 43.6], [-120.5, 34.4], [-117.3, 32.5],
+            [-106.5, 31.8], [-97.1, 26.0], [-80.1, 26.9], [-75.1, 38.5],
+            [-67.0, 44.8], [-69.2, 47.5], [-82.5, 43.0], [-95.2, 49.4],
+            [-123.1, 49.0], [-124.7, 48.4]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "India", "iso_a3": "IND", "hasData": true, "status": "prototype" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [74.9, 37.1], [79.5, 33.5], [81.0, 30.2], [88.8, 27.2],
+            [97.4, 28.3], [93.5, 24.0], [88.9, 21.6], [80.2, 13.1],
+            [77.5, 8.1], [72.7, 21.2], [68.2, 23.7], [71.8, 29.5],
+            [74.9, 37.1]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Canada", "iso_a3": "CAN", "hasData": false },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-141.0, 69.6], [-128.0, 70.5], [-95.0, 74.0], [-64.0, 62.0],
+            [-55.0, 50.0], [-67.0, 44.8], [-123.1, 49.0], [-141.0, 60.3],
+            [-141.0, 69.6]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Brazil", "iso_a3": "BRA", "hasData": false },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-60.0, 5.0], [-50.0, 1.0], [-35.0, -5.0], [-39.0, -18.0],
+            [-53.0, -33.0], [-57.0, -25.0], [-70.0, -10.0], [-73.0, -7.0],
+            [-60.0, 5.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Europe", "iso_a3": "EUR", "hasData": false },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-9.5, 38.7], [-0.1, 51.5], [10.0, 59.9], [25.0, 71.0],
+            [40.0, 65.0], [30.0, 45.0], [15.0, 38.0], [-5.0, 36.0],
+            [-9.5, 38.7]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Africa", "iso_a3": "AFR", "hasData": false },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-17.0, 14.8], [-5.0, 36.0], [31.0, 31.0], [51.0, 11.5],
+            [40.5, -4.0], [32.0, -28.0], [18.4, -34.3], [12.0, -5.0],
+            [-17.0, 14.8]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Australia", "iso_a3": "AUS", "hasData": false },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [113.0, -26.0], [130.0, -12.0], [142.0, -10.8], [153.5, -28.0],
+            [150.0, -37.5], [138.0, -35.0], [115.0, -34.0], [113.0, -26.0]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "East Asia", "iso_a3": "EAS", "hasData": false },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [75.0, 40.0], [100.0, 50.0], [135.0, 48.0], [122.0, 30.0],
+            [108.0, 21.0], [100.0, 21.0], [97.4, 28.3], [75.0, 40.0]
+          ]
+        ]
+      }
+    }
+  ]
+}

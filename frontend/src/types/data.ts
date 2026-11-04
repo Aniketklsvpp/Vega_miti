@@ -1,3 +1,7 @@
+export type RegionType = 'usa' | 'india'
+export type SceneType = 'globe' | 'map'
+export type AnalysisTab = 'map' | 'station' | 'trust' | 'spotlight'
+
 export interface StationMetadata {
   station_id: string
   station_name: string
@@ -52,7 +56,9 @@ export interface EnrichedStation extends StationMetadata {
 }
 
 export interface AppDataPayload {
+  region: RegionType
   isDemo: boolean
+  isPrototype: boolean
   stations: EnrichedStation[]
   metadataMap: Map<string, StationMetadata>
   predictions: PredictionRow[]
@@ -64,4 +70,3 @@ export type AdapterStatus =
   | { status: 'loading' }
   | { status: 'error'; message: string; missingField?: string; file?: string }
   | { status: 'ready'; data: AppDataPayload }
-
