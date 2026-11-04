@@ -1,176 +1,118 @@
 {
-  "project_name": "Vega_miti",
-  "model_name": "ExtraTrees (Raw)",
-  "model_type": "extra_trees",
-  "target_transform": false,
-  "validation_method": "LeaveOneGroupOut",
-  "validation_station_count": 5,
-  "total_folds": 5,
-  "aggregate_metrics": {
-    "overall_rmse": 297.3145,
-    "extreme_rmse": 910.9983,
-    "mae": 87.9451,
-    "r2": 0.7421,
-    "composite_score": 402.3932,
-    "n_total": 1220,
-    "n_extreme": 125
+  "evaluation_title": "Vega_miti FLOODCAST Baseline Models",
+  "dataset": {
+    "path": "data/processed/train.csv",
+    "total_records": 16060,
+    "total_stations": 22,
+    "train_stations_count": 20,
+    "held_out_test_stations_count": 2,
+    "held_out_test_stations": [
+      "12119000",
+      "14211720"
+    ],
+    "weather_source": "NASA POWER Global Reanalysis (All 22 stations via automated fallback due to Open-Meteo HTTP 429 rate limit)",
+    "soil_moisture_definition": "NASA POWER GWETTOP top-layer wetness fraction (scale 0.0 - 1.0)"
   },
-  "fold_metrics": [
+  "preserved_configurations": [
     {
-      "overall_rmse": 103.6124,
-      "extreme_rmse": 323.2259,
-      "mae": 31.6296,
-      "r2": 0.9462,
-      "composite_score": 135.2762,
-      "n_total": 244,
-      "n_extreme": 25,
-      "fold": 1,
-      "val_stations": [
-        "USGS_0101"
-      ]
+      "name": "HistGradientBoosting + Log1p + Full Features",
+      "model_type": "HistGradientBoostingRegressor",
+      "target_transform": "log1p",
+      "feature_set": "Full 24 features (including same-day weather)",
+      "artifact_path": "outputs/hist_gb_log1p_full.joblib",
+      "features_count": 24,
+      "features": [
+        "precipitation_mm",
+        "temp_max_c",
+        "temp_min_c",
+        "soil_moisture",
+        "drainage_area_sqmi",
+        "mean_elevation_ft",
+        "day_of_year",
+        "month",
+        "day_of_week",
+        "season",
+        "sin_day_of_year",
+        "cos_day_of_year",
+        "temp_range",
+        "temp_avg",
+        "log_drainage_area",
+        "precip_lag_1",
+        "precip_lag_2",
+        "precip_lag_3",
+        "precip_roll_sum_3d",
+        "precip_roll_sum_7d",
+        "precip_roll_sum_14d",
+        "temp_avg_lag_1",
+        "soil_moisture_lag_1",
+        "soil_moisture_roll_mean_3d"
+      ],
+      "metrics": {
+        "overall_rmse": 9320.9762,
+        "extreme_rmse": 22211.4709,
+        "mae": 4257.857,
+        "r2": 0.387,
+        "composite_score": 11239.5333,
+        "n_total": 14600,
+        "n_extreme": 1463
+      }
     },
     {
-      "overall_rmse": 98.8586,
-      "extreme_rmse": 308.3184,
-      "mae": 27.9708,
-      "r2": 0.9529,
-      "composite_score": 128.1036,
-      "n_total": 244,
-      "n_extreme": 25,
-      "fold": 2,
-      "val_stations": [
-        "USGS_0102"
-      ]
-    },
-    {
-      "overall_rmse": 91.8481,
-      "extreme_rmse": 285.9764,
-      "mae": 29.8635,
-      "r2": 0.9357,
-      "composite_score": 119.1476,
-      "n_total": 244,
-      "n_extreme": 25,
-      "fold": 3,
-      "val_stations": [
-        "USGS_0103"
-      ]
-    },
-    {
-      "overall_rmse": 213.3971,
-      "extreme_rmse": 660.7228,
-      "mae": 80.4338,
-      "r2": -0.0039,
-      "composite_score": 299.6624,
-      "n_total": 244,
-      "n_extreme": 25,
-      "fold": 4,
-      "val_stations": [
-        "USGS_0104"
-      ]
-    },
-    {
-      "overall_rmse": 606.215,
-      "extreme_rmse": 1852.4895,
-      "mae": 269.8278,
-      "r2": 0.6396,
-      "composite_score": 845.8028,
-      "n_total": 244,
-      "n_extreme": 25,
-      "fold": 5,
-      "val_stations": [
-        "USGS_0105"
-      ]
+      "name": "ExtraTrees + Raw Target + Past-Only Features",
+      "model_type": "ExtraTreesRegressor",
+      "target_transform": "None",
+      "feature_set": "Past-only 18 features (strictly t-1 lags, rolling sums, catchment, seasonality)",
+      "artifact_path": "outputs/extra_trees_raw_past_only.joblib",
+      "features_count": 18,
+      "features": [
+        "drainage_area_sqmi",
+        "mean_elevation_ft",
+        "day_of_year",
+        "month",
+        "day_of_week",
+        "season",
+        "sin_day_of_year",
+        "cos_day_of_year",
+        "log_drainage_area",
+        "precip_lag_1",
+        "precip_lag_2",
+        "precip_lag_3",
+        "precip_roll_sum_3d",
+        "precip_roll_sum_7d",
+        "precip_roll_sum_14d",
+        "temp_avg_lag_1",
+        "soil_moisture_lag_1",
+        "soil_moisture_roll_mean_3d"
+      ],
+      "metrics": {
+        "overall_rmse": 9505.1578,
+        "extreme_rmse": 21701.6424,
+        "mae": 4944.9584,
+        "r2": 0.3625,
+        "composite_score": 11297.9223,
+        "n_total": 14600,
+        "n_extreme": 1463
+      }
     }
   ],
-  "per_station_metrics": {
-    "USGS_0101": {
-      "overall_rmse": 103.6124,
-      "extreme_rmse": 323.2259,
-      "mae": 31.6296,
-      "r2": 0.9462,
-      "composite_score": 135.2762,
-      "n_total": 244,
-      "n_extreme": 25
-    },
-    "USGS_0102": {
-      "overall_rmse": 98.8586,
-      "extreme_rmse": 308.3184,
-      "mae": 27.9708,
-      "r2": 0.9529,
-      "composite_score": 128.1036,
-      "n_total": 244,
-      "n_extreme": 25
-    },
-    "USGS_0103": {
-      "overall_rmse": 91.8481,
-      "extreme_rmse": 285.9764,
-      "mae": 29.8635,
-      "r2": 0.9357,
-      "composite_score": 119.1476,
-      "n_total": 244,
-      "n_extreme": 25
-    },
-    "USGS_0104": {
-      "overall_rmse": 213.3971,
-      "extreme_rmse": 660.7228,
-      "mae": 80.4338,
-      "r2": -0.0039,
-      "composite_score": 299.6624,
-      "n_total": 244,
-      "n_extreme": 25
-    },
-    "USGS_0105": {
-      "overall_rmse": 606.215,
-      "extreme_rmse": 1852.4895,
-      "mae": 269.8278,
-      "r2": 0.6396,
-      "composite_score": 845.8028,
-      "n_total": 244,
-      "n_extreme": 25
-    }
+  "predictions_provenance": {
+    "file": "predictions.csv",
+    "status": "SIMULATED_UNSEEN_STATION_EVALUATION",
+    "note": "Generated for unseen test stations 12119000 and 14211720 for verification only. NOT official competition submission.",
+    "row_count": 1460,
+    "target_leakage_check": "PASSED (discharge_cfs stripped before feature construction and inference)"
   },
-  "worst_performing_stations": [
-    "USGS_0105",
-    "USGS_0104",
-    "USGS_0101"
-  ],
-  "extreme_event_analysis": {
-    "underestimation_rate_pct": 47.2,
-    "extreme_mean_error_cfs": -214.59,
-    "normal_mean_error_cfs": -14.58,
-    "extreme_event_sample_count": 125,
-    "normal_sample_count": 1095
+  "model_name": "HistGradientBoosting (Log1p + Full Features)",
+  "validation_strategy": "GroupKFold (5 Folds)",
+  "overall": {
+    "rmse": 9320.9762,
+    "mae": 4257.857,
+    "r2": 0.387
   },
-  "feature_names": [
-    "precipitation_mm",
-    "temperature_c",
-    "soil_moisture",
-    "catchment_area_sqkm",
-    "elevation_m",
-    "day_of_year",
-    "month",
-    "day_of_week",
-    "season",
-    "sin_day_of_year",
-    "cos_day_of_year",
-    "precip_lag_1",
-    "precip_lag_2",
-    "precip_lag_3",
-    "precip_roll_sum_3d",
-    "precip_roll_sum_7d",
-    "precip_roll_sum_14d",
-    "soil_moisture_lag_1",
-    "soil_moisture_roll_mean_3d"
-  ],
-  "model_configuration": {
-    "random_state": 42,
-    "model_artifact": "outputs\\selected_model.joblib"
+  "extreme": {
+    "rmse": 22211.4709,
+    "threshold_definition": "Top 10% daily discharge per station in evaluation ground truth"
   },
-  "training_timestamp": "2026-11-04T12:45:57.146677+00:00",
-  "dataset_status": "synthetic_fallback",
-  "is_synthetic": true,
-  "known_model_limitations": [
-    "Evaluated using station-held-out validation to simulate unseen stations",
-    "Extreme-event prediction constrained by historical station catchment attributes"
-  ]
+  "per_station": [],
+  "generated_at": "2026-11-04T13:22:54.419372+00:00"
 }

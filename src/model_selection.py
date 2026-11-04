@@ -23,6 +23,12 @@ class ModelComparisonEngine:
             {"name": "ExtraTrees (Log1p)", "type": "extra_trees", "transform": True}
         ]
 
+        f_names = list(feature_names) if feature_names is not None else [f"f_{i}" for i in range(np.asarray(X).shape[1])]
+        X_df = pd.DataFrame(X, columns=f_names)
+
+        sm_cols = [c for c in f_names if "soil_moisture" in c]
+        non_sm_cols = [c for c in f_names if "soil_moisture" not in c]
+
         comparison_records = []
         val_results_map = {}
         best_model_info = None
@@ -31,7 +37,7 @@ class ModelComparisonEngine:
         for cfg in candidate_configs:
             start_time = time.time()
             builder = lambda c=cfg: create_model(c["type"], transform_target=c["transform"], random_state=self.random_state)
-            val_res = self.validator.evaluate(builder, X, y, identifiers, model_name=cfg["name"])
+            val_res = self.validator.evaluate(builder, X_df, y, identifiers, model_name=cfg["name"])
             elapsed = round(time.time() - start_time, 2)
             
             agg = val_res["aggregate_metrics"]
@@ -39,6 +45,7 @@ class ModelComparisonEngine:
                 "model_name": cfg["name"],
                 "model_type": cfg["type"],
                 "target_transform": cfg["transform"],
+                "feature_set": "with_soil_moisture",
                 "overall_rmse": agg["overall_rmse"],
                 "extreme_rmse": agg["extreme_rmse"],
                 "mae": agg["mae"],
@@ -53,13 +60,47 @@ class ModelComparisonEngine:
                 best_composite = agg["composite_score"]
                 best_model_info = {
                     "config": cfg,
-                    "validation_result": val_res
+                    "validation_result": val_res,
+                    "features_used": f_names
                 }
+
+        ablation_records = []
+        if sm_cols:
+            X_no_sm = X_df[non_sm_cols]
+            for cfg in candidate_configs:
+                start_time = time.time()
+                builder = lambda c=cfg: create_model(c["type"], transform_target=c["transform"], random_state=self.random_state)
+                val_res = self.validator.evaluate(builder, X_no_sm, y, identifiers, model_name=f"{cfg['name']} (No SM)")
+                elapsed = round(time.time() - start_time, 2)
+                agg = val_res["aggregate_metrics"]
+                rec = {
+                    "model_name": cfg["name"],
+                    "model_type": cfg["type"],
+                    "target_transform": cfg["transform"],
+                    "feature_set": "without_soil_moisture",
+                    "overall_rmse": agg["overall_rmse"],
+                    "extreme_rmse": agg["extreme_rmse"],
+                    "mae": agg["mae"],
+                    "r2": agg["r2"],
+                    "composite_score": agg["composite_score"],
+                    "validation_time_sec": elapsed
+                }
+                ablation_records.append(rec)
+                comparison_records.append(rec)
+
+                if agg["composite_score"] < best_composite:
+                    best_composite = agg["composite_score"]
+                    best_model_info = {
+                        "config": cfg,
+                        "validation_result": val_res,
+                        "features_used": non_sm_cols
+                    }
 
         comparison_df = pd.DataFrame(comparison_records).sort_values("composite_score", ascending=True)
 
         selected_cfg = best_model_info["config"]
         selected_val = best_model_info["validation_result"]
+        selected_features = best_model_info["features_used"]
 
         best_oof = selected_val["oof_dataframe"]
         extreme_rows = best_oof[best_oof["extreme_event_flag"] == 1]
@@ -70,11 +111,24 @@ class ModelComparisonEngine:
         normal_mean_err = float(np.mean(normal_rows["prediction_error"])) if len(normal_rows) > 0 else 0.0
 
         final_model = create_model(selected_cfg["type"], transform_target=selected_cfg["transform"], random_state=self.random_state)
-        train_full(final_model, X, y)
+        train_full(final_model, X_df[selected_features], y)
 
         os.makedirs("outputs", exist_ok=True)
+
+        feature_imp_df = None
+        if final_model.feature_importances_ is not None:
+            feature_imp_df = pd.DataFrame({
+                "feature": selected_features,
+                "importance": np.round(final_model.feature_importances_, 6)
+            }).sort_values("importance", ascending=False)
+            feature_imp_df.to_csv(os.path.join("outputs", "feature_importances.csv"), index=False)
+
         comparison_path = os.path.join("outputs", "model_comparison.csv")
         comparison_df.to_csv(comparison_path, index=False)
+
+        if ablation_records:
+            ablation_df = pd.DataFrame(ablation_records)
+            ablation_df.to_csv(os.path.join("outputs", "soil_moisture_ablation.csv"), index=False)
 
         val_pred_path = os.path.join("outputs", "validation_predictions.csv")
         best_oof.to_csv(val_pred_path, index=False)
@@ -87,6 +141,7 @@ class ModelComparisonEngine:
             "model_name": selected_cfg["name"],
             "model_type": selected_cfg["type"],
             "target_transform": selected_cfg["transform"],
+            "features_used": selected_features,
             "validation_method": selected_val["validation_method"],
             "validation_station_count": selected_val["station_count"],
             "total_folds": selected_val["total_folds"],
@@ -101,7 +156,8 @@ class ModelComparisonEngine:
                 "extreme_event_sample_count": len(extreme_rows),
                 "normal_sample_count": len(normal_rows)
             },
-            "feature_names": feature_names if feature_names is not None else [],
+            "soil_moisture_features": sm_cols,
+            "feature_importance_top": feature_imp_df.head(10).to_dict(orient="records") if feature_imp_df is not None else [],
             "model_configuration": {
                 "random_state": self.random_state,
                 "model_artifact": model_artifact_path
@@ -111,7 +167,8 @@ class ModelComparisonEngine:
             "is_synthetic": is_synthetic,
             "known_model_limitations": [
                 "Evaluated using station-held-out validation to simulate unseen stations",
-                "Extreme-event prediction constrained by historical station catchment attributes"
+                "Extreme-event prediction constrained by historical station catchment attributes",
+                "Open-Meteo volumetric water content vs NASA POWER wetness fraction definition discrepancy evaluated via ablation"
             ]
         }
 
@@ -122,6 +179,7 @@ class ModelComparisonEngine:
         return {
             "comparison_df": comparison_df,
             "selected_config": selected_cfg,
+            "selected_features": selected_features,
             "validation_result": selected_val,
             "final_model": final_model,
             "results_json": results_json

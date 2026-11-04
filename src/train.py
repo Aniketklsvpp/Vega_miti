@@ -31,6 +31,12 @@ class TargetTransformedModel(BaseEstimator, RegressorMixin):
             pred = raw_pred
         return np.clip(pred, a_min=0.0, a_max=None)
 
+    @property
+    def feature_importances_(self):
+        if hasattr(self.fitted_estimator_, "feature_importances_"):
+            return self.fitted_estimator_.feature_importances_
+        return None
+
 def create_model(model_name="hist_gb", transform_target=False, random_state=42):
     name = model_name.lower()
     if name == "dummy":
