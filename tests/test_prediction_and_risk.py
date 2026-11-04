@@ -82,6 +82,10 @@ class TestPredictionAndRisk(unittest.TestCase):
         t3 = self.risk_engine.detect_risk_transition("CRITICAL", "CRITICAL")
         self.assertEqual(t3["transition"], "STEADY")
 
+        t4 = self.risk_engine.detect_risk_transition("NORMAL", "UNKNOWN")
+        self.assertEqual(t4["transition"], "INSUFFICIENT_DATA")
+        self.assertEqual(t4["severity_delta"], 0)
+
     def test_forecast_and_high_flow_metrics(self):
         y_true = np.array([100.0, 200.0, 300.0, 1000.0, 5000.0])
         y_pred = np.array([110.0, 190.0, 320.0, 950.0, 4800.0])

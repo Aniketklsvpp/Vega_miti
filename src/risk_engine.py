@@ -167,9 +167,20 @@ class FloodRiskEngine:
         return pd.DataFrame(results)
 
     def detect_risk_transition(self, prev_risk_level, current_risk_level):
-        hierarchy = {"NORMAL": 0, "WATCH": 1, "WARNING": 2, "CRITICAL": 3}
-        prev_idx = hierarchy.get(str(prev_risk_level).upper(), 0)
-        curr_idx = hierarchy.get(str(current_risk_level).upper(), 0)
+        hierarchy = {"UNKNOWN": -1, "INSUFFICIENT_DATA": -1, "NORMAL": 0, "WATCH": 1, "WARNING": 2, "CRITICAL": 3}
+        p_str = str(prev_risk_level).upper()
+        c_str = str(current_risk_level).upper()
+
+        if p_str in ("UNKNOWN", "INSUFFICIENT_DATA") or c_str in ("UNKNOWN", "INSUFFICIENT_DATA"):
+            return {
+                "previous_risk": prev_risk_level,
+                "current_risk": current_risk_level,
+                "transition": "INSUFFICIENT_DATA",
+                "severity_delta": 0
+            }
+
+        prev_idx = hierarchy.get(p_str, 0)
+        curr_idx = hierarchy.get(c_str, 0)
 
         if curr_idx > prev_idx:
             status = "ESCALATION"
