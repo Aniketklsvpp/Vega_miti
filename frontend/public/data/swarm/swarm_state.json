@@ -1,0 +1,110 @@
+{
+  "coordinator_status": "ONLINE",
+  "active_missions_count": 0,
+  "completed_missions_count": 0,
+  "synchronized_events_count": 0,
+  "agents": [
+    {
+      "agent_id": "DRONE_AERIAL_1",
+      "agent_type": "UAV",
+      "capabilities": [
+        "VERIFICATION",
+        "AERIAL_OBSERVATION"
+      ],
+      "position": [
+        1,
+        1
+      ],
+      "battery": 95.0,
+      "connectivity": "DISCONNECTED",
+      "status": "DISCONNECTED",
+      "current_mission": "MSN-2FAC92",
+      "path_remaining": 16
+    },
+    {
+      "agent_id": "DRONE_AERIAL_2",
+      "agent_type": "UAV",
+      "capabilities": [
+        "VERIFICATION",
+        "AERIAL_OBSERVATION",
+        "AREA_SURVEILLANCE"
+      ],
+      "position": [
+        18,
+        1
+      ],
+      "battery": 88.0,
+      "connectivity": "DISCONNECTED",
+      "status": "DISCONNECTED",
+      "current_mission": "MSN-F08D66",
+      "path_remaining": 11
+    },
+    {
+      "agent_id": "USV_RIVER_1",
+      "agent_type": "USV",
+      "capabilities": [
+        "VERIFICATION",
+        "RIVER_MONITORING"
+      ],
+      "position": [
+        5,
+        10
+      ],
+      "battery": 92.0,
+      "connectivity": "DISCONNECTED",
+      "status": "DISCONNECTED",
+      "current_mission": "MSN-8DC000",
+      "path_remaining": 7
+    },
+    {
+      "agent_id": "USV_RIVER_2",
+      "agent_type": "USV",
+      "capabilities": [
+        "RIVER_MONITORING"
+      ],
+      "position": [
+        12,
+        10
+      ],
+      "battery": 85.0,
+      "connectivity": "DISCONNECTED",
+      "status": "DISCONNECTED",
+      "current_mission": "MSN-967FC4",
+      "path_remaining": 11
+    },
+    {
+      "agent_id": "RELAY_NODE_1",
+      "agent_type": "RELAY",
+      "capabilities": [
+        "AERIAL_OBSERVATION",
+        "DATA_RELAY"
+      ],
+      "position": [
+        10,
+        5
+      ],
+      "battery": 90.0,
+      "connectivity": "DISCONNECTED",
+      "status": "DISCONNECTED",
+      "current_mission": "MSN-FB514D",
+      "path_remaining": 5
+    },
+    {
+      "agent_id": "GROUND_SCOUT_1",
+      "agent_type": "UGV",
+      "capabilities": [
+        "VERIFICATION",
+        "AREA_SURVEILLANCE"
+      ],
+      "position": [
+        2,
+        18
+      ],
+      "battery": 78.0,
+      "connectivity": "DISCONNECTED",
+      "status": "DISCONNECTED",
+      "current_mission": null,
+      "path_remaining": 0
+    }
+  ]
+}

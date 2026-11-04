@@ -8,11 +8,12 @@ from pydantic import BaseModel
 from src.prediction_service import PredictionService
 from src.risk_engine import FloodRiskEngine
 from src.hydrological_evaluation import HydrologicalEvaluator
+from src.swarm_api import router as swarm_router
 
 app = FastAPI(
-    title="VEGA-MITI Hydrological Intelligence API",
+    title="VEGA-MITI Unified Hydrological Intelligence & Swarm API",
     version="1.0.0",
-    description="Operational Flood Prediction, Risk Classification, and Hydrological Evaluation API"
+    description="Operational Flood Prediction, Risk Classification, Hydrological Evaluation, and Swarm Simulation API"
 )
 
 app.add_middleware(
@@ -22,6 +23,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+app.include_router(swarm_router)
 
 pred_service = PredictionService()
 risk_engine = FloodRiskEngine()
