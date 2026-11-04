@@ -8,9 +8,11 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "sync-data": "node scripts/sync-outputs.mjs"
+    "sync-data": "node scripts/sync-outputs.mjs",
+    "copy-cesium": "node scripts/copy-cesium-assets.mjs"
   },
   "dependencies": {
+    "cesium": "^1.147.0",
     "d3-geo": "^3.1.2",
     "leaflet": "^1.9.4",
     "lucide-react": "^1.68.0",
