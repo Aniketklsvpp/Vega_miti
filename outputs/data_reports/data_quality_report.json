@@ -1,0 +1,250 @@
+{
+  "train_rows": 16060,
+  "train_columns": [
+    "station_id",
+    "date",
+    "discharge_cfs",
+    "precipitation_mm",
+    "temp_max_c",
+    "temp_min_c",
+    "soil_moisture",
+    "drainage_area_sqmi",
+    "mean_elevation_ft"
+  ],
+  "status": "VALID",
+  "errors": [],
+  "warnings": [],
+  "train_missingness": {
+    "station_id": 0.0,
+    "date": 0.0,
+    "discharge_cfs": 0.0,
+    "precipitation_mm": 0.0,
+    "temp_max_c": 0.0,
+    "temp_min_c": 0.0,
+    "soil_moisture": 0.0,
+    "drainage_area_sqmi": 0.0,
+    "mean_elevation_ft": 0.0
+  },
+  "extreme_event_statistics": {
+    "01570500": {
+      "observation_count": 730,
+      "median_cfs": 24900.0,
+      "p90_cfs": 69520.0,
+      "p95_cfs": 87829.99999999997,
+      "p99_cfs": 137840.00000000015,
+      "max_cfs": 179000.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "01638500": {
+      "observation_count": 730,
+      "median_cfs": 4525.0,
+      "p90_cfs": 12630.000000000007,
+      "p95_cfs": 17554.999999999996,
+      "p99_cfs": 32671.000000000004,
+      "max_cfs": 94500.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "01646500": {
+      "observation_count": 730,
+      "median_cfs": 5105.0,
+      "p90_cfs": 13920.000000000004,
+      "p95_cfs": 19019.99999999998,
+      "p99_cfs": 40026.00000000002,
+      "max_cfs": 102000.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "02037500": {
+      "observation_count": 730,
+      "median_cfs": 4240.0,
+      "p90_cfs": 10510.000000000002,
+      "p95_cfs": 15254.999999999996,
+      "p99_cfs": 26688.000000000102,
+      "max_cfs": 41700.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "02146000": {
+      "observation_count": 730,
+      "median_cfs": 2535.0,
+      "p90_cfs": 6253.000000000001,
+      "p95_cfs": 7538.499999999996,
+      "p99_cfs": 11297.000000000025,
+      "max_cfs": 15300.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "02169500": {
+      "observation_count": 730,
+      "median_cfs": 4630.0,
+      "p90_cfs": 13310.000000000002,
+      "p95_cfs": 20954.999999999996,
+      "p99_cfs": 39213.000000000015,
+      "max_cfs": 60900.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "02202500": {
+      "observation_count": 730,
+      "median_cfs": 1240.0,
+      "p90_cfs": 3400.0,
+      "p95_cfs": 4823.999999999996,
+      "p99_cfs": 6440.700000000006,
+      "max_cfs": 7570.0,
+      "count_above_p90": 74,
+      "missing_pct": 0.0
+    },
+    "03234500": {
+      "observation_count": 730,
+      "median_cfs": 2650.0,
+      "p90_cfs": 13410.000000000002,
+      "p95_cfs": 20829.99999999997,
+      "p99_cfs": 32371.000000000004,
+      "max_cfs": 41000.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "03374100": {
+      "observation_count": 730,
+      "median_cfs": 6370.0,
+      "p90_cfs": 33150.000000000015,
+      "p95_cfs": 43854.99999999999,
+      "p99_cfs": 65620.00000000007,
+      "max_cfs": 69600.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "05484500": {
+      "observation_count": 730,
+      "median_cfs": 254.5,
+      "p90_cfs": 2191.0,
+      "p95_cfs": 3446.4999999999986,
+      "p99_cfs": 6006.800000000003,
+      "max_cfs": 11700.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "05527500": {
+      "observation_count": 730,
+      "median_cfs": 2665.0,
+      "p90_cfs": 9260.0,
+      "p95_cfs": 12654.999999999996,
+      "p99_cfs": 19113.00000000001,
+      "max_cfs": 21900.0,
+      "count_above_p90": 74,
+      "missing_pct": 0.0
+    },
+    "05586100": {
+      "observation_count": 730,
+      "median_cfs": 13200.0,
+      "p90_cfs": 47120.00000000001,
+      "p95_cfs": 50854.99999999999,
+      "p99_cfs": 59355.000000000015,
+      "max_cfs": 61300.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "06192500": {
+      "observation_count": 730,
+      "median_cfs": 1840.0,
+      "p90_cfs": 11430.000000000007,
+      "p95_cfs": 15900.0,
+      "p99_cfs": 20684.000000000015,
+      "max_cfs": 43000.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "07144100": {
+      "observation_count": 730,
+      "median_cfs": 20.05,
+      "p90_cfs": 84.61,
+      "p95_cfs": 221.0499999999986,
+      "p99_cfs": 2143.9000000000033,
+      "max_cfs": 9110.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "07196500": {
+      "observation_count": 730,
+      "median_cfs": 748.0,
+      "p90_cfs": 2582.0000000000005,
+      "p95_cfs": 3880.0,
+      "p99_cfs": 8764.40000000006,
+      "max_cfs": 62600.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "08116650": {
+      "observation_count": 730,
+      "median_cfs": 1320.0,
+      "p90_cfs": 6280.000000000002,
+      "p95_cfs": 10619.999999999982,
+      "p99_cfs": 21555.00000000002,
+      "max_cfs": 34700.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "08158000": {
+      "observation_count": 730,
+      "median_cfs": 496.0,
+      "p90_cfs": 2557.000000000002,
+      "p95_cfs": 3605.4999999999995,
+      "p99_cfs": 3947.1000000000004,
+      "max_cfs": 7970.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "09095500": {
+      "observation_count": 730,
+      "median_cfs": 2130.0,
+      "p90_cfs": 9283.0,
+      "p95_cfs": 13754.999999999996,
+      "p99_cfs": 16171.000000000004,
+      "max_cfs": 16900.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "09180500": {
+      "observation_count": 730,
+      "median_cfs": 3500.0,
+      "p90_cfs": 14840.00000000001,
+      "p95_cfs": 24354.999999999996,
+      "p99_cfs": 36926.00000000002,
+      "max_cfs": 40700.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    },
+    "09380000": {
+      "observation_count": 730,
+      "median_cfs": 9500.0,
+      "p90_cfs": 18100.0,
+      "p95_cfs": 18500.0,
+      "p99_cfs": 19000.0,
+      "max_cfs": 39600.0,
+      "count_above_p90": 74,
+      "missing_pct": 0.0
+    },
+    "12119000": {
+      "observation_count": 730,
+      "median_cfs": 483.5,
+      "p90_cfs": 1400.0,
+      "p95_cfs": 1760.0,
+      "p99_cfs": 2475.2000000000044,
+      "max_cfs": 3680.0,
+      "count_above_p90": 74,
+      "missing_pct": 0.0
+    },
+    "14211720": {
+      "observation_count": 730,
+      "median_cfs": 20700.0,
+      "p90_cfs": 64380.000000000015,
+      "p95_cfs": 85094.99999999996,
+      "p99_cfs": 116420.00000000007,
+      "max_cfs": 148000.0,
+      "count_above_p90": 73,
+      "missing_pct": 0.0
+    }
+  }
+}
