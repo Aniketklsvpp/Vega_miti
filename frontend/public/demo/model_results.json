@@ -1,0 +1,52 @@
+{
+  "model_name": "HydroBoost-Ensemble-v1.4",
+  "validation_strategy": "Spatial-Temporal Held-Out Catchment K-Fold",
+  "overall": {
+    "rmse": 142.35,
+    "mae": 84.12,
+    "r2": 0.884
+  },
+  "extreme": {
+    "rmse": 318.64,
+    "threshold_definition": "90th percentile historical daily discharge (top 10% events)"
+  },
+  "per_station": [
+    {
+      "station_id": "STN_01010000",
+      "rmse": 182.4,
+      "mae": 98.7,
+      "r2": 0.892,
+      "extreme_threshold_cfs": 1850.0
+    },
+    {
+      "station_id": "STN_01022500",
+      "rmse": 94.1,
+      "mae": 52.3,
+      "r2": 0.865,
+      "extreme_threshold_cfs": 820.0
+    },
+    {
+      "station_id": "STN_01031500",
+      "rmse": 154.8,
+      "mae": 89.2,
+      "r2": 0.879,
+      "extreme_threshold_cfs": 1420.0
+    },
+    {
+      "station_id": "STN_01047000",
+      "rmse": 168.3,
+      "mae": 104.5,
+      "r2": 0.841,
+      "extreme_threshold_cfs": 1600.0
+    },
+    {
+      "station_id": "STN_01054200",
+      "rmse": 112.1,
+      "mae": 75.8,
+      "r2": 0.943,
+      "extreme_threshold_cfs": 950.0
+    }
+  ],
+  "generated_at": "2026-11-04T12:00:00Z"
+}
+
