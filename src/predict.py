@@ -47,7 +47,7 @@ class RiverDischargePredictor:
             return list(CONFIG_B_FEATURES)
         return list(CONFIG_A_FEATURES)
 
-    def predict(self, X, identifiers, config="A"):
+    def predict(self, X, identifiers=None, config="A"):
         cfg_key = str(config).upper()
         model_key = "B" if cfg_key in ("B", "PAST_ONLY", "PAST") else "A"
         
@@ -85,6 +85,9 @@ class RiverDischargePredictor:
         raw_preds = model.predict(X_arr)
         clean_preds = np.clip(raw_preds, a_min=0.0, a_max=None)
         clean_preds = np.where(np.isfinite(clean_preds), clean_preds, 0.0)
+
+        if identifiers is None:
+            return clean_preds
 
         ident_df = pd.DataFrame(identifiers).copy()
         station_col = "station_id" if "station_id" in ident_df.columns else ident_df.columns[0]

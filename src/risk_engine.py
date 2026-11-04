@@ -22,7 +22,7 @@ class FloodRiskEngine:
                             "warning": float(clean.quantile(0.95)),
                             "critical": float(clean.quantile(0.99)),
                             "max": float(clean.max()),
-                            "source": "USGS_HISTORICAL_DISTRIBUTION_2022_2023_EMPIRICAL_PERCENTILES",
+                            "source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
                             "is_provisional": False
                         }
 
@@ -36,48 +36,59 @@ class FloodRiskEngine:
             "warning": self.default_thresholds["warning"],
             "critical": self.default_thresholds["critical"],
             "max": 50000.0,
-            "source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+            "source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
             "is_provisional": True
         }
 
-    def classify_discharge(self, station_id, discharge_cfs, date=None, data_quality_status="VALID"):
+    def classify_discharge(self, station_id, discharge_cfs, date=None, data_quality_status=None):
         st_clean = str(station_id).strip()
         thresh = self.get_thresholds_for_station(st_clean)
         
-        q_val = float(discharge_cfs) if pd.notna(discharge_cfs) else 0.0
+        is_valid = pd.notna(discharge_cfs) and np.isfinite(float(discharge_cfs))
+        q_val = float(discharge_cfs) if is_valid else 0.0
         
         if q_val >= thresh["critical"]:
             risk_level = "CRITICAL"
             explanation = (
-                f"Discharge ({q_val:,.1f} cfs) meets or exceeds the CRITICAL threshold "
+                f"Discharge ({q_val:,.1f} cfs) meets or exceeds the empirical demonstration CRITICAL threshold "
                 f"({thresh['critical']:,.1f} cfs, 99th percentile). Severe flood conditions indicated."
             )
+            action = "HIGH_PRIORITY_RESPONSE_MISSIONS"
         elif q_val >= thresh["warning"]:
             risk_level = "WARNING"
             explanation = (
-                f"Discharge ({q_val:,.1f} cfs) meets or exceeds the WARNING threshold "
+                f"Discharge ({q_val:,.1f} cfs) meets or exceeds the empirical demonstration WARNING threshold "
                 f"({thresh['warning']:,.1f} cfs, 95th percentile). Elevated high-flow event in progress."
             )
+            action = "PREPARE_VERIFICATION_MISSIONS"
         elif q_val >= thresh["watch"]:
             risk_level = "WATCH"
             explanation = (
-                f"Discharge ({q_val:,.1f} cfs) meets or exceeds the WATCH threshold "
+                f"Discharge ({q_val:,.1f} cfs) meets or exceeds the empirical demonstration WATCH threshold "
                 f"({thresh['watch']:,.1f} cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
             )
+            action = "INCREASE_MONITORING_FREQUENCY"
         else:
             risk_level = "NORMAL"
             explanation = (
-                f"Discharge ({q_val:,.1f} cfs) is below the WATCH threshold "
+                f"Discharge ({q_val:,.1f} cfs) is below empirical demonstration WATCH threshold "
                 f"({thresh['watch']:,.1f} cfs). Normal river conditions."
             )
+            action = "PASSIVE_MONITORING"
 
-        evidence_quality = "HIGH" if data_quality_status == "VALID" else "DEGRADED"
+        quality_status = "VALID_OBSERVATION" if is_valid else "INVALID_OR_MISSING"
+        if data_quality_status and data_quality_status != "VALID":
+            quality_status = "DEGRADED"
 
         return {
             "station_id": st_clean,
             "date": str(date) if date is not None else None,
             "discharge_cfs": round(q_val, 2),
+            "high_flow_threshold_cfs": round(thresh["watch"], 2),
+            "critical_threshold_cfs": round(thresh["critical"], 2),
             "risk_level": risk_level,
+            "threshold_type": "EMPIRICAL_DEMONSTRATION",
+            "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
             "thresholds": {
                 "watch_p90_cfs": round(thresh["watch"], 2),
                 "warning_p95_cfs": round(thresh["warning"], 2),
@@ -86,9 +97,23 @@ class FloodRiskEngine:
             },
             "threshold_source": thresh["source"],
             "is_provisional": thresh["is_provisional"],
-            "evidence_quality": evidence_quality,
-            "explanation": explanation
+            "data_quality_status": quality_status,
+            "evidence_quality": "HIGH" if quality_status == "VALID_OBSERVATION" else "DEGRADED",
+            "explanation": explanation,
+            "recommended_action": action
         }
+
+    def assess_station_risk(self, station_id, discharge_cfs, date=None):
+        return self.classify_discharge(station_id, discharge_cfs, date=date)
+
+    def assess_batch(self, predictions_df):
+        results = []
+        for _, row in predictions_df.iterrows():
+            st_id = row.get("station_id")
+            val = row.get("discharge_cfs", row.get("predicted_discharge_cfs"))
+            dt = row.get("date")
+            results.append(self.assess_station_risk(st_id, val, date=dt))
+        return pd.DataFrame(results)
 
     def detect_risk_transition(self, prev_risk_level, current_risk_level):
         hierarchy = {"NORMAL": 0, "WATCH": 1, "WARNING": 2, "CRITICAL": 3}
@@ -108,3 +133,5 @@ class FloodRiskEngine:
             "transition": status,
             "severity_delta": curr_idx - prev_idx
         }
+
+HydrologicalRiskEngine = FloodRiskEngine
