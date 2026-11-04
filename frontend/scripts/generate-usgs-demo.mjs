@@ -124,3 +124,4 @@ const modelResults = {
 fs.writeFileSync(path.join(outDir, 'model_results.json'), JSON.stringify(modelResults, null, 2))
 
 console.log('Successfully generated 22 USGS stations in demo/usa!')
+

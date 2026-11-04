@@ -1,6 +1,6 @@
 import React from 'react'
 import type { EnrichedStation, RegionType } from '../types/data'
-import { SurveySheetMap } from '../components/map/SurveySheetMap'
+import { Terrain3DScene } from '../components/terrain/Terrain3DScene'
 import { Activity, ArrowRight, Compass, Droplet, Flame } from 'lucide-react'
 
 interface OverviewViewProps {
@@ -81,24 +81,22 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-base font-bold text-[#1F2A33] tracking-tight">
-              {region === 'india' ? 'India River Basin Cartographic Map' : 'USGS River Catchment Survey Sheet'}
+              {region === 'india' ? 'India 3D Hypsometric River Basin Terrain' : 'USGS 3D River Catchment Elevation Model'}
             </h2>
             <p className="text-xs text-[#526573]">
-              Real geographic river lines &middot; Drag to pan &middot; Scroll to zoom &middot; Select station for telemetry
+              Real SRTM elevation mesh &middot; Drag to orbit &middot; Right-drag to pan &middot; Scroll to zoom &middot; Click station to fly-in
             </p>
           </div>
           <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-[#EAE1D2] text-[#1F2A33] font-semibold border border-[#DDD1BF]">
-            {region.toUpperCase()} REGION
+            {region.toUpperCase()} 3D TERRAIN
           </span>
         </div>
-        <SurveySheetMap
+        <Terrain3DScene
           region={region}
           stations={stations}
           selectedStationId={selectedStationId}
-          onSelectStation={(id) => {
-            onSelectStation(id)
-            onNavigateToStation(id)
-          }}
+          onSelectStation={onSelectStation}
+          onNavigateToStation={onNavigateToStation}
         />
       </div>
 
