@@ -165,6 +165,7 @@ class SwarmCoordinator:
                     best_agent.status = "ASSIGNED"
                     best_agent.current_mission = mid
                     best_agent.planned_path = path
+                    was_reassigned = (m.get("status") == "REASSIGNED")
                     m["status"] = "IN_PROGRESS"
                     m["assigned_agent_id"] = best_agent.agent_id
                     now = time.time()
@@ -181,7 +182,10 @@ class SwarmCoordinator:
                         "bid_score": round(best_bid, 2)
                     }
                     allocations.append(alloc)
-                    best_agent.record_event("MISSION_ASSIGNED", alloc)
+                    if was_reassigned:
+                        best_agent.record_event("MISSION_REASSIGNED_TAKEOVER", alloc)
+                    else:
+                        best_agent.record_event("MISSION_ASSIGNED", alloc)
 
         return allocations
 
@@ -295,6 +299,7 @@ class SwarmCoordinator:
             a.connectivity = "CONNECTED"
             a.status = "AVAILABLE" if not a.current_mission else "ASSIGNED"
             a.send_heartbeat()
+            a.record_event("NETWORK_RECONNECTED", {"position": a.position})
             self.synchronize_agent(agent_id)
 
     def simulate_coordinator_failure(self):
