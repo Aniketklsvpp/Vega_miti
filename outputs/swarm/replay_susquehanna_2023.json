@@ -1,0 +1,2307 @@
+{
+  "status": "success",
+  "event_id": "EVENT-US-SUSQUEHANNA-2023",
+  "title": "December 2023 Susquehanna River Flood Event (Harrisburg, PA, US)",
+  "country": "United States",
+  "river": "Susquehanna River",
+  "geographic_context": {
+    "latitude": 40.252,
+    "longitude": -76.883,
+    "primary_station_name": "Susquehanna River at Harrisburg, PA"
+  },
+  "total_steps": 13,
+  "executed_steps_count": 13,
+  "current_step_frame": {
+    "step_index": 12,
+    "date": "2023-12-26",
+    "timeline_phase": "RECOVERY",
+    "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
+    "historical_metrics": {
+      "rainfall_mm": 3.26,
+      "water_level_m": null,
+      "discharge_cfs": 50900.0
+    },
+    "risk_assessment": {
+      "station_id": "01570500",
+      "date": "2023-12-26",
+      "discharge_cfs": 50900.0,
+      "high_flow_threshold_cfs": 69520.0,
+      "critical_threshold_cfs": 137840.0,
+      "risk_level": "NORMAL",
+      "threshold_type": "EMPIRICAL_DEMONSTRATION",
+      "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+      "thresholds": {
+        "watch_p90_cfs": 69520.0,
+        "warning_p95_cfs": 87830.0,
+        "critical_p99_cfs": 137840.0,
+        "median_cfs": 24900.0
+      },
+      "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+      "is_provisional": false,
+      "data_quality_status": "VALID_OBSERVATION",
+      "evidence_quality": "HIGH",
+      "explanation": "Discharge (50,900.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
+      "recommended_action": "PASSIVE_MONITORING"
+    },
+    "swarm_state": {
+      "activation_state": "NORMAL",
+      "active_missions_count": 0,
+      "completed_missions_count": 0,
+      "new_missions_generated": 0,
+      "allocations_in_step": [],
+      "reassigned_in_step": [],
+      "failure_event": null,
+      "agents": [
+        {
+          "agent_id": "DRONE_AERIAL_1",
+          "agent_type": "UAV",
+          "capabilities": [
+            "AERIAL_OBSERVATION",
+            "VERIFICATION"
+          ],
+          "position": [
+            1,
+            1
+          ],
+          "battery": 95.0,
+          "connectivity": "DISCONNECTED",
+          "status": "DISCONNECTED",
+          "current_mission": "MSN-98A6B3",
+          "path_remaining": 18,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        },
+        {
+          "agent_id": "DRONE_AERIAL_2",
+          "agent_type": "UAV",
+          "capabilities": [
+            "AREA_SURVEILLANCE",
+            "AERIAL_OBSERVATION",
+            "VERIFICATION"
+          ],
+          "position": [
+            18,
+            1
+          ],
+          "battery": 88.0,
+          "connectivity": "DISCONNECTED",
+          "status": "DISCONNECTED",
+          "current_mission": null,
+          "path_remaining": 0,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        },
+        {
+          "agent_id": "USV_RIVER_1",
+          "agent_type": "USV",
+          "capabilities": [
+            "VERIFICATION",
+            "RIVER_MONITORING"
+          ],
+          "position": [
+            5,
+            10
+          ],
+          "battery": 92.0,
+          "connectivity": "DISCONNECTED",
+          "status": "DISCONNECTED",
+          "current_mission": null,
+          "path_remaining": 0,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        },
+        {
+          "agent_id": "USV_RIVER_2",
+          "agent_type": "USV",
+          "capabilities": [
+            "RIVER_MONITORING"
+          ],
+          "position": [
+            12,
+            10
+          ],
+          "battery": 85.0,
+          "connectivity": "DISCONNECTED",
+          "status": "DISCONNECTED",
+          "current_mission": null,
+          "path_remaining": 0,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        },
+        {
+          "agent_id": "RELAY_NODE_1",
+          "agent_type": "RELAY",
+          "capabilities": [
+            "AERIAL_OBSERVATION",
+            "DATA_RELAY"
+          ],
+          "position": [
+            10,
+            5
+          ],
+          "battery": 90.0,
+          "connectivity": "DISCONNECTED",
+          "status": "DISCONNECTED",
+          "current_mission": null,
+          "path_remaining": 0,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        },
+        {
+          "agent_id": "GROUND_SCOUT_1",
+          "agent_type": "UGV",
+          "capabilities": [
+            "AREA_SURVEILLANCE",
+            "VERIFICATION"
+          ],
+          "position": [
+            2,
+            18
+          ],
+          "battery": 78.0,
+          "connectivity": "DISCONNECTED",
+          "status": "DISCONNECTED",
+          "current_mission": "MSN-C248E0",
+          "path_remaining": 16,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        }
+      ]
+    }
+  },
+  "timeline_frames": [
+    {
+      "step_index": 0,
+      "date": "2023-12-14",
+      "timeline_phase": "BEFORE_FLOOD",
+      "key_observation": "Advisory winter baseflow; dry conditions preceding frontal storm",
+      "historical_metrics": {
+        "rainfall_mm": 0.0,
+        "water_level_m": null,
+        "discharge_cfs": 63700.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-14",
+        "discharge_cfs": 63700.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "NORMAL",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (63,700.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
+        "recommended_action": "PASSIVE_MONITORING"
+      },
+      "swarm_state": {
+        "activation_state": "NORMAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 0,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 1,
+      "date": "2023-12-15",
+      "timeline_phase": "BEFORE_FLOOD",
+      "key_observation": "Advisory winter baseflow; dry conditions preceding frontal storm",
+      "historical_metrics": {
+        "rainfall_mm": 0.0,
+        "water_level_m": null,
+        "discharge_cfs": 54600.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-15",
+        "discharge_cfs": 54600.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "NORMAL",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (54,600.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
+        "recommended_action": "PASSIVE_MONITORING"
+      },
+      "swarm_state": {
+        "activation_state": "NORMAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 0,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 2,
+      "date": "2023-12-16",
+      "timeline_phase": "BEFORE_FLOOD",
+      "key_observation": "Advisory winter baseflow; dry conditions preceding frontal storm",
+      "historical_metrics": {
+        "rainfall_mm": 0.01,
+        "water_level_m": null,
+        "discharge_cfs": 46600.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-16",
+        "discharge_cfs": 46600.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "NORMAL",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (46,600.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
+        "recommended_action": "PASSIVE_MONITORING"
+      },
+      "swarm_state": {
+        "activation_state": "NORMAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 0,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 3,
+      "date": "2023-12-17",
+      "timeline_phase": "RISING_RISK",
+      "key_observation": "Intense atmospheric river system brings heavy rainfall (24.2 mm); basin saturated",
+      "historical_metrics": {
+        "rainfall_mm": 24.22,
+        "water_level_m": null,
+        "discharge_cfs": 41000.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-17",
+        "discharge_cfs": 41000.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "NORMAL",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (41,000.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
+        "recommended_action": "PASSIVE_MONITORING"
+      },
+      "swarm_state": {
+        "activation_state": "NORMAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 0,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 4,
+      "date": "2023-12-18",
+      "timeline_phase": "RISING_RISK",
+      "key_observation": "Intense atmospheric river system brings heavy rainfall (33.6 mm); basin saturated",
+      "historical_metrics": {
+        "rainfall_mm": 33.65,
+        "water_level_m": null,
+        "discharge_cfs": 62500.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-18",
+        "discharge_cfs": 62500.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "NORMAL",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (62,500.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
+        "recommended_action": "PASSIVE_MONITORING"
+      },
+      "swarm_state": {
+        "activation_state": "NORMAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 0,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 5,
+      "date": "2023-12-19",
+      "timeline_phase": "HIGH_RISK_PEAK",
+      "key_observation": "Runoff convergence causes massive discharge crest (169,000 cfs); river exceeds historical 99th percentile",
+      "historical_metrics": {
+        "rainfall_mm": 0.55,
+        "water_level_m": null,
+        "discharge_cfs": 169000.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-19",
+        "discharge_cfs": 169000.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "CRITICAL",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (169,000.0 cfs) meets or exceeds the empirical demonstration CRITICAL threshold (137,840.0 cfs, 99th percentile). Severe flood conditions indicated.",
+        "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS"
+      },
+      "swarm_state": {
+        "activation_state": "CRITICAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 2,
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-98A6B3",
+            "agent_id": "DRONE_AERIAL_1",
+            "path_length": 18,
+            "path": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                2,
+                7
+              ],
+              [
+                3,
+                7
+              ],
+              [
+                4,
+                7
+              ],
+              [
+                5,
+                7
+              ],
+              [
+                6,
+                7
+              ],
+              [
+                7,
+                7
+              ],
+              [
+                8,
+                7
+              ],
+              [
+                8,
+                8
+              ],
+              [
+                8,
+                9
+              ],
+              [
+                8,
+                10
+              ],
+              [
+                9,
+                10
+              ]
+            ],
+            "bid_score": 287.0
+          },
+          {
+            "mission_id": "MSN-C248E0",
+            "agent_id": "GROUND_SCOUT_1",
+            "path_length": 16,
+            "path": [
+              [
+                2,
+                18
+              ],
+              [
+                2,
+                17
+              ],
+              [
+                2,
+                16
+              ],
+              [
+                2,
+                15
+              ],
+              [
+                2,
+                14
+              ],
+              [
+                2,
+                13
+              ],
+              [
+                2,
+                12
+              ],
+              [
+                2,
+                11
+              ],
+              [
+                3,
+                11
+              ],
+              [
+                4,
+                11
+              ],
+              [
+                5,
+                11
+              ],
+              [
+                6,
+                11
+              ],
+              [
+                7,
+                11
+              ],
+              [
+                8,
+                11
+              ],
+              [
+                9,
+                11
+              ],
+              [
+                10,
+                11
+              ]
+            ],
+            "bid_score": 286.2
+          }
+        ],
+        "reassigned_in_step": [
+          "MSN-98A6B3",
+          "MSN-C248E0"
+        ],
+        "failure_event": {
+          "disconnected_agent": "DRONE_AERIAL_1",
+          "reassigned_missions": [
+            "MSN-98A6B3",
+            "MSN-C248E0"
+          ],
+          "reallocations": []
+        },
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-98A6B3",
+            "path_remaining": 18,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-C248E0",
+            "path_remaining": 16,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 6,
+      "date": "2023-12-20",
+      "timeline_phase": "HIGH_RISK_PEAK",
+      "key_observation": "Runoff convergence causes massive discharge crest (179,000 cfs); river exceeds historical 99th percentile",
+      "historical_metrics": {
+        "rainfall_mm": 0.0,
+        "water_level_m": null,
+        "discharge_cfs": 179000.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-20",
+        "discharge_cfs": 179000.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "CRITICAL",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (179,000.0 cfs) meets or exceeds the empirical demonstration CRITICAL threshold (137,840.0 cfs, 99th percentile). Severe flood conditions indicated.",
+        "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS"
+      },
+      "swarm_state": {
+        "activation_state": "CRITICAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 2,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-98A6B3",
+            "path_remaining": 18,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-C248E0",
+            "path_remaining": 16,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 7,
+      "date": "2023-12-21",
+      "timeline_phase": "HIGH_RISK_PEAK",
+      "key_observation": "Runoff convergence causes massive discharge crest (139,000 cfs); river exceeds historical 99th percentile",
+      "historical_metrics": {
+        "rainfall_mm": 0.0,
+        "water_level_m": null,
+        "discharge_cfs": 139000.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-21",
+        "discharge_cfs": 139000.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "CRITICAL",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (139,000.0 cfs) meets or exceeds the empirical demonstration CRITICAL threshold (137,840.0 cfs, 99th percentile). Severe flood conditions indicated.",
+        "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS"
+      },
+      "swarm_state": {
+        "activation_state": "CRITICAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 2,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-98A6B3",
+            "path_remaining": 18,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-C248E0",
+            "path_remaining": 16,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 8,
+      "date": "2023-12-22",
+      "timeline_phase": "RECESSION",
+      "key_observation": "Discharge recedes from flood crest; cold front stabilizes catchment",
+      "historical_metrics": {
+        "rainfall_mm": 0.0,
+        "water_level_m": null,
+        "discharge_cfs": 105000.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-22",
+        "discharge_cfs": 105000.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "WARNING",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (105,000.0 cfs) meets or exceeds the empirical demonstration WARNING threshold (87,830.0 cfs, 95th percentile). Elevated high-flow event in progress.",
+        "recommended_action": "PREPARE_VERIFICATION_MISSIONS"
+      },
+      "swarm_state": {
+        "activation_state": "WARNING",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 2,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-98A6B3",
+            "path_remaining": 18,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-C248E0",
+            "path_remaining": 16,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 9,
+      "date": "2023-12-23",
+      "timeline_phase": "RECESSION",
+      "key_observation": "Discharge recedes from flood crest; cold front stabilizes catchment",
+      "historical_metrics": {
+        "rainfall_mm": 0.18,
+        "water_level_m": null,
+        "discharge_cfs": 84900.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-23",
+        "discharge_cfs": 84900.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "WATCH",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (84,900.0 cfs) meets or exceeds the empirical demonstration WATCH threshold (69,520.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline.",
+        "recommended_action": "INCREASE_MONITORING_FREQUENCY"
+      },
+      "swarm_state": {
+        "activation_state": "WATCH",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 1,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-98A6B3",
+            "path_remaining": 18,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-C248E0",
+            "path_remaining": 16,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 10,
+      "date": "2023-12-24",
+      "timeline_phase": "RECOVERY",
+      "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
+      "historical_metrics": {
+        "rainfall_mm": 0.1,
+        "water_level_m": null,
+        "discharge_cfs": 66800.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-24",
+        "discharge_cfs": 66800.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "NORMAL",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (66,800.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
+        "recommended_action": "PASSIVE_MONITORING"
+      },
+      "swarm_state": {
+        "activation_state": "RISK_REDUCTION",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 0,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-98A6B3",
+            "path_remaining": 18,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-C248E0",
+            "path_remaining": 16,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 11,
+      "date": "2023-12-25",
+      "timeline_phase": "RECOVERY",
+      "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
+      "historical_metrics": {
+        "rainfall_mm": 0.03,
+        "water_level_m": null,
+        "discharge_cfs": 56400.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-25",
+        "discharge_cfs": 56400.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "NORMAL",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (56,400.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
+        "recommended_action": "PASSIVE_MONITORING"
+      },
+      "swarm_state": {
+        "activation_state": "NORMAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 0,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-98A6B3",
+            "path_remaining": 18,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-C248E0",
+            "path_remaining": 16,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 12,
+      "date": "2023-12-26",
+      "timeline_phase": "RECOVERY",
+      "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
+      "historical_metrics": {
+        "rainfall_mm": 3.26,
+        "water_level_m": null,
+        "discharge_cfs": 50900.0
+      },
+      "risk_assessment": {
+        "station_id": "01570500",
+        "date": "2023-12-26",
+        "discharge_cfs": 50900.0,
+        "high_flow_threshold_cfs": 69520.0,
+        "critical_threshold_cfs": 137840.0,
+        "risk_level": "NORMAL",
+        "threshold_type": "EMPIRICAL_DEMONSTRATION",
+        "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+        "thresholds": {
+          "watch_p90_cfs": 69520.0,
+          "warning_p95_cfs": 87830.0,
+          "critical_p99_cfs": 137840.0,
+          "median_cfs": 24900.0
+        },
+        "threshold_source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
+        "is_provisional": false,
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality": "HIGH",
+        "explanation": "Discharge (50,900.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
+        "recommended_action": "PASSIVE_MONITORING"
+      },
+      "swarm_state": {
+        "activation_state": "NORMAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 0,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-98A6B3",
+            "path_remaining": 18,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "VERIFICATION",
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "DATA_RELAY"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-C248E0",
+            "path_remaining": 16,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    }
+  ]
+}

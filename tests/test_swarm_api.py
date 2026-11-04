@@ -86,5 +86,30 @@ class TestSwarmAPI(unittest.TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.json()["data"]["reset_status"], "COMPLETED")
 
+    def test_historical_replay_endpoints(self):
+        cat_resp = self.client.get("/api/swarm/replay/events")
+        self.assertEqual(cat_resp.status_code, 200)
+        cat_body = cat_resp.json()
+        self.assertEqual(cat_body["status"], "success")
+        self.assertGreaterEqual(len(cat_body["data"]), 2)
+        event_ids = [e["event_id"] for e in cat_body["data"]]
+        self.assertIn("EVENT-IN-YAMUNA-2023", event_ids)
+        self.assertIn("EVENT-US-SUSQUEHANNA-2023", event_ids)
+
+        meta_resp = self.client.get("/api/swarm/replay/event/EVENT-IN-YAMUNA-2023")
+        self.assertEqual(meta_resp.status_code, 200)
+        meta_body = meta_resp.json()
+        self.assertEqual(meta_body["status"], "success")
+        self.assertEqual(meta_body["data"]["country"], "India")
+        self.assertEqual(meta_body["data"]["river"], "Yamuna River (Upper Yamuna Basin)")
+
+        run_resp = self.client.post("/api/swarm/replay/run", json={"event_id": "EVENT-IN-YAMUNA-2023", "step_index": 4})
+        self.assertEqual(run_resp.status_code, 200)
+        run_body = run_resp.json()
+        self.assertEqual(run_body["status"], "success")
+        self.assertEqual(run_body["data"]["executed_steps_count"], 5)
+        self.assertIn("current_step_frame", run_body["data"])
+        self.assertIn("swarm_state", run_body["data"]["current_step_frame"])
+
 if __name__ == "__main__":
     unittest.main()

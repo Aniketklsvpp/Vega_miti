@@ -255,9 +255,12 @@ class SwarmCoordinator:
                 "connectivity": a.connectivity,
                 "status": a.status,
                 "current_mission": a.current_mission,
-                "path_remaining": len(a.planned_path)
+                "path_remaining": len(a.planned_path),
+                "coordinate_frame": "SIMULATED_20X20_GRID"
             })
         return {
+            "environment_mode": "SIMULATED_AGENT_NETWORK",
+            "grid_dimensions": [self.planner.width, self.planner.height],
             "coordinator_status": "ONLINE" if self.coordinator_active else "OFFLINE",
             "active_missions_count": sum(1 for m in self.missions.values() if m["status"] == "IN_PROGRESS"),
             "completed_missions_count": sum(1 for m in self.missions.values() if m["status"] == "COMPLETED"),
@@ -294,22 +297,29 @@ def run_coordination_comparison(missions_to_run):
         "comparison_framework": "STATIC_VS_ADAPTIVE_SWARM_COORDINATION",
         "scenario_missions_count": total_m,
         "static_strategy": {
+            "initial_missions_allocated": len(static_alloc),
+            "reassigned_missions_allocated": 0,
             "missions_allocated": len(static_alloc),
             "reassignments_handled": 0,
+            "simulated_task_coverage_rate_pct": round((static_completed / total_m) * 100.0 if total_m > 0 else 0.0, 1),
             "effective_coverage_rate_pct": round((static_completed / total_m) * 100.0 if total_m > 0 else 0.0, 1),
             "communication_overhead_events": len(swarm_static.synchronized_event_log),
             "coordinator_fault_tolerant": False,
             "runtime_sec": t_static
         },
         "adaptive_strategy": {
+            "initial_missions_allocated": len(adaptive_alloc),
+            "reassigned_missions_allocated": len(adaptive_reassigned),
             "missions_allocated": len(adaptive_alloc) + len(adaptive_reassigned),
             "reassignments_handled": len(reassigned),
+            "simulated_task_coverage_rate_pct": round((adaptive_completed / total_m) * 100.0 if total_m > 0 else 0.0, 1),
             "effective_coverage_rate_pct": round((adaptive_completed / total_m) * 100.0 if total_m > 0 else 0.0, 1),
             "communication_overhead_events": len(swarm_adaptive.synchronized_event_log),
             "coordinator_fault_tolerant": True,
             "runtime_sec": t_adaptive
         },
         "performance_differential": {
+            "simulated_coverage_improvement_pct": round(((adaptive_completed - static_completed) / max(1, total_m)) * 100.0, 1),
             "coverage_improvement_pct": round(((adaptive_completed - static_completed) / max(1, total_m)) * 100.0, 1),
             "fault_recovery_supported": True
         }

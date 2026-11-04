@@ -1,17 +1,18 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 
 from src.swarm_simulator import SwarmCoordinator, run_coordination_comparison
 from src.swarm_activation import SwarmActivationEngine
-from src.risk_engine import HydrologicalRiskEngine
+from src.risk_engine import FloodRiskEngine
+from src.historical_replay import HistoricalReplayEngine
 
-router = APIRouter()
-
+router = APIRouter(prefix="/api/swarm", tags=["swarm"])
 coordinator = SwarmCoordinator(grid_size=(20, 20), lease_duration_sec=45)
 activation_engine = SwarmActivationEngine()
-risk_engine = HydrologicalRiskEngine()
+risk_engine = FloodRiskEngine()
+replay_engine = HistoricalReplayEngine()
 
 def envelope(data=None, error=None):
     if error:
@@ -27,12 +28,17 @@ class AgentReconnectRequest(BaseModel):
 class SwarmActivationRequest(BaseModel):
     assessments: Optional[List[Dict[str, Any]]] = None
 
-@router.get("/api/swarm/agents")
+class ReplayRunRequest(BaseModel):
+    event_id: str = "EVENT-IN-YAMUNA-2023"
+    step_index: Optional[int] = None
+    simulate_failure: Optional[bool] = True
+
+@router.get("/agents")
 def get_agents():
     snapshot = coordinator.get_swarm_snapshot()
     return envelope(snapshot["agents"])
 
-@router.get("/api/swarm/missions")
+@router.get("/missions")
 def get_missions():
     missions_list = list(coordinator.missions.values())
     leases = coordinator.task_leases
@@ -45,13 +51,13 @@ def get_missions():
         "reassigned": sum(1 for m in missions_list if m["status"] == "REASSIGNED")
     })
 
-@router.post("/api/swarm/activate")
+@router.post("/activate")
 def activate_swarm(req: SwarmActivationRequest):
     assessments = req.assessments
     if not assessments:
         assessments = [
-            {"station_id": "01570500", "risk_level": "CRITICAL", "data_quality_status": "VALID_OBSERVATION"},
-            {"station_id": "01638500", "risk_level": "WARNING", "data_quality_status": "VALID_OBSERVATION"}
+            {"station_id": "01570500", "discharge_cfs": 179000.0, "risk_level": "CRITICAL", "data_quality_status": "VALID_OBSERVATION"},
+            {"station_id": "01638500", "discharge_cfs": 45000.0, "risk_level": "WARNING", "data_quality_status": "VALID_OBSERVATION"}
         ]
     activation_res = activation_engine.evaluate_activation(assessments)
     for m in activation_res["missions"]:
@@ -66,7 +72,7 @@ def activate_swarm(req: SwarmActivationRequest):
         "swarm_status": coordinator.get_swarm_snapshot()
     })
 
-@router.post("/api/swarm/agent/disconnect")
+@router.post("/agent/disconnect")
 def disconnect_agent(req: AgentDisconnectRequest):
     if req.agent_id not in coordinator.agents:
         return envelope(error=f"Agent '{req.agent_id}' not found.")
@@ -80,7 +86,7 @@ def disconnect_agent(req: AgentDisconnectRequest):
         "new_allocations": reallocations
     })
 
-@router.post("/api/swarm/agent/reconnect")
+@router.post("/agent/reconnect")
 def reconnect_agent(req: AgentReconnectRequest):
     if req.agent_id not in coordinator.agents:
         return envelope(error=f"Agent '{req.agent_id}' not found.")
@@ -93,7 +99,7 @@ def reconnect_agent(req: AgentReconnectRequest):
         "new_allocations": allocations
     })
 
-@router.post("/api/swarm/coordinator/fail")
+@router.post("/coordinator/fail")
 def fail_coordinator():
     coordinator.simulate_coordinator_failure()
     for aid, agent in coordinator.agents.items():
@@ -105,7 +111,7 @@ def fail_coordinator():
         "buffered_events_count": sum(len(a.event_buffer) for a in coordinator.agents.values())
     })
 
-@router.post("/api/swarm/coordinator/restore")
+@router.post("/coordinator/restore")
 def restore_coordinator():
     coordinator.simulate_coordinator_recovery()
     allocations = coordinator.allocate_missions(strategy="adaptive")
@@ -115,7 +121,7 @@ def restore_coordinator():
         "post_recovery_allocations": allocations
     })
 
-@router.post("/api/swarm/reset")
+@router.post("/reset")
 def reset_simulation():
     global coordinator, activation_engine
     coordinator = SwarmCoordinator(grid_size=(20, 20), lease_duration_sec=45)
@@ -126,7 +132,7 @@ def reset_simulation():
         "missions_count": len(coordinator.missions)
     })
 
-@router.get("/api/swarm/evaluation/static")
+@router.get("/evaluation/static")
 def evaluate_static():
     sample_missions = [
         {"mission_id": f"MSN-STAT-{i}", "priority": (i % 3) + 1, "target_position": (i * 3 + 1, i * 2 + 1), "required_capabilities": ["AERIAL_OBSERVATION"]}
@@ -135,7 +141,7 @@ def evaluate_static():
     res = run_coordination_comparison(sample_missions)
     return envelope(res["static_strategy"])
 
-@router.get("/api/swarm/evaluation/adaptive")
+@router.get("/evaluation/adaptive")
 def evaluate_adaptive():
     sample_missions = [
         {"mission_id": f"MSN-ADAPT-{i}", "priority": (i % 3) + 1, "target_position": (i * 3 + 1, i * 2 + 1), "required_capabilities": ["AERIAL_OBSERVATION"]}
@@ -144,7 +150,7 @@ def evaluate_adaptive():
     res = run_coordination_comparison(sample_missions)
     return envelope(res["adaptive_strategy"])
 
-@router.post("/api/swarm/evaluate/compare")
+@router.post("/evaluate/compare")
 def compare_strategies():
     sample_missions = [
         {"mission_id": "MSN-BENCH-1", "priority": 1, "target_position": (3, 3), "required_capabilities": ["AERIAL_OBSERVATION", "VERIFICATION"]},
@@ -154,6 +160,29 @@ def compare_strategies():
         {"mission_id": "MSN-BENCH-5", "priority": 3, "target_position": (11, 12), "required_capabilities": ["RIVER_MONITORING"]}
     ]
     res = run_coordination_comparison(sample_missions)
+    return envelope(res)
+
+@router.get("/replay/events")
+def get_replay_events():
+    events = replay_engine.get_available_events()
+    return envelope(events)
+
+@router.get("/replay/event/{event_id}")
+def get_replay_event(event_id: str):
+    meta = replay_engine.get_event_metadata(event_id)
+    if not meta:
+        return envelope(error=f"Historical event '{event_id}' not found.")
+    return envelope(meta)
+
+@router.post("/replay/run")
+def run_historical_replay(req: ReplayRunRequest):
+    res = replay_engine.execute_replay(
+        event_id=req.event_id,
+        step_index=req.step_index,
+        simulate_failure=True if req.simulate_failure is None else req.simulate_failure
+    )
+    if res.get("status") == "error":
+        return envelope(error=res.get("error"))
     return envelope(res)
 
 app = FastAPI(title="VEGA-MITI Simulation & Resilience API", version="1.0.0")

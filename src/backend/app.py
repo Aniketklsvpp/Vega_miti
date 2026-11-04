@@ -47,7 +47,7 @@ def make_envelope(data=None, error=None, status="success"):
 @app.get("/api/health")
 def get_health():
     return make_envelope(data={
-        "service": "VEGA-MITI Hydrological Intelligence API",
+        "service": "VEGA-MITI Unified Hydrological & Swarm Intelligence API",
         "status": "HEALTHY",
         "version": "1.0.0",
         "models_loaded": {
@@ -55,7 +55,9 @@ def get_health():
             "config_B": "ExtraTreesRegressor (raw target, 18 past features)"
         },
         "station_count": len(risk_engine.station_thresholds),
-        "dataset_observations": 16060
+        "dataset_observations": 16060,
+        "swarm_simulation": "ACTIVE",
+        "swarm_endpoints_mounted": 11
     })
 
 @app.get("/api/stations")
@@ -232,3 +234,5 @@ def get_hydrology_evaluation(config: str = Query("A")):
             
     rep = evaluator.run_full_evaluation(config=config)
     return make_envelope(data=rep)
+
+app.include_router(swarm_router)

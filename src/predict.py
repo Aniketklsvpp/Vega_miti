@@ -28,6 +28,8 @@ class RiverDischargePredictor:
     def __init__(self, config_a_path=CONFIG_A_PATH, config_b_path=CONFIG_B_PATH):
         self.config_a_path = config_a_path
         self.config_b_path = config_b_path
+        self.model_a_path = config_a_path
+        self.model_b_path = config_b_path
         self.models = {}
         self._load_models()
 
