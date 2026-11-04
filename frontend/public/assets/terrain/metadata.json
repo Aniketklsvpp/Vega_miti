@@ -1,0 +1,36 @@
+{
+  "india": {
+    "source": "Terrarium SRTM-derived AWS",
+    "isProcedural": false,
+    "bounds": {
+      "minLon": 67.5,
+      "maxLon": 101.25,
+      "maxLat": 40.97989806962013,
+      "minLat": 0
+    },
+    "elevation": {
+      "min": 0,
+      "max": 7188
+    },
+    "width": 768,
+    "height": 1024,
+    "zoom": 5
+  },
+  "usa": {
+    "source": "Terrarium SRTM-derived AWS",
+    "isProcedural": false,
+    "bounds": {
+      "minLon": -135,
+      "maxLon": -56.25,
+      "maxLat": 55.77657301866769,
+      "minLat": 21.943045533438177
+    },
+    "elevation": {
+      "min": 0,
+      "max": 3872
+    },
+    "width": 1792,
+    "height": 1024,
+    "zoom": 5
+  }
+}
