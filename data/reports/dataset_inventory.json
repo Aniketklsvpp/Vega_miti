@@ -1,0 +1,101 @@
+{
+  "dataset_name": "USGS_22_Station_Processed",
+  "source_path": "C:\\Users\\Asus\\Documents\\moves F\\hackoven\\Vega_miti\\data\\processed\\train.csv",
+  "total_records": 16060,
+  "catchment_station_count": 22,
+  "station_identifiers_sample": [
+    "01570500",
+    "01638500",
+    "01646500",
+    "02037500",
+    "02146000",
+    "02169500",
+    "02202500",
+    "03234500",
+    "03374100",
+    "05484500"
+  ],
+  "temporal_coverage": {
+    "start_date": "2022-01-01",
+    "end_date": "2023-12-31",
+    "span_days": 730,
+    "unparseable_dates_count": 0
+  },
+  "temporal_resolution": "daily",
+  "geographic_coverage": {},
+  "variables_present": [
+    "station_id",
+    "date",
+    "discharge_cfs",
+    "precipitation_mm",
+    "temp_max_c",
+    "temp_min_c",
+    "soil_moisture",
+    "drainage_area_sqmi",
+    "mean_elevation_ft"
+  ],
+  "variable_types": {
+    "station_id": "str",
+    "date": "str",
+    "discharge_cfs": "float64",
+    "precipitation_mm": "float64",
+    "temp_max_c": "float64",
+    "temp_min_c": "float64",
+    "soil_moisture": "float64",
+    "drainage_area_sqmi": "float64",
+    "mean_elevation_ft": "float64"
+  },
+  "discharge_audit": {
+    "discharge_column": "discharge_cfs",
+    "detected_units": "cfs (ft3/s)",
+    "missing_count": 0,
+    "missing_pct": 0.0,
+    "negative_count": 0,
+    "negative_pct": 0.0,
+    "min_valid": 2.14,
+    "median_valid": 2720.0,
+    "p90_valid": 18500.0,
+    "p99_valid": 66140.99999999999,
+    "max_valid": 179000.0
+  },
+  "missingness": {
+    "station_id": {
+      "missing_count": 0,
+      "missing_percentage": 0.0
+    },
+    "date": {
+      "missing_count": 0,
+      "missing_percentage": 0.0
+    },
+    "discharge_cfs": {
+      "missing_count": 0,
+      "missing_percentage": 0.0
+    },
+    "precipitation_mm": {
+      "missing_count": 0,
+      "missing_percentage": 0.0
+    },
+    "temp_max_c": {
+      "missing_count": 0,
+      "missing_percentage": 0.0
+    },
+    "temp_min_c": {
+      "missing_count": 0,
+      "missing_percentage": 0.0
+    },
+    "soil_moisture": {
+      "missing_count": 0,
+      "missing_percentage": 0.0
+    },
+    "drainage_area_sqmi": {
+      "missing_count": 0,
+      "missing_percentage": 0.0
+    },
+    "mean_elevation_ft": {
+      "missing_count": 0,
+      "missing_percentage": 0.0
+    }
+  },
+  "duplicate_records_count": 0,
+  "integrity_status": "PASS"
+}
