@@ -99,15 +99,15 @@ const AppContent: React.FC = () => {
 export function App() {
   return (
     <RiverDataProvider>
-      <div className="min-h-screen bg-[#080c14] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
+      <div className="min-h-screen bg-[#F5F7F8] text-[#19364A] flex flex-col font-sans selection:bg-[#28A6A1]/20 selection:text-[#19364A]">
         <Header />
         <div className="flex-1">
           <AppContent />
         </div>
-        <footer className="border-t border-slate-900 bg-[#06080e] py-4 px-6 text-center text-xs font-mono text-slate-500">
+        <footer className="border-t border-[#DCE4E9] bg-white py-4 px-6 text-center text-xs text-[#647786]">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-            <span>VEGA_MITI &middot; FLOODCAST CHALLENGE</span>
-            <span className="text-slate-600 text-[11px]">
+            <span className="font-semibold text-[#19364A]">VEGA_MITI &middot; FLOODCAST CHALLENGE</span>
+            <span className="text-[11px] text-[#647786]">
               Scientific ML discharge estimation from weather & catchment topologies. Historical held-out validation.
             </span>
           </div>

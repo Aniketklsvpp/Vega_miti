@@ -2,22 +2,21 @@
 
 @layer base {
   :root {
-    --bg-space: #080c14;
-    --paper-cream: #f4eedb;
-    --paper-cream-dark: #ede4cc;
-    --ink-contour: #2d2a24;
-    --ink-subtle: #6b6355;
-    --survey-grid: #7d7565;
-    --river-blue: #38bdf8;
-    --river-cyan: #06b6d4;
-    --extreme-ruby: #e11d48;
-    --card-dark: #0f1523;
-    --border-dark: #1e293b;
+    --bg-main: #F5F7F8;
+    --surface: #FFFFFF;
+    --surface-secondary: #EAF0F3;
+    --primary-navy: #19364A;
+    --river-blue: #398DB5;
+    --accent-teal: #28A6A1;
+    --secondary-text: #647786;
+    --border: #DCE4E9;
+    --warning: #D97745;
+    --extreme-discharge: #C94C55;
   }
 
   body {
-    background-color: var(--bg-space);
-    color: #f8fafc;
+    background-color: var(--bg-main);
+    color: var(--primary-navy);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -25,16 +24,9 @@
   }
 }
 
-.cartographic-sheet {
-  background-color: var(--paper-cream);
-  color: var(--ink-contour);
-}
-
-.survey-grid-pattern {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(125, 117, 101, 0.15) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(125, 117, 101, 0.15) 1px, transparent 1px);
+*:focus-visible {
+  outline: 2px solid #28A6A1;
+  outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {

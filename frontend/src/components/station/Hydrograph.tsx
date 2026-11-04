@@ -46,15 +46,15 @@ export const Hydrograph: React.FC<HydrographProps> = ({
   ]
 
   return (
-    <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-4">
+    <div className="bg-white border border-[#DCE4E9] rounded-2xl p-6 shadow-xs space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DCE4E9] pb-4">
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-cyan-400 font-semibold">{stationId}</span>
-          <h2 className="text-xl font-bold text-slate-100 tracking-tight">{stationName}</h2>
+          <span className="text-xs font-mono font-bold text-[#28A6A1] uppercase">{stationId}</span>
+          <h2 className="text-xl font-bold text-[#19364A] tracking-tight">{stationName}</h2>
         </div>
         {extremeThreshold && (
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs font-mono">
-            <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping" />
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#FFF1F2] border border-[#FECDD3] text-[#C94C55] text-xs font-mono font-semibold">
+            <span className="w-2 h-2 rounded-full bg-[#C94C55]" />
             <span>Extreme Flow Cutoff: <b>{extremeThreshold.toFixed(1)} cfs</b></span>
           </div>
         )}
@@ -62,59 +62,55 @@ export const Hydrograph: React.FC<HydrographProps> = ({
 
       <div className="h-[420px] w-full pt-2">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={chartData} margin={{ top: 15, right: 25, left: 0, bottom: 25 }}>
+          <ComposedChart data={chartData} margin={{ top: 15, right: 25, left: 10, bottom: 25 }}>
             <defs>
-              <linearGradient id="forecastGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.35} />
-                <stop offset="95%" stopColor="#38bdf8" stopOpacity={0.0} />
-              </linearGradient>
               <linearGradient id="actualGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#a855f7" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#a855f7" stopOpacity={0.0} />
+                <stop offset="5%" stopColor="#19364A" stopOpacity={0.12} />
+                <stop offset="95%" stopColor="#19364A" stopOpacity={0.0} />
               </linearGradient>
             </defs>
 
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
             <XAxis
               dataKey="date"
-              stroke="#64748b"
-              tick={{ fill: '#94a3b8', fontSize: 11, fontFamily: 'ui-monospace, monospace' }}
-              tickLine={{ stroke: '#334155' }}
+              stroke="#647786"
+              tick={{ fill: '#647786', fontSize: 11, fontFamily: 'system-ui, sans-serif' }}
+              tickLine={{ stroke: '#CBD5E1' }}
             />
             <YAxis
-              stroke="#64748b"
-              tick={{ fill: '#94a3b8', fontSize: 11, fontFamily: 'ui-monospace, monospace' }}
-              tickLine={{ stroke: '#334155' }}
+              stroke="#647786"
+              tick={{ fill: '#647786', fontSize: 11, fontFamily: 'system-ui, sans-serif' }}
+              tickLine={{ stroke: '#CBD5E1' }}
               unit=" cfs"
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#0f172a',
-                borderColor: '#334155',
+                backgroundColor: '#FFFFFF',
+                borderColor: '#DCE4E9',
                 borderRadius: '8px',
-                color: '#f8fafc',
+                color: '#19364A',
                 fontSize: '12px',
-                fontFamily: 'ui-monospace, monospace',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
               }}
             />
             <Legend
               verticalAlign="top"
               height={36}
-              wrapperStyle={{ fontSize: '12px', color: '#94a3b8' }}
+              wrapperStyle={{ fontSize: '12px', color: '#19364A' }}
             />
 
             {extremeThreshold && (
               <ReferenceLine
                 y={extremeThreshold}
-                stroke="#f43f5e"
+                stroke="#C94C55"
                 strokeDasharray="4 4"
                 strokeWidth={2}
                 label={{
                   value: `Extreme Cutoff (${extremeThreshold} cfs)`,
-                  fill: '#f43f5e',
+                  fill: '#C94C55',
                   position: 'top',
                   fontSize: 11,
-                  fontFamily: 'ui-monospace, monospace',
+                  fontWeight: 600,
                 }}
               />
             )}
@@ -122,9 +118,9 @@ export const Hydrograph: React.FC<HydrographProps> = ({
             <Area
               type="monotone"
               dataKey="actual"
-              name="Historical Actual (cfs)"
-              stroke="#a855f7"
-              strokeWidth={2}
+              name="Historical (observed)"
+              stroke="#19364A"
+              strokeWidth={2.5}
               fill="url(#actualGrad)"
               connectNulls={false}
             />
@@ -132,32 +128,33 @@ export const Hydrograph: React.FC<HydrographProps> = ({
             <Line
               type="monotone"
               dataKey="predicted"
-              name="Validation Estimate (cfs)"
-              stroke="#38bdf8"
+              name="Backtest (validation prediction)"
+              stroke="#28A6A1"
               strokeWidth={2}
-              strokeDasharray="3 3"
+              strokeDasharray="4 4"
               dot={false}
               connectNulls={false}
             />
 
-            <Area
+            <Line
               type="monotone"
               dataKey="futurePrediction"
-              name="Target Forecast (cfs)"
-              stroke="#06b6d4"
+              name="Test-period prediction"
+              stroke="#D97745"
               strokeWidth={2.5}
-              fill="url(#forecastGrad)"
+              dot={{ r: 3.5, fill: '#D97745', stroke: '#FFFFFF', strokeWidth: 1.5 }}
               connectNulls={false}
             />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
-      <div className="text-[11px] text-slate-500 font-mono text-center flex items-center justify-center gap-6">
-        <span>🟣 Historical Validation Actuals</span>
-        <span>🔵 Model Estimates</span>
-        <span className="text-rose-400">🔴 Top 10% Extreme Event Threshold</span>
+
+      <div className="text-xs text-[#647786] text-center flex flex-wrap items-center justify-center gap-6 pt-1">
+        <span>— Solid Navy: Historical observed</span>
+        <span>--- Dashed Teal: Backtest validation prediction</span>
+        <span>-●- Dotted Ochre: Test-period prediction</span>
+        <span className="text-[#C94C55] font-semibold">--- Red: Top 10% Extreme cutoff</span>
       </div>
     </div>
   )
 }
-

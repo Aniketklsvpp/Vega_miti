@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import * as THREE from 'three'
 import type { RegionType } from '../../types/data'
-import { FastForward, Globe2, Info, Navigation } from 'lucide-react'
+import { FastForward, Navigation, ZoomIn, ZoomOut } from 'lucide-react'
 
 interface GlobeSceneProps {
   onSelectRegion: (region: RegionType) => void
@@ -44,6 +44,7 @@ export const GlobeScene: React.FC<GlobeSceneProps> = ({ onSelectRegion, onSkipIn
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
   const globeGroupRef = useRef<THREE.Group | null>(null)
+  const countriesRef = useRef<{ feature: any; lines: THREE.Line[] }[]>([])
   const interactiveTargetsRef = useRef<{ mesh: THREE.Mesh; region: RegionType; name: string }[]>([])
 
   const isDraggingRef = useRef<boolean>(false)
@@ -67,18 +68,18 @@ export const GlobeScene: React.FC<GlobeSceneProps> = ({ onSelectRegion, onSkipIn
       return
     }
 
-    const targetLat = region === 'usa' ? 38 : 22
-    const targetLon = region === 'usa' ? -97 : 78
+    const targetLat = region === 'india' ? 22.5 : 38.0
+    const targetLon = region === 'india' ? 79.0 : -97.0
 
     const targetRotY = -((targetLon + 180) * (Math.PI / 180)) + Math.PI / 2
-    const targetRotX = (targetLat * (Math.PI / 180)) * 0.4
+    const targetRotX = (targetLat * (Math.PI / 180)) * 0.35
 
     const startRotX = globe.rotation.x
     const startRotY = globe.rotation.y
     const startCamZ = camera.position.z
-    const targetCamZ = 3.2
+    const targetCamZ = 3.0
     const startTime = performance.now()
-    const duration = 1800
+    const duration = 1900
 
     const animateTransition = (currentTime: number) => {
       const elapsed = currentTime - startTime
@@ -114,8 +115,8 @@ export const GlobeScene: React.FC<GlobeSceneProps> = ({ onSelectRegion, onSkipIn
     const scene = new THREE.Scene()
     sceneRef.current = scene
 
-    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 1000)
-    camera.position.z = 6.2
+    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000)
+    camera.position.z = 5.8
     cameraRef.current = camera
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
@@ -124,85 +125,97 @@ export const GlobeScene: React.FC<GlobeSceneProps> = ({ onSelectRegion, onSkipIn
     rendererRef.current = renderer
     container.appendChild(renderer.domElement)
 
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85)
+    scene.add(ambientLight)
+
+    const dirLight = new THREE.DirectionalLight(0xe8f0f8, 1.4)
+    dirLight.position.set(5, 3, 5)
+    scene.add(dirLight)
+
     const globeGroup = new THREE.Group()
     globeGroupRef.current = globeGroup
     scene.add(globeGroup)
 
-    const sphereRadius = 2.0
-    const sphereGeo = new THREE.SphereGeometry(sphereRadius, 48, 48)
-    const sphereMat = new THREE.MeshBasicMaterial({
-      color: 0x0c121e,
-      wireframe: false,
-    })
-    const baseSphere = new THREE.Mesh(sphereGeo, sphereMat)
-    globeGroup.add(baseSphere)
+    globeGroup.rotation.y = 1.1
 
-    const atmosphereGeo = new THREE.SphereGeometry(sphereRadius * 1.025, 32, 32)
-    const atmosphereMat = new THREE.MeshBasicMaterial({
-      color: 0x1e3a5f,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.15,
+    const sphereRadius = 2.05
+
+    const oceanMat = new THREE.MeshPhongMaterial({
+      color: 0x19364A,
+      emissive: 0x0c1b26,
+      specular: 0x28A6A1,
+      shininess: 18,
     })
-    const atmosphere = new THREE.Mesh(atmosphereGeo, atmosphereMat)
+    const oceanSphere = new THREE.Mesh(new THREE.SphereGeometry(sphereRadius, 64, 64), oceanMat)
+    globeGroup.add(oceanSphere)
+
+    const atmosphereMat = new THREE.MeshBasicMaterial({
+      color: 0x398DB5,
+      transparent: true,
+      opacity: 0.12,
+      side: THREE.BackSide,
+    })
+    const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(sphereRadius * 1.035, 48, 48), atmosphereMat)
     globeGroup.add(atmosphere)
 
     interactiveTargetsRef.current = []
+    countriesRef.current = []
 
-    const createRegionMarker = (lat: number, lon: number, region: RegionType, name: string, color: number) => {
+    const createRegionPin = (lat: number, lon: number, region: RegionType, name: string, color: number) => {
       const pos = latLonToVector3(lat, lon, sphereRadius * 1.01)
-      const markerGeo = new THREE.RingGeometry(0.12, 0.22, 24)
-      const markerMat = new THREE.MeshBasicMaterial({
+      const pinMat = new THREE.MeshBasicMaterial({
         color: color,
         side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.9,
       })
-      const marker = new THREE.Mesh(markerGeo, markerMat)
-      marker.position.copy(pos)
-      marker.lookAt(new THREE.Vector3(0, 0, 0))
+      const ring = new THREE.Mesh(new THREE.RingGeometry(0.10, 0.18, 32), pinMat)
+      ring.position.copy(pos)
+      ring.lookAt(new THREE.Vector3(0, 0, 0))
 
-      const pulseGeo = new THREE.RingGeometry(0.24, 0.28, 24)
-      const pulseMat = new THREE.MeshBasicMaterial({
-        color: color,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.5,
-      })
-      const pulse = new THREE.Mesh(pulseGeo, pulseMat)
-      marker.add(pulse)
+      const core = new THREE.Mesh(new THREE.CircleGeometry(0.06, 24), pinMat)
+      core.position.copy(pos)
+      core.lookAt(new THREE.Vector3(0, 0, 0))
 
-      globeGroup.add(marker)
-      interactiveTargetsRef.current.push({ mesh: marker, region, name })
+      globeGroup.add(ring)
+      globeGroup.add(core)
+      interactiveTargetsRef.current.push({ mesh: ring, region, name })
     }
 
-    createRegionMarker(39.0, -98.0, 'usa', 'United States', 0x38bdf8)
-    createRegionMarker(22.0, 79.0, 'india', 'India', 0x818cf8)
+    createRegionPin(22.5, 79.0, 'india', 'India (Selected Catchment Region)', 0x28A6A1)
+    createRegionPin(38.0, -97.0, 'usa', 'United States (USGS Demo Network)', 0x398DB5)
 
     fetch('/assets/geo/world-countries.json')
       .then((res) => res.json())
       .then((data) => {
         if (!data || !data.features) return
+
         data.features.forEach((feature: any) => {
           const geom = feature.geometry
           if (!geom) return
+          const isIndia = feature.properties?.name === 'India' || feature.id === '356'
+          const isUsa = feature.properties?.name === 'United States' || feature.id === '840'
+
           const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates
+          const featureLines: THREE.Line[] = []
+
           polys.forEach((ringGroup: any) => {
             ringGroup.forEach((ring: any) => {
               const points: THREE.Vector3[] = []
               ring.forEach(([lon, lat]: [number, number]) => {
-                points.push(latLonToVector3(lat, lon, sphereRadius * 1.005))
+                points.push(latLonToVector3(lat, lon, sphereRadius * 1.004))
               })
               const lineGeo = new THREE.BufferGeometry().setFromPoints(points)
               const lineMat = new THREE.LineBasicMaterial({
-                color: feature.properties?.hasData ? 0x38bdf8 : 0x243247,
+                color: isIndia ? 0x28A6A1 : isUsa ? 0x398DB5 : 0x7c9bb3,
                 transparent: true,
-                opacity: feature.properties?.hasData ? 0.8 : 0.4,
+                opacity: isIndia ? 0.95 : isUsa ? 0.85 : 0.45,
               })
               const line = new THREE.Line(lineGeo, lineMat)
               globeGroup.add(line)
+              featureLines.push(line)
             })
           })
+
+          countriesRef.current.push({ feature, lines: featureLines })
         })
       })
       .catch(() => {})
@@ -227,7 +240,7 @@ export const GlobeScene: React.FC<GlobeSceneProps> = ({ onSelectRegion, onSkipIn
           renderer.domElement.style.cursor = 'pointer'
           setHoverInfo({
             name: hit.name,
-            status: hit.region === 'usa' ? 'active' : 'prototype',
+            status: hit.region === 'india' ? 'prototype' : 'active',
             x: e.clientX,
             y: e.clientY,
           })
@@ -235,7 +248,7 @@ export const GlobeScene: React.FC<GlobeSceneProps> = ({ onSelectRegion, onSkipIn
         }
       }
 
-      const sphereIntersects = raycaster.intersectObject(baseSphere)
+      const sphereIntersects = raycaster.intersectObject(oceanSphere)
       if (sphereIntersects.length > 0) {
         renderer.domElement.style.cursor = 'grab'
         setHoverInfo(null)
@@ -274,10 +287,10 @@ export const GlobeScene: React.FC<GlobeSceneProps> = ({ onSelectRegion, onSkipIn
           }
         }
 
-        const sphereIntersects = raycaster.intersectObject(baseSphere)
+        const sphereIntersects = raycaster.intersectObject(oceanSphere)
         if (sphereIntersects.length > 0) {
           setHoverInfo({
-            name: 'Unmonitored Region',
+            name: 'Non-Gauged Catchment',
             status: 'none',
             x: e.clientX,
             y: e.clientY,
@@ -301,7 +314,7 @@ export const GlobeScene: React.FC<GlobeSceneProps> = ({ onSelectRegion, onSkipIn
     const onWheel = (e: WheelEvent) => {
       e.preventDefault()
       if (!cameraRef.current) return
-      cameraRef.current.position.z = Math.max(3.8, Math.min(8.5, cameraRef.current.position.z + e.deltaY * 0.003))
+      cameraRef.current.position.z = Math.max(3.4, Math.min(7.5, cameraRef.current.position.z + e.deltaY * 0.003))
     }
 
     const dom = renderer.domElement
@@ -330,7 +343,7 @@ export const GlobeScene: React.FC<GlobeSceneProps> = ({ onSelectRegion, onSkipIn
       animFrameRef.current = requestAnimationFrame(animate)
       if (!isDocumentVisibleRef.current) return
       if (!isDraggingRef.current && !isTransitioning && globeGroupRef.current) {
-        globeGroupRef.current.rotation.y += 0.0012
+        globeGroupRef.current.rotation.y += 0.001
       }
       renderer.render(scene, camera)
     }
@@ -353,105 +366,114 @@ export const GlobeScene: React.FC<GlobeSceneProps> = ({ onSelectRegion, onSkipIn
   if (!webGLSupported) {
     return (
       <div className="min-h-[75vh] flex flex-col items-center justify-center text-center p-6 space-y-4">
-        <Globe2 className="w-12 h-12 text-cyan-400" />
-        <h2 className="text-xl font-bold font-mono text-slate-100">WebGL Acceleration Unavailable</h2>
-        <p className="text-xs text-slate-400 max-w-md">
-          Hardware 3D canvas is disabled in this environment. Proceeding directly to the cartographic survey sheet.
+        <Navigation className="w-12 h-12 text-[#28A6A1]" />
+        <h2 className="text-xl font-bold text-[#19364A]">Hardware Acceleration Unavailable</h2>
+        <p className="text-xs text-[#647786] max-w-md">
+          Proceeding directly to the geographic river monitoring map.
         </p>
         <button
           onClick={onSkipIntro}
-          className="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-mono text-xs font-semibold"
+          className="px-4 py-2 rounded-lg bg-[#28A6A1] text-white text-xs font-semibold shadow-xs"
         >
-          Open Survey Sheet
+          Open River Map
         </button>
       </div>
     )
   }
 
   return (
-    <div className="relative w-full h-[calc(100vh-140px)] min-h-[580px] bg-[#080c14] overflow-hidden select-none">
-      <div ref={mountRef} className="w-full h-full" />
+    <div className="relative w-full h-[calc(100vh-140px)] min-h-[580px] bg-[#F5F7F8] flex items-center justify-center overflow-hidden select-none">
+      <div ref={mountRef} className="w-full h-full max-w-5xl" />
 
       <div className="absolute top-6 left-6 z-20 pointer-events-none space-y-2 max-w-sm">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 border border-cyan-500/30 text-cyan-400 font-mono text-xs font-bold shadow-lg backdrop-blur">
-          <Navigation className="w-3.5 h-3.5" />
-          <span>Interactive Earth Telemetry</span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#DCE4E9] text-[#19364A] font-mono text-xs font-semibold shadow-sm">
+          <Navigation className="w-3.5 h-3.5 text-[#28A6A1]" />
+          <span>Geospatial Earth Observation</span>
         </div>
-        <h1 className="text-2xl font-extrabold text-slate-100 tracking-tight font-mono">
-          RIVER DISCHARGE INTELLIGENCE
+        <h1 className="text-2xl font-bold text-[#19364A] tracking-tight">
+          River Discharge Intelligence
         </h1>
-        <p className="text-xs text-slate-400 leading-relaxed font-sans">
-          Click an active catchment region to enter the topographic survey sheet and inspect station discharge hydrographs.
+        <p className="text-xs text-[#647786] leading-relaxed">
+          Select an operational river catchment region to inspect geographic river monitoring networks, telemetry hydrographs, and validation models.
         </p>
       </div>
 
       <div className="absolute top-6 right-6 z-20 flex items-center gap-3">
         <button
           onClick={onSkipIntro}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700/80 text-xs font-mono font-medium shadow-xl backdrop-blur transition"
-          title="Directly enter survey map"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white hover:bg-[#EAF0F3] text-[#19364A] border border-[#DCE4E9] text-xs font-medium shadow-sm transition"
         >
-          <FastForward className="w-4 h-4 text-cyan-400" />
-          <span>Skip Intro</span>
+          <FastForward className="w-4 h-4 text-[#28A6A1]" />
+          <span>Skip to India Map</span>
         </button>
       </div>
 
-      <div className="absolute bottom-6 left-6 z-20 bg-slate-950/85 backdrop-blur border border-slate-800/80 p-3.5 rounded-xl text-xs font-mono space-y-2 max-w-xs text-slate-300 shadow-2xl">
-        <div className="text-[10px] uppercase text-slate-500 font-bold tracking-wider border-b border-slate-800 pb-1">
-          Operational Catchment Regions
-        </div>
-        <div
-          onClick={() => handleRegionClick('usa')}
-          className="flex items-center justify-between p-1.5 rounded hover:bg-slate-800/60 cursor-pointer transition"
-        >
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-sky-400" />
-            <span className="font-semibold text-slate-200">United States</span>
-          </div>
-          <span className="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-[10px]">
-            REAL DATA
-          </span>
+      <div className="absolute bottom-6 left-6 z-20 bg-white/95 backdrop-blur border border-[#DCE4E9] p-4 rounded-xl text-xs space-y-2.5 max-w-xs text-[#19364A] shadow-lg">
+        <div className="text-[11px] font-mono uppercase text-[#647786] font-bold tracking-wider border-b border-[#DCE4E9] pb-1.5">
+          Catchment Exploration Regions
         </div>
         <div
           onClick={() => handleRegionClick('india')}
-          className="flex items-center justify-between p-1.5 rounded hover:bg-slate-800/60 cursor-pointer transition"
+          className="flex items-center justify-between p-2 rounded-lg bg-[#EAF0F3]/80 hover:bg-[#EAF0F3] border border-[#28A6A1]/40 cursor-pointer transition"
         >
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-indigo-400" />
-            <span className="font-semibold text-slate-200">India Basins</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#28A6A1]" />
+            <span className="font-semibold text-[#19364A]">India River Basins</span>
           </div>
-          <span className="px-1.5 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800/50 text-[10px]">
-            PROTOTYPE
+          <span className="px-2 py-0.5 rounded bg-white text-[#28A6A1] font-mono font-bold border border-[#DCE4E9] text-[10px]">
+            PRIMARY
           </span>
         </div>
+        <div
+          onClick={() => handleRegionClick('usa')}
+          className="flex items-center justify-between p-2 rounded-lg hover:bg-[#EAF0F3] cursor-pointer transition border border-transparent"
+        >
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#398DB5]" />
+            <span className="font-medium text-[#19364A]">United States Catchments</span>
+          </div>
+          <span className="px-2 py-0.5 rounded bg-[#EAF0F3] text-[#398DB5] font-mono text-[10px]">
+            DEMO
+          </span>
+        </div>
+      </div>
+
+      <div className="absolute bottom-6 right-6 z-20 flex flex-col gap-1.5 bg-white border border-[#DCE4E9] p-1.5 rounded-lg shadow-md">
+        <button
+          onClick={() => {
+            if (cameraRef.current) cameraRef.current.position.z = Math.max(3.4, cameraRef.current.position.z - 0.5)
+          }}
+          className="p-1.5 hover:bg-[#EAF0F3] text-[#19364A] rounded transition"
+          title="Zoom In"
+        >
+          <ZoomIn className="w-4 h-4" />
+        </button>
+        <button
+          onClick={() => {
+            if (cameraRef.current) cameraRef.current.position.z = Math.min(7.5, cameraRef.current.position.z + 0.5)
+          }}
+          className="p-1.5 hover:bg-[#EAF0F3] text-[#19364A] rounded transition"
+          title="Zoom Out"
+        >
+          <ZoomOut className="w-4 h-4" />
+        </button>
       </div>
 
       {hoverInfo && (
         <div
-          className="fixed z-30 pointer-events-none transform -translate-x-1/2 -translate-y-12 bg-slate-900/95 border border-slate-700 text-slate-100 text-xs font-mono px-3 py-1.5 rounded-lg shadow-2xl backdrop-blur flex items-center gap-2"
+          className="fixed z-30 pointer-events-none transform -translate-x-1/2 -translate-y-12 bg-[#19364A] text-white text-xs px-3 py-1.5 rounded-lg shadow-xl backdrop-blur flex items-center gap-2"
           style={{ left: hoverInfo.x, top: hoverInfo.y }}
         >
-          {hoverInfo.status === 'active' && (
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-          )}
-          {hoverInfo.status === 'prototype' && (
-            <span className="w-2 h-2 rounded-full bg-indigo-400 animate-ping" />
-          )}
-          {hoverInfo.status === 'none' && (
-            <Info className="w-3.5 h-3.5 text-slate-400" />
-          )}
-          <span>
-            {hoverInfo.name}
-            {hoverInfo.status === 'active' ? ' — Real Catchment Network' : hoverInfo.status === 'prototype' ? ' — Prototype Region' : ' — No stations here'}
-          </span>
+          <span className="w-2 h-2 rounded-full bg-[#28A6A1]" />
+          <span>{hoverInfo.name}</span>
         </div>
       )}
 
       {isTransitioning && (
-        <div className="absolute inset-0 z-40 bg-black/40 backdrop-blur-[1px] pointer-events-none flex items-center justify-center transition-opacity duration-1000">
-          <div className="px-4 py-2 rounded-xl bg-slate-950/90 border border-cyan-500/40 text-cyan-300 font-mono text-xs font-bold flex items-center gap-2 shadow-2xl">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping" />
-            <span>Easing to Catchment Survey Sheet...</span>
+        <div className="absolute inset-0 z-40 bg-white/50 backdrop-blur-[2px] pointer-events-none flex items-center justify-center transition-opacity duration-1000">
+          <div className="px-4 py-2.5 rounded-xl bg-white border border-[#28A6A1] text-[#19364A] text-xs font-semibold flex items-center gap-2.5 shadow-xl">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#28A6A1] animate-ping" />
+            <span>Transitioning to India River Monitoring Map...</span>
           </div>
         </div>
       )}

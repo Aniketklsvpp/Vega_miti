@@ -1,0 +1,94 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Ganga River", "system": "Ganges Basin" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [78.60, 30.15], [78.18, 29.95], [78.85, 28.95], [80.35, 26.45],
+          [81.85, 25.43], [83.01, 25.32], [85.14, 25.61], [87.05, 25.30],
+          [88.15, 24.80], [88.35, 22.57]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Yamuna River", "system": "Ganges Basin" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [78.45, 31.01], [77.20, 28.61], [77.60, 27.50], [78.01, 27.18],
+          [79.05, 26.75], [80.20, 25.80], [81.85, 25.43]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Brahmaputra River", "system": "Brahmaputra Basin" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [95.50, 28.10], [94.90, 27.50], [93.00, 26.60], [91.75, 26.18],
+          [90.50, 26.15], [89.80, 25.10]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Narmada River", "system": "Narmada Basin" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [81.75, 22.68], [79.95, 23.16], [77.72, 22.75], [75.85, 22.18],
+          [73.80, 21.80], [72.60, 21.65]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Godavari River", "system": "Godavari Basin" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [73.53, 19.93], [75.30, 19.50], [77.30, 18.90], [79.90, 18.75],
+          [81.80, 16.98], [82.25, 16.70]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Krishna River", "system": "Krishna Basin" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [73.65, 17.92], [75.90, 16.50], [77.35, 16.20], [80.15, 16.52],
+          [80.90, 15.75]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Kaveri River", "system": "Cauvery Basin" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [75.50, 12.42], [76.65, 12.30], [77.70, 11.90], [78.70, 11.10],
+          [79.85, 11.15]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Mahanadi River", "system": "Mahanadi Basin" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [81.90, 20.35], [82.50, 21.10], [83.90, 21.45], [85.80, 20.46],
+          [86.70, 20.28]
+        ]
+      }
+    }
+  ]
+}

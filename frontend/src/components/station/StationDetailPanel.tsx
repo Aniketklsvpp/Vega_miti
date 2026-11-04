@@ -54,47 +54,47 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl bg-[#0f1420] border border-slate-800 shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-white border border-[#DCE4E9] shadow-xs">
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToMap}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono transition"
-            title="Return to survey map"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EAF0F3] hover:bg-[#DCE4E9] text-[#19364A] text-xs font-semibold border border-[#DCE4E9] transition"
+            title="Return to river map"
           >
-            <ChevronLeft className="w-4 h-4" />
-            <span>Survey Map</span>
+            <ChevronLeft className="w-4 h-4 text-[#28A6A1]" />
+            <span>River Map</span>
           </button>
 
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono font-bold text-cyan-400 uppercase">{station.station_id}</span>
+              <span className="text-xs font-mono font-bold text-[#28A6A1] uppercase">{station.station_id}</span>
               {station.isExtreme && (
-                <span className="px-2 py-0.5 rounded bg-rose-950/80 text-rose-400 border border-rose-800/60 text-[10px] font-mono font-bold flex items-center gap-1">
-                  <Flame className="w-3 h-3" /> EXTREME DISCHARGE
+                <span className="px-2 py-0.5 rounded bg-[#FFF1F2] text-[#C94C55] border border-[#FECDD3] text-[10px] font-bold flex items-center gap-1">
+                  <Flame className="w-3 h-3" /> EXTREME DISCHARGE REACHED
                 </span>
               )}
             </div>
-            <h2 className="text-lg font-bold text-slate-100">{station.station_name}</h2>
-            <div className="flex items-center gap-2 text-xs text-slate-400 mt-0.5 font-mono">
-              <MapPin className="w-3.5 h-3.5 text-cyan-400" />
+            <h2 className="text-lg font-bold text-[#19364A]">{station.station_name}</h2>
+            <div className="flex items-center gap-2 text-xs text-[#647786] mt-0.5">
+              <MapPin className="w-3.5 h-3.5 text-[#28A6A1]" />
               <span>{station.river_name || 'Catchment Basin'}, {station.state}</span>
-              <span className="text-slate-600">|</span>
-              <span>{station.latitude.toFixed(4)}°N, {Math.abs(station.longitude).toFixed(4)}°W</span>
+              <span className="text-[#DCE4E9]">|</span>
+              <span className="font-mono">{station.latitude.toFixed(4)}°N, {Math.abs(station.longitude).toFixed(4)}°E</span>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <label htmlFor="station-dropdown" className="text-xs font-mono text-slate-400">Switch Station:</label>
+          <label htmlFor="station-dropdown" className="text-xs font-medium text-[#647786]">Switch Station:</label>
           <select
             id="station-dropdown"
             value={station.station_id}
             onChange={(e) => onSelectStation(e.target.value)}
-            className="bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-lg px-3 py-2 font-mono focus:outline-none focus:border-cyan-500"
+            className="bg-white border border-[#DCE4E9] text-[#19364A] text-xs font-semibold rounded-lg px-3 py-2 focus:outline-none focus:border-[#28A6A1] shadow-xs"
           >
             {stations.map((s) => (
               <option key={s.station_id} value={s.station_id}>
-                {s.station_id} — {s.station_name}
+                {s.station_name} ({s.station_id})
               </option>
             ))}
           </select>
@@ -102,48 +102,48 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-[#0f1420] border border-slate-800 rounded-xl p-4 shadow">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-mono uppercase">Current Discharge</span>
-            <Droplet className="w-3.5 h-3.5 text-cyan-400" />
+        <div className="bg-white border border-[#DCE4E9] rounded-xl p-4 shadow-xs">
+          <div className="flex items-center justify-between text-[#647786] mb-1">
+            <span className="text-[11px] font-medium uppercase">Model estimate (selected date)</span>
+            <Droplet className="w-3.5 h-3.5 text-[#28A6A1]" />
           </div>
-          <div className="text-xl font-bold font-mono text-slate-100">
-            {station.currentDischarge?.toFixed(1) ?? 'N/A'} cfs
+          <div className="text-xl font-bold font-mono text-[#19364A]">
+            {dischargeValue.toFixed(1)} cfs
           </div>
-          <div className="text-[10.5px] text-slate-500 font-mono mt-0.5">Model Estimate</div>
+          <div className="text-[10.5px] text-[#647786] mt-0.5">{selectedDate} Estimate</div>
         </div>
 
-        <div className="bg-[#0f1420] border border-rose-950/60 rounded-xl p-4 shadow">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-mono uppercase text-rose-300">Extreme Cutoff (10%)</span>
-            <Flame className="w-3.5 h-3.5 text-rose-400" />
+        <div className="bg-white border border-[#FECDD3] rounded-xl p-4 shadow-xs">
+          <div className="flex items-center justify-between text-[#647786] mb-1">
+            <span className="text-[11px] font-medium uppercase text-[#C94C55]">Extreme Cutoff (10%)</span>
+            <Flame className="w-3.5 h-3.5 text-[#C94C55]" />
           </div>
-          <div className="text-xl font-bold font-mono text-rose-400">
+          <div className="text-xl font-bold font-mono text-[#C94C55]">
             {station.metrics?.extreme_threshold_cfs.toFixed(0) ?? 'N/A'} cfs
           </div>
-          <div className="text-[10.5px] text-slate-500 font-mono mt-0.5">90th %ile Threshold</div>
+          <div className="text-[10.5px] text-[#647786] mt-0.5">90th %ile Threshold</div>
         </div>
 
-        <div className="bg-[#0f1420] border border-slate-800 rounded-xl p-4 shadow">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-mono uppercase">Validation RMSE</span>
-            <Gauge className="w-3.5 h-3.5 text-sky-400" />
+        <div className="bg-white border border-[#DCE4E9] rounded-xl p-4 shadow-xs">
+          <div className="flex items-center justify-between text-[#647786] mb-1">
+            <span className="text-[11px] font-medium uppercase">Validation RMSE</span>
+            <Gauge className="w-3.5 h-3.5 text-[#398DB5]" />
           </div>
-          <div className="text-xl font-bold font-mono text-slate-100">
+          <div className="text-xl font-bold font-mono text-[#19364A]">
             {station.metrics?.rmse.toFixed(1) ?? 'N/A'} cfs
           </div>
-          <div className="text-[10.5px] text-slate-500 font-mono mt-0.5">Held-Out Error</div>
+          <div className="text-[10.5px] text-[#647786] mt-0.5">Held-Out Error</div>
         </div>
 
-        <div className="bg-[#0f1420] border border-slate-800 rounded-xl p-4 shadow">
-          <div className="flex items-center justify-between text-slate-400 mb-1">
-            <span className="text-[11px] font-mono uppercase">Validation R²</span>
-            <Award className="w-3.5 h-3.5 text-indigo-400" />
+        <div className="bg-white border border-[#DCE4E9] rounded-xl p-4 shadow-xs">
+          <div className="flex items-center justify-between text-[#647786] mb-1">
+            <span className="text-[11px] font-medium uppercase">Validation R²</span>
+            <Award className="w-3.5 h-3.5 text-[#28A6A1]" />
           </div>
-          <div className="text-xl font-bold font-mono text-indigo-300">
+          <div className="text-xl font-bold font-mono text-[#19364A]">
             {station.metrics?.r2.toFixed(3) ?? 'N/A'}
           </div>
-          <div className="text-[10.5px] text-slate-500 font-mono mt-0.5">Goodness of Fit</div>
+          <div className="text-[10.5px] text-[#647786] mt-0.5">Goodness of Fit</div>
         </div>
       </div>
 
