@@ -9,34 +9,58 @@ from src.swarm_simulator import SwarmCoordinator
 HISTORICAL_EVENTS_CATALOG = {
     "EVENT-IN-YAMUNA-2023": {
         "event_id": "EVENT-IN-YAMUNA-2023",
-        "title": "2023 Yamuna River Mega-Flood (Delhi Basin, India)",
+        "title": "July 2023 Yamuna River Mega-Flood (Delhi NCR & Haryana, India)",
         "country": "India",
         "state_or_region": "National Capital Territory of Delhi / Haryana",
-        "river": "Yamuna River (Upper Yamuna Basin)",
+        "river": "Yamuna River (Upper Yamuna Basin, Ganges Sub-basin)",
         "start_date": "2023-07-07",
         "end_date": "2023-07-18",
         "peak_date": "2023-07-13",
+        "timezone": "IST (UTC+05:30)",
+        "measurement_units": {
+            "river_stage": "metres above Mean Sea Level (m MSL)",
+            "upstream_discharge_release": "cubic feet per second (cfs)",
+            "precipitation": "millimetres (mm)"
+        },
         "primary_gauge_station": {
             "station_id": "YMN-DEL-ORB-01",
             "station_name": "Old Railway Bridge (ORB), Delhi",
             "river_name": "Yamuna River",
             "latitude": 28.663,
             "longitude": 77.234,
-            "warning_level_m": 204.50,
-            "danger_level_m": 205.33,
-            "prior_all_time_record_m": 207.49,
-            "observed_crest_level_m": 208.66
+            "statutory_reference_marks": {
+                "warning_level_m": 204.50,
+                "danger_level_m": 205.33,
+                "prior_1978_all_time_record_m": 207.49,
+                "observed_july_2023_crest_m": 208.66,
+                "authority": "Central Water Commission (CWC), Government of India"
+            },
+            "vega_miti_operational_rules": {
+                "critical_water_level_trigger_m": 206.50,
+                "critical_barrage_release_trigger_cfs": 300000.0,
+                "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+            }
         },
         "upstream_barrage": {
             "station_id": "YMN-HAR-HKB-01",
             "station_name": "Hathnikund Barrage, Yamunanagar, Haryana",
             "latitude": 30.315,
             "longitude": 77.583,
-            "peak_barrage_release_cfs": 359000.0
+            "peak_barrage_release_cfs": 359000.0,
+            "distance_upstream_km": 228.0
         },
-        "data_provenance": "CWC (Central Water Commission) Daily Flood Bulletins & IMD (India Meteorological Department) Monsoon Precipitation Records",
+        "downstream_infrastructure": [
+            {"name": "Wazirabad Barrage", "latitude": 28.711, "longitude": 77.231},
+            {"name": "ITO Barrage", "latitude": 28.628, "longitude": 77.248},
+            {"name": "Okhla Barrage", "latitude": 28.544, "longitude": 77.311}
+        ],
+        "data_provenance": {
+            "water_levels": "Central Water Commission (CWC) Daily River Stage Bulletins (July 2023)",
+            "barrage_outflow": "Haryana Irrigation and Water Resources Department Hathnikund Release Logs (July 2023)",
+            "rainfall": "India Meteorological Department (IMD) Safdarjung & Catchment Daily Precipitation Records"
+        },
         "is_partial_record": False,
-        "regulatory_disclaimer": "Historical gauge levels (meters MSL) and barrage releases (cfs) derived from CWC/IMD official public archives. Swarm movements, routes, and leases are simulated research demonstrations on a 20x20 grid.",
+        "regulatory_disclaimer": "204.50 m (Warning) and 205.33 m (Danger) are official CWC statutory reference levels. 206.50 m is a custom VEGA-MITI operational demonstration rule. Never presented as official flood forecast stages. Swarm movements on 20x20 grid are simulated research visualizations.",
         "timeline_data": [
             {
                 "date": "2023-07-07",
@@ -44,7 +68,8 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 12.5,
                 "water_level_m": 203.40,
                 "upstream_release_cfs": 42000.0,
-                "key_observation": "Normal pre-monsoon flow; water level 1.1m below warning mark"
+                "key_observation": "Normal pre-monsoon flow; water level 1.10 m below CWC warning mark",
+                "retrospective_context": "Initial seasonal baseflow before monsoon trough convergence"
             },
             {
                 "date": "2023-07-08",
@@ -52,7 +77,8 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 126.1,
                 "water_level_m": 204.10,
                 "upstream_release_cfs": 85000.0,
-                "key_observation": "Intense torrential downpour starts across Delhi NCR and Himachal hills"
+                "key_observation": "Torrential monsoon downpour starts across Delhi NCR and Himachal hills",
+                "retrospective_context": "Catchment saturation begins in upper sub-basins"
             },
             {
                 "date": "2023-07-09",
@@ -60,7 +86,8 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 153.0,
                 "water_level_m": 204.85,
                 "upstream_release_cfs": 145000.0,
-                "key_observation": "Highest 24h July rainfall in Delhi since 1982; Yamuna crosses Warning Level (204.50m)"
+                "key_observation": "Safdarjung records 153.0 mm (highest 24h July rain since 1982); Yamuna breaches Warning Level (204.50 m)",
+                "retrospective_context": "Local urban runoff combines with early tributary discharge"
             },
             {
                 "date": "2023-07-10",
@@ -68,7 +95,8 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 42.0,
                 "water_level_m": 205.76,
                 "upstream_release_cfs": 216000.0,
-                "key_observation": "River breaches Danger Level (205.33m); Hathnikund release exceeds 200,000 cfs"
+                "key_observation": "River breaches CWC Danger Level (205.33 m); Hathnikund release surges past 200,000 cfs",
+                "retrospective_context": "Upstream hydraulic surge enters upper Delhi reaches"
             },
             {
                 "date": "2023-07-11",
@@ -76,7 +104,8 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 18.0,
                 "water_level_m": 206.71,
                 "upstream_release_cfs": 359000.0,
-                "key_observation": "Peak barrage release from Hathnikund surges downstream toward national capital"
+                "key_observation": "Peak barrage release from Hathnikund (approx 359,000 cfs) travels downstream; VEGA-MITI critical operational rule triggered",
+                "retrospective_context": "Maximum instantaneous volume released from upstream control structure"
             },
             {
                 "date": "2023-07-12",
@@ -84,7 +113,8 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 5.0,
                 "water_level_m": 207.71,
                 "upstream_release_cfs": 180000.0,
-                "key_observation": "Breaches historic 1978 record of 207.49m; Ring Road and Monastery Market flooded"
+                "key_observation": "Breaches historic 45-year 1978 record (207.49 m); Ring Road and Monastery Market inundated",
+                "retrospective_context": "Extensive backwater effect through stormwater drainage outfalls"
             },
             {
                 "date": "2023-07-13",
@@ -92,7 +122,8 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 2.0,
                 "water_level_m": 208.66,
                 "upstream_release_cfs": 95000.0,
-                "key_observation": "All-time historical crest of 208.66m recorded at 18:00 IST; Red Fort perimeter inundated"
+                "key_observation": "All-time historical crest of 208.66 m recorded at Old Railway Bridge at 18:00 IST; Red Fort perimeter flooded",
+                "retrospective_context": "Peak flood stage in recorded Delhi history"
             },
             {
                 "date": "2023-07-14",
@@ -100,7 +131,8 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 0.0,
                 "water_level_m": 208.20,
                 "upstream_release_cfs": 58000.0,
-                "key_observation": "High-water plateau holds across central Delhi embankments; flood regulators breached"
+                "key_observation": "High-water plateau holds across central Delhi embankments; flood regulator near WHO building breached",
+                "retrospective_context": "Inundation persists due to downstream channel throttling"
             },
             {
                 "date": "2023-07-15",
@@ -108,7 +140,8 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 8.0,
                 "water_level_m": 207.45,
                 "upstream_release_cfs": 44000.0,
-                "key_observation": "Water recedes below 1978 benchmark; army and rescue teams seal WHO building regulator"
+                "key_observation": "Water recedes below 1978 benchmark; army and engineering units seal breached regulator",
+                "retrospective_context": "Upstream inflows drop significantly"
             },
             {
                 "date": "2023-07-16",
@@ -116,7 +149,8 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 1.0,
                 "water_level_m": 206.30,
                 "upstream_release_cfs": 38000.0,
-                "key_observation": "Gradual draining toward Okhla; traffic reopens on higher arterial roads"
+                "key_observation": "Gradual draining through Okhla downstream sluices; arterial roads gradually cleared of silt",
+                "retrospective_context": "Recession limb well-established"
             },
             {
                 "date": "2023-07-17",
@@ -124,7 +158,8 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 0.0,
                 "water_level_m": 205.20,
                 "upstream_release_cfs": 32000.0,
-                "key_observation": "Water drops below Danger Level (205.33m); post-event structural surveys underway"
+                "key_observation": "Water level drops below CWC Danger Level (205.33 m); post-flood recovery operations active",
+                "retrospective_context": "River confines back within active channel banks"
             },
             {
                 "date": "2023-07-18",
@@ -132,19 +167,26 @@ HISTORICAL_EVENTS_CATALOG = {
                 "rainfall_mm": 0.0,
                 "water_level_m": 204.30,
                 "upstream_release_cfs": 28000.0,
-                "key_observation": "Water returns below Warning Level (204.50m); de-escalation complete"
+                "key_observation": "Water level recedes below CWC Warning Level (204.50 m); swarm de-escalation complete",
+                "retrospective_context": "Catchment returns to baseline seasonal equilibrium"
             }
         ]
     },
     "EVENT-US-SUSQUEHANNA-2023": {
         "event_id": "EVENT-US-SUSQUEHANNA-2023",
-        "title": "December 2023 Susquehanna River Flood Event (Harrisburg, PA, US)",
+        "title": "December 2023 Susquehanna River High-Flow Event (Harrisburg, PA, US)",
         "country": "United States",
         "state_or_region": "Pennsylvania",
         "river": "Susquehanna River",
         "start_date": "2023-12-14",
         "end_date": "2023-12-26",
         "peak_date": "2023-12-20",
+        "timezone": "EST (UTC-05:00)",
+        "measurement_units": {
+            "river_discharge": "cubic feet per second (cfs)",
+            "precipitation": "millimetres (mm)",
+            "temperature": "degrees Celsius (C)"
+        },
         "primary_gauge_station": {
             "station_id": "01570500",
             "station_name": "Susquehanna River at Harrisburg, PA",
@@ -154,9 +196,12 @@ HISTORICAL_EVENTS_CATALOG = {
             "drainage_area_sqmi": 24100.0,
             "mean_elevation_ft": 289.4
         },
-        "data_provenance": "USGS NWIS Station 01570500 (data/processed/train.csv) & NASA POWER Daily Meteorology",
+        "data_provenance": {
+            "discharge": "USGS NWIS Station 01570500 daily streamflow from data/processed/train.csv",
+            "weather": "NASA POWER daily surface meteorology"
+        },
         "is_partial_record": False,
-        "regulatory_disclaimer": "Historical observations from USGS NWIS verified records. Research simulation on discrete 20x20 grid.",
+        "regulatory_disclaimer": "Historical daily mean discharge from USGS NWIS verified records. Research simulation on discrete 20x20 grid.",
         "timeline_data": []
     }
 }
@@ -182,18 +227,23 @@ class HistoricalReplayEngine:
             if dt in ("2023-12-14", "2023-12-15", "2023-12-16"):
                 phase = "BEFORE_FLOOD"
                 obs = "Advisory winter baseflow; dry conditions preceding frontal storm"
+                retro = "Catchment baseflow conditions before precipitation system"
             elif dt in ("2023-12-17", "2023-12-18"):
                 phase = "RISING_RISK"
-                obs = f"Intense atmospheric river system brings heavy rainfall ({precip:.1f} mm); basin saturated"
+                obs = f"Intense atmospheric storm brings heavy rainfall ({precip:.1f} mm); basin saturated"
+                retro = "Direct precipitation runoff initiates hydrograph climb"
             elif dt in ("2023-12-19", "2023-12-20", "2023-12-21"):
                 phase = "HIGH_RISK_PEAK"
                 obs = f"Runoff convergence causes massive discharge crest ({q:,.0f} cfs); river exceeds historical 99th percentile"
+                retro = "Crest propagation down the lower mainstem"
             elif dt in ("2023-12-22", "2023-12-23"):
                 phase = "RECESSION"
                 obs = "Discharge recedes from flood crest; cold front stabilizes catchment"
+                retro = "Declining hydrograph recession limb"
             else:
                 phase = "RECOVERY"
                 obs = "Flow normalizes toward seasonal median; post-event inspection"
+                retro = "Post-event baseflow stabilization"
 
             timeline.append({
                 "date": dt,
@@ -202,7 +252,8 @@ class HistoricalReplayEngine:
                 "discharge_cfs": round(q, 2),
                 "temp_max_c": float(r["temp_max_c"]) if pd.notna(r.get("temp_max_c")) else None,
                 "temp_min_c": float(r["temp_min_c"]) if pd.notna(r.get("temp_min_c")) else None,
-                "key_observation": obs
+                "key_observation": obs,
+                "retrospective_context": retro
             })
         HISTORICAL_EVENTS_CATALOG["EVENT-US-SUSQUEHANNA-2023"]["timeline_data"] = timeline
 
@@ -218,6 +269,8 @@ class HistoricalReplayEngine:
                 "start_date": item["start_date"],
                 "end_date": item["end_date"],
                 "peak_date": item["peak_date"],
+                "timezone": item.get("timezone", "UTC"),
+                "measurement_units": item.get("measurement_units", {}),
                 "primary_station_id": item["primary_gauge_station"]["station_id"],
                 "primary_station_name": item["primary_gauge_station"]["station_name"],
                 "latitude": item["primary_gauge_station"]["latitude"],
@@ -237,50 +290,107 @@ class HistoricalReplayEngine:
         res["total_timeline_steps"] = len(ev["timeline_data"])
         return res
 
-    def _assess_event_row(self, event_id: str, row: Dict[str, Any]) -> Dict[str, Any]:
-        dt = row["date"]
+    def assess_event_observation(self, event_id: str, row: Dict[str, Any]) -> Dict[str, Any]:
+        dt = row.get("date")
         if event_id == "EVENT-IN-YAMUNA-2023":
             st_id = "YMN-DEL-ORB-01"
-            level_m = row.get("water_level_m", 204.0)
-            release_cfs = row.get("upstream_release_cfs", 40000.0)
-            
-            if level_m >= 206.5 or release_cfs >= 300000.0:
-                lvl = "CRITICAL"
-                expl = f"Water level ({level_m:.2f} m) and upstream barrage release ({release_cfs:,.0f} cfs) severely breach Danger Level (205.33 m)."
+            level_m = row.get("water_level_m")
+            release_cfs = row.get("upstream_release_cfs")
+            precip_mm = row.get("rainfall_mm")
+
+            if level_m is None and release_cfs is None:
+                return {
+                    "station_id": st_id,
+                    "date": dt,
+                    "water_level_m": None,
+                    "upstream_release_cfs": None,
+                    "rainfall_mm": precip_mm,
+                    "risk_level": "NORMAL",
+                    "data_quality_status": "INVALID_OR_MISSING",
+                    "evidence_quality": "DEGRADED",
+                    "evidence_used": ["INSUFFICIENT_DATA"],
+                    "is_provisional": True,
+                    "explanation": "Missing water level and barrage discharge observations; cannot verify flood risk.",
+                    "recommended_action": "REQUEST_IMMEDIATE_SENSOR_TELEMETRY",
+                    "statutory_reference_marks": {
+                        "warning_level_m": 204.50,
+                        "danger_level_m": 205.33,
+                        "authority": "Central Water Commission (CWC)"
+                    },
+                    "regulatory_disclaimer": "Data missing. Demonstration only."
+                }
+
+            lvl_val = float(level_m) if level_m is not None else 0.0
+            rel_val = float(release_cfs) if release_cfs is not None else 0.0
+
+            evidence_sources = []
+            if level_m is not None:
+                evidence_sources.append(f"CWC_OLD_RAILWAY_BRIDGE_STAGE_{lvl_val:.2f}M")
+            if release_cfs is not None:
+                evidence_sources.append(f"HATHNIKUND_BARRAGE_RELEASE_{rel_val:,.0f}CFS")
+            if precip_mm is not None:
+                evidence_sources.append(f"IMD_PRECIPITATION_{precip_mm:.1f}MM")
+
+            if lvl_val >= 206.50 or rel_val >= 300000.0:
+                risk_level = "CRITICAL"
+                explanation = f"Water level ({lvl_val:.2f} m MSL) breaches CWC Danger Level (205.33 m) and meets VEGA-MITI operational critical threshold (206.50 m); upstream barrage release ({rel_val:,.0f} cfs) indicates severe urban flooding."
                 action = "HIGH_PRIORITY_RESPONSE_MISSIONS"
-            elif level_m >= 205.33 or release_cfs >= 200000.0:
-                lvl = "WARNING"
-                expl = f"Water level ({level_m:.2f} m) exceeds CWC Danger Level (205.33 m). Evacuation and barrier surveillance active."
+            elif lvl_val >= 205.33 or rel_val >= 200000.0:
+                risk_level = "WARNING"
+                explanation = f"Water level ({lvl_val:.2f} m MSL) meets or exceeds official CWC Danger Level (205.33 m); upstream release ({rel_val:,.0f} cfs) requires barrier surveillance and evacuation readiness."
                 action = "PREPARE_VERIFICATION_MISSIONS"
-            elif level_m >= 204.50 or release_cfs >= 100000.0:
-                lvl = "WATCH"
-                expl = f"Water level ({level_m:.2f} m) meets or exceeds CWC Warning Level (204.50 m). Monitoring frequency increased."
+            elif lvl_val >= 204.50 or rel_val >= 100000.0:
+                risk_level = "WATCH"
+                explanation = f"Water level ({lvl_val:.2f} m MSL) meets or exceeds official CWC Warning Level (204.50 m); flow elevated above baseline."
                 action = "INCREASE_MONITORING_FREQUENCY"
             else:
-                lvl = "NORMAL"
-                expl = f"Water level ({level_m:.2f} m) remains below CWC Warning Level (204.50 m)."
+                risk_level = "NORMAL"
+                explanation = f"Water level ({lvl_val:.2f} m MSL) remains below official CWC Warning Level (204.50 m). Normal river conditions."
                 action = "PASSIVE_MONITORING"
 
             return {
                 "station_id": st_id,
                 "date": dt,
-                "water_level_m": level_m,
-                "discharge_cfs": release_cfs,
-                "risk_level": lvl,
-                "threshold_type": "CWC_OFFICIAL_FLOOD_STAGES",
-                "warning_level_m": 204.50,
-                "danger_level_m": 205.33,
-                "highest_recorded_level_m": 208.66,
+                "water_level_m": lvl_val,
+                "upstream_release_cfs": rel_val,
+                "rainfall_mm": precip_mm,
+                "discharge_cfs": rel_val,
+                "risk_level": risk_level,
+                "evidence_sources": evidence_sources,
                 "evidence_quality": "HIGH",
                 "data_quality_status": "VALID_OBSERVATION",
                 "is_provisional": False,
-                "explanation": expl,
+                "statutory_reference_marks": {
+                    "warning_level_m": 204.50,
+                    "danger_level_m": 205.33,
+                    "prior_1978_record_m": 207.49,
+                    "historic_all_time_peak_m": 208.66,
+                    "authority": "Central Water Commission (CWC), Government of India"
+                },
+                "vega_miti_operational_rules": {
+                    "critical_water_level_trigger_m": 206.50,
+                    "critical_barrage_release_trigger_cfs": 300000.0,
+                    "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+                },
+                "explanation": explanation,
                 "recommended_action": action,
-                "regulatory_disclaimer": "CWC published flood levels. Simulation on 20x20 test grid."
+                "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
             }
         else:
             st_id = "01570500"
-            q = row.get("discharge_cfs", 50000.0)
+            q = row.get("discharge_cfs")
+            if q is None:
+                return {
+                    "station_id": st_id,
+                    "date": dt,
+                    "discharge_cfs": 0.0,
+                    "risk_level": "NORMAL",
+                    "data_quality_status": "INVALID_OR_MISSING",
+                    "evidence_quality": "DEGRADED",
+                    "explanation": "Missing discharge observation; cannot classify risk.",
+                    "recommended_action": "PASSIVE_MONITORING",
+                    "is_provisional": True
+                }
             return self.risk_engine.classify_discharge(st_id, q, date=dt)
 
     def execute_replay(
@@ -297,6 +407,13 @@ class HistoricalReplayEngine:
         if not timeline:
             return {"status": "error", "error": f"No timeline data for event '{event_id}'."}
 
+        total_steps = len(timeline)
+        if step_index is not None and (step_index < 0 or step_index >= total_steps):
+            return {
+                "status": "error",
+                "error": f"Invalid step_index {step_index}. Valid range is 0 to {total_steps - 1}."
+            }
+
         coordinator = SwarmCoordinator(grid_size=(20, 20), lease_duration_sec=60)
         activation_engine = SwarmActivationEngine()
         steps_to_run = timeline if step_index is None else timeline[:step_index + 1]
@@ -307,7 +424,7 @@ class HistoricalReplayEngine:
         for idx, row in enumerate(steps_to_run):
             dt = row["date"]
             phase = row["phase"]
-            assessment = self._assess_event_row(event_id, row)
+            assessment = self.assess_event_observation(event_id, row)
             
             activation_result = activation_engine.evaluate_activation([assessment])
             current_state = activation_result["current_state"]
@@ -343,14 +460,22 @@ class HistoricalReplayEngine:
                 "step_index": idx,
                 "date": dt,
                 "timeline_phase": phase,
-                "key_observation": row.get("key_observation", ""),
-                "historical_metrics": {
+                "observed_historical_state": {
+                    "key_observation": row.get("key_observation", ""),
                     "rainfall_mm": row.get("rainfall_mm"),
                     "water_level_m": row.get("water_level_m"),
                     "discharge_cfs": row.get("discharge_cfs", row.get("upstream_release_cfs"))
                 },
-                "risk_assessment": assessment,
-                "swarm_state": {
+                "available_evidence": {
+                    "cutoff_date": dt,
+                    "evidence_sources": assessment.get("evidence_sources", ["USGS_NWIS_DISCHARGE"])
+                },
+                "vega_miti_risk_assessment": assessment,
+                "retrospective_event_outcome": {
+                    "context": row.get("retrospective_context", ""),
+                    "event_peak_date": ev.get("peak_date")
+                },
+                "simulated_swarm_response": {
                     "activation_state": current_state,
                     "active_missions_count": snapshot["active_missions_count"],
                     "completed_missions_count": snapshot["completed_missions_count"],
@@ -371,6 +496,8 @@ class HistoricalReplayEngine:
             "title": ev["title"],
             "country": ev["country"],
             "river": ev["river"],
+            "timezone": ev.get("timezone", "UTC"),
+            "measurement_units": ev.get("measurement_units", {}),
             "geographic_context": {
                 "latitude": ev["primary_gauge_station"]["latitude"],
                 "longitude": ev["primary_gauge_station"]["longitude"],

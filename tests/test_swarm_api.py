@@ -101,7 +101,7 @@ class TestSwarmAPI(unittest.TestCase):
         meta_body = meta_resp.json()
         self.assertEqual(meta_body["status"], "success")
         self.assertEqual(meta_body["data"]["country"], "India")
-        self.assertEqual(meta_body["data"]["river"], "Yamuna River (Upper Yamuna Basin)")
+        self.assertEqual(meta_body["data"]["river"], "Yamuna River (Upper Yamuna Basin, Ganges Sub-basin)")
 
         run_resp = self.client.post("/api/swarm/replay/run", json={"event_id": "EVENT-IN-YAMUNA-2023", "step_index": 4})
         self.assertEqual(run_resp.status_code, 200)
@@ -109,7 +109,8 @@ class TestSwarmAPI(unittest.TestCase):
         self.assertEqual(run_body["status"], "success")
         self.assertEqual(run_body["data"]["executed_steps_count"], 5)
         self.assertIn("current_step_frame", run_body["data"])
-        self.assertIn("swarm_state", run_body["data"]["current_step_frame"])
+        self.assertIn("simulated_swarm_response", run_body["data"]["current_step_frame"])
+        self.assertIn("observed_historical_state", run_body["data"]["current_step_frame"])
 
 if __name__ == "__main__":
     unittest.main()

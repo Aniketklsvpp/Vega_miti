@@ -1,38 +1,57 @@
 [
   {
     "event_id": "EVENT-IN-YAMUNA-2023",
-    "title": "2023 Yamuna River Mega-Flood (Delhi Basin, India)",
+    "title": "July 2023 Yamuna River Mega-Flood (Delhi NCR & Haryana, India)",
     "country": "India",
     "state_or_region": "National Capital Territory of Delhi / Haryana",
-    "river": "Yamuna River (Upper Yamuna Basin)",
+    "river": "Yamuna River (Upper Yamuna Basin, Ganges Sub-basin)",
     "start_date": "2023-07-07",
     "end_date": "2023-07-18",
     "peak_date": "2023-07-13",
+    "timezone": "IST (UTC+05:30)",
+    "measurement_units": {
+      "river_stage": "metres above Mean Sea Level (m MSL)",
+      "upstream_discharge_release": "cubic feet per second (cfs)",
+      "precipitation": "millimetres (mm)"
+    },
     "primary_station_id": "YMN-DEL-ORB-01",
     "primary_station_name": "Old Railway Bridge (ORB), Delhi",
     "latitude": 28.663,
     "longitude": 77.234,
     "total_days": 12,
-    "data_provenance": "CWC (Central Water Commission) Daily Flood Bulletins & IMD (India Meteorological Department) Monsoon Precipitation Records",
+    "data_provenance": {
+      "water_levels": "Central Water Commission (CWC) Daily River Stage Bulletins (July 2023)",
+      "barrage_outflow": "Haryana Irrigation and Water Resources Department Hathnikund Release Logs (July 2023)",
+      "rainfall": "India Meteorological Department (IMD) Safdarjung & Catchment Daily Precipitation Records"
+    },
     "is_partial_record": false,
-    "regulatory_disclaimer": "Historical gauge levels (meters MSL) and barrage releases (cfs) derived from CWC/IMD official public archives. Swarm movements, routes, and leases are simulated research demonstrations on a 20x20 grid."
+    "regulatory_disclaimer": "204.50 m (Warning) and 205.33 m (Danger) are official CWC statutory reference levels. 206.50 m is a custom VEGA-MITI operational demonstration rule. Never presented as official flood forecast stages. Swarm movements on 20x20 grid are simulated research visualizations."
   },
   {
     "event_id": "EVENT-US-SUSQUEHANNA-2023",
-    "title": "December 2023 Susquehanna River Flood Event (Harrisburg, PA, US)",
+    "title": "December 2023 Susquehanna River High-Flow Event (Harrisburg, PA, US)",
     "country": "United States",
     "state_or_region": "Pennsylvania",
     "river": "Susquehanna River",
     "start_date": "2023-12-14",
     "end_date": "2023-12-26",
     "peak_date": "2023-12-20",
+    "timezone": "EST (UTC-05:00)",
+    "measurement_units": {
+      "river_discharge": "cubic feet per second (cfs)",
+      "precipitation": "millimetres (mm)",
+      "temperature": "degrees Celsius (C)"
+    },
     "primary_station_id": "01570500",
     "primary_station_name": "Susquehanna River at Harrisburg, PA",
     "latitude": 40.252,
     "longitude": -76.883,
     "total_days": 13,
-    "data_provenance": "USGS NWIS Station 01570500 (data/processed/train.csv) & NASA POWER Daily Meteorology",
+    "data_provenance": {
+      "discharge": "USGS NWIS Station 01570500 daily streamflow from data/processed/train.csv",
+      "weather": "NASA POWER daily surface meteorology"
+    },
     "is_partial_record": false,
-    "regulatory_disclaimer": "Historical observations from USGS NWIS verified records. Research simulation on discrete 20x20 grid."
+    "regulatory_disclaimer": "Historical daily mean discharge from USGS NWIS verified records. Research simulation on discrete 20x20 grid."
   }
 ]
