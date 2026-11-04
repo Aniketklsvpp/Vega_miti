@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from src.prediction_service import PredictionService
 from src.risk_engine import FloodRiskEngine
 from src.hydrological_evaluation import HydrologicalEvaluator
+from src.swarm_api import router as swarm_router
 
 app = FastAPI(
     title="DELTA-SWARM Hydrological Intelligence API",
@@ -44,7 +45,7 @@ def make_envelope(data=None, error=None, status="success"):
 @app.get("/api/health")
 def get_health():
     return make_envelope(data={
-        "service": "DELTA-SWARM Hydrological Intelligence API",
+        "service": "DELTA-SWARM Unified Hydrological & Swarm Intelligence API",
         "status": "HEALTHY",
         "version": "1.0.0",
         "models_loaded": {
@@ -52,7 +53,9 @@ def get_health():
             "config_B": "ExtraTreesRegressor (raw target, 18 past features)"
         },
         "station_count": len(risk_engine.station_thresholds),
-        "dataset_observations": 16060
+        "dataset_observations": 16060,
+        "swarm_simulation": "ACTIVE",
+        "swarm_endpoints_mounted": 11
     })
 
 @app.get("/api/stations")
@@ -201,3 +204,5 @@ def get_hydrology_evaluation(config: str = Query("A")):
             
     rep = evaluator.run_full_evaluation(config=config)
     return make_envelope(data=rep)
+
+app.include_router(swarm_router)

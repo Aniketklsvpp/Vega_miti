@@ -1,125 +1,111 @@
 {
-  "framework": "BASINSHIFT_GLOBAL_FLOOD_INTELLIGENCE",
-  "forecast_skill": {
-    "mae_cfs": 2018.77,
-    "rmse_cfs": 5688.65,
-    "normalized_mae": 0.2648,
-    "nse": 0.8235
+  "evaluation_title": "DELTA-SWARM Hydrological Evaluation Report",
+  "model_configuration": "A",
+  "target_variable": "discharge_cfs",
+  "evaluation_sample_count": 4380,
+  "held_out_stations_count": 6,
+  "held_out_stations": [
+    "08158000",
+    "09095500",
+    "09180500",
+    "09380000",
+    "12119000",
+    "14211720"
+  ],
+  "forecast_skill_pooled": {
+    "mae": 2880.5032,
+    "rmse": 8245.7002,
+    "nmae_normalized_by_mean": 0.333,
+    "nmae_normalized_by_range": 0.0195,
+    "nse": 0.6957
   },
-  "high_flow_detection": {
-    "threshold_cfs": 18500.0,
-    "event_precision": 0.8362,
-    "event_recall": 0.8357,
-    "event_f1_score": 0.836,
-    "false_alarm_rate": 0.0182,
-    "total_extreme_events": 1607
+  "forecast_skill_macro_station_average": {
+    "macro_mae": 2880.5032,
+    "macro_rmse": 4785.4761,
+    "macro_nse": -0.1491
   },
-  "generalization": {
-    "unseen_catchments_count": 20,
-    "macro_average_nse": -1.8413,
-    "macro_average_rmse_cfs": 6521.02,
-    "pooled_rmse_cfs": 9320.98,
-    "pooled_nse": 0.387,
-    "per_catchment": {
-      "1570500": {
-        "rmse": 32842.71,
-        "nse": -0.335
-      },
-      "1638500": {
-        "rmse": 4330.2,
-        "nse": 0.635
-      },
-      "1646500": {
-        "rmse": 6206.48,
-        "nse": 0.4524
-      },
-      "2037500": {
-        "rmse": 4051.98,
-        "nse": 0.3656
-      },
-      "2146000": {
-        "rmse": 4364.58,
-        "nse": -2.9267
-      },
-      "2169500": {
-        "rmse": 6428.2,
-        "nse": 0.1707
-      },
-      "2202500": {
-        "rmse": 1404.25,
-        "nse": -0.0225
-      },
-      "3234500": {
-        "rmse": 4283.78,
-        "nse": 0.5951
-      },
-      "3374100": {
-        "rmse": 11994.02,
-        "nse": 0.2842
-      },
-      "5484500": {
-        "rmse": 1492.78,
-        "nse": -0.2677
-      },
-      "5527500": {
-        "rmse": 2584.78,
-        "nse": 0.5822
-      },
-      "5586100": {
-        "rmse": 9092.45,
-        "nse": 0.6533
-      },
-      "6192500": {
-        "rmse": 6113.9,
-        "nse": -0.5183
-      },
-      "7144100": {
-        "rmse": 666.87,
-        "nse": -0.3465
-      },
-      "7196500": {
-        "rmse": 2898.96,
-        "nse": 0.0544
-      },
-      "8116650": {
-        "rmse": 4761.06,
-        "nse": -0.3059
-      },
-      "8158000": {
-        "rmse": 6362.54,
-        "nse": -29.7807
-      },
-      "9095500": {
-        "rmse": 4300.13,
-        "nse": -0.3566
-      },
-      "9180500": {
-        "rmse": 5952.66,
-        "nse": 0.3513
-      },
-      "9380000": {
-        "rmse": 10287.99,
-        "nse": -6.1112
-      }
+  "baseline_comparisons": {
+    "training_mean_baseline": {
+      "mae": 8255.5444,
+      "rmse": 15013.4387,
+      "nmae_normalized_by_mean": 0.9543,
+      "nmae_normalized_by_range": 0.0558,
+      "nse": -0.009
+    },
+    "persistence_baseline": {
+      "mae": 716.2217,
+      "rmse": 2339.5138,
+      "nmae_normalized_by_mean": 0.0828,
+      "nmae_normalized_by_range": 0.0048,
+      "nse": 0.9755
+    },
+    "rmse_skill_score_vs_mean": 0.4508,
+    "rmse_skill_score_vs_persistence": -2.5245
+  },
+  "high_flow_event_detection": {
+    "threshold_percentile": 0.9,
+    "threshold_value_cfs": 20220.0,
+    "precision": 0.8859,
+    "recall": 0.6735,
+    "f1_score": 0.7652,
+    "auprc": 0.8916,
+    "actual_event_count": 438,
+    "predicted_event_count": 333,
+    "total_observations": 4380
+  },
+  "per_station_generalization": {
+    "08158000": {
+      "mae": 387.8644,
+      "rmse": 694.6769,
+      "nmae_normalized_by_mean": 0.4157,
+      "nmae_normalized_by_range": 0.0491,
+      "nse": 0.6331
+    },
+    "09095500": {
+      "mae": 540.1038,
+      "rmse": 1027.116,
+      "nmae_normalized_by_mean": 0.1536,
+      "nmae_normalized_by_range": 0.0335,
+      "nse": 0.9226
+    },
+    "09180500": {
+      "mae": 1725.5533,
+      "rmse": 3886.1131,
+      "nmae_normalized_by_mean": 0.2754,
+      "nmae_normalized_by_range": 0.0443,
+      "nse": 0.7235
+    },
+    "09380000": {
+      "mae": 1200.7585,
+      "rmse": 2262.6685,
+      "nmae_normalized_by_mean": 0.11,
+      "nmae_normalized_by_range": 0.0364,
+      "nse": 0.656
+    },
+    "12119000": {
+      "mae": 521.5023,
+      "rmse": 1229.0251,
+      "nmae_normalized_by_mean": 0.8154,
+      "nmae_normalized_by_range": 0.1461,
+      "nse": -4.2423
+    },
+    "14211720": {
+      "mae": 12907.2368,
+      "rmse": 19613.2567,
+      "nmae_normalized_by_mean": 0.4356,
+      "nmae_normalized_by_range": 0.09,
+      "nse": 0.4123
     }
   },
-  "robustness": {
-    "baseline_rmse_cfs": 5688.65,
-    "noisy_inputs_rmse_cfs": 5732.09,
-    "noise_degradation_pct": 0.76,
-    "missing_inputs_rmse_cfs": 5707.81,
-    "missing_degradation_pct": 0.34,
-    "delayed_inputs_rmse_cfs": 5689.38,
-    "delay_degradation_pct": 0.01
+  "robustness_stress_testing": {
+    "gaussian_noise_injection_degradation_pct": 42.36,
+    "noisy_inputs_rmse": 11738.7696,
+    "missing_weather_degradation_pct": 5.84,
+    "missing_inputs_rmse": 8727.4451
   },
-  "efficiency": {
-    "total_benchmark_samples": 16060,
-    "inference_latency_us_per_sample": 14.08,
-    "throughput_samples_per_sec": 70997.9,
-    "artifact_size_kb": 520.85
-  },
-  "unsupported_metrics_disclosure": [
-    "CRPS and Brier score currently unsupported without ensemble/probabilistic dispersion head",
-    "Evacuation routing validation unsupported"
-  ]
+  "computational_efficiency": {
+    "total_inference_time_sec": 5.0654,
+    "latency_ms_per_1000_samples": 1156.49,
+    "model_artifact_size_bytes": 533348
+  }
 }

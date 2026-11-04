@@ -1,45 +1,29 @@
 import unittest
 import numpy as np
 import pandas as pd
-from src.risk_engine import HydrologicalRiskEngine
-from src.hydrological_evaluation import BasinshiftEvaluator, calculate_nse
+from src.risk_engine import FloodRiskEngine
+from src.hydrological_evaluation import compute_forecast_metrics
 from src.swarm_activation import SwarmActivationEngine
 from src.swarm_simulator import AStarPlanner, SwarmCoordinator, run_coordination_comparison
 from src.predict import RiverDischargePredictor
 
-class MockModel:
-    def predict(self, X):
-        return np.ones(len(X)) * 500.0
-
 class TestDeltaSwarm(unittest.TestCase):
     def test_risk_engine_thresholds(self):
-        engine = HydrologicalRiskEngine()
-        normal_res = engine.assess_station_risk("01570500", 500.0)
+        engine = FloodRiskEngine()
+        normal_res = engine.classify_discharge("01570500", 500.0)
         self.assertEqual(normal_res["risk_level"], "NORMAL")
         
-        crit_res = engine.assess_station_risk("01570500", 200000.0)
+        crit_res = engine.classify_discharge("01570500", 200000.0)
         self.assertEqual(crit_res["risk_level"], "CRITICAL")
-        self.assertEqual(crit_res["recommended_action"], "HIGH_PRIORITY_RESPONSE_MISSIONS")
+        self.assertIn("CRITICAL threshold", crit_res["explanation"])
 
     def test_basinshift_evaluator(self):
         y_t = np.array([100.0, 200.0, 500.0, 1000.0, 2000.0])
         y_p = np.array([110.0, 190.0, 480.0, 950.0, 1900.0])
-        nse = calculate_nse(y_t, y_p)
-        self.assertGreater(nse, 0.9)
-
-        mock = MockModel()
-        evaluator = BasinshiftEvaluator(mock, ["f1", "f2"])
-        skill = evaluator.evaluate_forecast_skill(y_t, y_p)
-        self.assertIn("nse", skill)
-        self.assertIn("mae_cfs", skill)
-
-        val_df = pd.DataFrame({
-            "station_id": ["S1", "S1", "S2", "S2"],
-            "actual_discharge_cfs": [100.0, 200.0, 300.0, 400.0],
-            "predicted_discharge_cfs": [105.0, 195.0, 290.0, 410.0]
-        })
-        gen = evaluator.evaluate_generalization(val_df)
-        self.assertEqual(gen["unseen_catchments_count"], 2)
+        fm = compute_forecast_metrics(y_t, y_p)
+        self.assertGreater(fm["nse"], 0.9)
+        self.assertIn("mae", fm)
+        self.assertIn("rmse", fm)
 
     def test_swarm_activation_engine(self):
         activation = SwarmActivationEngine()

@@ -21,7 +21,7 @@
     "effective_coverage_rate_pct": 100.0,
     "communication_overhead_events": 6,
     "coordinator_fault_tolerant": true,
-    "runtime_sec": 0.001
+    "runtime_sec": 0.0
   },
   "performance_differential": {
     "simulated_coverage_improvement_pct": 20.0,

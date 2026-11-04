@@ -1,165 +1,15 @@
 [
   {
-    "mission_id": "MSN-A08339",
-    "mission_type": "SURFACE_FLOW_MONITORING",
-    "priority": 2,
-    "target_station_id": "1638500",
-    "discharge_cfs": 18297.53,
-    "risk_level": "WARNING",
-    "data_quality_status": "VALID_OBSERVATION",
-    "target_position": [
-      11,
-      9
-    ],
-    "required_capabilities": [
-      "RIVER_MONITORING"
-    ],
-    "estimated_duration_sec": 150,
-    "status": "REASSIGNED",
-    "assigned_agent_id": null
-  },
-  {
-    "mission_id": "MSN-0BFF3B",
-    "mission_type": "NETWORK_RELAY_BRIDGE",
-    "priority": 2,
-    "target_station_id": "1638500",
-    "discharge_cfs": 18297.53,
-    "risk_level": "WARNING",
-    "data_quality_status": "VALID_OBSERVATION",
-    "target_position": [
-      10,
-      9
-    ],
-    "required_capabilities": [
-      "DATA_RELAY"
-    ],
-    "estimated_duration_sec": 240,
-    "status": "REASSIGNED",
-    "assigned_agent_id": null
-  },
-  {
-    "mission_id": "MSN-9DA409",
-    "mission_type": "SURFACE_FLOW_MONITORING",
-    "priority": 2,
-    "target_station_id": "1646500",
-    "discharge_cfs": 18560.8,
-    "risk_level": "WARNING",
-    "data_quality_status": "VALID_OBSERVATION",
-    "target_position": [
-      15,
-      14
-    ],
-    "required_capabilities": [
-      "RIVER_MONITORING"
-    ],
-    "estimated_duration_sec": 150,
-    "status": "REASSIGNED",
-    "assigned_agent_id": null
-  },
-  {
-    "mission_id": "MSN-C2ACA4",
-    "mission_type": "NETWORK_RELAY_BRIDGE",
-    "priority": 2,
-    "target_station_id": "1646500",
-    "discharge_cfs": 18560.8,
-    "risk_level": "WARNING",
-    "data_quality_status": "VALID_OBSERVATION",
-    "target_position": [
-      14,
-      14
-    ],
-    "required_capabilities": [
-      "DATA_RELAY"
-    ],
-    "estimated_duration_sec": 240,
-    "status": "PENDING"
-  },
-  {
-    "mission_id": "MSN-F136C2",
-    "mission_type": "SURFACE_FLOW_MONITORING",
-    "priority": 2,
-    "target_station_id": "2037500",
-    "discharge_cfs": 15695.68,
-    "risk_level": "WARNING",
-    "data_quality_status": "VALID_OBSERVATION",
-    "target_position": [
-      14,
-      9
-    ],
-    "required_capabilities": [
-      "RIVER_MONITORING"
-    ],
-    "estimated_duration_sec": 150,
-    "status": "PENDING"
-  },
-  {
-    "mission_id": "MSN-C08E15",
-    "mission_type": "NETWORK_RELAY_BRIDGE",
-    "priority": 2,
-    "target_station_id": "2037500",
-    "discharge_cfs": 15695.68,
-    "risk_level": "WARNING",
-    "data_quality_status": "VALID_OBSERVATION",
-    "target_position": [
-      13,
-      9
-    ],
-    "required_capabilities": [
-      "DATA_RELAY"
-    ],
-    "estimated_duration_sec": 240,
-    "status": "PENDING"
-  },
-  {
-    "mission_id": "MSN-B329F9",
-    "mission_type": "EMERGENCY_CREST_VERIFICATION",
-    "priority": 1,
-    "target_station_id": "2146000",
-    "discharge_cfs": 13307.49,
-    "risk_level": "CRITICAL",
-    "data_quality_status": "VALID_OBSERVATION",
-    "target_position": [
-      12,
-      10
-    ],
-    "required_capabilities": [
-      "AERIAL_OBSERVATION",
-      "VERIFICATION"
-    ],
-    "estimated_duration_sec": 120,
-    "status": "REASSIGNED",
-    "assigned_agent_id": null
-  },
-  {
-    "mission_id": "MSN-F55122",
-    "mission_type": "DOWNSTREAM_SURVEILLANCE",
-    "priority": 1,
-    "target_station_id": "2146000",
-    "discharge_cfs": 13307.49,
-    "risk_level": "CRITICAL",
-    "data_quality_status": "VALID_OBSERVATION",
-    "target_position": [
-      13,
-      11
-    ],
-    "required_capabilities": [
-      "AREA_SURVEILLANCE"
-    ],
-    "estimated_duration_sec": 180,
-    "status": "REASSIGNED",
-    "assigned_agent_id": null
-  },
-  {
-    "mission_id": "MSN-383990",
+    "mission_id": "MSN-DFFF1B",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
-    "target_station_id": "5484500",
-    "discharge_cfs": 1395.94,
+    "target_station_id": "1570500",
+    "discharge_cfs": 8798.71,
     "risk_level": "WATCH",
-    "data_quality_status": "VALID_OBSERVATION",
+    "data_quality_status": "HIGH",
     "target_position": [
-      16,
-      11
+      11,
+      6
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -169,34 +19,73 @@
     "assigned_agent_id": null
   },
   {
-    "mission_id": "MSN-3A0161",
+    "mission_id": "MSN-325017",
     "mission_type": "SURFACE_FLOW_MONITORING",
     "priority": 2,
-    "target_station_id": "7144100",
-    "discharge_cfs": 431.93,
+    "target_station_id": "1638500",
+    "discharge_cfs": 18297.53,
     "risk_level": "WARNING",
-    "data_quality_status": "VALID_OBSERVATION",
+    "data_quality_status": "HIGH",
     "target_position": [
-      16,
-      3
+      15,
+      9
     ],
     "required_capabilities": [
       "RIVER_MONITORING"
     ],
     "estimated_duration_sec": 150,
-    "status": "PENDING"
+    "status": "REASSIGNED",
+    "assigned_agent_id": null
   },
   {
-    "mission_id": "MSN-2D7708",
+    "mission_id": "MSN-3DD1A3",
     "mission_type": "NETWORK_RELAY_BRIDGE",
     "priority": 2,
-    "target_station_id": "7144100",
-    "discharge_cfs": 431.93,
+    "target_station_id": "1638500",
+    "discharge_cfs": 18297.53,
     "risk_level": "WARNING",
-    "data_quality_status": "VALID_OBSERVATION",
+    "data_quality_status": "HIGH",
     "target_position": [
-      15,
-      3
+      14,
+      9
+    ],
+    "required_capabilities": [
+      "DATA_RELAY"
+    ],
+    "estimated_duration_sec": 240,
+    "status": "REASSIGNED",
+    "assigned_agent_id": null
+  },
+  {
+    "mission_id": "MSN-8EA264",
+    "mission_type": "SURFACE_FLOW_MONITORING",
+    "priority": 2,
+    "target_station_id": "1646500",
+    "discharge_cfs": 18560.8,
+    "risk_level": "WARNING",
+    "data_quality_status": "HIGH",
+    "target_position": [
+      11,
+      17
+    ],
+    "required_capabilities": [
+      "RIVER_MONITORING"
+    ],
+    "estimated_duration_sec": 150,
+    "status": "REASSIGNED",
+    "assigned_agent_id": null
+  },
+  {
+    "mission_id": "MSN-E6C3B4",
+    "mission_type": "NETWORK_RELAY_BRIDGE",
+    "priority": 2,
+    "target_station_id": "1646500",
+    "discharge_cfs": 18560.8,
+    "risk_level": "WARNING",
+    "data_quality_status": "HIGH",
+    "target_position": [
+      10,
+      17
     ],
     "required_capabilities": [
       "DATA_RELAY"
@@ -205,16 +94,125 @@
     "status": "PENDING"
   },
   {
-    "mission_id": "MSN-4BEA2A",
+    "mission_id": "MSN-14B387",
+    "mission_type": "SURFACE_FLOW_MONITORING",
+    "priority": 2,
+    "target_station_id": "2037500",
+    "discharge_cfs": 15695.68,
+    "risk_level": "WARNING",
+    "data_quality_status": "HIGH",
+    "target_position": [
+      3,
+      15
+    ],
+    "required_capabilities": [
+      "RIVER_MONITORING"
+    ],
+    "estimated_duration_sec": 150,
+    "status": "PENDING"
+  },
+  {
+    "mission_id": "MSN-BF9F7B",
+    "mission_type": "NETWORK_RELAY_BRIDGE",
+    "priority": 2,
+    "target_station_id": "2037500",
+    "discharge_cfs": 15695.68,
+    "risk_level": "WARNING",
+    "data_quality_status": "HIGH",
+    "target_position": [
+      2,
+      15
+    ],
+    "required_capabilities": [
+      "DATA_RELAY"
+    ],
+    "estimated_duration_sec": 240,
+    "status": "PENDING"
+  },
+  {
+    "mission_id": "MSN-355F07",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
-    "target_station_id": "8158000",
-    "discharge_cfs": 2173.09,
+    "target_station_id": "2146000",
+    "discharge_cfs": 13307.49,
     "risk_level": "WATCH",
-    "data_quality_status": "VALID_OBSERVATION",
+    "data_quality_status": "HIGH",
     "target_position": [
-      17,
-      16
+      3,
+      12
+    ],
+    "required_capabilities": [
+      "AERIAL_OBSERVATION"
+    ],
+    "estimated_duration_sec": 90,
+    "status": "REASSIGNED",
+    "assigned_agent_id": null
+  },
+  {
+    "mission_id": "MSN-2CA3F7",
+    "mission_type": "PREVENTIVE_RECONNAISSANCE",
+    "priority": 3,
+    "target_station_id": "2169500",
+    "discharge_cfs": 6382.36,
+    "risk_level": "WATCH",
+    "data_quality_status": "HIGH",
+    "target_position": [
+      12,
+      4
+    ],
+    "required_capabilities": [
+      "AERIAL_OBSERVATION"
+    ],
+    "estimated_duration_sec": 90,
+    "status": "PENDING"
+  },
+  {
+    "mission_id": "MSN-F016AD",
+    "mission_type": "PREVENTIVE_RECONNAISSANCE",
+    "priority": 3,
+    "target_station_id": "3374100",
+    "discharge_cfs": 5879.93,
+    "risk_level": "WATCH",
+    "data_quality_status": "HIGH",
+    "target_position": [
+      2,
+      8
+    ],
+    "required_capabilities": [
+      "AERIAL_OBSERVATION"
+    ],
+    "estimated_duration_sec": 90,
+    "status": "PENDING"
+  },
+  {
+    "mission_id": "MSN-CE4A08",
+    "mission_type": "PREVENTIVE_RECONNAISSANCE",
+    "priority": 3,
+    "target_station_id": "5586100",
+    "discharge_cfs": 8501.81,
+    "risk_level": "WATCH",
+    "data_quality_status": "HIGH",
+    "target_position": [
+      7,
+      5
+    ],
+    "required_capabilities": [
+      "AERIAL_OBSERVATION"
+    ],
+    "estimated_duration_sec": 90,
+    "status": "PENDING"
+  },
+  {
+    "mission_id": "MSN-FB3F99",
+    "mission_type": "PREVENTIVE_RECONNAISSANCE",
+    "priority": 3,
+    "target_station_id": "9180500",
+    "discharge_cfs": 6658.88,
+    "risk_level": "WATCH",
+    "data_quality_status": "HIGH",
+    "target_position": [
+      14,
+      8
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"

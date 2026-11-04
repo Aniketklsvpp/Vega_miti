@@ -5,8 +5,8 @@ import pandas as pd
 import numpy as np
 
 from src.predict import RiverDischargePredictor, CONFIG_A_FEATURES
-from src.risk_engine import HydrologicalRiskEngine
-from src.hydrological_evaluation import BasinshiftEvaluator
+from src.risk_engine import FloodRiskEngine
+from src.hydrological_evaluation import HydrologicalEvaluator
 from src.swarm_activation import SwarmActivationEngine
 from src.swarm_simulator import SwarmCoordinator, run_coordination_comparison
 
@@ -24,11 +24,11 @@ def run():
             "predicted_discharge_cfs": np.random.uniform(500, 15000, 20)
         })
 
-    risk_engine = HydrologicalRiskEngine()
+    risk_engine = FloodRiskEngine()
     latest_rows = val_df.groupby("station_id").last().reset_index()
     risk_assessments = []
     for _, r in latest_rows.iterrows():
-        assess = risk_engine.assess_station_risk(
+        assess = risk_engine.classify_discharge(
             r["station_id"],
             r.get("predicted_discharge_cfs", r.get("discharge_cfs")),
             date=r.get("date", "2023-12-31")
@@ -38,26 +38,8 @@ def run():
     with open("outputs/swarm/flood_intelligence.json", "w", encoding="utf-8") as f:
         json.dump(risk_assessments, f, indent=2)
 
-    predictor = RiverDischargePredictor()
-    model_a = predictor.models.get("A")
-    evaluator = BasinshiftEvaluator(model_a, CONFIG_A_FEATURES)
-
-    from src.feature_engineering import build_features
-    train_csv = "data/processed/train.csv"
-    if os.path.exists(train_csv):
-        train_df = pd.read_csv(train_csv)
-        X_train_raw, y_true, _, _, _, f_names, _ = build_features(train_df)
-        X_df = pd.DataFrame(X_train_raw, columns=f_names)
-    else:
-        X_df = pd.DataFrame(np.random.randn(100, len(CONFIG_A_FEATURES)), columns=CONFIG_A_FEATURES)
-        y_true = np.random.uniform(100, 10000, 100)
-
-    basinshift_report = evaluator.generate_full_report(
-        X_df,
-        y_true,
-        val_df,
-        artifact_path="outputs/hist_gb_log1p_full.joblib"
-    )
+    evaluator = HydrologicalEvaluator()
+    basinshift_report = evaluator.run_full_evaluation(config="A")
 
     with open("outputs/swarm/basinshift_evaluation.json", "w", encoding="utf-8") as f:
         json.dump(basinshift_report, f, indent=2)
@@ -117,7 +99,7 @@ def run():
     print(f"Missions Generated: {activation_result['active_missions_generated']}, Initial Allocations: {len(allocations)}")
     print(f"Fault Recovery Reassignments: {len(reassigned)}, Post-Recovery Allocations: {len(reallocations)}")
     print(f"Static vs Adaptive Coverage Improvement: {benchmark_comparison['performance_differential']['coverage_improvement_pct']}%")
-    print(f"BASINSHIFT Forecast Skill: MAE={basinshift_report['forecast_skill']['mae_cfs']} cfs, NSE={basinshift_report['forecast_skill']['nse']}")
+    print(f"BASINSHIFT Forecast Skill: MAE={basinshift_report['forecast_skill_pooled']['mae']} cfs, NSE={basinshift_report['forecast_skill_pooled']['nse']}")
 
 if __name__ == "__main__":
     run()

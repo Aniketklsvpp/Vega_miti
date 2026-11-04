@@ -3,240 +3,320 @@
     "station_id": "1570500",
     "date": "2023-12-31",
     "discharge_cfs": 8798.71,
-    "high_flow_threshold_cfs": 69520.0,
-    "critical_threshold_cfs": 124260.0,
-    "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (8798.7 cfs) within normal historical bounds (< 47210.0 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "risk_level": "WATCH",
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (8,798.7 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
   },
   {
     "station_id": "1638500",
     "date": "2023-12-31",
     "discharge_cfs": 18297.53,
-    "high_flow_threshold_cfs": 12630.0,
-    "critical_threshold_cfs": 53565.0,
     "risk_level": "WARNING",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (18297.5 cfs) exceeds 90th percentile high-flow threshold (12630.0 cfs)",
-    "recommended_action": "PREPARE_VERIFICATION_MISSIONS"
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (18,297.5 cfs) meets or exceeds the WARNING threshold (15,000.0 cfs, 95th percentile). Elevated high-flow event in progress."
   },
   {
     "station_id": "1646500",
     "date": "2023-12-31",
     "discharge_cfs": 18560.8,
-    "high_flow_threshold_cfs": 13920.0,
-    "critical_threshold_cfs": 57960.0,
     "risk_level": "WARNING",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (18560.8 cfs) exceeds 90th percentile high-flow threshold (13920.0 cfs)",
-    "recommended_action": "PREPARE_VERIFICATION_MISSIONS"
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (18,560.8 cfs) meets or exceeds the WARNING threshold (15,000.0 cfs, 95th percentile). Elevated high-flow event in progress."
   },
   {
     "station_id": "2037500",
     "date": "2023-12-31",
     "discharge_cfs": 15695.68,
-    "high_flow_threshold_cfs": 10510.0,
-    "critical_threshold_cfs": 26105.0,
     "risk_level": "WARNING",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (15695.7 cfs) exceeds 90th percentile high-flow threshold (10510.0 cfs)",
-    "recommended_action": "PREPARE_VERIFICATION_MISSIONS"
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (15,695.7 cfs) meets or exceeds the WARNING threshold (15,000.0 cfs, 95th percentile). Elevated high-flow event in progress."
   },
   {
     "station_id": "2146000",
     "date": "2023-12-31",
     "discharge_cfs": 13307.49,
-    "high_flow_threshold_cfs": 6253.0,
-    "critical_threshold_cfs": 10776.5,
-    "risk_level": "CRITICAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (13307.5 cfs) exceeds 98th percentile flood threshold (10776.5 cfs)",
-    "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS"
+    "risk_level": "WATCH",
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (13,307.5 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
   },
   {
     "station_id": "2169500",
     "date": "2023-12-31",
     "discharge_cfs": 6382.36,
-    "high_flow_threshold_cfs": 13310.0,
-    "critical_threshold_cfs": 37105.0,
-    "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (6382.4 cfs) within normal historical bounds (< 8970.0 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "risk_level": "WATCH",
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (6,382.4 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
   },
   {
     "station_id": "2202500",
     "date": "2023-12-31",
     "discharge_cfs": 1202.79,
-    "high_flow_threshold_cfs": 3400.0,
-    "critical_threshold_cfs": 5485.0,
     "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (1202.8 cfs) within normal historical bounds (< 2320.0 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (1,202.8 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
   },
   {
     "station_id": "3234500",
     "date": "2023-12-31",
     "discharge_cfs": 2532.74,
-    "high_flow_threshold_cfs": 13410.0,
-    "critical_threshold_cfs": 27205.0,
     "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (2532.7 cfs) within normal historical bounds (< 8030.0 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (2,532.7 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
   },
   {
     "station_id": "3374100",
     "date": "2023-12-31",
     "discharge_cfs": 5879.93,
-    "high_flow_threshold_cfs": 33150.0,
-    "critical_threshold_cfs": 51375.0,
-    "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (5879.9 cfs) within normal historical bounds (< 19760.0 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "risk_level": "WATCH",
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (5,879.9 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
   },
   {
     "station_id": "5484500",
     "date": "2023-12-31",
     "discharge_cfs": 1395.94,
-    "high_flow_threshold_cfs": 2191.0,
-    "critical_threshold_cfs": 6945.5,
-    "risk_level": "WATCH",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (1395.9 cfs) exceeds 75th percentile advisory threshold (1222.8 cfs)",
-    "recommended_action": "INCREASE_MONITORING_FREQUENCY"
+    "risk_level": "NORMAL",
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (1,395.9 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
   },
   {
     "station_id": "5527500",
     "date": "2023-12-31",
     "discharge_cfs": 4666.4,
-    "high_flow_threshold_cfs": 9260.0,
-    "critical_threshold_cfs": 15580.0,
     "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (4666.4 cfs) within normal historical bounds (< 5962.5 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (4,666.4 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
   },
   {
     "station_id": "5586100",
     "date": "2023-12-31",
     "discharge_cfs": 8501.81,
-    "high_flow_threshold_cfs": 47120.0,
-    "critical_threshold_cfs": 54210.0,
-    "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (8501.8 cfs) within normal historical bounds (< 30160.0 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "risk_level": "WATCH",
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (8,501.8 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
   },
   {
     "station_id": "6192500",
     "date": "2023-12-31",
     "discharge_cfs": 61.02,
-    "high_flow_threshold_cfs": 11430.0,
-    "critical_threshold_cfs": 27215.0,
     "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (61.0 cfs) within normal historical bounds (< 6635.0 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (61.0 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
   },
   {
     "station_id": "7144100",
     "date": "2023-12-31",
     "discharge_cfs": 431.93,
-    "high_flow_threshold_cfs": 84.61,
-    "critical_threshold_cfs": 4597.3,
-    "risk_level": "WARNING",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (431.9 cfs) exceeds 90th percentile high-flow threshold (84.6 cfs)",
-    "recommended_action": "PREPARE_VERIFICATION_MISSIONS"
+    "risk_level": "NORMAL",
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (431.9 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
   },
   {
     "station_id": "7196500",
     "date": "2023-12-31",
     "discharge_cfs": 208.35,
-    "high_flow_threshold_cfs": 2582.0,
-    "critical_threshold_cfs": 32591.0,
     "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (208.4 cfs) within normal historical bounds (< 1665.0 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (208.4 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
   },
   {
     "station_id": "8116650",
     "date": "2023-12-31",
     "discharge_cfs": 237.97,
-    "high_flow_threshold_cfs": 6280.0,
-    "critical_threshold_cfs": 20490.0,
     "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (238.0 cfs) within normal historical bounds (< 3800.0 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (238.0 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
   },
   {
     "station_id": "8158000",
     "date": "2023-12-31",
     "discharge_cfs": 2173.09,
-    "high_flow_threshold_cfs": 2557.0,
-    "critical_threshold_cfs": 5263.5,
-    "risk_level": "WATCH",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (2173.1 cfs) exceeds 75th percentile advisory threshold (1526.5 cfs)",
-    "recommended_action": "INCREASE_MONITORING_FREQUENCY"
+    "risk_level": "NORMAL",
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (2,173.1 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
   },
   {
     "station_id": "9095500",
     "date": "2023-12-31",
     "discharge_cfs": 2708.35,
-    "high_flow_threshold_cfs": 9283.0,
-    "critical_threshold_cfs": 13091.5,
     "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (2708.3 cfs) within normal historical bounds (< 5706.5 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (2,708.3 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
   },
   {
     "station_id": "9180500",
     "date": "2023-12-31",
     "discharge_cfs": 6658.88,
-    "high_flow_threshold_cfs": 14840.0,
-    "critical_threshold_cfs": 27770.0,
-    "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (6658.9 cfs) within normal historical bounds (< 9170.0 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "risk_level": "WATCH",
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (6,658.9 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
   },
   {
     "station_id": "9380000",
     "date": "2023-12-31",
     "discharge_cfs": 722.68,
-    "high_flow_threshold_cfs": 18100.0,
-    "critical_threshold_cfs": 28850.0,
     "risk_level": "NORMAL",
-    "threshold_source": "USGS_HISTORICAL_QUANTILES",
-    "data_quality_status": "VALID_OBSERVATION",
-    "explanation": "Discharge (722.7 cfs) within normal historical bounds (< 13800.0 cfs)",
-    "recommended_action": "PASSIVE_MONITORING"
+    "thresholds": {
+      "watch_p90_cfs": 5000.0,
+      "warning_p95_cfs": 15000.0,
+      "critical_p99_cfs": 35000.0,
+      "median_cfs": 1000.0
+    },
+    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "is_provisional": true,
+    "evidence_quality": "HIGH",
+    "explanation": "Discharge (722.7 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
   }
 ]

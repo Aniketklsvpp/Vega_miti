@@ -5,12 +5,12 @@ from typing import List, Optional, Dict, Any
 
 from src.swarm_simulator import SwarmCoordinator, run_coordination_comparison
 from src.swarm_activation import SwarmActivationEngine
-from src.risk_engine import HydrologicalRiskEngine
+from src.risk_engine import FloodRiskEngine
 
 router = APIRouter(prefix="/api/swarm", tags=["swarm"])
 coordinator = SwarmCoordinator(grid_size=(20, 20), lease_duration_sec=45)
 activation_engine = SwarmActivationEngine()
-risk_engine = HydrologicalRiskEngine()
+risk_engine = FloodRiskEngine()
 
 def envelope(data=None, error=None):
     if error:
