@@ -1,0 +1,125 @@
+{
+  "framework": "BASINSHIFT_GLOBAL_FLOOD_INTELLIGENCE",
+  "forecast_skill": {
+    "mae_cfs": 2018.77,
+    "rmse_cfs": 5688.65,
+    "normalized_mae": 0.2648,
+    "nse": 0.8235
+  },
+  "high_flow_detection": {
+    "threshold_cfs": 18500.0,
+    "event_precision": 0.8362,
+    "event_recall": 0.8357,
+    "event_f1_score": 0.836,
+    "false_alarm_rate": 0.0182,
+    "total_extreme_events": 1607
+  },
+  "generalization": {
+    "unseen_catchments_count": 20,
+    "macro_average_nse": -1.8413,
+    "macro_average_rmse_cfs": 6521.02,
+    "pooled_rmse_cfs": 9320.98,
+    "pooled_nse": 0.387,
+    "per_catchment": {
+      "1570500": {
+        "rmse": 32842.71,
+        "nse": -0.335
+      },
+      "1638500": {
+        "rmse": 4330.2,
+        "nse": 0.635
+      },
+      "1646500": {
+        "rmse": 6206.48,
+        "nse": 0.4524
+      },
+      "2037500": {
+        "rmse": 4051.98,
+        "nse": 0.3656
+      },
+      "2146000": {
+        "rmse": 4364.58,
+        "nse": -2.9267
+      },
+      "2169500": {
+        "rmse": 6428.2,
+        "nse": 0.1707
+      },
+      "2202500": {
+        "rmse": 1404.25,
+        "nse": -0.0225
+      },
+      "3234500": {
+        "rmse": 4283.78,
+        "nse": 0.5951
+      },
+      "3374100": {
+        "rmse": 11994.02,
+        "nse": 0.2842
+      },
+      "5484500": {
+        "rmse": 1492.78,
+        "nse": -0.2677
+      },
+      "5527500": {
+        "rmse": 2584.78,
+        "nse": 0.5822
+      },
+      "5586100": {
+        "rmse": 9092.45,
+        "nse": 0.6533
+      },
+      "6192500": {
+        "rmse": 6113.9,
+        "nse": -0.5183
+      },
+      "7144100": {
+        "rmse": 666.87,
+        "nse": -0.3465
+      },
+      "7196500": {
+        "rmse": 2898.96,
+        "nse": 0.0544
+      },
+      "8116650": {
+        "rmse": 4761.06,
+        "nse": -0.3059
+      },
+      "8158000": {
+        "rmse": 6362.54,
+        "nse": -29.7807
+      },
+      "9095500": {
+        "rmse": 4300.13,
+        "nse": -0.3566
+      },
+      "9180500": {
+        "rmse": 5952.66,
+        "nse": 0.3513
+      },
+      "9380000": {
+        "rmse": 10287.99,
+        "nse": -6.1112
+      }
+    }
+  },
+  "robustness": {
+    "baseline_rmse_cfs": 5688.65,
+    "noisy_inputs_rmse_cfs": 5712.97,
+    "noise_degradation_pct": 0.43,
+    "missing_inputs_rmse_cfs": 5697.6,
+    "missing_degradation_pct": 0.16,
+    "delayed_inputs_rmse_cfs": 5689.38,
+    "delay_degradation_pct": 0.01
+  },
+  "efficiency": {
+    "total_benchmark_samples": 16060,
+    "inference_latency_us_per_sample": 30.42,
+    "throughput_samples_per_sec": 32870.9,
+    "artifact_size_kb": 520.85
+  },
+  "unsupported_metrics_disclosure": [
+    "CRPS and Brier score currently unsupported without ensemble/probabilistic dispersion head",
+    "Evacuation routing validation unsupported"
+  ]
+}

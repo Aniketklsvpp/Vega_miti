@@ -1,0 +1,108 @@
+import uuid
+
+class SwarmActivationEngine:
+    def __init__(self):
+        self.current_state = "NORMAL"
+
+    def evaluate_activation(self, risk_assessment_list):
+        critical_count = sum(1 for r in risk_assessment_list if r["risk_level"] == "CRITICAL")
+        warning_count = sum(1 for r in risk_assessment_list if r["risk_level"] == "WARNING")
+        watch_count = sum(1 for r in risk_assessment_list if r["risk_level"] == "WATCH")
+
+        prev_state = self.current_state
+        if critical_count > 0:
+            new_state = "CRITICAL"
+        elif warning_count > 0:
+            new_state = "WARNING"
+        elif watch_count > 0:
+            new_state = "WATCH"
+        elif self.current_state in ("CRITICAL", "WARNING", "WATCH"):
+            new_state = "RISK_REDUCTION"
+        else:
+            new_state = "NORMAL"
+
+        self.current_state = new_state
+        missions = self._generate_missions(risk_assessment_list, new_state)
+
+        return {
+            "previous_state": prev_state,
+            "current_state": new_state,
+            "critical_stations": critical_count,
+            "warning_stations": warning_count,
+            "watch_stations": watch_count,
+            "active_missions_generated": len(missions),
+            "missions": missions
+        }
+
+    def _generate_missions(self, assessments, state):
+        missions = []
+        if state == "NORMAL":
+            return missions
+
+        for assess in assessments:
+            level = assess["risk_level"]
+            st_id = assess["station_id"]
+            if assess.get("data_quality_status") != "VALID_OBSERVATION":
+                continue
+
+            if level == "CRITICAL":
+                missions.append({
+                    "mission_id": f"MSN-{uuid.uuid4().hex[:6].upper()}",
+                    "mission_type": "EMERGENCY_CREST_VERIFICATION",
+                    "priority": 1,
+                    "target_station_id": st_id,
+                    "target_position": self._station_to_grid(st_id),
+                    "required_capabilities": ["AERIAL_OBSERVATION", "VERIFICATION"],
+                    "estimated_duration_sec": 120,
+                    "status": "PENDING"
+                })
+                missions.append({
+                    "mission_id": f"MSN-{uuid.uuid4().hex[:6].upper()}",
+                    "mission_type": "DOWNSTREAM_SURVEILLANCE",
+                    "priority": 1,
+                    "target_station_id": st_id,
+                    "target_position": (self._station_to_grid(st_id)[0] + 1, self._station_to_grid(st_id)[1] + 1),
+                    "required_capabilities": ["AREA_SURVEILLANCE"],
+                    "estimated_duration_sec": 180,
+                    "status": "PENDING"
+                })
+            elif level == "WARNING":
+                missions.append({
+                    "mission_id": f"MSN-{uuid.uuid4().hex[:6].upper()}",
+                    "mission_type": "SURFACE_FLOW_MONITORING",
+                    "priority": 2,
+                    "target_station_id": st_id,
+                    "target_position": self._station_to_grid(st_id),
+                    "required_capabilities": ["RIVER_MONITORING"],
+                    "estimated_duration_sec": 150,
+                    "status": "PENDING"
+                })
+                missions.append({
+                    "mission_id": f"MSN-{uuid.uuid4().hex[:6].upper()}",
+                    "mission_type": "NETWORK_RELAY_BRIDGE",
+                    "priority": 2,
+                    "target_station_id": st_id,
+                    "target_position": (self._station_to_grid(st_id)[0] - 1, self._station_to_grid(st_id)[1]),
+                    "required_capabilities": ["DATA_RELAY"],
+                    "estimated_duration_sec": 240,
+                    "status": "PENDING"
+                })
+            elif level == "WATCH":
+                missions.append({
+                    "mission_id": f"MSN-{uuid.uuid4().hex[:6].upper()}",
+                    "mission_type": "PREVENTIVE_RECONNAISSANCE",
+                    "priority": 3,
+                    "target_station_id": st_id,
+                    "target_position": self._station_to_grid(st_id),
+                    "required_capabilities": ["AERIAL_OBSERVATION"],
+                    "estimated_duration_sec": 90,
+                    "status": "PENDING"
+                })
+
+        return missions
+
+    def _station_to_grid(self, station_id):
+        hash_val = hash(str(station_id))
+        x = (hash_val % 16) + 2
+        y = ((hash_val // 16) % 16) + 2
+        return (abs(x), abs(y))
