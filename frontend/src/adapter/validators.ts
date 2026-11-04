@@ -94,3 +94,4 @@ export function validateModelResults(
 
   return { valid: true, data: data as ModelResults }
 }
+

@@ -64,3 +64,4 @@ export type AdapterStatus =
   | { status: 'loading' }
   | { status: 'error'; message: string; missingField?: string; file?: string }
   | { status: 'ready'; data: AppDataPayload }
+

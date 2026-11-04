@@ -22,3 +22,4 @@ for (const file of files) {
     fs.copyFileSync(srcPath, destPath)
   }
 }
+
