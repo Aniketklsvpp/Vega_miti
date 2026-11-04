@@ -28,3 +28,4 @@ const copyDir = (src, dest) => {
 for (const dir of ['Assets', 'ThirdParty', 'Widgets', 'Workers']) {
   copyDir(path.join(cesiumSrc, dir), path.join(cesiumDest, dir))
 }
+

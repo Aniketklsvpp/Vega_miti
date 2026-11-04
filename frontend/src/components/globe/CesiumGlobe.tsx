@@ -42,22 +42,11 @@ export const CesiumGlobe: React.FC<CesiumGlobeProps> = ({ onSelectRegion, onSkip
     const container = containerRef.current
     if (!container) return
 
-    (window as any).CESIUM_BASE_URL = '/cesium'
+    ;(window as any).CESIUM_BASE_URL = '/cesium/'
 
     const ionToken = (import.meta as any).env?.VITE_CESIUM_ION_TOKEN
     if (ionToken) {
       Cesium.Ion.defaultAccessToken = ionToken
-    }
-
-    let imageryProvider: Cesium.ImageryProvider
-    try {
-      imageryProvider = new (Cesium.TileMapServiceImageryProvider as any)({
-        url: Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII'),
-      })
-    } catch {
-      imageryProvider = new Cesium.UrlTemplateImageryProvider({
-        url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-      })
     }
 
     const viewer = new Cesium.Viewer(container, {
@@ -71,20 +60,28 @@ export const CesiumGlobe: React.FC<CesiumGlobeProps> = ({ onSelectRegion, onSkip
       animation: false,
       fullscreenButton: false,
       selectionIndicator: false,
-      baseLayer: new Cesium.ImageryLayer(imageryProvider),
+      baseLayer: false,
+      skyBox: false,
+      requestRenderMode: true,
+      maximumRenderTimeChange: Number.POSITIVE_INFINITY,
     })
 
     viewerRef.current = viewer
+    viewer.resolutionScale = 1.0
 
-    viewer.scene.globe.enableLighting = true
-    viewer.scene.globe.atmosphereBrightnessShift = 0.1
-    viewer.scene.globe.atmosphereHueShift = 0.02
+    viewer.scene.globe.enableLighting = false
+    viewer.scene.globe.showGroundAtmosphere = true
+    viewer.scene.globe.atmosphereBrightnessShift = 0.05
+    viewer.scene.globe.atmosphereSaturationShift = -0.05
     viewer.scene.globe.depthTestAgainstTerrain = false
+    viewer.scene.globe.baseColor = Cesium.Color.fromCssColorString('#19364A')
+    viewer.scene.backgroundColor = Cesium.Color.fromCssColorString('#F5F7F8')
 
     if (viewer.scene.skyAtmosphere) {
       viewer.scene.skyAtmosphere.show = true
+      viewer.scene.skyAtmosphere.brightnessShift = 0.05
+      viewer.scene.skyAtmosphere.saturationShift = -0.05
     }
-    viewer.scene.backgroundColor = Cesium.Color.fromCssColorString('#F5F7F8')
 
     viewer.camera.setView({
       destination: Cesium.Cartesian3.fromDegrees(60.0, 20.0, 18000000.0),
@@ -94,6 +91,24 @@ export const CesiumGlobe: React.FC<CesiumGlobeProps> = ({ onSelectRegion, onSkip
         roll: 0.0,
       },
     })
+
+    Cesium.TileMapServiceImageryProvider.fromUrl('/cesium/Assets/Textures/NaturalEarthII')
+      .then((provider) => {
+        if (!viewer.isDestroyed()) {
+          viewer.imageryLayers.addImageryProvider(provider)
+          viewer.scene.requestRender()
+        }
+      })
+      .catch(() => {
+        Cesium.SingleTileImageryProvider.fromUrl('/assets/topo.png')
+          .then((provider) => {
+            if (!viewer.isDestroyed()) {
+              viewer.imageryLayers.addImageryProvider(provider)
+              viewer.scene.requestRender()
+            }
+          })
+          .catch(() => {})
+      })
 
     const indiaEntity = viewer.entities.add({
       id: 'region-india',
@@ -139,36 +154,67 @@ export const CesiumGlobe: React.FC<CesiumGlobeProps> = ({ onSelectRegion, onSkip
       },
     })
 
-    Cesium.GeoJsonDataSource.load('/assets/geo/india-pov.json', {
-      stroke: Cesium.Color.fromCssColorString('#28A6A1'),
-      fill: Cesium.Color.fromCssColorString('#28A6A1').withAlpha(0.12),
-      strokeWidth: 3,
-      clampToGround: true,
+    Cesium.GeoJsonDataSource.load('/assets/geo/world-countries.json', {
+      stroke: Cesium.Color.fromCssColorString('#DCE4E9').withAlpha(0.6),
+      fill: Cesium.Color.TRANSPARENT,
+      strokeWidth: 1,
+      clampToGround: false,
     })
       .then((ds) => {
-        viewer.dataSources.add(ds)
+        if (!viewer.isDestroyed()) {
+          viewer.dataSources.add(ds)
+          viewer.scene.requestRender()
+        }
+      })
+      .catch(() => {})
+
+    Cesium.GeoJsonDataSource.load('/assets/geo/india-pov.json', {
+      stroke: Cesium.Color.fromCssColorString('#28A6A1'),
+      fill: Cesium.Color.fromCssColorString('#28A6A1').withAlpha(0.15),
+      strokeWidth: 3,
+      clampToGround: false,
+    })
+      .then((ds) => {
+        if (!viewer.isDestroyed()) {
+          viewer.dataSources.add(ds)
+          viewer.scene.requestRender()
+        }
       })
       .catch(() => {})
 
     Cesium.GeoJsonDataSource.load('/assets/geo/usa-boundary.json', {
       stroke: Cesium.Color.fromCssColorString('#398DB5'),
-      fill: Cesium.Color.fromCssColorString('#398DB5').withAlpha(0.08),
+      fill: Cesium.Color.fromCssColorString('#398DB5').withAlpha(0.1),
       strokeWidth: 2,
-      clampToGround: true,
+      clampToGround: false,
     })
       .then((ds) => {
-        viewer.dataSources.add(ds)
+        if (!viewer.isDestroyed()) {
+          viewer.dataSources.add(ds)
+          viewer.scene.requestRender()
+        }
       })
       .catch(() => {})
 
+    let isUserDragging = false
     const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
+
+    handler.setInputAction(() => {
+      isUserDragging = true
+    }, Cesium.ScreenSpaceEventType.LEFT_DOWN)
+
+    handler.setInputAction(() => {
+      isUserDragging = false
+      viewer.scene.requestRender()
+    }, Cesium.ScreenSpaceEventType.LEFT_UP)
 
     handler.setInputAction((click: any) => {
       const picked = viewer.scene.pick(click.position)
       if (Cesium.defined(picked) && picked.id) {
-        if (picked.id === indiaEntity || picked.id.id === 'region-india') {
+        const id = picked.id
+        if (id === indiaEntity || id.id === 'region-india' || id.name === 'India') {
           triggerFlyTo('india')
-        } else if (picked.id === usaEntity || picked.id.id === 'region-usa') {
+        } else if (id === usaEntity || id.id === 'region-usa' || id.name === 'United States of America') {
           triggerFlyTo('usa')
         }
       }
@@ -177,26 +223,37 @@ export const CesiumGlobe: React.FC<CesiumGlobeProps> = ({ onSelectRegion, onSkip
     handler.setInputAction((movement: any) => {
       const picked = viewer.scene.pick(movement.endPosition)
       if (Cesium.defined(picked) && picked.id) {
-        if (picked.id === indiaEntity || picked.id.id === 'region-india') {
+        const id = picked.id
+        if (id === indiaEntity || id.id === 'region-india' || id.name === 'India') {
           container.style.cursor = 'pointer'
           setHoveredRegion({ name: 'India River Basins (Selected Region)', x: movement.endPosition.x, y: movement.endPosition.y })
+          viewer.scene.requestRender()
           return
         }
-        if (picked.id === usaEntity || picked.id.id === 'region-usa') {
+        if (id === usaEntity || id.id === 'region-usa' || id.name === 'United States of America') {
           container.style.cursor = 'pointer'
           setHoveredRegion({ name: 'United States Catchments', x: movement.endPosition.x, y: movement.endPosition.y })
+          viewer.scene.requestRender()
+          return
+        }
+        if (id.name) {
+          container.style.cursor = 'default'
+          setHoveredRegion({ name: `${id.name} (No active stations)`, x: movement.endPosition.x, y: movement.endPosition.y })
+          viewer.scene.requestRender()
           return
         }
       }
       container.style.cursor = 'default'
       setHoveredRegion(null)
+      viewer.scene.requestRender()
     }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
 
     let spinHandler: Cesium.Event.RemoveCallback | null = null
-    const spinRate = 0.0008
+    const spinRate = 0.0006
     spinHandler = viewer.clock.onTick.addEventListener(() => {
-      if (!isFlying && !viewer.camera.getPickRay(new Cesium.Cartesian2(0, 0))) {
+      if (!isFlying && !isUserDragging) {
         viewer.scene.camera.rotate(Cesium.Cartesian3.UNIT_Z, spinRate)
+        viewer.scene.requestRender()
       }
     })
 
@@ -271,7 +328,10 @@ export const CesiumGlobe: React.FC<CesiumGlobeProps> = ({ onSelectRegion, onSkip
         <button
           onClick={() => {
             const viewer = viewerRef.current
-            if (viewer) viewer.camera.zoomIn(1000000.0)
+            if (viewer) {
+              viewer.camera.zoomIn(1000000.0)
+              viewer.scene.requestRender()
+            }
           }}
           className="p-1.5 hover:bg-[#EAF0F3] text-[#19364A] rounded transition"
           title="Zoom In"
@@ -281,7 +341,10 @@ export const CesiumGlobe: React.FC<CesiumGlobeProps> = ({ onSelectRegion, onSkip
         <button
           onClick={() => {
             const viewer = viewerRef.current
-            if (viewer) viewer.camera.zoomOut(1000000.0)
+            if (viewer) {
+              viewer.camera.zoomOut(1000000.0)
+              viewer.scene.requestRender()
+            }
           }}
           className="p-1.5 hover:bg-[#EAF0F3] text-[#19364A] rounded transition"
           title="Zoom Out"
