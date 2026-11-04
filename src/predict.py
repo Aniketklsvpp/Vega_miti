@@ -26,12 +26,19 @@ CONFIG_B_FEATURES = [
 
 class RiverDischargePredictor:
     def __init__(self, config_a_path=CONFIG_A_PATH, config_b_path=CONFIG_B_PATH):
+        self.config_a_path = config_a_path
+        self.config_b_path = config_b_path
         self.models = {}
-        if os.path.exists(config_a_path):
-            self.models["A"] = joblib.load(config_a_path)
+        self._load_models()
+
+    def _load_models(self):
+        if os.path.exists(self.config_a_path):
+            art_a = joblib.load(self.config_a_path)
+            self.models["A"] = art_a["model"] if isinstance(art_a, dict) and "model" in art_a else art_a
             self.models["primary"] = self.models["A"]
-        if os.path.exists(config_b_path):
-            self.models["B"] = joblib.load(config_b_path)
+        if os.path.exists(self.config_b_path):
+            art_b = joblib.load(self.config_b_path)
+            self.models["B"] = art_b["model"] if isinstance(art_b, dict) and "model" in art_b else art_b
             self.models["past_only"] = self.models["B"]
 
     def get_required_features(self, config="A"):
@@ -44,6 +51,8 @@ class RiverDischargePredictor:
         cfg_key = str(config).upper()
         model_key = "B" if cfg_key in ("B", "PAST_ONLY", "PAST") else "A"
         
+        if model_key not in self.models:
+            self._load_models()
         if model_key not in self.models:
             raise RuntimeError(f"Model artifact for configuration '{config}' not loaded.")
         
@@ -61,7 +70,10 @@ class RiverDischargePredictor:
             X_arr = X_mat.values
         else:
             X_arr = np.asarray(X, dtype=float)
-            if X_arr.shape[1] != len(req_features):
+            if X_arr.shape[1] == 24 and len(req_features) == 18:
+                indices = [CONFIG_A_FEATURES.index(c) for c in req_features]
+                X_arr = X_arr[:, indices]
+            elif X_arr.shape[1] != len(req_features):
                 raise ValueError(f"Input feature array has {X_arr.shape[1]} columns, expected {len(req_features)}")
             nan_mask = ~np.isfinite(X_arr)
             if np.any(nan_mask):
@@ -92,75 +104,6 @@ class RiverDischargePredictor:
         out_df = self.predict(X, identifiers, config=config)
         os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
         out_df.to_csv(output_path, index=False)
-        return out_df
-
-class RiverDischargePredictor:
-    def __init__(self, model_a_path="outputs/hist_gb_log1p_full.joblib", model_b_path="outputs/extra_trees_raw_past_only.joblib"):
-        self.model_a_path = model_a_path
-        self.model_b_path = model_b_path
-        self._models = {}
-        self.past_only_features = [
-            "drainage_area_sqmi", "mean_elevation_ft", "day_of_year", "month",
-            "day_of_week", "season", "sin_day_of_year", "cos_day_of_year",
-            "log_drainage_area", "precip_lag_1", "precip_lag_2", "precip_lag_3",
-            "precip_roll_sum_3d", "precip_roll_sum_7d", "precip_roll_sum_14d",
-            "temp_avg_lag_1", "soil_moisture_lag_1", "soil_moisture_roll_mean_3d"
-        ]
-
-    def _get_model(self, config="A"):
-        cfg = config.upper()
-        if cfg not in self._models:
-            path = self.model_a_path if cfg == "A" else self.model_b_path
-            if not os.path.exists(path):
-                raise FileNotFoundError(f"Model artifact not found for Config {cfg}: {path}")
-            artifact = joblib.load(path)
-            self._models[cfg] = artifact["model"] if isinstance(artifact, dict) and "model" in artifact else artifact
-        return self._models[cfg]
-
-    def predict(self, X_test, test_identifiers, config="A"):
-        cfg = config.upper()
-        model = self._get_model(cfg)
-
-        if isinstance(X_test, pd.DataFrame):
-            if cfg == "B":
-                avail = [c for c in self.past_only_features if c in X_test.columns]
-                if len(avail) == len(self.past_only_features):
-                    X_mat = X_test[self.past_only_features].values
-                else:
-                    X_mat = X_test.values
-            else:
-                X_mat = X_test.values
-        else:
-            X_mat = np.asarray(X_test)
-            if cfg == "B" and X_mat.shape[1] == 24:
-                full_features = [
-                    "precipitation_mm", "temp_max_c", "temp_min_c", "soil_moisture",
-                    "drainage_area_sqmi", "mean_elevation_ft", "day_of_year", "month",
-                    "day_of_week", "season", "sin_day_of_year", "cos_day_of_year",
-                    "temp_range", "temp_avg", "log_drainage_area", "precip_lag_1",
-                    "precip_lag_2", "precip_lag_3", "precip_roll_sum_3d",
-                    "precip_roll_sum_7d", "precip_roll_sum_14d", "temp_avg_lag_1",
-                    "soil_moisture_lag_1", "soil_moisture_roll_mean_3d"
-                ]
-                indices = [full_features.index(c) for c in self.past_only_features]
-                X_mat = X_mat[:, indices]
-
-        raw_preds = model.predict(X_mat)
-        clean_preds = np.clip(raw_preds, a_min=0.0, a_max=None)
-        clean_preds = np.where(np.isfinite(clean_preds), clean_preds, 0.0)
-
-        ident_df = pd.DataFrame(test_identifiers).copy()
-        station_col = "station_id" if "station_id" in ident_df.columns else ident_df.columns[0]
-        date_col = "date" if "date" in ident_df.columns else (ident_df.columns[1] if len(ident_df.columns) > 1 else None)
-
-        if len(clean_preds) != len(ident_df):
-            raise ValueError(f"Mismatch between prediction count ({len(clean_preds)}) and test row count ({len(ident_df)})")
-
-        out_df = pd.DataFrame({
-            "station_id": ident_df[station_col].values,
-            "date": ident_df[date_col].values if date_col is not None else np.arange(len(clean_preds)),
-            "discharge_cfs": np.round(clean_preds, 4)
-        })
         return out_df
 
 def generate_predictions(model_or_path, X_test, test_identifiers, output_path="predictions.csv"):
