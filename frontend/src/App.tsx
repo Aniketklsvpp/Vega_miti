@@ -7,7 +7,7 @@ import { OverviewView } from './views/OverviewView'
 import { StationDetailPanel } from './components/station/StationDetailPanel'
 import { ModelTrustView } from './views/ModelTrustView'
 import { PeakComparison } from './components/spotlight/PeakComparison'
-import { CesiumGlobe } from './components/globe/CesiumGlobe'
+import OrbitDeliveryHero from './components/ui/orbit-delivery-hero'
 
 const AppContent: React.FC = () => {
   const { status, scene, setScene, setRegion, activeTab, setActiveTab, selectedStationId, setSelectedStationId, reload } = useRiverData()
@@ -32,7 +32,7 @@ const AppContent: React.FC = () => {
 
   if (scene === 'globe') {
     return (
-      <CesiumGlobe
+      <OrbitDeliveryHero
         onSelectRegion={(reg) => {
           setRegion(reg)
           setScene('map')
