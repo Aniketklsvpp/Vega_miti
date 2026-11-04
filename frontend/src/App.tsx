@@ -7,10 +7,25 @@ import { OverviewView } from './views/OverviewView'
 import { StationDetailPanel } from './components/station/StationDetailPanel'
 import { ModelTrustView } from './views/ModelTrustView'
 import { PeakComparison } from './components/spotlight/PeakComparison'
+import { FloodIntelligenceView } from './views/FloodIntelligenceView'
+import { SwarmCommandView } from './views/SwarmCommandView'
+import { MissionControlView } from './views/MissionControlView'
+import { NetworkResilienceView } from './views/NetworkResilienceView'
+import { EvaluationBenchmarkView } from './views/EvaluationBenchmarkView'
 import OrbitDeliveryHero from './components/ui/orbit-delivery-hero'
 
 const AppContent: React.FC = () => {
-  const { status, scene, setScene, setRegion, activeTab, setActiveTab, selectedStationId, setSelectedStationId, reload } = useRiverData()
+  const {
+    status,
+    scene,
+    setScene,
+    setRegion,
+    activeTab,
+    setActiveTab,
+    selectedStationId,
+    setSelectedStationId,
+    reload,
+  } = useRiverData()
 
   if (status.status === 'loading') {
     return <LoadingState />
@@ -28,16 +43,19 @@ const AppContent: React.FC = () => {
   }
 
   const { data } = status
-  const currentStation = data.stations.find((s) => s.station_id === selectedStationId) || data.stations[0]
+  const currentStation =
+    data.stations.find((s) => s.station_id === selectedStationId) || data.stations[0]
 
   if (scene === 'globe') {
     return (
       <OrbitDeliveryHero
         onSelectRegion={(reg) => {
           setRegion(reg)
+          setActiveTab('flood')
           setScene('map')
         }}
         onSkipIntro={() => {
+          setActiveTab('flood')
           setScene('map')
         }}
       />
@@ -46,6 +64,28 @@ const AppContent: React.FC = () => {
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+      {activeTab === 'flood' && (
+        <FloodIntelligenceView
+          stations={data.stations}
+          selectedStationId={selectedStationId || data.stations[0]?.station_id || 'IND-BR-01'}
+          onSelectStation={setSelectedStationId}
+          onNavigateToSwarm={() => setActiveTab('swarm')}
+        />
+      )}
+
+      {activeTab === 'swarm' && (
+        <SwarmCommandView
+          onNavigateToMissions={() => setActiveTab('missions')}
+          onNavigateToResilience={() => setActiveTab('resilience')}
+        />
+      )}
+
+      {activeTab === 'missions' && <MissionControlView />}
+
+      {activeTab === 'resilience' && <NetworkResilienceView />}
+
+      {activeTab === 'benchmarks' && <EvaluationBenchmarkView />}
+
       {activeTab === 'map' && (
         <OverviewView
           region={data.region}
@@ -106,9 +146,11 @@ export function App() {
         </div>
         <footer className="border-t border-[#DCE4E9] bg-white py-4 px-6 text-center text-xs text-[#647786]">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-            <span className="font-semibold text-[#19364A]">VEGA_MITI &middot; FLOODCAST CHALLENGE</span>
+            <span className="font-semibold text-[#19364A]">
+              DELTA-SWARM &middot; BASINSHIFT GLOBAL FLOOD INTELLIGENCE CHALLENGE
+            </span>
             <span className="text-[11px] text-[#647786]">
-              Scientific ML discharge estimation from weather & catchment topologies. Historical held-out validation.
+              Physics-guided ML discharge estimation coupled with autonomous multi-agent mesh coordination.
             </span>
           </div>
         </footer>

@@ -22,7 +22,7 @@ const RiverDataContext = createContext<RiverDataContextValue | null>(null)
 export const RiverDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [scene, setScene] = useState<SceneType>('globe')
   const [region, setRegion] = useState<RegionType>('usa')
-  const [activeTab, setActiveTab] = useState<AnalysisTab>('map')
+  const [activeTab, setActiveTab] = useState<AnalysisTab>('flood')
   const [selectedStationId, setSelectedStationId] = useState<string | null>(null)
   const [status, setStatus] = useState<AdapterStatus>({ status: 'loading' })
 
@@ -51,7 +51,7 @@ export const RiverDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const switchRegionAndEnterMap = useCallback((r: RegionType) => {
     setRegion(r)
-    setActiveTab('map')
+    setActiveTab('flood')
     setScene('map')
   }, [])
 

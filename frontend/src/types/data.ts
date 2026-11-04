@@ -1,6 +1,15 @@
 export type RegionType = 'usa' | 'india'
 export type SceneType = 'globe' | 'map'
-export type AnalysisTab = 'map' | 'station' | 'trust' | 'spotlight'
+export type AnalysisTab =
+  | 'flood'
+  | 'swarm'
+  | 'missions'
+  | 'resilience'
+  | 'benchmarks'
+  | 'map'
+  | 'station'
+  | 'trust'
+  | 'spotlight'
 
 export interface StationMetadata {
   station_id: string
