@@ -216,11 +216,71 @@ class SwarmCoordinator:
                 if agent.status == "ASSIGNED" and agent.connectivity == "CONNECTED":
                     agent.status = "AVAILABLE"
                     agent.current_mission = None
+                    agent.planned_path = []
                     if m.get("target_position"):
                         agent.position = m["target_position"]
-                    agent.record_event("MISSION_COMPLETED", {"mission_id": mission_id})
+                    agent.record_event("MISSION_COMPLETED", {"mission_id": mission_id, "position": agent.position})
             if mission_id in self.task_leases:
                 del self.task_leases[mission_id]
+
+    def step_simulation(self):
+        moved_agents = []
+        completed_missions = []
+        for aid, agent in self.agents.items():
+            if agent.status == "ASSIGNED" and agent.connectivity == "CONNECTED" and agent.planned_path:
+                prev_pos = agent.position
+                if len(agent.planned_path) > 1:
+                    agent.position = agent.planned_path[1]
+                    agent.planned_path = agent.planned_path[1:]
+                    agent.battery = max(0.0, round(agent.battery - 0.5, 2))
+                    agent.record_event("AGENT_MOVED", {
+                        "from_position": prev_pos,
+                        "to_position": agent.position,
+                        "remaining_path_length": len(agent.planned_path) - 1
+                    })
+                    moved_agents.append({
+                        "agent_id": aid,
+                        "previous_position": prev_pos,
+                        "current_position": agent.position,
+                        "battery": agent.battery,
+                        "remaining_steps": len(agent.planned_path) - 1
+                    })
+                    if len(agent.planned_path) == 1:
+                        mid = agent.current_mission
+                        self.complete_mission(mid)
+                        completed_missions.append(mid)
+                else:
+                    mid = agent.current_mission
+                    self.complete_mission(mid)
+                    completed_missions.append(mid)
+
+        for aid, agent in self.agents.items():
+            if agent.connectivity == "CONNECTED" and agent.event_buffer:
+                self.synchronize_agent(aid)
+
+        return {
+            "step_status": "COMPLETED",
+            "moved_agents": moved_agents,
+            "completed_missions": completed_missions,
+            "coordinate_frame": "SIMULATED_20X20_GRID",
+            "active_missions_count": sum(1 for m in self.missions.values() if m["status"] in ("PENDING", "IN_PROGRESS", "ASSIGNED", "REASSIGNED")),
+            "completed_missions_count": sum(1 for m in self.missions.values() if m["status"] == "COMPLETED"),
+            "agents": [
+                {
+                    "agent_id": a.agent_id,
+                    "agent_type": a.agent_type,
+                    "capabilities": sorted(list(a.capabilities)),
+                    "position": a.position,
+                    "battery": a.battery,
+                    "status": a.status,
+                    "connectivity": a.connectivity,
+                    "current_mission": a.current_mission,
+                    "planned_path": a.planned_path,
+                    "remaining_steps": max(0, len(a.planned_path) - 1)
+                }
+                for a in self.agents.values()
+            ]
+        }
 
     def simulate_agent_disconnect(self, agent_id):
         if agent_id in self.agents:

@@ -13,8 +13,8 @@
       "agent_id": "DRONE_AERIAL_1",
       "agent_type": "UAV",
       "capabilities": [
-        "VERIFICATION",
-        "AERIAL_OBSERVATION"
+        "AERIAL_OBSERVATION",
+        "VERIFICATION"
       ],
       "position": [
         1,
@@ -23,8 +23,8 @@
       "battery": 95.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-AF351B",
-      "path_remaining": 26,
+      "current_mission": "MSN-33AFE2",
+      "path_remaining": 11,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
@@ -32,8 +32,8 @@
       "agent_type": "UAV",
       "capabilities": [
         "AREA_SURVEILLANCE",
-        "VERIFICATION",
-        "AERIAL_OBSERVATION"
+        "AERIAL_OBSERVATION",
+        "VERIFICATION"
       ],
       "position": [
         18,
@@ -42,7 +42,7 @@
       "battery": 88.0,
       "connectivity": "CONNECTED",
       "status": "ASSIGNED",
-      "current_mission": "MSN-35D980",
+      "current_mission": "MSN-5ABD14",
       "path_remaining": 20,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
@@ -85,8 +85,8 @@
       "agent_id": "RELAY_NODE_1",
       "agent_type": "RELAY",
       "capabilities": [
-        "AERIAL_OBSERVATION",
-        "DATA_RELAY"
+        "DATA_RELAY",
+        "AERIAL_OBSERVATION"
       ],
       "position": [
         10,
@@ -95,8 +95,8 @@
       "battery": 90.0,
       "connectivity": "CONNECTED",
       "status": "ASSIGNED",
-      "current_mission": "MSN-CCA89B",
-      "path_remaining": 3,
+      "current_mission": "MSN-3C4097",
+      "path_remaining": 10,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {

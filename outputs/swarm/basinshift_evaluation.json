@@ -289,8 +289,8 @@
     }
   },
   "computational_efficiency": {
-    "training_time_sec": 4.4531,
-    "inference_time_sec": 0.0185,
-    "latency_ms_per_1000_samples": 4.22
+    "training_time_sec": 18.7924,
+    "inference_time_sec": 0.1102,
+    "latency_ms_per_1000_samples": 25.15
   }
 }

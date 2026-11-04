@@ -234,5 +234,3 @@ def get_hydrology_evaluation(config: str = Query("A")):
             
     rep = evaluator.run_full_evaluation(config=config)
     return make_envelope(data=rep)
-
-app.include_router(swarm_router)
