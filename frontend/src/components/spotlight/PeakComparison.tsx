@@ -34,14 +34,14 @@ export const PeakComparison: React.FC<PeakComparisonProps> = ({ validationRows, 
           stationName: name,
           residual: error,
           pctError,
-          label: `${row.date} (${row.station_id.replace('STN_', '')})`,
+          label: `${row.date} (${row.station_id})`,
         }
       })
   }, [validationRows, stationNameMap])
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-[#0f1420] border border-slate-800">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
             <BarChart2 className="w-5 h-5" />
@@ -51,13 +51,13 @@ export const PeakComparison: React.FC<PeakComparisonProps> = ({ validationRows, 
             <p className="text-xs text-slate-400">Comparing top historical peak discharge events against model estimates</p>
           </div>
         </div>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium bg-purple-500/10 text-purple-300 border border-purple-500/30">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium bg-purple-500/15 text-purple-300 border border-purple-500/40 shadow-sm">
           <AlertCircle className="w-3.5 h-3.5 text-purple-400" />
           <span>HISTORICAL VALIDATION DATA ONLY</span>
         </div>
       </div>
 
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+      <div className="bg-[#0f1420] border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
         <h3 className="text-sm font-bold text-slate-200 tracking-tight font-mono uppercase">
           Top 8 Highest Observed Discharge Days (Actual vs Predicted)
         </h3>
@@ -94,7 +94,7 @@ export const PeakComparison: React.FC<PeakComparisonProps> = ({ validationRows, 
         </div>
       </div>
 
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+      <div className="bg-[#0f1420] border border-slate-800 rounded-2xl p-6 shadow-xl">
         <h3 className="text-sm font-bold text-slate-200 tracking-tight font-mono uppercase mb-4">
           Peak Event Residual Audit Log
         </h3>
@@ -152,4 +152,3 @@ export const PeakComparison: React.FC<PeakComparisonProps> = ({ validationRows, 
     </div>
   )
 }
-
