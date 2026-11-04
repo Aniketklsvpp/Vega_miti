@@ -1,0 +1,3303 @@
+{
+  "status": "success",
+  "event_id": "EVENT-IN-YAMUNA-2023",
+  "title": "July 2023 Yamuna River Mega-Flood (Delhi NCR & Haryana, India)",
+  "country": "India",
+  "river": "Yamuna River (Upper Yamuna Basin)",
+  "timezone": "IST (UTC+05:30)",
+  "measurement_units": {
+    "river_stage": "metres above Mean Sea Level (m MSL)",
+    "upstream_discharge_release": "cubic feet per second (cfs)",
+    "precipitation": "millimetres (mm)"
+  },
+  "geographic_context": {
+    "latitude": 28.663,
+    "longitude": 77.234,
+    "primary_station_name": "Old Railway Bridge (ORB), Delhi"
+  },
+  "total_steps": 12,
+  "executed_steps_count": 12,
+  "current_step_frame": {
+    "step_index": 11,
+    "date": "2023-07-18",
+    "timeline_phase": "RECOVERY",
+    "observed_historical_state": {
+      "key_observation": "Water level recedes below CWC Warning Level (204.50 m); swarm de-escalation complete",
+      "observation_timestamp": "2023-07-18T08:30:00+05:30",
+      "publication_timestamp": "2023-07-18T11:30:00+05:30",
+      "rainfall_mm": 0.0,
+      "water_level_m": 204.3,
+      "upstream_release_cfs": 28000.0,
+      "upstream_release_cumec": 792.87,
+      "in_situ_discharge_cfs": null,
+      "in_situ_discharge_status": "UNMETERED_IN_SITU",
+      "discharge_cfs": null,
+      "legacy_deprecated_discharge_cfs": 28000.0,
+      "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+    },
+    "available_evidence": {
+      "cutoff_date": "2023-07-18",
+      "evidence_sources": [
+        "CWC_OLD_RAILWAY_BRIDGE_STAGE_204.30M",
+        "HATHNIKUND_BARRAGE_RELEASE_28,000CFS",
+        "IMD_PRECIPITATION_0.0MM"
+      ]
+    },
+    "vega_miti_risk_assessment": {
+      "station_id": "YMN-DEL-ORB-01",
+      "date": "2023-07-18",
+      "observation_timestamp": "2023-07-18T08:30:00+05:30",
+      "publication_timestamp": "2023-07-18T11:30:00+05:30",
+      "water_level_m": 204.3,
+      "water_level_status": "OBSERVED",
+      "upstream_release_cfs": 28000.0,
+      "upstream_release_cumec": 792.87,
+      "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+      "in_situ_discharge_cfs": null,
+      "in_situ_discharge_status": "UNMETERED_IN_SITU",
+      "discharge_cfs": null,
+      "legacy_deprecated_discharge_cfs": 28000.0,
+      "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+      "rainfall_mm": 0.0,
+      "rainfall_status": "OBSERVED",
+      "risk_level": "NORMAL",
+      "evidence_sources": [
+        "CWC_OLD_RAILWAY_BRIDGE_STAGE_204.30M",
+        "HATHNIKUND_BARRAGE_RELEASE_28,000CFS",
+        "IMD_PRECIPITATION_0.0MM"
+      ],
+      "evidence_quality": "HIGH",
+      "data_quality_status": "VALID_OBSERVATION",
+      "evidence_quality_breakdown": {
+        "individual_observation_confidence": "HIGH",
+        "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+        "record_completeness": "PARTIAL",
+        "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+        "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+        "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+      },
+      "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+      "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+      "is_provisional": false,
+      "statutory_reference_marks": {
+        "warning_level_m": 204.5,
+        "danger_level_m": 205.33,
+        "prior_1978_record_m": 207.49,
+        "historic_all_time_peak_m": 208.66,
+        "authority": "Central Water Commission (CWC), Government of India"
+      },
+      "vega_miti_operational_rules": {
+        "critical_water_level_trigger_m": 206.5,
+        "critical_barrage_release_trigger_cfs": 300000.0,
+        "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+      },
+      "explanation": "Water level (204.30 m MSL) remains below official CWC Warning Level (204.50 m). Normal river conditions.",
+      "recommended_action": "PASSIVE_MONITORING",
+      "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+    },
+    "retrospective_event_outcome": {
+      "context": "Catchment returns to baseline seasonal equilibrium",
+      "event_peak_date": "2023-07-13"
+    },
+    "simulated_swarm_response": {
+      "coordinate_frame": "SIMULATED_20X20_GRID",
+      "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+      "simulation_clock": {
+        "event_step_date": "2023-07-18",
+        "historical_observation_timestamp": "2023-07-18T08:30:00+05:30",
+        "historical_publication_timestamp": "2023-07-18T11:30:00+05:30",
+        "historical_event_epoch_sec": 1689649200.0,
+        "runtime_simulation_wall_clock_sec": 1793816810.3857722,
+        "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+      },
+      "activation_state": "RISK_REDUCTION",
+      "active_missions_count": 0,
+      "completed_missions_count": 15,
+      "new_missions_generated": 0,
+      "allocations_in_step": [],
+      "reassigned_in_step": [],
+      "failure_event": null,
+      "agents": [
+        {
+          "agent_id": "DRONE_AERIAL_1",
+          "agent_type": "UAV",
+          "capabilities": [
+            "AERIAL_OBSERVATION",
+            "VERIFICATION"
+          ],
+          "position": [
+            2,
+            11
+          ],
+          "battery": 95.0,
+          "connectivity": "DISCONNECTED",
+          "status": "DISCONNECTED",
+          "current_mission": "MSN-390397",
+          "path_remaining": 1,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        },
+        {
+          "agent_id": "DRONE_AERIAL_2",
+          "agent_type": "UAV",
+          "capabilities": [
+            "AREA_SURVEILLANCE",
+            "AERIAL_OBSERVATION",
+            "VERIFICATION"
+          ],
+          "position": [
+            2,
+            11
+          ],
+          "battery": 88.0,
+          "connectivity": "CONNECTED",
+          "status": "ASSIGNED",
+          "current_mission": "MSN-B21FF0",
+          "path_remaining": 1,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        },
+        {
+          "agent_id": "USV_RIVER_1",
+          "agent_type": "USV",
+          "capabilities": [
+            "RIVER_MONITORING",
+            "VERIFICATION"
+          ],
+          "position": [
+            2,
+            11
+          ],
+          "battery": 92.0,
+          "connectivity": "CONNECTED",
+          "status": "ASSIGNED",
+          "current_mission": "MSN-C0006B",
+          "path_remaining": 1,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        },
+        {
+          "agent_id": "USV_RIVER_2",
+          "agent_type": "USV",
+          "capabilities": [
+            "RIVER_MONITORING"
+          ],
+          "position": [
+            12,
+            10
+          ],
+          "battery": 85.0,
+          "connectivity": "CONNECTED",
+          "status": "AVAILABLE",
+          "current_mission": null,
+          "path_remaining": 0,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        },
+        {
+          "agent_id": "RELAY_NODE_1",
+          "agent_type": "RELAY",
+          "capabilities": [
+            "DATA_RELAY",
+            "AERIAL_OBSERVATION"
+          ],
+          "position": [
+            1,
+            11
+          ],
+          "battery": 90.0,
+          "connectivity": "CONNECTED",
+          "status": "ASSIGNED",
+          "current_mission": "MSN-6B5CC8",
+          "path_remaining": 1,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        },
+        {
+          "agent_id": "GROUND_SCOUT_1",
+          "agent_type": "UGV",
+          "capabilities": [
+            "AREA_SURVEILLANCE",
+            "VERIFICATION"
+          ],
+          "position": [
+            3,
+            12
+          ],
+          "battery": 78.0,
+          "connectivity": "CONNECTED",
+          "status": "ASSIGNED",
+          "current_mission": "MSN-6679CC",
+          "path_remaining": 1,
+          "coordinate_frame": "SIMULATED_20X20_GRID"
+        }
+      ]
+    }
+  },
+  "timeline_frames": [
+    {
+      "step_index": 0,
+      "date": "2023-07-07",
+      "timeline_phase": "BEFORE_FLOOD",
+      "observed_historical_state": {
+        "key_observation": "Normal pre-monsoon flow; water level 1.10 m below CWC warning mark",
+        "observation_timestamp": "2023-07-07T08:30:00+05:30",
+        "publication_timestamp": "2023-07-07T11:30:00+05:30",
+        "rainfall_mm": 12.5,
+        "water_level_m": 203.4,
+        "upstream_release_cfs": 42000.0,
+        "upstream_release_cumec": 1189.31,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 42000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-07",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_203.40M",
+          "HATHNIKUND_BARRAGE_RELEASE_42,000CFS",
+          "IMD_PRECIPITATION_12.5MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-07",
+        "observation_timestamp": "2023-07-07T08:30:00+05:30",
+        "publication_timestamp": "2023-07-07T11:30:00+05:30",
+        "water_level_m": 203.4,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 42000.0,
+        "upstream_release_cumec": 1189.31,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 42000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 12.5,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "NORMAL",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_203.40M",
+          "HATHNIKUND_BARRAGE_RELEASE_42,000CFS",
+          "IMD_PRECIPITATION_12.5MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (203.40 m MSL) remains below official CWC Warning Level (204.50 m). Normal river conditions.",
+        "recommended_action": "PASSIVE_MONITORING",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "Initial seasonal baseflow before monsoon trough convergence",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-07",
+          "historical_observation_timestamp": "2023-07-07T08:30:00+05:30",
+          "historical_publication_timestamp": "2023-07-07T11:30:00+05:30",
+          "historical_event_epoch_sec": 1688698800.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.381584,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "NORMAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 0,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 1,
+      "date": "2023-07-08",
+      "timeline_phase": "RISING_RISK",
+      "observed_historical_state": {
+        "key_observation": "Torrential monsoon downpour starts across Delhi NCR and Himachal hills",
+        "observation_timestamp": "2023-07-08T08:30:00+05:30",
+        "publication_timestamp": "2023-07-08T11:30:00+05:30",
+        "rainfall_mm": 126.1,
+        "water_level_m": 204.1,
+        "upstream_release_cfs": 85000.0,
+        "upstream_release_cumec": 2406.93,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 85000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-08",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_204.10M",
+          "HATHNIKUND_BARRAGE_RELEASE_85,000CFS",
+          "IMD_PRECIPITATION_126.1MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-08",
+        "observation_timestamp": "2023-07-08T08:30:00+05:30",
+        "publication_timestamp": "2023-07-08T11:30:00+05:30",
+        "water_level_m": 204.1,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 85000.0,
+        "upstream_release_cumec": 2406.93,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 85000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 126.1,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "NORMAL",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_204.10M",
+          "HATHNIKUND_BARRAGE_RELEASE_85,000CFS",
+          "IMD_PRECIPITATION_126.1MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (204.10 m MSL) remains below official CWC Warning Level (204.50 m). Normal river conditions.",
+        "recommended_action": "PASSIVE_MONITORING",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "Catchment saturation begins in upper sub-basins",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-08",
+          "historical_observation_timestamp": "2023-07-08T08:30:00+05:30",
+          "historical_publication_timestamp": "2023-07-08T11:30:00+05:30",
+          "historical_event_epoch_sec": 1688785200.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.3818443,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "NORMAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 0,
+        "new_missions_generated": 0,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 2,
+      "date": "2023-07-09",
+      "timeline_phase": "RISING_RISK",
+      "observed_historical_state": {
+        "key_observation": "Safdarjung records 153.0 mm (highest 24h July rain since 1982); Yamuna breaches Warning Level (204.50 m)",
+        "observation_timestamp": "2023-07-09T08:30:00+05:30",
+        "publication_timestamp": "2023-07-09T13:00:00+05:30",
+        "rainfall_mm": 153.0,
+        "water_level_m": 204.85,
+        "upstream_release_cfs": 145000.0,
+        "upstream_release_cumec": 4105.94,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 145000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-09",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_204.85M",
+          "HATHNIKUND_BARRAGE_RELEASE_145,000CFS",
+          "IMD_PRECIPITATION_153.0MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-09",
+        "observation_timestamp": "2023-07-09T08:30:00+05:30",
+        "publication_timestamp": "2023-07-09T13:00:00+05:30",
+        "water_level_m": 204.85,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 145000.0,
+        "upstream_release_cumec": 4105.94,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 145000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 153.0,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "WATCH",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_204.85M",
+          "HATHNIKUND_BARRAGE_RELEASE_145,000CFS",
+          "IMD_PRECIPITATION_153.0MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (204.85 m MSL) meets or exceeds official CWC Warning Level (204.50 m); flow elevated above baseline.",
+        "recommended_action": "INCREASE_MONITORING_FREQUENCY",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "Local urban runoff combines with early tributary discharge",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-09",
+          "historical_observation_timestamp": "2023-07-09T08:30:00+05:30",
+          "historical_publication_timestamp": "2023-07-09T13:00:00+05:30",
+          "historical_event_epoch_sec": 1688871600.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.3825955,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "WATCH",
+        "active_missions_count": 1,
+        "completed_missions_count": 0,
+        "new_missions_generated": 1,
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-7D487F",
+            "agent_id": "DRONE_AERIAL_1",
+            "path_length": 12,
+            "path": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                1,
+                8
+              ],
+              [
+                1,
+                9
+              ],
+              [
+                1,
+                10
+              ],
+              [
+                1,
+                11
+              ],
+              [
+                2,
+                11
+              ]
+            ],
+            "bid_score": 105.0,
+            "assigned_at": 1688871600.0,
+            "assigned_at_iso": "2023-07-09T08:30:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.3825955,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              1,
+              1
+            ],
+            "battery": 95.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-7D487F",
+            "path_remaining": 12,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 3,
+      "date": "2023-07-10",
+      "timeline_phase": "RISING_RISK",
+      "observed_historical_state": {
+        "key_observation": "River breaches CWC Danger Level (205.33 m); Hathnikund release surges past 200,000 cfs",
+        "observation_timestamp": "2023-07-10T17:00:00+05:30",
+        "publication_timestamp": "2023-07-10T18:00:00+05:30",
+        "rainfall_mm": 42.0,
+        "water_level_m": 205.76,
+        "upstream_release_cfs": 216000.0,
+        "upstream_release_cumec": 6116.43,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 216000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-10",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_205.76M",
+          "HATHNIKUND_BARRAGE_RELEASE_216,000CFS",
+          "IMD_PRECIPITATION_42.0MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-10",
+        "observation_timestamp": "2023-07-10T17:00:00+05:30",
+        "publication_timestamp": "2023-07-10T18:00:00+05:30",
+        "water_level_m": 205.76,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 216000.0,
+        "upstream_release_cumec": 6116.43,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 216000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 42.0,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "WARNING",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_205.76M",
+          "HATHNIKUND_BARRAGE_RELEASE_216,000CFS",
+          "IMD_PRECIPITATION_42.0MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (205.76 m MSL) meets or exceeds official CWC Danger Level (205.33 m); upstream release (216,000 cfs) requires barrier surveillance and evacuation readiness.",
+        "recommended_action": "PREPARE_VERIFICATION_MISSIONS",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "Upstream hydraulic surge enters upper Delhi reaches",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-10",
+          "historical_observation_timestamp": "2023-07-10T17:00:00+05:30",
+          "historical_publication_timestamp": "2023-07-10T18:00:00+05:30",
+          "historical_event_epoch_sec": 1688988600.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.383022,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "WARNING",
+        "active_missions_count": 2,
+        "completed_missions_count": 1,
+        "new_missions_generated": 2,
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-6F285D",
+            "agent_id": "USV_RIVER_1",
+            "path_length": 5,
+            "path": [
+              [
+                5,
+                10
+              ],
+              [
+                4,
+                10
+              ],
+              [
+                3,
+                10
+              ],
+              [
+                2,
+                10
+              ],
+              [
+                2,
+                11
+              ]
+            ],
+            "bid_score": 224.8,
+            "assigned_at": 1688988600.0,
+            "assigned_at_iso": "2023-07-10T17:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.383022,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-E8E3D0",
+            "agent_id": "RELAY_NODE_1",
+            "path_length": 16,
+            "path": [
+              [
+                10,
+                5
+              ],
+              [
+                9,
+                5
+              ],
+              [
+                8,
+                5
+              ],
+              [
+                7,
+                5
+              ],
+              [
+                6,
+                5
+              ],
+              [
+                5,
+                5
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                3,
+                5
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                1,
+                8
+              ],
+              [
+                1,
+                9
+              ],
+              [
+                1,
+                10
+              ],
+              [
+                1,
+                11
+              ]
+            ],
+            "bid_score": 191.0,
+            "assigned_at": 1688988600.0,
+            "assigned_at_iso": "2023-07-10T17:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.383022,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 95.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              5,
+              10
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6F285D",
+            "path_remaining": 5,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              10,
+              5
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-E8E3D0",
+            "path_remaining": 16,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 4,
+      "date": "2023-07-11",
+      "timeline_phase": "HIGH_RISK_PEAK",
+      "observed_historical_state": {
+        "key_observation": "Peak barrage release from Hathnikund (approx 359,000 cfs) travels downstream; VEGA-MITI critical operational rule triggered",
+        "observation_timestamp": "2023-07-11T11:00:00+05:30",
+        "publication_timestamp": "2023-07-11T12:30:00+05:30",
+        "rainfall_mm": 18.0,
+        "water_level_m": 206.71,
+        "upstream_release_cfs": 359000.0,
+        "upstream_release_cumec": 10165.73,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 359000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-11",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_206.71M",
+          "HATHNIKUND_BARRAGE_RELEASE_359,000CFS",
+          "IMD_PRECIPITATION_18.0MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-11",
+        "observation_timestamp": "2023-07-11T11:00:00+05:30",
+        "publication_timestamp": "2023-07-11T12:30:00+05:30",
+        "water_level_m": 206.71,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 359000.0,
+        "upstream_release_cumec": 10165.73,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 359000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 18.0,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "CRITICAL",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_206.71M",
+          "HATHNIKUND_BARRAGE_RELEASE_359,000CFS",
+          "IMD_PRECIPITATION_18.0MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (206.71 m MSL) breaches CWC Danger Level (205.33 m) and meets VEGA-MITI operational critical threshold (206.50 m); upstream barrage release (359,000 cfs) indicates severe urban flooding.",
+        "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "Maximum instantaneous volume released from upstream control structure",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-11",
+          "historical_observation_timestamp": "2023-07-11T11:00:00+05:30",
+          "historical_publication_timestamp": "2023-07-11T12:30:00+05:30",
+          "historical_event_epoch_sec": 1689053400.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.384221,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "CRITICAL",
+        "active_missions_count": 2,
+        "completed_missions_count": 3,
+        "new_missions_generated": 2,
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-390397",
+            "agent_id": "DRONE_AERIAL_1",
+            "path_length": 1,
+            "path": [
+              [
+                2,
+                11
+              ]
+            ],
+            "bid_score": 338.0,
+            "assigned_at": 1689053400.0,
+            "assigned_at_iso": "2023-07-11T11:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.384221,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-69B5CA",
+            "agent_id": "GROUND_SCOUT_1",
+            "path_length": 8,
+            "path": [
+              [
+                2,
+                18
+              ],
+              [
+                2,
+                17
+              ],
+              [
+                2,
+                16
+              ],
+              [
+                2,
+                15
+              ],
+              [
+                2,
+                14
+              ],
+              [
+                2,
+                13
+              ],
+              [
+                2,
+                12
+              ],
+              [
+                3,
+                12
+              ]
+            ],
+            "bid_score": 310.2,
+            "assigned_at": 1689053400.0,
+            "assigned_at_iso": "2023-07-11T11:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.384221,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
+        "reassigned_in_step": [
+          "MSN-390397"
+        ],
+        "failure_event": {
+          "disconnected_agent": "DRONE_AERIAL_1",
+          "reassigned_missions": [
+            "MSN-390397"
+          ],
+          "reallocations": [
+            {
+              "mission_id": "MSN-390397",
+              "agent_id": "DRONE_AERIAL_2",
+              "path_length": 27,
+              "path": [
+                [
+                  18,
+                  1
+                ],
+                [
+                  17,
+                  1
+                ],
+                [
+                  16,
+                  1
+                ],
+                [
+                  15,
+                  1
+                ],
+                [
+                  14,
+                  1
+                ],
+                [
+                  13,
+                  1
+                ],
+                [
+                  12,
+                  1
+                ],
+                [
+                  11,
+                  1
+                ],
+                [
+                  10,
+                  1
+                ],
+                [
+                  9,
+                  1
+                ],
+                [
+                  8,
+                  1
+                ],
+                [
+                  7,
+                  1
+                ],
+                [
+                  6,
+                  1
+                ],
+                [
+                  5,
+                  1
+                ],
+                [
+                  4,
+                  1
+                ],
+                [
+                  3,
+                  1
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  2,
+                  3
+                ],
+                [
+                  2,
+                  4
+                ],
+                [
+                  2,
+                  5
+                ],
+                [
+                  2,
+                  6
+                ],
+                [
+                  2,
+                  7
+                ],
+                [
+                  2,
+                  8
+                ],
+                [
+                  2,
+                  9
+                ],
+                [
+                  2,
+                  10
+                ],
+                [
+                  2,
+                  11
+                ]
+              ],
+              "bid_score": 257.2,
+              "assigned_at": 1689053400.0,
+              "assigned_at_iso": "2023-07-11T11:00:00+05:30",
+              "runtime_simulation_wall_clock_sec": 1793816810.384221,
+              "timestamp_domain": "HISTORICAL_EVENT_TIME"
+            }
+          ]
+        },
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-390397",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              18,
+              1
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-390397",
+            "path_remaining": 27,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              1,
+              11
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              18
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-69B5CA",
+            "path_remaining": 8,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 5,
+      "date": "2023-07-12",
+      "timeline_phase": "HIGH_RISK_PEAK",
+      "observed_historical_state": {
+        "key_observation": "Breaches historic 45-year 1978 record (207.49 m); Ring Road and Monastery Market inundated",
+        "observation_timestamp": "2023-07-12T13:00:00+05:30",
+        "publication_timestamp": "2023-07-12T14:30:00+05:30",
+        "rainfall_mm": 5.0,
+        "water_level_m": 207.71,
+        "upstream_release_cfs": 180000.0,
+        "upstream_release_cumec": 5097.02,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 180000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-12",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_207.71M",
+          "HATHNIKUND_BARRAGE_RELEASE_180,000CFS",
+          "IMD_PRECIPITATION_5.0MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-12",
+        "observation_timestamp": "2023-07-12T13:00:00+05:30",
+        "publication_timestamp": "2023-07-12T14:30:00+05:30",
+        "water_level_m": 207.71,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 180000.0,
+        "upstream_release_cumec": 5097.02,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 180000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 5.0,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "CRITICAL",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_207.71M",
+          "HATHNIKUND_BARRAGE_RELEASE_180,000CFS",
+          "IMD_PRECIPITATION_5.0MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (207.71 m MSL) breaches CWC Danger Level (205.33 m) and meets VEGA-MITI operational critical threshold (206.50 m); upstream barrage release (180,000 cfs) indicates severe urban flooding.",
+        "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "Extensive backwater effect through stormwater drainage outfalls",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-12",
+          "historical_observation_timestamp": "2023-07-12T13:00:00+05:30",
+          "historical_publication_timestamp": "2023-07-12T14:30:00+05:30",
+          "historical_event_epoch_sec": 1689147000.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.3847208,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "CRITICAL",
+        "active_missions_count": 2,
+        "completed_missions_count": 5,
+        "new_missions_generated": 2,
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-726D29",
+            "agent_id": "DRONE_AERIAL_2",
+            "path_length": 1,
+            "path": [
+              [
+                2,
+                11
+              ]
+            ],
+            "bid_score": 335.2,
+            "assigned_at": 1689147000.0,
+            "assigned_at_iso": "2023-07-12T13:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.3847208,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-A8F934",
+            "agent_id": "GROUND_SCOUT_1",
+            "path_length": 1,
+            "path": [
+              [
+                3,
+                12
+              ]
+            ],
+            "bid_score": 331.2,
+            "assigned_at": 1689147000.0,
+            "assigned_at_iso": "2023-07-12T13:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.3847208,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-390397",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-726D29",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              1,
+              11
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              3,
+              12
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-A8F934",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 6,
+      "date": "2023-07-13",
+      "timeline_phase": "HIGH_RISK_PEAK",
+      "observed_historical_state": {
+        "key_observation": "All-time historical crest of 208.66 m recorded at Old Railway Bridge at 18:00 IST; Red Fort perimeter flooded",
+        "observation_timestamp": "2023-07-13T18:00:00+05:30",
+        "publication_timestamp": "2023-07-13T19:30:00+05:30",
+        "rainfall_mm": 2.0,
+        "water_level_m": 208.66,
+        "upstream_release_cfs": 95000.0,
+        "upstream_release_cumec": 2690.1,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 95000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-13",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_208.66M",
+          "HATHNIKUND_BARRAGE_RELEASE_95,000CFS",
+          "IMD_PRECIPITATION_2.0MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-13",
+        "observation_timestamp": "2023-07-13T18:00:00+05:30",
+        "publication_timestamp": "2023-07-13T19:30:00+05:30",
+        "water_level_m": 208.66,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 95000.0,
+        "upstream_release_cumec": 2690.1,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 95000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 2.0,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "CRITICAL",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_208.66M",
+          "HATHNIKUND_BARRAGE_RELEASE_95,000CFS",
+          "IMD_PRECIPITATION_2.0MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (208.66 m MSL) breaches CWC Danger Level (205.33 m) and meets VEGA-MITI operational critical threshold (206.50 m); upstream barrage release (95,000 cfs) indicates severe urban flooding.",
+        "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "Peak flood stage in recorded Delhi history",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-13",
+          "historical_observation_timestamp": "2023-07-13T18:00:00+05:30",
+          "historical_publication_timestamp": "2023-07-13T19:30:00+05:30",
+          "historical_event_epoch_sec": 1689251400.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.3848891,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "CRITICAL",
+        "active_missions_count": 2,
+        "completed_missions_count": 7,
+        "new_missions_generated": 2,
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-B55ED1",
+            "agent_id": "DRONE_AERIAL_2",
+            "path_length": 1,
+            "path": [
+              [
+                2,
+                11
+              ]
+            ],
+            "bid_score": 335.2,
+            "assigned_at": 1689251400.0,
+            "assigned_at_iso": "2023-07-13T18:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.3848891,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-FD72EF",
+            "agent_id": "GROUND_SCOUT_1",
+            "path_length": 1,
+            "path": [
+              [
+                3,
+                12
+              ]
+            ],
+            "bid_score": 331.2,
+            "assigned_at": 1689251400.0,
+            "assigned_at_iso": "2023-07-13T18:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.3848891,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-390397",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-B55ED1",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              1,
+              11
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              3,
+              12
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-FD72EF",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 7,
+      "date": "2023-07-14",
+      "timeline_phase": "HIGH_RISK_PEAK",
+      "observed_historical_state": {
+        "key_observation": "High-water plateau holds across central Delhi embankments; flood regulator near WHO building breached",
+        "observation_timestamp": "2023-07-14T10:00:00+05:30",
+        "publication_timestamp": "2023-07-14T11:30:00+05:30",
+        "rainfall_mm": 0.0,
+        "water_level_m": 208.2,
+        "upstream_release_cfs": 58000.0,
+        "upstream_release_cumec": 1642.37,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 58000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-14",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_208.20M",
+          "HATHNIKUND_BARRAGE_RELEASE_58,000CFS",
+          "IMD_PRECIPITATION_0.0MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-14",
+        "observation_timestamp": "2023-07-14T10:00:00+05:30",
+        "publication_timestamp": "2023-07-14T11:30:00+05:30",
+        "water_level_m": 208.2,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 58000.0,
+        "upstream_release_cumec": 1642.37,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 58000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 0.0,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "CRITICAL",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_208.20M",
+          "HATHNIKUND_BARRAGE_RELEASE_58,000CFS",
+          "IMD_PRECIPITATION_0.0MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (208.20 m MSL) breaches CWC Danger Level (205.33 m) and meets VEGA-MITI operational critical threshold (206.50 m); upstream barrage release (58,000 cfs) indicates severe urban flooding.",
+        "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "Inundation persists due to downstream channel throttling",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-14",
+          "historical_observation_timestamp": "2023-07-14T10:00:00+05:30",
+          "historical_publication_timestamp": "2023-07-14T11:30:00+05:30",
+          "historical_event_epoch_sec": 1689309000.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.3850315,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "CRITICAL",
+        "active_missions_count": 2,
+        "completed_missions_count": 9,
+        "new_missions_generated": 2,
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-ADAD95",
+            "agent_id": "DRONE_AERIAL_2",
+            "path_length": 1,
+            "path": [
+              [
+                2,
+                11
+              ]
+            ],
+            "bid_score": 335.2,
+            "assigned_at": 1689309000.0,
+            "assigned_at_iso": "2023-07-14T10:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.3850315,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-9EFED4",
+            "agent_id": "GROUND_SCOUT_1",
+            "path_length": 1,
+            "path": [
+              [
+                3,
+                12
+              ]
+            ],
+            "bid_score": 331.2,
+            "assigned_at": 1689309000.0,
+            "assigned_at_iso": "2023-07-14T10:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.3850315,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-390397",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-ADAD95",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              1,
+              11
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              3,
+              12
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-9EFED4",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 8,
+      "date": "2023-07-15",
+      "timeline_phase": "RECESSION",
+      "observed_historical_state": {
+        "key_observation": "Water recedes below 1978 benchmark; army and engineering units seal breached regulator",
+        "observation_timestamp": "2023-07-15T08:30:00+05:30",
+        "publication_timestamp": "2023-07-15T11:30:00+05:30",
+        "rainfall_mm": 8.0,
+        "water_level_m": 207.45,
+        "upstream_release_cfs": 44000.0,
+        "upstream_release_cumec": 1245.94,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 44000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-15",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_207.45M",
+          "HATHNIKUND_BARRAGE_RELEASE_44,000CFS",
+          "IMD_PRECIPITATION_8.0MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-15",
+        "observation_timestamp": "2023-07-15T08:30:00+05:30",
+        "publication_timestamp": "2023-07-15T11:30:00+05:30",
+        "water_level_m": 207.45,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 44000.0,
+        "upstream_release_cumec": 1245.94,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 44000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 8.0,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "CRITICAL",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_207.45M",
+          "HATHNIKUND_BARRAGE_RELEASE_44,000CFS",
+          "IMD_PRECIPITATION_8.0MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (207.45 m MSL) breaches CWC Danger Level (205.33 m) and meets VEGA-MITI operational critical threshold (206.50 m); upstream barrage release (44,000 cfs) indicates severe urban flooding.",
+        "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "Upstream inflows drop significantly",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-15",
+          "historical_observation_timestamp": "2023-07-15T08:30:00+05:30",
+          "historical_publication_timestamp": "2023-07-15T11:30:00+05:30",
+          "historical_event_epoch_sec": 1689390000.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.3852835,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "CRITICAL",
+        "active_missions_count": 0,
+        "completed_missions_count": 13,
+        "new_missions_generated": 2,
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-B21FF0",
+            "agent_id": "DRONE_AERIAL_2",
+            "path_length": 1,
+            "path": [
+              [
+                2,
+                11
+              ]
+            ],
+            "bid_score": 335.2,
+            "assigned_at": 1689390000.0,
+            "assigned_at_iso": "2023-07-15T08:30:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.3852835,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-6679CC",
+            "agent_id": "GROUND_SCOUT_1",
+            "path_length": 1,
+            "path": [
+              [
+                3,
+                12
+              ]
+            ],
+            "bid_score": 331.2,
+            "assigned_at": 1689390000.0,
+            "assigned_at_iso": "2023-07-15T08:30:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.3852835,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-390397",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-B21FF0",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              1,
+              11
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              3,
+              12
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6679CC",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 9,
+      "date": "2023-07-16",
+      "timeline_phase": "RECESSION",
+      "observed_historical_state": {
+        "key_observation": "Gradual draining through Okhla downstream sluices; arterial roads gradually cleared of silt",
+        "observation_timestamp": "2023-07-16T08:30:00+05:30",
+        "publication_timestamp": "2023-07-16T11:30:00+05:30",
+        "rainfall_mm": 1.0,
+        "water_level_m": 206.3,
+        "upstream_release_cfs": 38000.0,
+        "upstream_release_cumec": 1076.04,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 38000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-16",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_206.30M",
+          "HATHNIKUND_BARRAGE_RELEASE_38,000CFS",
+          "IMD_PRECIPITATION_1.0MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-16",
+        "observation_timestamp": "2023-07-16T08:30:00+05:30",
+        "publication_timestamp": "2023-07-16T11:30:00+05:30",
+        "water_level_m": 206.3,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 38000.0,
+        "upstream_release_cumec": 1076.04,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 38000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 1.0,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "WARNING",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_206.30M",
+          "HATHNIKUND_BARRAGE_RELEASE_38,000CFS",
+          "IMD_PRECIPITATION_1.0MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (206.30 m MSL) meets or exceeds official CWC Danger Level (205.33 m); upstream release (38,000 cfs) requires barrier surveillance and evacuation readiness.",
+        "recommended_action": "PREPARE_VERIFICATION_MISSIONS",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "Recession limb well-established",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-16",
+          "historical_observation_timestamp": "2023-07-16T08:30:00+05:30",
+          "historical_publication_timestamp": "2023-07-16T11:30:00+05:30",
+          "historical_event_epoch_sec": 1689476400.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.3854618,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "WARNING",
+        "active_missions_count": 0,
+        "completed_missions_count": 15,
+        "new_missions_generated": 2,
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-C0006B",
+            "agent_id": "USV_RIVER_1",
+            "path_length": 1,
+            "path": [
+              [
+                2,
+                11
+              ]
+            ],
+            "bid_score": 236.8,
+            "assigned_at": 1689476400.0,
+            "assigned_at_iso": "2023-07-16T08:30:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.3854618,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-6B5CC8",
+            "agent_id": "RELAY_NODE_1",
+            "path_length": 1,
+            "path": [
+              [
+                1,
+                11
+              ]
+            ],
+            "bid_score": 236.0,
+            "assigned_at": 1689476400.0,
+            "assigned_at_iso": "2023-07-16T08:30:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793816810.3854618,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-390397",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-B21FF0",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-C0006B",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              1,
+              11
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6B5CC8",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              3,
+              12
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6679CC",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 10,
+      "date": "2023-07-17",
+      "timeline_phase": "RECOVERY",
+      "observed_historical_state": {
+        "key_observation": "Water level drops below CWC Danger Level (205.33 m); post-flood recovery operations active",
+        "observation_timestamp": "2023-07-17T08:30:00+05:30",
+        "publication_timestamp": "2023-07-17T11:30:00+05:30",
+        "rainfall_mm": 0.0,
+        "water_level_m": 205.2,
+        "upstream_release_cfs": 32000.0,
+        "upstream_release_cumec": 906.14,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 32000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-17",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_205.20M",
+          "HATHNIKUND_BARRAGE_RELEASE_32,000CFS",
+          "IMD_PRECIPITATION_0.0MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-17",
+        "observation_timestamp": "2023-07-17T08:30:00+05:30",
+        "publication_timestamp": "2023-07-17T11:30:00+05:30",
+        "water_level_m": 205.2,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 32000.0,
+        "upstream_release_cumec": 906.14,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 32000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 0.0,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "WATCH",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_205.20M",
+          "HATHNIKUND_BARRAGE_RELEASE_32,000CFS",
+          "IMD_PRECIPITATION_0.0MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (205.20 m MSL) meets or exceeds official CWC Warning Level (204.50 m); flow elevated above baseline.",
+        "recommended_action": "INCREASE_MONITORING_FREQUENCY",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "River confines back within active channel banks",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-17",
+          "historical_observation_timestamp": "2023-07-17T08:30:00+05:30",
+          "historical_publication_timestamp": "2023-07-17T11:30:00+05:30",
+          "historical_event_epoch_sec": 1689562800.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.385639,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "WATCH",
+        "active_missions_count": 0,
+        "completed_missions_count": 15,
+        "new_missions_generated": 1,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-390397",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-B21FF0",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-C0006B",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              1,
+              11
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6B5CC8",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              3,
+              12
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6679CC",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    },
+    {
+      "step_index": 11,
+      "date": "2023-07-18",
+      "timeline_phase": "RECOVERY",
+      "observed_historical_state": {
+        "key_observation": "Water level recedes below CWC Warning Level (204.50 m); swarm de-escalation complete",
+        "observation_timestamp": "2023-07-18T08:30:00+05:30",
+        "publication_timestamp": "2023-07-18T11:30:00+05:30",
+        "rainfall_mm": 0.0,
+        "water_level_m": 204.3,
+        "upstream_release_cfs": 28000.0,
+        "upstream_release_cumec": 792.87,
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 28000.0,
+        "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs."
+      },
+      "available_evidence": {
+        "cutoff_date": "2023-07-18",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_204.30M",
+          "HATHNIKUND_BARRAGE_RELEASE_28,000CFS",
+          "IMD_PRECIPITATION_0.0MM"
+        ]
+      },
+      "vega_miti_risk_assessment": {
+        "station_id": "YMN-DEL-ORB-01",
+        "date": "2023-07-18",
+        "observation_timestamp": "2023-07-18T08:30:00+05:30",
+        "publication_timestamp": "2023-07-18T11:30:00+05:30",
+        "water_level_m": 204.3,
+        "water_level_status": "OBSERVED",
+        "upstream_release_cfs": 28000.0,
+        "upstream_release_cumec": 792.87,
+        "upstream_release_status": "REPORTED_BY_BARRAGE_LOG",
+        "in_situ_discharge_cfs": null,
+        "in_situ_discharge_status": "UNMETERED_IN_SITU",
+        "discharge_cfs": null,
+        "legacy_deprecated_discharge_cfs": 28000.0,
+        "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
+        "rainfall_mm": 0.0,
+        "rainfall_status": "OBSERVED",
+        "risk_level": "NORMAL",
+        "evidence_sources": [
+          "CWC_OLD_RAILWAY_BRIDGE_STAGE_204.30M",
+          "HATHNIKUND_BARRAGE_RELEASE_28,000CFS",
+          "IMD_PRECIPITATION_0.0MM"
+        ],
+        "evidence_quality": "HIGH",
+        "data_quality_status": "VALID_OBSERVATION",
+        "evidence_quality_breakdown": {
+          "individual_observation_confidence": "HIGH",
+          "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+          "record_completeness": "PARTIAL",
+          "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+          "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+          "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+        },
+        "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
+        "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
+        "is_provisional": false,
+        "statutory_reference_marks": {
+          "warning_level_m": 204.5,
+          "danger_level_m": 205.33,
+          "prior_1978_record_m": 207.49,
+          "historic_all_time_peak_m": 208.66,
+          "authority": "Central Water Commission (CWC), Government of India"
+        },
+        "vega_miti_operational_rules": {
+          "critical_water_level_trigger_m": 206.5,
+          "critical_barrage_release_trigger_cfs": 300000.0,
+          "rule_type": "VEGA_MITI_DEMONSTRATION_OPERATIONAL_THRESHOLD"
+        },
+        "explanation": "Water level (204.30 m MSL) remains below official CWC Warning Level (204.50 m). Normal river conditions.",
+        "recommended_action": "PASSIVE_MONITORING",
+        "regulatory_disclaimer": "204.50m (Warning) and 205.33m (Danger) are official CWC statutory marks. 206.50m is a custom VEGA-MITI operational demonstration rule. NOT a certified CWC flood stage."
+      },
+      "retrospective_event_outcome": {
+        "context": "Catchment returns to baseline seasonal equilibrium",
+        "event_peak_date": "2023-07-13"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+        "simulation_clock": {
+          "event_step_date": "2023-07-18",
+          "historical_observation_timestamp": "2023-07-18T08:30:00+05:30",
+          "historical_publication_timestamp": "2023-07-18T11:30:00+05:30",
+          "historical_event_epoch_sec": 1689649200.0,
+          "runtime_simulation_wall_clock_sec": 1793816810.3857722,
+          "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+        },
+        "activation_state": "RISK_REDUCTION",
+        "active_missions_count": 0,
+        "completed_missions_count": 15,
+        "new_missions_generated": 0,
+        "allocations_in_step": [],
+        "reassigned_in_step": [],
+        "failure_event": null,
+        "agents": [
+          {
+            "agent_id": "DRONE_AERIAL_1",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 95.0,
+            "connectivity": "DISCONNECTED",
+            "status": "DISCONNECTED",
+            "current_mission": "MSN-390397",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "DRONE_AERIAL_2",
+            "agent_type": "UAV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "AERIAL_OBSERVATION",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 88.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-B21FF0",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_1",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING",
+              "VERIFICATION"
+            ],
+            "position": [
+              2,
+              11
+            ],
+            "battery": 92.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-C0006B",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "USV_RIVER_2",
+            "agent_type": "USV",
+            "capabilities": [
+              "RIVER_MONITORING"
+            ],
+            "position": [
+              12,
+              10
+            ],
+            "battery": 85.0,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 0,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "RELAY_NODE_1",
+            "agent_type": "RELAY",
+            "capabilities": [
+              "DATA_RELAY",
+              "AERIAL_OBSERVATION"
+            ],
+            "position": [
+              1,
+              11
+            ],
+            "battery": 90.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6B5CC8",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          },
+          {
+            "agent_id": "GROUND_SCOUT_1",
+            "agent_type": "UGV",
+            "capabilities": [
+              "AREA_SURVEILLANCE",
+              "VERIFICATION"
+            ],
+            "position": [
+              3,
+              12
+            ],
+            "battery": 78.0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6679CC",
+            "path_remaining": 1,
+            "coordinate_frame": "SIMULATED_20X20_GRID"
+          }
+        ]
+      }
+    }
+  ]
+}

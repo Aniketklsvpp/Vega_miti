@@ -1,0 +1,178 @@
+import unittest
+from starlette.testclient import TestClient
+from src.swarm_api import app
+
+class TestSwarmAPI(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.client = TestClient(app)
+
+    def test_get_agents(self):
+        resp = self.client.get("/api/swarm/agents")
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        self.assertIsNone(body["error"])
+        self.assertEqual(len(body["data"]), 6)
+        first = body["data"][0]
+        self.assertIn("agent_id", first)
+        self.assertIn("capabilities", first)
+        self.assertIn("battery", first)
+        self.assertIn("connectivity", first)
+        self.assertIn("status", first)
+
+    def test_get_missions(self):
+        resp = self.client.get("/api/swarm/missions")
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        self.assertIn("missions", body["data"])
+        self.assertIn("active_leases", body["data"])
+
+    def test_activate_swarm(self):
+        payload = {
+            "assessments": [
+                {"station_id": "01570500", "risk_level": "CRITICAL", "data_quality_status": "VALID_OBSERVATION"}
+            ]
+        }
+        resp = self.client.post("/api/swarm/activate", json=payload)
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        self.assertEqual(body["data"]["activation_state"], "CRITICAL")
+        self.assertGreater(body["data"]["missions_generated"], 0)
+
+    def test_agent_disconnect_and_reconnect(self):
+        disc_resp = self.client.post("/api/swarm/agent/disconnect", json={"agent_id": "DRONE_AERIAL_1"})
+        self.assertEqual(disc_resp.status_code, 200)
+        disc_body = disc_resp.json()
+        self.assertEqual(disc_body["status"], "success")
+        self.assertEqual(disc_body["data"]["status"], "DISCONNECTED")
+
+        rec_resp = self.client.post("/api/swarm/agent/reconnect", json={"agent_id": "DRONE_AERIAL_1"})
+        self.assertEqual(rec_resp.status_code, 200)
+        rec_body = rec_resp.json()
+        self.assertEqual(rec_body["status"], "success")
+        self.assertEqual(rec_body["data"]["status"], "CONNECTED")
+
+    def test_coordinator_fail_and_restore(self):
+        fail_resp = self.client.post("/api/swarm/coordinator/fail")
+        self.assertEqual(fail_resp.status_code, 200)
+        fail_body = fail_resp.json()
+        self.assertEqual(fail_body["data"]["coordinator_status"], "OFFLINE")
+
+        restore_resp = self.client.post("/api/swarm/coordinator/restore")
+        self.assertEqual(restore_resp.status_code, 200)
+        restore_body = restore_resp.json()
+        self.assertEqual(restore_body["data"]["coordinator_status"], "ONLINE")
+
+    def test_evaluation_endpoints(self):
+        stat_resp = self.client.get("/api/swarm/evaluation/static")
+        self.assertEqual(stat_resp.status_code, 200)
+        self.assertEqual(stat_resp.json()["status"], "success")
+
+        adapt_resp = self.client.get("/api/swarm/evaluation/adaptive")
+        self.assertEqual(adapt_resp.status_code, 200)
+        self.assertEqual(adapt_resp.json()["status"], "success")
+
+        comp_resp = self.client.post("/api/swarm/evaluate/compare")
+        self.assertEqual(comp_resp.status_code, 200)
+        comp_body = comp_resp.json()
+        self.assertEqual(comp_body["status"], "success")
+        self.assertIn("performance_differential", comp_body["data"])
+
+    def test_reset_simulation(self):
+        resp = self.client.post("/api/swarm/reset")
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.json()["data"]["reset_status"], "COMPLETED")
+
+    def test_historical_replay_endpoints(self):
+        cat_resp = self.client.get("/api/swarm/replay/events")
+        self.assertEqual(cat_resp.status_code, 200)
+        cat_body = cat_resp.json()
+        self.assertEqual(cat_body["status"], "success")
+        self.assertGreaterEqual(len(cat_body["data"]), 2)
+        event_ids = [e["event_id"] for e in cat_body["data"]]
+        self.assertIn("EVENT-IN-YAMUNA-2023", event_ids)
+        self.assertIn("EVENT-US-SUSQUEHANNA-2023", event_ids)
+
+        meta_resp = self.client.get("/api/swarm/replay/event/EVENT-IN-YAMUNA-2023")
+        self.assertEqual(meta_resp.status_code, 200)
+        meta_body = meta_resp.json()
+        self.assertEqual(meta_body["status"], "success")
+        self.assertEqual(meta_body["data"]["country"], "India")
+        self.assertEqual(meta_body["data"]["river"], "Yamuna River (Upper Yamuna Basin)")
+
+        run_resp = self.client.post("/api/swarm/replay/run", json={"event_id": "EVENT-IN-YAMUNA-2023", "step_index": 4})
+        self.assertEqual(run_resp.status_code, 200)
+        run_body = run_resp.json()
+        self.assertEqual(run_body["status"], "success")
+        self.assertEqual(run_body["data"]["executed_steps_count"], 5)
+        self.assertIn("current_step_frame", run_body["data"])
+        self.assertIn("simulated_swarm_response", run_body["data"]["current_step_frame"])
+        self.assertIn("observed_historical_state", run_body["data"]["current_step_frame"])
+
+    def test_swarm_status(self):
+        resp = self.client.get("/api/swarm/status")
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        self.assertIsNone(body["error"])
+        data = body["data"]
+        self.assertIn("simulation_state", data)
+        self.assertIn("active_agents", data)
+        self.assertIn("idle_agents", data)
+        self.assertIn("failed_agents", data)
+        self.assertEqual(data["total_agents"], 6)
+        self.assertEqual(data["coordinate_frame"], "SIMULATED_20X20_GRID")
+
+    def test_get_single_agent(self):
+        resp = self.client.get("/api/swarm/agents/DRONE_AERIAL_1")
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        self.assertEqual(body["data"]["agent_id"], "DRONE_AERIAL_1")
+        self.assertEqual(body["data"]["coordinate_frame"], "SIMULATED_20X20_GRID")
+
+        bad_resp = self.client.get("/api/swarm/agents/NON_EXISTENT_AGENT")
+        self.assertEqual(bad_resp.status_code, 404)
+
+    def test_agent_fail_endpoint(self):
+        payload = {
+            "assessments": [
+                {"station_id": "01570500", "risk_level": "CRITICAL", "data_quality_status": "VALID_OBSERVATION"}
+            ]
+        }
+        self.client.post("/api/swarm/activate", json=payload)
+        fail_resp = self.client.post("/api/swarm/agents/DRONE_AERIAL_1/fail")
+        self.assertEqual(fail_resp.status_code, 200)
+        fail_body = fail_resp.json()
+        self.assertEqual(fail_body["status"], "success")
+        self.assertEqual(fail_body["data"]["failed_agent_id"], "DRONE_AERIAL_1")
+        self.assertEqual(fail_body["data"]["status"], "DISCONNECTED")
+        self.assertIsInstance(fail_body["data"]["reassigned_missions"], list)
+
+        bad_fail = self.client.post("/api/swarm/agents/NON_EXISTENT_AGENT/fail")
+        self.assertEqual(bad_fail.status_code, 404)
+
+        self.client.post("/api/swarm/agent/reconnect", json={"agent_id": "DRONE_AERIAL_1"})
+
+    def test_swarm_step(self):
+        resp = self.client.post("/api/swarm/step", json={"steps": 2})
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        self.assertEqual(body["data"]["steps_executed"], 2)
+        self.assertEqual(body["data"]["agents_updated"], 6)
+        self.assertEqual(body["data"]["coordinate_frame"], "SIMULATED_20X20_GRID")
+
+    def test_get_swarm_events(self):
+        resp = self.client.get("/api/swarm/events?limit=5")
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        self.assertLessEqual(body["data"]["returned_count"], 5)
+        self.assertIsInstance(body["data"]["events"], list)
+
+if __name__ == "__main__":
+    unittest.main()
