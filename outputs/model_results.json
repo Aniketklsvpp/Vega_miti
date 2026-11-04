@@ -101,5 +101,18 @@
     "note": "Generated for unseen test stations 12119000 and 14211720 for verification only. NOT official competition submission.",
     "row_count": 1460,
     "target_leakage_check": "PASSED (discharge_cfs stripped before feature construction and inference)"
-  }
+  },
+  "model_name": "HistGradientBoosting (Log1p + Full Features)",
+  "validation_strategy": "GroupKFold (5 Folds)",
+  "overall": {
+    "rmse": 9320.9762,
+    "mae": 4257.857,
+    "r2": 0.387
+  },
+  "extreme": {
+    "rmse": 22211.4709,
+    "threshold_definition": "Top 10% daily discharge per station in evaluation ground truth"
+  },
+  "per_station": [],
+  "generated_at": "2026-11-04T13:22:54.419372+00:00"
 }

@@ -1,0 +1,8 @@
+model_name,model_type,target_transform,feature_set,overall_rmse,extreme_rmse,mae,r2,composite_score,validation_time_sec
+Dummy (Mean),dummy,False,without_soil_moisture,12077.5661,28344.4976,6870.4485,-0.0292,14708.4654,0.22
+HistGradientBoosting (Raw),hist_gb,False,without_soil_moisture,12882.8704,23989.0632,7028.8912,-0.171,13755.6454,9.38
+HistGradientBoosting (Log1p),hist_gb,True,without_soil_moisture,11250.5894,25536.1312,5313.5621,0.1069,13222.7184,11.77
+RandomForest (Raw),random_forest,False,without_soil_moisture,14450.8963,26777.3673,7705.0864,-0.4734,15354.586,14.83
+RandomForest (Log1p),random_forest,True,without_soil_moisture,11584.5228,24387.5318,5793.5531,0.0531,13108.2482,6.69
+ExtraTrees (Raw),extra_trees,False,without_soil_moisture,10481.238,21556.7147,5293.5376,0.2249,11715.9684,2.42
+ExtraTrees (Log1p),extra_trees,True,without_soil_moisture,9760.6733,23429.256,4468.5484,0.3278,11823.4779,2.33

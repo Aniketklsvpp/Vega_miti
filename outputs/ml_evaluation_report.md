@@ -66,3 +66,4 @@ Two production configurations have been frozen and saved in `outputs/`:
    - Standard tree regression averages leaf values, leading to a 30–45% underestimation on the top 1% crest discharge events.
 3. **Temporal Autocorrelation**:
    - The past-only configuration confirms river basins act as low-pass filters: antecedent soil saturation and 14-day rolling precipitation contribute ~98% of the predictive power compared to same-day weather.
+
