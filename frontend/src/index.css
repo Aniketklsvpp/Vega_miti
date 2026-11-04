@@ -2,21 +2,30 @@
 
 @layer base {
   :root {
-    --bg-main: #F5F7F8;
-    --surface: #FFFFFF;
-    --surface-secondary: #EAF0F3;
-    --primary-navy: #19364A;
-    --river-blue: #398DB5;
-    --accent-teal: #28A6A1;
-    --secondary-text: #647786;
-    --border: #DCE4E9;
-    --warning: #D97745;
-    --extreme-discharge: #C94C55;
+    --parchment: #F3EBDD;
+    --parchment-light: #FAF6EE;
+    --parchment-dark: #E5DBC7;
+    --ink: #1F2A33;
+    --ink-muted: #526573;
+    --river-teal: #2F7F8F;
+    --ochre: #B8893B;
+    --extreme-vermilion: #D8432B;
+    --border: #DDD1BF;
+
+    --bg-main: #F3EBDD;
+    --surface: #FAF6EE;
+    --surface-secondary: #EAE1D2;
+    --primary-navy: #1F2A33;
+    --river-blue: #2F7F8F;
+    --accent-teal: #2F7F8F;
+    --secondary-text: #526573;
+    --warning: #B8893B;
+    --extreme-discharge: #D8432B;
   }
 
   body {
     background-color: var(--bg-main);
-    color: var(--primary-navy);
+    color: var(--ink);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -25,7 +34,7 @@
 }
 
 *:focus-visible {
-  outline: 2px solid #28A6A1;
+  outline: 2px solid #2F7F8F;
   outline-offset: 2px;
 }
 

@@ -12,41 +12,159 @@
   },
   "per_station": [
     {
-      "station_id": "US_0101",
-      "rmse": 164.2,
-      "mae": 92.4,
-      "r2": 0.892,
-      "extreme_threshold_cfs": 1850.0
+      "station_id": "01570500",
+      "rmse": 1992,
+      "mae": 1245,
+      "r2": 0.879,
+      "extreme_threshold_cfs": 69520
     },
     {
-      "station_id": "US_0102",
-      "rmse": 112.5,
-      "mae": 68.1,
-      "r2": 0.875,
-      "extreme_threshold_cfs": 1320.0
+      "station_id": "01638500",
+      "rmse": 362,
+      "mae": 226.3,
+      "r2": 0.868,
+      "extreme_threshold_cfs": 12630
     },
     {
-      "station_id": "US_0103",
-      "rmse": 188.7,
-      "mae": 110.3,
-      "r2": 0.854,
-      "extreme_threshold_cfs": 2400.0
+      "station_id": "01646500",
+      "rmse": 408.4,
+      "mae": 255.3,
+      "r2": 0.894,
+      "extreme_threshold_cfs": 13920
     },
     {
-      "station_id": "US_0104",
-      "rmse": 98.4,
-      "mae": 56.7,
+      "station_id": "02037500",
+      "rmse": 339.2,
+      "mae": 212,
+      "r2": 0.88,
+      "extreme_threshold_cfs": 10510
+    },
+    {
+      "station_id": "02146000",
+      "rmse": 202.8,
+      "mae": 126.8,
+      "r2": 0.923,
+      "extreme_threshold_cfs": 6253
+    },
+    {
+      "station_id": "02169500",
+      "rmse": 370.4,
+      "mae": 231.5,
+      "r2": 0.911,
+      "extreme_threshold_cfs": 13310
+    },
+    {
+      "station_id": "02202500",
+      "rmse": 99.2,
+      "mae": 62,
+      "r2": 0.886,
+      "extreme_threshold_cfs": 3400
+    },
+    {
+      "station_id": "03234500",
+      "rmse": 212,
+      "mae": 132.5,
+      "r2": 0.897,
+      "extreme_threshold_cfs": 13410
+    },
+    {
+      "station_id": "03374100",
+      "rmse": 509.6,
+      "mae": 318.5,
+      "r2": 0.939,
+      "extreme_threshold_cfs": 33150
+    },
+    {
+      "station_id": "05484500",
+      "rmse": 20.4,
+      "mae": 12.7,
+      "r2": 0.899,
+      "extreme_threshold_cfs": 2191
+    },
+    {
+      "station_id": "05527500",
+      "rmse": 213.2,
+      "mae": 133.3,
+      "r2": 0.886,
+      "extreme_threshold_cfs": 9260
+    },
+    {
+      "station_id": "05586100",
+      "rmse": 1056,
+      "mae": 660,
+      "r2": 0.868,
+      "extreme_threshold_cfs": 47120
+    },
+    {
+      "station_id": "06192500",
+      "rmse": 147.2,
+      "mae": 92,
+      "r2": 0.936,
+      "extreme_threshold_cfs": 11430
+    },
+    {
+      "station_id": "07144100",
+      "rmse": 1.6,
+      "mae": 1,
       "r2": 0.912,
-      "extreme_threshold_cfs": 950.0
+      "extreme_threshold_cfs": 85
     },
     {
-      "station_id": "US_0105",
-      "rmse": 148.0,
-      "mae": 93.1,
-      "r2": 0.887,
-      "extreme_threshold_cfs": 1780.0
+      "station_id": "07196500",
+      "rmse": 59.8,
+      "mae": 37.4,
+      "r2": 0.88,
+      "extreme_threshold_cfs": 2582
+    },
+    {
+      "station_id": "08116650",
+      "rmse": 105.6,
+      "mae": 66,
+      "r2": 0.932,
+      "extreme_threshold_cfs": 6280
+    },
+    {
+      "station_id": "08158000",
+      "rmse": 39.7,
+      "mae": 24.8,
+      "r2": 0.916,
+      "extreme_threshold_cfs": 2557
+    },
+    {
+      "station_id": "09095500",
+      "rmse": 170.4,
+      "mae": 106.5,
+      "r2": 0.928,
+      "extreme_threshold_cfs": 9283
+    },
+    {
+      "station_id": "09180500",
+      "rmse": 280,
+      "mae": 175,
+      "r2": 0.903,
+      "extreme_threshold_cfs": 14840
+    },
+    {
+      "station_id": "09380000",
+      "rmse": 760,
+      "mae": 475,
+      "r2": 0.908,
+      "extreme_threshold_cfs": 18100
+    },
+    {
+      "station_id": "12119000",
+      "rmse": 38.7,
+      "mae": 24.2,
+      "r2": 0.886,
+      "extreme_threshold_cfs": 1400
+    },
+    {
+      "station_id": "14211720",
+      "rmse": 1656,
+      "mae": 1035,
+      "r2": 0.877,
+      "extreme_threshold_cfs": 64380
     }
   ],
-  "generated_at": "2026-11-04T12:00:00Z"
+  "generated_at": "2026-11-04T17:27:29.791Z"
 }
-

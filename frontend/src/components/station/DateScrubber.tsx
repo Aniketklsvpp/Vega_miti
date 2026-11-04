@@ -40,14 +40,14 @@ export const DateScrubber: React.FC<DateScrubberProps> = ({
   const currentDate = dates[selectedIndex] || dates[0]
 
   return (
-    <div className="bg-white border border-[#DCE4E9] rounded-xl p-4 shadow-xs space-y-3">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DCE4E9] pb-3">
+    <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-xl p-4 shadow-xs space-y-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DDD1BF] pb-3">
         <div className="flex items-center gap-2 text-xs">
-          <Calendar className="w-4 h-4 text-[#28A6A1]" />
-          <span className="text-[#647786]">Observation Date:</span>
-          <span className="text-sm font-bold text-[#19364A]">{currentDate}</span>
+          <Calendar className="w-4 h-4 text-[#2F7F8F]" />
+          <span className="text-[#526573]">Observation Date:</span>
+          <span className="text-sm font-bold text-[#1F2A33]">{currentDate}</span>
           {isExtreme && (
-            <span className="px-2 py-0.5 rounded bg-[#FFF1F2] text-[#C94C55] border border-[#FECDD3] text-[10px] font-bold">
+            <span className="px-2 py-0.5 rounded bg-[#FBECE9] text-[#D8432B] border border-[#D8432B]/30 text-[10px] font-bold">
               EXTREME DISCHARGE
             </span>
           )}
@@ -56,14 +56,14 @@ export const DateScrubber: React.FC<DateScrubberProps> = ({
         <div className="flex items-center gap-4 text-xs">
           {currentActual !== undefined && currentActual !== null && (
             <div>
-              <span className="text-[#19364A] font-semibold">Observed Actual:</span>{' '}
-              <span className="text-[#19364A] font-bold">{currentActual.toFixed(1)} cfs</span>
+              <span className="text-[#1F2A33] font-semibold">Observed Actual:</span>{' '}
+              <span className="text-[#1F2A33] font-bold font-mono">{currentActual.toFixed(1)} cfs</span>
             </div>
           )}
           {currentPredicted !== undefined && currentPredicted !== null && (
             <div>
-              <span className="text-[#28A6A1] font-semibold">Model Estimate:</span>{' '}
-              <span className="text-[#19364A] font-bold">{currentPredicted.toFixed(1)} cfs</span>
+              <span className="text-[#2F7F8F] font-semibold">Model Estimate:</span>{' '}
+              <span className="text-[#1F2A33] font-bold font-mono">{currentPredicted.toFixed(1)} cfs</span>
             </div>
           )}
         </div>
@@ -72,7 +72,7 @@ export const DateScrubber: React.FC<DateScrubberProps> = ({
       <div className="flex items-center gap-3 pt-1">
         <button
           onClick={() => setIsPlaying(!isPlaying)}
-          className="p-1.5 rounded-lg bg-[#EAF0F3] hover:bg-[#DCE4E9] text-[#19364A] transition"
+          className="p-1.5 rounded-lg bg-[#EAE1D2] hover:bg-[#DDD1BF] text-[#1F2A33] transition cursor-pointer"
           title={isPlaying ? 'Pause replay' : 'Play timeline'}
         >
           {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
@@ -81,7 +81,7 @@ export const DateScrubber: React.FC<DateScrubberProps> = ({
         <button
           onClick={() => onSelectIndex(Math.max(selectedIndex - 1, 0))}
           disabled={selectedIndex === 0}
-          className="p-1.5 rounded-lg bg-[#EAF0F3] hover:bg-[#DCE4E9] text-[#19364A] disabled:opacity-30 transition"
+          className="p-1.5 rounded-lg bg-[#EAE1D2] hover:bg-[#DDD1BF] text-[#1F2A33] disabled:opacity-30 transition cursor-pointer"
         >
           <ChevronLeft className="w-3.5 h-3.5" />
         </button>
@@ -92,13 +92,13 @@ export const DateScrubber: React.FC<DateScrubberProps> = ({
           max={dates.length - 1}
           value={selectedIndex}
           onChange={(e) => onSelectIndex(Number(e.target.value))}
-          className="flex-1 accent-[#28A6A1] cursor-pointer h-1.5 bg-[#EAF0F3] rounded-lg appearance-none"
+          className="flex-1 accent-[#2F7F8F] cursor-pointer h-1.5 bg-[#EAE1D2] rounded-lg appearance-none"
         />
 
         <button
           onClick={() => onSelectIndex(Math.min(selectedIndex + 1, dates.length - 1))}
           disabled={selectedIndex === dates.length - 1}
-          className="p-1.5 rounded-lg bg-[#EAF0F3] hover:bg-[#DCE4E9] text-[#19364A] disabled:opacity-30 transition"
+          className="p-1.5 rounded-lg bg-[#EAE1D2] hover:bg-[#DDD1BF] text-[#1F2A33] disabled:opacity-30 transition cursor-pointer"
         >
           <ChevronRight className="w-3.5 h-3.5" />
         </button>

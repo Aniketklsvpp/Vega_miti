@@ -19,6 +19,7 @@ interface HydrographProps {
   validationRows: ValidationPredictionRow[]
   predictionRows: PredictionRow[]
   extremeThreshold?: number
+  isDemo?: boolean
 }
 
 export const Hydrograph: React.FC<HydrographProps> = ({
@@ -27,6 +28,7 @@ export const Hydrograph: React.FC<HydrographProps> = ({
   validationRows,
   predictionRows,
   extremeThreshold,
+  isDemo = true,
 }) => {
   const chartData = [
     ...validationRows.map((r) => ({
@@ -38,7 +40,7 @@ export const Hydrograph: React.FC<HydrographProps> = ({
     })),
     ...predictionRows.map((r) => ({
       date: r.date,
-      type: 'forecast',
+      type: 'prediction',
       actual: null as number | null,
       predicted: null as number | null,
       futurePrediction: r.discharge_cfs,
@@ -46,16 +48,23 @@ export const Hydrograph: React.FC<HydrographProps> = ({
   ]
 
   return (
-    <div className="bg-white border border-[#DCE4E9] rounded-2xl p-6 shadow-xs space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DCE4E9] pb-4">
+    <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-2xl p-6 shadow-xs space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DDD1BF] pb-4">
         <div>
-          <span className="text-xs font-mono font-bold text-[#28A6A1] uppercase">{stationId}</span>
-          <h2 className="text-xl font-bold text-[#19364A] tracking-tight">{stationName}</h2>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-mono font-bold text-[#2F7F8F] uppercase">{stationId}</span>
+            {isDemo && (
+              <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-[#B8893B]/15 text-[#B8893B] border border-[#B8893B]/30">
+                DEMO DATA
+              </span>
+            )}
+          </div>
+          <h2 className="text-xl font-bold text-[#1F2A33] tracking-tight mt-0.5">{stationName}</h2>
         </div>
         {extremeThreshold && (
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#FFF1F2] border border-[#FECDD3] text-[#C94C55] text-xs font-mono font-semibold">
-            <span className="w-2 h-2 rounded-full bg-[#C94C55]" />
-            <span>Extreme Flow Cutoff: <b>{extremeThreshold.toFixed(1)} cfs</b></span>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#D8432B]/10 border border-[#D8432B]/30 text-[#D8432B] text-xs font-mono font-semibold">
+            <span className="w-2 h-2 rounded-full bg-[#D8432B]" />
+            <span>Extreme Flow Cutoff (P90): <b>{extremeThreshold.toFixed(1)} cfs</b></span>
           </div>
         )}
       </div>
@@ -65,30 +74,30 @@ export const Hydrograph: React.FC<HydrographProps> = ({
           <ComposedChart data={chartData} margin={{ top: 15, right: 25, left: 10, bottom: 25 }}>
             <defs>
               <linearGradient id="actualGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#19364A" stopOpacity={0.12} />
-                <stop offset="95%" stopColor="#19364A" stopOpacity={0.0} />
+                <stop offset="5%" stopColor="#1F2A33" stopOpacity={0.15} />
+                <stop offset="95%" stopColor="#1F2A33" stopOpacity={0.0} />
               </linearGradient>
             </defs>
 
-            <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#EAE1D2" vertical={false} />
             <XAxis
               dataKey="date"
-              stroke="#647786"
-              tick={{ fill: '#647786', fontSize: 11, fontFamily: 'system-ui, sans-serif' }}
-              tickLine={{ stroke: '#CBD5E1' }}
+              stroke="#526573"
+              tick={{ fill: '#526573', fontSize: 11, fontFamily: 'system-ui, sans-serif' }}
+              tickLine={{ stroke: '#DDD1BF' }}
             />
             <YAxis
-              stroke="#647786"
-              tick={{ fill: '#647786', fontSize: 11, fontFamily: 'system-ui, sans-serif' }}
-              tickLine={{ stroke: '#CBD5E1' }}
+              stroke="#526573"
+              tick={{ fill: '#526573', fontSize: 11, fontFamily: 'system-ui, sans-serif' }}
+              tickLine={{ stroke: '#DDD1BF' }}
               unit=" cfs"
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#FFFFFF',
-                borderColor: '#DCE4E9',
+                backgroundColor: '#FAF6EE',
+                borderColor: '#DDD1BF',
                 borderRadius: '8px',
-                color: '#19364A',
+                color: '#1F2A33',
                 fontSize: '12px',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
               }}
@@ -96,18 +105,18 @@ export const Hydrograph: React.FC<HydrographProps> = ({
             <Legend
               verticalAlign="top"
               height={36}
-              wrapperStyle={{ fontSize: '12px', color: '#19364A' }}
+              wrapperStyle={{ fontSize: '12px', color: '#1F2A33' }}
             />
 
             {extremeThreshold && (
               <ReferenceLine
                 y={extremeThreshold}
-                stroke="#C94C55"
+                stroke="#D8432B"
                 strokeDasharray="4 4"
                 strokeWidth={2}
                 label={{
                   value: `Extreme Cutoff (${extremeThreshold} cfs)`,
-                  fill: '#C94C55',
+                  fill: '#D8432B',
                   position: 'top',
                   fontSize: 11,
                   fontWeight: 600,
@@ -115,45 +124,58 @@ export const Hydrograph: React.FC<HydrographProps> = ({
               />
             )}
 
+            {/* Historical (observed) = solid ink */}
             <Area
               type="monotone"
               dataKey="actual"
               name="Historical (observed)"
-              stroke="#19364A"
+              stroke="#1F2A33"
               strokeWidth={2.5}
               fill="url(#actualGrad)"
               connectNulls={false}
             />
 
+            {/* Backtest (validation prediction) = dashed teal */}
             <Line
               type="monotone"
               dataKey="predicted"
               name="Backtest (validation prediction)"
-              stroke="#28A6A1"
+              stroke="#2F7F8F"
               strokeWidth={2}
               strokeDasharray="4 4"
               dot={false}
               connectNulls={false}
             />
 
+            {/* Test-period prediction = ochre with markers */}
             <Line
               type="monotone"
               dataKey="futurePrediction"
               name="Test-period prediction"
-              stroke="#D97745"
+              stroke="#B8893B"
               strokeWidth={2.5}
-              dot={{ r: 3.5, fill: '#D97745', stroke: '#FFFFFF', strokeWidth: 1.5 }}
+              dot={{ r: 4, fill: '#B8893B', stroke: '#FAF6EE', strokeWidth: 1.5 }}
               connectNulls={false}
             />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="text-xs text-[#647786] text-center flex flex-wrap items-center justify-center gap-6 pt-1">
-        <span>— Solid Navy: Historical observed</span>
-        <span>--- Dashed Teal: Backtest validation prediction</span>
-        <span>-●- Dotted Ochre: Test-period prediction</span>
-        <span className="text-[#C94C55] font-semibold">--- Red: Top 10% Extreme cutoff</span>
+      <div className="text-xs text-[#526573] text-center flex flex-wrap items-center justify-center gap-6 pt-1 border-t border-[#DDD1BF]/60">
+        <span className="flex items-center gap-1.5 font-medium">
+          <span className="w-3.5 h-0.5 bg-[#1F2A33] inline-block" /> Historical (observed) &mdash; Solid Ink
+        </span>
+        <span className="flex items-center gap-1.5 font-medium">
+          <span className="w-3.5 h-0.5 bg-[#2F7F8F] inline-block border-b border-dashed" /> Backtest (validation prediction) &mdash; Dashed Teal
+        </span>
+        <span className="flex items-center gap-1.5 font-medium">
+          <span className="w-3.5 h-0.5 bg-[#B8893B] inline-block" /> Test-period prediction &mdash; Ochre with markers
+        </span>
+        {extremeThreshold && (
+          <span className="text-[#D8432B] font-semibold flex items-center gap-1.5">
+            <span className="w-3.5 h-0.5 bg-[#D8432B] inline-block border-b border-dotted" /> Extreme vermilion cutoff
+          </span>
+        )}
       </div>
     </div>
   )

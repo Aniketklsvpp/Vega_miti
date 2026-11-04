@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react'
 import * as d3Geo from 'd3-geo'
 import type { EnrichedStation, RegionType } from '../../types/data'
-import { AlertCircle, Flame, Layers, Minus, Plus, RotateCcw } from 'lucide-react'
+import { Flame, Layers, Minus, Plus, RotateCcw } from 'lucide-react'
 
 interface SurveySheetMapProps {
   region: RegionType
@@ -85,7 +85,7 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
   }
 
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden border border-[#DCE4E9] bg-[#F5F7F8] shadow-sm select-none">
+    <div className="relative w-full rounded-2xl overflow-hidden border border-[#DDD1BF] bg-[#F3EBDD] shadow-sm select-none">
       <div
         ref={containerRef}
         onMouseDown={handleMouseDown}
@@ -109,15 +109,15 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
             </clipPath>
 
             <pattern id="gis-grid" width="60" height="60" patternUnits="userSpaceOnUse">
-              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#DCE4E9" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.7" />
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#DDD1BF" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.8" />
             </pattern>
           </defs>
 
-          <rect width={width} height={height} fill="#EAF0F3" />
+          <rect width={width} height={height} fill="#EAE1D2" />
           <rect width={width} height={height} fill="url(#gis-grid)" />
 
           <g clipPath="url(#country-boundary-clip)">
-            <rect width={width} height={height} fill="#FFFFFF" />
+            <rect width={width} height={height} fill="#FAF6EE" />
 
             <image
               href="/assets/topo.png"
@@ -126,11 +126,11 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
               width={width}
               height={height}
               preserveAspectRatio="xMidYMid slice"
-              opacity="0.18"
+              opacity="0.15"
               style={{ mixBlendMode: 'multiply' }}
             />
 
-            <rect width={width} height={height} fill="url(#gis-grid)" opacity="0.5" />
+            <rect width={width} height={height} fill="url(#gis-grid)" opacity="0.4" />
 
             {riversData &&
               riversData.features.map((river: any, idx: number) => {
@@ -141,7 +141,7 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
                     <path
                       d={pathStr}
                       fill="none"
-                      stroke="#398DB5"
+                      stroke="#2F7F8F"
                       strokeWidth="2.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -150,10 +150,10 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
                     <path
                       d={pathStr}
                       fill="none"
-                      stroke="#28A6A1"
+                      stroke="#FAF6EE"
                       strokeWidth="0.8"
                       strokeDasharray="4 2"
-                      opacity="0.5"
+                      opacity="0.6"
                     />
                   </g>
                 )
@@ -164,11 +164,11 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
             <path
               d={countryPath}
               fill="none"
-              stroke="#19364A"
+              stroke="#1F2A33"
               strokeWidth="2"
               strokeLinejoin="round"
               strokeLinecap="round"
-              opacity="0.85"
+              opacity="0.9"
             />
           )}
 
@@ -187,8 +187,8 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
                   fontSize="10"
                   fontFamily="system-ui, sans-serif"
                   fontWeight="600"
-                  fill="#19364A"
-                  opacity="0.75"
+                  fill="#1F2A33"
+                  opacity="0.8"
                   className="select-none pointer-events-none"
                 >
                   {river.properties?.name}
@@ -202,7 +202,7 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
             const [cx, cy] = coords
             const isSelected = stn.station_id === selectedStationId
             const isExtreme = stn.isExtreme
-            const pinColor = isExtreme ? '#C94C55' : isSelected ? '#28A6A1' : '#19364A'
+            const pinColor = isExtreme ? '#D8432B' : isSelected ? '#2F7F8F' : '#1F2A33'
 
             return (
               <g
@@ -218,7 +218,7 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
                   <circle
                     r="14"
                     fill="none"
-                    stroke="#C94C55"
+                    stroke="#D8432B"
                     strokeWidth="1.5"
                     strokeDasharray="2 2"
                     className="animate-pulse"
@@ -230,7 +230,7 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
                   <circle
                     r="12"
                     fill="none"
-                    stroke="#28A6A1"
+                    stroke="#2F7F8F"
                     strokeWidth="2"
                     opacity="0.9"
                   />
@@ -238,7 +238,7 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
 
                 <circle
                   r="6.5"
-                  fill={isExtreme ? '#FFE4E6' : '#FFFFFF'}
+                  fill={isExtreme ? '#FBECE9' : '#FAF6EE'}
                   stroke={pinColor}
                   strokeWidth="2"
                 />
@@ -253,18 +253,18 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
                     width={stn.station_name.length * 6.5 + 16}
                     height="18"
                     rx="4"
-                    fill="#FFFFFF"
-                    stroke="#DCE4E9"
+                    fill="#FAF6EE"
+                    stroke="#DDD1BF"
                     strokeWidth="1"
                     className="shadow-sm"
                   />
                   <text
                     x="8"
                     y="0"
-                    fontSize="9.5"
-                    fontFamily="system-ui, sans-serif"
+                    fontSize="10"
+                    fontFamily="monospace"
                     fontWeight="600"
-                    fill={isExtreme ? '#C94C55' : '#19364A'}
+                    fill="#1F2A33"
                   >
                     {stn.station_name}
                   </text>
@@ -275,59 +275,57 @@ export const SurveySheetMap: React.FC<SurveySheetMapProps> = ({
         </svg>
       </div>
 
-      <div className="absolute top-4 left-4 z-10 flex flex-col gap-1.5 bg-white border border-[#DCE4E9] p-1.5 rounded-xl shadow-sm">
+      <div className="absolute bottom-4 left-4 flex items-center gap-1.5 bg-[#FAF6EE]/90 backdrop-blur-xs p-1 rounded-xl border border-[#DDD1BF] shadow-xs">
         <button
-          onClick={() => setZoomLevel((z) => Math.min(z + 0.3, 3))}
-          className="p-1.5 rounded-lg hover:bg-[#EAF0F3] text-[#19364A] transition"
-          title="Zoom In"
+          onClick={() => setZoomLevel((z) => Math.min(z + 0.25, 3))}
+          className="p-1.5 rounded-lg hover:bg-[#EAE1D2] text-[#1F2A33] transition cursor-pointer"
+          title="Zoom in"
         >
           <Plus className="w-4 h-4" />
         </button>
         <button
-          onClick={() => setZoomLevel((z) => Math.max(z - 0.3, 0.7))}
-          className="p-1.5 rounded-lg hover:bg-[#EAF0F3] text-[#19364A] transition"
-          title="Zoom Out"
+          onClick={() => setZoomLevel((z) => Math.max(z - 0.25, 0.75))}
+          className="p-1.5 rounded-lg hover:bg-[#EAE1D2] text-[#1F2A33] transition cursor-pointer"
+          title="Zoom out"
         >
           <Minus className="w-4 h-4" />
         </button>
         <button
           onClick={resetView}
-          className="p-1.5 rounded-lg hover:bg-[#EAF0F3] text-[#19364A] transition"
-          title="Reset View"
+          className="p-1.5 rounded-lg hover:bg-[#EAE1D2] text-[#1F2A33] transition cursor-pointer"
+          title="Reset view"
         >
           <RotateCcw className="w-4 h-4" />
         </button>
       </div>
 
-      <div className="absolute top-4 right-4 z-10 bg-white border border-[#DCE4E9] p-3.5 rounded-xl text-xs space-y-2 text-[#19364A] shadow-sm max-w-xs">
-        <div className="text-[11px] font-mono uppercase tracking-wider text-[#647786] font-bold border-b border-[#DCE4E9] pb-1.5 flex items-center gap-1.5">
-          <Layers className="w-3.5 h-3.5 text-[#28A6A1]" />
-          <span>Geographic Legend</span>
+      <div className="absolute top-4 right-4 bg-[#FAF6EE]/90 backdrop-blur-xs p-3 rounded-xl border border-[#DDD1BF] shadow-xs text-xs space-y-1.5">
+        <div className="flex items-center gap-2 font-bold text-[#1F2A33]">
+          <Layers className="w-3.5 h-3.5 text-[#2F7F8F]" />
+          <span>Cartographic Legend</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="w-4 h-0.5 bg-[#398DB5] rounded" />
-          <span className="text-[#647786] text-[11px]">Major River Drainage Network</span>
+        <div className="flex items-center gap-2 text-[11px] text-[#526573]">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#1F2A33]"></span>
+          <span>Nominal Discharge Station</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="font-bold text-[#19364A] text-base leading-none">+</span>
-          <span className="text-[#647786] text-[11px]">River Monitoring Station</span>
+        <div className="flex items-center gap-2 text-[11px] text-[#526573]">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#2F7F8F]"></span>
+          <span>Selected Active Station</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="font-bold text-[#C94C55] text-base leading-none flex items-center gap-1">
-            <Flame className="w-3.5 h-3.5 text-[#C94C55]" />
-          </span>
-          <span className="text-[#C94C55] font-semibold text-[11px]">Top 10% Extreme Discharge</span>
+        <div className="flex items-center gap-2 text-[11px] text-[#D8432B]">
+          <Flame className="w-3 h-3 text-[#D8432B]" />
+          <span className="font-semibold">Extreme Flow Cutoff (P90)</span>
         </div>
+        {region === 'india' && (
+          <div className="flex items-center gap-2 text-[11px] text-[#2F7F8F]">
+            <span className="w-3 h-0.5 bg-[#2F7F8F] inline-block"></span>
+            <span>Surveyed River Reach</span>
+          </div>
+        )}
       </div>
 
-      <div className="p-3 bg-white border-t border-[#DCE4E9] flex items-center justify-between text-xs text-[#647786] px-5">
-        <div className="flex items-center gap-1.5">
-          <AlertCircle className="w-3.5 h-3.5 text-[#D97745] shrink-0" />
-          <span>Geographic river paths and station points mapped from catchment hydrological registers.</span>
-        </div>
-        <div className="hidden sm:block text-[11px] font-mono text-[#647786]">
-          Scale 1:6,500,000 &middot; Projection: {region === 'usa' ? 'Albers Conic Equal-Area' : 'Survey Mercator'}
-        </div>
+      <div className="absolute bottom-4 right-4 bg-[#FAF6EE]/80 backdrop-blur-xs px-2.5 py-1 rounded-md text-[10px] font-mono text-[#526573] border border-[#DDD1BF]">
+        {region === 'india' ? 'EPSG:3857 &bull; SURVEY OF INDIA' : 'EPSG:5070 &bull; USGS HYDROLOGICAL SURVEY'}
       </div>
     </div>
   )
