@@ -3,7 +3,7 @@
   "event_id": "EVENT-IN-YAMUNA-2023",
   "title": "July 2023 Yamuna River Mega-Flood (Delhi NCR & Haryana, India)",
   "country": "India",
-  "river": "Yamuna River (Upper Yamuna Basin, Ganges Sub-basin)",
+  "river": "Yamuna River (Upper Yamuna Basin)",
   "timezone": "IST (UTC+05:30)",
   "measurement_units": {
     "river_stage": "metres above Mean Sea Level (m MSL)",
@@ -107,12 +107,12 @@
         "historical_observation_timestamp": "2023-07-18T08:30:00+05:30",
         "historical_publication_timestamp": "2023-07-18T11:30:00+05:30",
         "historical_event_epoch_sec": 1689649200.0,
-        "runtime_simulation_wall_clock_sec": 1793815277.49936,
+        "runtime_simulation_wall_clock_sec": 1793815969.9135013,
         "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
       },
       "activation_state": "RISK_REDUCTION",
       "active_missions_count": 0,
-      "completed_missions_count": 0,
+      "completed_missions_count": 15,
       "new_missions_generated": 0,
       "allocations_in_step": [],
       "reassigned_in_step": [],
@@ -122,18 +122,18 @@
           "agent_id": "DRONE_AERIAL_1",
           "agent_type": "UAV",
           "capabilities": [
-            "AERIAL_OBSERVATION",
-            "VERIFICATION"
+            "VERIFICATION",
+            "AERIAL_OBSERVATION"
           ],
           "position": [
-            1,
-            1
+            11,
+            5
           ],
           "battery": 95.0,
-          "connectivity": "DISCONNECTED",
-          "status": "DISCONNECTED",
-          "current_mission": "MSN-86D4C5",
-          "path_remaining": 16,
+          "connectivity": "CONNECTED",
+          "status": "ASSIGNED",
+          "current_mission": "MSN-3875A2",
+          "path_remaining": 1,
           "coordinate_frame": "SIMULATED_20X20_GRID"
         },
         {
@@ -141,8 +141,8 @@
           "agent_type": "UAV",
           "capabilities": [
             "AREA_SURVEILLANCE",
-            "AERIAL_OBSERVATION",
-            "VERIFICATION"
+            "VERIFICATION",
+            "AERIAL_OBSERVATION"
           ],
           "position": [
             18,
@@ -151,24 +151,24 @@
           "battery": 88.0,
           "connectivity": "DISCONNECTED",
           "status": "DISCONNECTED",
-          "current_mission": "MSN-0F8123",
-          "path_remaining": 17,
+          "current_mission": "MSN-7FC1F2",
+          "path_remaining": 12,
           "coordinate_frame": "SIMULATED_20X20_GRID"
         },
         {
           "agent_id": "USV_RIVER_1",
           "agent_type": "USV",
           "capabilities": [
-            "VERIFICATION",
-            "RIVER_MONITORING"
+            "RIVER_MONITORING",
+            "VERIFICATION"
           ],
           "position": [
             5,
             10
           ],
           "battery": 92.0,
-          "connectivity": "DISCONNECTED",
-          "status": "DISCONNECTED",
+          "connectivity": "CONNECTED",
+          "status": "AVAILABLE",
           "current_mission": null,
           "path_remaining": 0,
           "coordinate_frame": "SIMULATED_20X20_GRID"
@@ -180,14 +180,14 @@
             "RIVER_MONITORING"
           ],
           "position": [
-            12,
-            10
+            11,
+            5
           ],
           "battery": 85.0,
-          "connectivity": "DISCONNECTED",
-          "status": "DISCONNECTED",
-          "current_mission": "MSN-3EC705",
-          "path_remaining": 6,
+          "connectivity": "CONNECTED",
+          "status": "ASSIGNED",
+          "current_mission": "MSN-F28172",
+          "path_remaining": 1,
           "coordinate_frame": "SIMULATED_20X20_GRID"
         },
         {
@@ -202,10 +202,10 @@
             5
           ],
           "battery": 90.0,
-          "connectivity": "DISCONNECTED",
-          "status": "DISCONNECTED",
-          "current_mission": "MSN-70309C",
-          "path_remaining": 5,
+          "connectivity": "CONNECTED",
+          "status": "ASSIGNED",
+          "current_mission": "MSN-D88DFE",
+          "path_remaining": 1,
           "coordinate_frame": "SIMULATED_20X20_GRID"
         },
         {
@@ -216,14 +216,14 @@
             "VERIFICATION"
           ],
           "position": [
-            2,
-            18
+            12,
+            6
           ],
           "battery": 78.0,
-          "connectivity": "DISCONNECTED",
-          "status": "DISCONNECTED",
-          "current_mission": null,
-          "path_remaining": 0,
+          "connectivity": "CONNECTED",
+          "status": "ASSIGNED",
+          "current_mission": "MSN-6D16A8",
+          "path_remaining": 1,
           "coordinate_frame": "SIMULATED_20X20_GRID"
         }
       ]
@@ -320,7 +320,7 @@
           "historical_observation_timestamp": "2023-07-07T08:30:00+05:30",
           "historical_publication_timestamp": "2023-07-07T11:30:00+05:30",
           "historical_event_epoch_sec": 1688698800.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.4984484,
+          "runtime_simulation_wall_clock_sec": 1793815969.9119444,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "NORMAL",
@@ -335,8 +335,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -354,8 +354,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -372,8 +372,8 @@
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -532,7 +532,7 @@
           "historical_observation_timestamp": "2023-07-08T08:30:00+05:30",
           "historical_publication_timestamp": "2023-07-08T11:30:00+05:30",
           "historical_event_epoch_sec": 1688785200.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.498532,
+          "runtime_simulation_wall_clock_sec": 1793815969.912063,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "NORMAL",
@@ -547,8 +547,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -566,8 +566,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -584,8 +584,8 @@
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -744,7 +744,7 @@
           "historical_observation_timestamp": "2023-07-09T08:30:00+05:30",
           "historical_publication_timestamp": "2023-07-09T13:00:00+05:30",
           "historical_event_epoch_sec": 1688871600.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.4985676,
+          "runtime_simulation_wall_clock_sec": 1793815969.9121158,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "WATCH",
@@ -753,35 +753,23 @@
         "new_missions_generated": 1,
         "allocations_in_step": [
           {
-            "mission_id": "MSN-70309C",
+            "mission_id": "MSN-114337",
             "agent_id": "RELAY_NODE_1",
-            "path_length": 5,
+            "path_length": 2,
             "path": [
               [
                 10,
                 5
               ],
               [
-                9,
+                11,
                 5
-              ],
-              [
-                9,
-                6
-              ],
-              [
-                9,
-                7
-              ],
-              [
-                9,
-                8
               ]
             ],
-            "bid_score": 124.0,
+            "bid_score": 133.0,
             "assigned_at": 1688871600.0,
             "assigned_at_iso": "2023-07-09T08:30:00+05:30",
-            "runtime_simulation_wall_clock_sec": 1793815277.4985676,
+            "runtime_simulation_wall_clock_sec": 1793815969.9121158,
             "timestamp_domain": "HISTORICAL_EVENT_TIME"
           }
         ],
@@ -792,8 +780,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -811,8 +799,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -829,8 +817,8 @@
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -874,8 +862,8 @@
             "battery": 90.0,
             "connectivity": "CONNECTED",
             "status": "ASSIGNED",
-            "current_mission": "MSN-70309C",
-            "path_remaining": 5,
+            "current_mission": "MSN-114337",
+            "path_remaining": 2,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -989,18 +977,18 @@
           "historical_observation_timestamp": "2023-07-10T17:00:00+05:30",
           "historical_publication_timestamp": "2023-07-10T18:00:00+05:30",
           "historical_event_epoch_sec": 1688988600.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.4986649,
+          "runtime_simulation_wall_clock_sec": 1793815969.9122314,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "WARNING",
         "active_missions_count": 2,
-        "completed_missions_count": 0,
+        "completed_missions_count": 1,
         "new_missions_generated": 2,
         "allocations_in_step": [
           {
-            "mission_id": "MSN-3EC705",
+            "mission_id": "MSN-9A6BCE",
             "agent_id": "USV_RIVER_2",
-            "path_length": 6,
+            "path_length": 7,
             "path": [
               [
                 12,
@@ -1011,26 +999,50 @@
                 10
               ],
               [
-                10,
-                10
-              ],
-              [
-                9,
-                10
-              ],
-              [
-                9,
+                11,
                 9
               ],
               [
-                9,
+                11,
                 8
+              ],
+              [
+                11,
+                7
+              ],
+              [
+                11,
+                6
+              ],
+              [
+                11,
+                5
               ]
             ],
-            "bid_score": 219.0,
+            "bid_score": 216.0,
             "assigned_at": 1688988600.0,
             "assigned_at_iso": "2023-07-10T17:00:00+05:30",
-            "runtime_simulation_wall_clock_sec": 1793815277.4986649,
+            "runtime_simulation_wall_clock_sec": 1793815969.9122314,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-37C7BA",
+            "agent_id": "RELAY_NODE_1",
+            "path_length": 2,
+            "path": [
+              [
+                11,
+                5
+              ],
+              [
+                10,
+                5
+              ]
+            ],
+            "bid_score": 233.0,
+            "assigned_at": 1688988600.0,
+            "assigned_at_iso": "2023-07-10T17:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9122314,
             "timestamp_domain": "HISTORICAL_EVENT_TIME"
           }
         ],
@@ -1041,8 +1053,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -1060,8 +1072,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -1078,8 +1090,8 @@
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -1105,8 +1117,8 @@
             "battery": 85.0,
             "connectivity": "CONNECTED",
             "status": "ASSIGNED",
-            "current_mission": "MSN-3EC705",
-            "path_remaining": 6,
+            "current_mission": "MSN-9A6BCE",
+            "path_remaining": 7,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -1117,14 +1129,14 @@
               "DATA_RELAY"
             ],
             "position": [
-              10,
+              11,
               5
             ],
             "battery": 90.0,
             "connectivity": "CONNECTED",
             "status": "ASSIGNED",
-            "current_mission": "MSN-70309C",
-            "path_remaining": 5,
+            "current_mission": "MSN-37C7BA",
+            "path_remaining": 2,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -1238,94 +1250,18 @@
           "historical_observation_timestamp": "2023-07-11T11:00:00+05:30",
           "historical_publication_timestamp": "2023-07-11T12:30:00+05:30",
           "historical_event_epoch_sec": 1689053400.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.4987435,
+          "runtime_simulation_wall_clock_sec": 1793815969.9123676,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "CRITICAL",
-        "active_missions_count": 0,
-        "completed_missions_count": 0,
+        "active_missions_count": 2,
+        "completed_missions_count": 3,
         "new_missions_generated": 2,
         "allocations_in_step": [
           {
-            "mission_id": "MSN-86D4C5",
-            "agent_id": "DRONE_AERIAL_1",
-            "path_length": 16,
-            "path": [
-              [
-                1,
-                1
-              ],
-              [
-                1,
-                2
-              ],
-              [
-                1,
-                3
-              ],
-              [
-                1,
-                4
-              ],
-              [
-                1,
-                5
-              ],
-              [
-                1,
-                6
-              ],
-              [
-                1,
-                7
-              ],
-              [
-                2,
-                7
-              ],
-              [
-                3,
-                7
-              ],
-              [
-                4,
-                7
-              ],
-              [
-                5,
-                7
-              ],
-              [
-                6,
-                7
-              ],
-              [
-                7,
-                7
-              ],
-              [
-                8,
-                7
-              ],
-              [
-                8,
-                8
-              ],
-              [
-                9,
-                8
-              ]
-            ],
-            "bid_score": 293.0,
-            "assigned_at": 1689053400.0,
-            "assigned_at_iso": "2023-07-11T11:00:00+05:30",
-            "runtime_simulation_wall_clock_sec": 1793815277.4987435,
-            "timestamp_domain": "HISTORICAL_EVENT_TIME"
-          },
-          {
-            "mission_id": "MSN-0F8123",
+            "mission_id": "MSN-7FC1F2",
             "agent_id": "DRONE_AERIAL_2",
-            "path_length": 17,
+            "path_length": 12,
             "path": [
               [
                 18,
@@ -1360,82 +1296,233 @@
                 1
               ],
               [
-                10,
-                1
-              ],
-              [
-                10,
+                11,
                 2
               ],
               [
-                10,
+                11,
                 3
               ],
               [
-                10,
+                11,
                 4
               ],
               [
-                10,
+                11,
                 5
+              ]
+            ],
+            "bid_score": 302.2,
+            "assigned_at": 1689053400.0,
+            "assigned_at_iso": "2023-07-11T11:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9123676,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-BE691F",
+            "agent_id": "GROUND_SCOUT_1",
+            "path_length": 23,
+            "path": [
+              [
+                2,
+                18
+              ],
+              [
+                2,
+                17
+              ],
+              [
+                2,
+                16
+              ],
+              [
+                2,
+                15
+              ],
+              [
+                2,
+                14
+              ],
+              [
+                2,
+                13
+              ],
+              [
+                2,
+                12
+              ],
+              [
+                2,
+                11
+              ],
+              [
+                2,
+                10
+              ],
+              [
+                2,
+                9
+              ],
+              [
+                2,
+                8
+              ],
+              [
+                2,
+                7
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                3,
+                6
+              ],
+              [
+                4,
+                6
+              ],
+              [
+                5,
+                6
+              ],
+              [
+                6,
+                6
+              ],
+              [
+                7,
+                6
+              ],
+              [
+                8,
+                6
+              ],
+              [
+                9,
+                6
               ],
               [
                 10,
                 6
               ],
               [
-                10,
-                7
+                11,
+                6
               ],
               [
-                10,
-                8
-              ],
-              [
-                10,
-                9
+                12,
+                6
               ]
             ],
-            "bid_score": 287.2,
+            "bid_score": 265.2,
             "assigned_at": 1689053400.0,
             "assigned_at_iso": "2023-07-11T11:00:00+05:30",
-            "runtime_simulation_wall_clock_sec": 1793815277.4987435,
+            "runtime_simulation_wall_clock_sec": 1793815969.9123676,
             "timestamp_domain": "HISTORICAL_EVENT_TIME"
           }
         ],
         "reassigned_in_step": [
-          "MSN-70309C",
-          "MSN-3EC705",
-          "MSN-86D4C5",
-          "MSN-0F8123"
+          "MSN-7FC1F2"
         ],
         "failure_event": {
-          "disconnected_agent": "DRONE_AERIAL_1",
+          "disconnected_agent": "DRONE_AERIAL_2",
           "reassigned_missions": [
-            "MSN-70309C",
-            "MSN-3EC705",
-            "MSN-86D4C5",
-            "MSN-0F8123"
+            "MSN-7FC1F2"
           ],
-          "reallocations": []
+          "reallocations": [
+            {
+              "mission_id": "MSN-7FC1F2",
+              "agent_id": "DRONE_AERIAL_1",
+              "path_length": 15,
+              "path": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  1,
+                  5
+                ],
+                [
+                  2,
+                  5
+                ],
+                [
+                  3,
+                  5
+                ],
+                [
+                  4,
+                  5
+                ],
+                [
+                  5,
+                  5
+                ],
+                [
+                  6,
+                  5
+                ],
+                [
+                  7,
+                  5
+                ],
+                [
+                  8,
+                  5
+                ],
+                [
+                  9,
+                  5
+                ],
+                [
+                  10,
+                  5
+                ],
+                [
+                  11,
+                  5
+                ]
+              ],
+              "bid_score": 296.0,
+              "assigned_at": 1689053400.0,
+              "assigned_at_iso": "2023-07-11T11:00:00+05:30",
+              "runtime_simulation_wall_clock_sec": 1793815969.9123676,
+              "timestamp_domain": "HISTORICAL_EVENT_TIME"
+            }
+          ]
         },
         "agents": [
           {
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
               1
             ],
             "battery": 95.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-86D4C5",
-            "path_remaining": 16,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-7FC1F2",
+            "path_remaining": 15,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -1443,8 +1530,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -1453,24 +1540,24 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-0F8123",
-            "path_remaining": 17,
+            "current_mission": "MSN-7FC1F2",
+            "path_remaining": 12,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
               10
             ],
             "battery": 92.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
             "current_mission": null,
             "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
@@ -1482,14 +1569,14 @@
               "RIVER_MONITORING"
             ],
             "position": [
-              12,
-              10
+              11,
+              5
             ],
             "battery": 85.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-3EC705",
-            "path_remaining": 6,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 7,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -1504,10 +1591,10 @@
               5
             ],
             "battery": 90.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-70309C",
-            "path_remaining": 5,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 2,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -1522,10 +1609,10 @@
               18
             ],
             "battery": 78.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-BE691F",
+            "path_remaining": 23,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -1621,14 +1708,47 @@
           "historical_observation_timestamp": "2023-07-12T13:00:00+05:30",
           "historical_publication_timestamp": "2023-07-12T14:30:00+05:30",
           "historical_event_epoch_sec": 1689147000.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.499088,
+          "runtime_simulation_wall_clock_sec": 1793815969.9131145,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "CRITICAL",
-        "active_missions_count": 0,
-        "completed_missions_count": 0,
+        "active_missions_count": 2,
+        "completed_missions_count": 5,
         "new_missions_generated": 2,
-        "allocations_in_step": [],
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-00534F",
+            "agent_id": "DRONE_AERIAL_1",
+            "path_length": 1,
+            "path": [
+              [
+                11,
+                5
+              ]
+            ],
+            "bid_score": 338.0,
+            "assigned_at": 1689147000.0,
+            "assigned_at_iso": "2023-07-12T13:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9131145,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-D29CA7",
+            "agent_id": "GROUND_SCOUT_1",
+            "path_length": 1,
+            "path": [
+              [
+                12,
+                6
+              ]
+            ],
+            "bid_score": 331.2,
+            "assigned_at": 1689147000.0,
+            "assigned_at_iso": "2023-07-12T13:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9131145,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
         "reassigned_in_step": [],
         "failure_event": null,
         "agents": [
@@ -1636,18 +1756,18 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
-              1,
-              1
+              11,
+              5
             ],
             "battery": 95.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-86D4C5",
-            "path_remaining": 16,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-00534F",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -1655,8 +1775,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -1665,24 +1785,24 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-0F8123",
-            "path_remaining": 17,
+            "current_mission": "MSN-7FC1F2",
+            "path_remaining": 12,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
               10
             ],
             "battery": 92.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
             "current_mission": null,
             "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
@@ -1694,14 +1814,14 @@
               "RIVER_MONITORING"
             ],
             "position": [
-              12,
-              10
+              11,
+              5
             ],
             "battery": 85.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-3EC705",
-            "path_remaining": 6,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 7,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -1716,10 +1836,10 @@
               5
             ],
             "battery": 90.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-70309C",
-            "path_remaining": 5,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 2,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -1730,14 +1850,14 @@
               "VERIFICATION"
             ],
             "position": [
-              2,
-              18
+              12,
+              6
             ],
             "battery": 78.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-D29CA7",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -1833,14 +1953,47 @@
           "historical_observation_timestamp": "2023-07-13T18:00:00+05:30",
           "historical_publication_timestamp": "2023-07-13T19:30:00+05:30",
           "historical_event_epoch_sec": 1689251400.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.499133,
+          "runtime_simulation_wall_clock_sec": 1793815969.9132082,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "CRITICAL",
-        "active_missions_count": 0,
-        "completed_missions_count": 0,
+        "active_missions_count": 2,
+        "completed_missions_count": 7,
         "new_missions_generated": 2,
-        "allocations_in_step": [],
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-DAAC23",
+            "agent_id": "DRONE_AERIAL_1",
+            "path_length": 1,
+            "path": [
+              [
+                11,
+                5
+              ]
+            ],
+            "bid_score": 338.0,
+            "assigned_at": 1689251400.0,
+            "assigned_at_iso": "2023-07-13T18:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9132082,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-E69123",
+            "agent_id": "GROUND_SCOUT_1",
+            "path_length": 1,
+            "path": [
+              [
+                12,
+                6
+              ]
+            ],
+            "bid_score": 331.2,
+            "assigned_at": 1689251400.0,
+            "assigned_at_iso": "2023-07-13T18:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9132082,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
         "reassigned_in_step": [],
         "failure_event": null,
         "agents": [
@@ -1848,18 +2001,18 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
-              1,
-              1
+              11,
+              5
             ],
             "battery": 95.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-86D4C5",
-            "path_remaining": 16,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-DAAC23",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -1867,8 +2020,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -1877,24 +2030,24 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-0F8123",
-            "path_remaining": 17,
+            "current_mission": "MSN-7FC1F2",
+            "path_remaining": 12,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
               10
             ],
             "battery": 92.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
             "current_mission": null,
             "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
@@ -1906,14 +2059,14 @@
               "RIVER_MONITORING"
             ],
             "position": [
-              12,
-              10
+              11,
+              5
             ],
             "battery": 85.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-3EC705",
-            "path_remaining": 6,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 7,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -1928,10 +2081,10 @@
               5
             ],
             "battery": 90.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-70309C",
-            "path_remaining": 5,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 2,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -1942,14 +2095,14 @@
               "VERIFICATION"
             ],
             "position": [
-              2,
-              18
+              12,
+              6
             ],
             "battery": 78.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-E69123",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -2045,14 +2198,47 @@
           "historical_observation_timestamp": "2023-07-14T10:00:00+05:30",
           "historical_publication_timestamp": "2023-07-14T11:30:00+05:30",
           "historical_event_epoch_sec": 1689309000.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.4991727,
+          "runtime_simulation_wall_clock_sec": 1793815969.9132736,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "CRITICAL",
-        "active_missions_count": 0,
-        "completed_missions_count": 0,
+        "active_missions_count": 2,
+        "completed_missions_count": 9,
         "new_missions_generated": 2,
-        "allocations_in_step": [],
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-438BB4",
+            "agent_id": "DRONE_AERIAL_1",
+            "path_length": 1,
+            "path": [
+              [
+                11,
+                5
+              ]
+            ],
+            "bid_score": 338.0,
+            "assigned_at": 1689309000.0,
+            "assigned_at_iso": "2023-07-14T10:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9132736,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-DE0624",
+            "agent_id": "GROUND_SCOUT_1",
+            "path_length": 1,
+            "path": [
+              [
+                12,
+                6
+              ]
+            ],
+            "bid_score": 331.2,
+            "assigned_at": 1689309000.0,
+            "assigned_at_iso": "2023-07-14T10:00:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9132736,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
         "reassigned_in_step": [],
         "failure_event": null,
         "agents": [
@@ -2060,18 +2246,18 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
-              1,
-              1
+              11,
+              5
             ],
             "battery": 95.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-86D4C5",
-            "path_remaining": 16,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-438BB4",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2079,8 +2265,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -2089,24 +2275,24 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-0F8123",
-            "path_remaining": 17,
+            "current_mission": "MSN-7FC1F2",
+            "path_remaining": 12,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
               10
             ],
             "battery": 92.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
             "current_mission": null,
             "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
@@ -2118,14 +2304,14 @@
               "RIVER_MONITORING"
             ],
             "position": [
-              12,
-              10
+              11,
+              5
             ],
             "battery": 85.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-3EC705",
-            "path_remaining": 6,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 7,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2140,10 +2326,10 @@
               5
             ],
             "battery": 90.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-70309C",
-            "path_remaining": 5,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 2,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2154,14 +2340,14 @@
               "VERIFICATION"
             ],
             "position": [
-              2,
-              18
+              12,
+              6
             ],
             "battery": 78.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-DE0624",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -2257,14 +2443,47 @@
           "historical_observation_timestamp": "2023-07-15T08:30:00+05:30",
           "historical_publication_timestamp": "2023-07-15T11:30:00+05:30",
           "historical_event_epoch_sec": 1689390000.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.4992168,
+          "runtime_simulation_wall_clock_sec": 1793815969.9133313,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "CRITICAL",
         "active_missions_count": 0,
-        "completed_missions_count": 0,
+        "completed_missions_count": 13,
         "new_missions_generated": 2,
-        "allocations_in_step": [],
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-3875A2",
+            "agent_id": "DRONE_AERIAL_1",
+            "path_length": 1,
+            "path": [
+              [
+                11,
+                5
+              ]
+            ],
+            "bid_score": 338.0,
+            "assigned_at": 1689390000.0,
+            "assigned_at_iso": "2023-07-15T08:30:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9133313,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-6D16A8",
+            "agent_id": "GROUND_SCOUT_1",
+            "path_length": 1,
+            "path": [
+              [
+                12,
+                6
+              ]
+            ],
+            "bid_score": 331.2,
+            "assigned_at": 1689390000.0,
+            "assigned_at_iso": "2023-07-15T08:30:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9133313,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
         "reassigned_in_step": [],
         "failure_event": null,
         "agents": [
@@ -2272,18 +2491,18 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
-              1,
-              1
+              11,
+              5
             ],
             "battery": 95.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-86D4C5",
-            "path_remaining": 16,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-3875A2",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2291,8 +2510,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -2301,24 +2520,24 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-0F8123",
-            "path_remaining": 17,
+            "current_mission": "MSN-7FC1F2",
+            "path_remaining": 12,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
               10
             ],
             "battery": 92.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
             "current_mission": null,
             "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
@@ -2330,14 +2549,14 @@
               "RIVER_MONITORING"
             ],
             "position": [
-              12,
-              10
+              11,
+              5
             ],
             "battery": 85.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-3EC705",
-            "path_remaining": 6,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 7,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2352,10 +2571,10 @@
               5
             ],
             "battery": 90.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-70309C",
-            "path_remaining": 5,
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
+            "current_mission": null,
+            "path_remaining": 2,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2366,14 +2585,14 @@
               "VERIFICATION"
             ],
             "position": [
-              2,
-              18
+              12,
+              6
             ],
             "battery": 78.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6D16A8",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -2469,14 +2688,47 @@
           "historical_observation_timestamp": "2023-07-16T08:30:00+05:30",
           "historical_publication_timestamp": "2023-07-16T11:30:00+05:30",
           "historical_event_epoch_sec": 1689476400.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.499265,
+          "runtime_simulation_wall_clock_sec": 1793815969.9133983,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "WARNING",
         "active_missions_count": 0,
-        "completed_missions_count": 0,
+        "completed_missions_count": 15,
         "new_missions_generated": 2,
-        "allocations_in_step": [],
+        "allocations_in_step": [
+          {
+            "mission_id": "MSN-F28172",
+            "agent_id": "USV_RIVER_2",
+            "path_length": 1,
+            "path": [
+              [
+                11,
+                5
+              ]
+            ],
+            "bid_score": 234.0,
+            "assigned_at": 1689476400.0,
+            "assigned_at_iso": "2023-07-16T08:30:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9133983,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          },
+          {
+            "mission_id": "MSN-D88DFE",
+            "agent_id": "RELAY_NODE_1",
+            "path_length": 1,
+            "path": [
+              [
+                10,
+                5
+              ]
+            ],
+            "bid_score": 236.0,
+            "assigned_at": 1689476400.0,
+            "assigned_at_iso": "2023-07-16T08:30:00+05:30",
+            "runtime_simulation_wall_clock_sec": 1793815969.9133983,
+            "timestamp_domain": "HISTORICAL_EVENT_TIME"
+          }
+        ],
         "reassigned_in_step": [],
         "failure_event": null,
         "agents": [
@@ -2484,18 +2736,18 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
-              1,
-              1
+              11,
+              5
             ],
             "battery": 95.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-86D4C5",
-            "path_remaining": 16,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-3875A2",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2503,8 +2755,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -2513,24 +2765,24 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-0F8123",
-            "path_remaining": 17,
+            "current_mission": "MSN-7FC1F2",
+            "path_remaining": 12,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
               10
             ],
             "battery": 92.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
             "current_mission": null,
             "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
@@ -2542,14 +2794,14 @@
               "RIVER_MONITORING"
             ],
             "position": [
-              12,
-              10
+              11,
+              5
             ],
             "battery": 85.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-3EC705",
-            "path_remaining": 6,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-F28172",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2564,10 +2816,10 @@
               5
             ],
             "battery": 90.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-70309C",
-            "path_remaining": 5,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-D88DFE",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2578,14 +2830,14 @@
               "VERIFICATION"
             ],
             "position": [
-              2,
-              18
+              12,
+              6
             ],
             "battery": 78.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6D16A8",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -2681,12 +2933,12 @@
           "historical_observation_timestamp": "2023-07-17T08:30:00+05:30",
           "historical_publication_timestamp": "2023-07-17T11:30:00+05:30",
           "historical_event_epoch_sec": 1689562800.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.499316,
+          "runtime_simulation_wall_clock_sec": 1793815969.9134574,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "WATCH",
         "active_missions_count": 0,
-        "completed_missions_count": 0,
+        "completed_missions_count": 15,
         "new_missions_generated": 1,
         "allocations_in_step": [],
         "reassigned_in_step": [],
@@ -2696,18 +2948,18 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
-              1,
-              1
+              11,
+              5
             ],
             "battery": 95.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-86D4C5",
-            "path_remaining": 16,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-3875A2",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2715,8 +2967,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -2725,24 +2977,24 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-0F8123",
-            "path_remaining": 17,
+            "current_mission": "MSN-7FC1F2",
+            "path_remaining": 12,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
               10
             ],
             "battery": 92.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
             "current_mission": null,
             "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
@@ -2754,14 +3006,14 @@
               "RIVER_MONITORING"
             ],
             "position": [
-              12,
-              10
+              11,
+              5
             ],
             "battery": 85.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-3EC705",
-            "path_remaining": 6,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-F28172",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2776,10 +3028,10 @@
               5
             ],
             "battery": 90.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-70309C",
-            "path_remaining": 5,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-D88DFE",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2790,14 +3042,14 @@
               "VERIFICATION"
             ],
             "position": [
-              2,
-              18
+              12,
+              6
             ],
             "battery": 78.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6D16A8",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -2893,12 +3145,12 @@
           "historical_observation_timestamp": "2023-07-18T08:30:00+05:30",
           "historical_publication_timestamp": "2023-07-18T11:30:00+05:30",
           "historical_event_epoch_sec": 1689649200.0,
-          "runtime_simulation_wall_clock_sec": 1793815277.49936,
+          "runtime_simulation_wall_clock_sec": 1793815969.9135013,
           "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
         },
         "activation_state": "RISK_REDUCTION",
         "active_missions_count": 0,
-        "completed_missions_count": 0,
+        "completed_missions_count": 15,
         "new_missions_generated": 0,
         "allocations_in_step": [],
         "reassigned_in_step": [],
@@ -2908,18 +3160,18 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
-              1,
-              1
+              11,
+              5
             ],
             "battery": 95.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-86D4C5",
-            "path_remaining": 16,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-3875A2",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2927,8 +3179,8 @@
             "agent_type": "UAV",
             "capabilities": [
               "AREA_SURVEILLANCE",
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               18,
@@ -2937,24 +3189,24 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-0F8123",
-            "path_remaining": 17,
+            "current_mission": "MSN-7FC1F2",
+            "path_remaining": 12,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
               10
             ],
             "battery": 92.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
+            "connectivity": "CONNECTED",
+            "status": "AVAILABLE",
             "current_mission": null,
             "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
@@ -2966,14 +3218,14 @@
               "RIVER_MONITORING"
             ],
             "position": [
-              12,
-              10
+              11,
+              5
             ],
             "battery": 85.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-3EC705",
-            "path_remaining": 6,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-F28172",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -2988,10 +3240,10 @@
               5
             ],
             "battery": 90.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": "MSN-70309C",
-            "path_remaining": 5,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-D88DFE",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
@@ -3002,14 +3254,14 @@
               "VERIFICATION"
             ],
             "position": [
-              2,
-              18
+              12,
+              6
             ],
             "battery": 78.0,
-            "connectivity": "DISCONNECTED",
-            "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "connectivity": "CONNECTED",
+            "status": "ASSIGNED",
+            "current_mission": "MSN-6D16A8",
+            "path_remaining": 1,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]

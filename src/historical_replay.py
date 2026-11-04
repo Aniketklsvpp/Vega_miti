@@ -13,7 +13,8 @@ HISTORICAL_EVENTS_CATALOG = {
         "title": "July 2023 Yamuna River Mega-Flood (Delhi NCR & Haryana, India)",
         "country": "India",
         "state_or_region": "National Capital Territory of Delhi / Haryana",
-        "river": "Yamuna River (Upper Yamuna Basin, Ganges Sub-basin)",
+        "river": "Yamuna River (Upper Yamuna Basin)",
+        "sub_basin": "Ganges Sub-basin",
         "start_date": "2023-07-07",
         "end_date": "2023-07-18",
         "peak_date": "2023-07-13",
@@ -625,6 +626,11 @@ class HistoricalReplayEngine:
             pub_ts = row.get("publication_timestamp") or f"{dt}T11:30:00+05:30"
             hist_epoch = float(pd.Timestamp(obs_ts).timestamp())
             wall_clock_now = float(time.time())
+
+            if idx > 0:
+                for mid, m in list(coordinator.missions.items()):
+                    if m["status"] == "IN_PROGRESS":
+                        coordinator.complete_mission(mid)
 
             assessment = self.assess_event_observation(event_id, row)
             

@@ -188,22 +188,39 @@ class SwarmCoordinator:
     def check_heartbeats_and_leases(self, timeout_sec=20):
         now = time.time()
         reassigned = []
-        for aid, agent in self.agents.items():
-            if now - agent.last_heartbeat > timeout_sec and agent.connectivity == "CONNECTED":
-                agent.connectivity = "DISCONNECTED"
-                agent.status = "DISCONNECTED"
-                agent.record_event("AGENT_HEARTBEAT_LOST", {"last_heartbeat": agent.last_heartbeat})
+        if timeout_sec is not None and timeout_sec > 0:
+            for aid, agent in self.agents.items():
+                if now - agent.last_heartbeat > timeout_sec and agent.connectivity == "CONNECTED":
+                    agent.connectivity = "DISCONNECTED"
+                    agent.status = "DISCONNECTED"
+                    agent.record_event("AGENT_HEARTBEAT_LOST", {"last_heartbeat": agent.last_heartbeat})
 
         for mid, lease in list(self.task_leases.items()):
             agent = self.agents.get(lease["agent_id"])
             if now > lease["expires_at"] or (agent and agent.connectivity == "DISCONNECTED"):
-                if mid in self.missions and self.missions[mid]["status"] == "IN_PROGRESS":
+                if mid in self.missions and self.missions[mid]["status"] in ("IN_PROGRESS", "ASSIGNED"):
                     self.missions[mid]["status"] = "REASSIGNED"
                     self.missions[mid]["assigned_agent_id"] = None
                     reassigned.append(mid)
                 del self.task_leases[mid]
 
         return reassigned
+
+    def complete_mission(self, mission_id):
+        if mission_id in self.missions:
+            m = self.missions[mission_id]
+            m["status"] = "COMPLETED"
+            aid = m.get("assigned_agent_id")
+            if aid and aid in self.agents:
+                agent = self.agents[aid]
+                if agent.status == "ASSIGNED" and agent.connectivity == "CONNECTED":
+                    agent.status = "AVAILABLE"
+                    agent.current_mission = None
+                    if m.get("target_position"):
+                        agent.position = m["target_position"]
+                    agent.record_event("MISSION_COMPLETED", {"mission_id": mission_id})
+            if mission_id in self.task_leases:
+                del self.task_leases[mission_id]
 
     def simulate_agent_disconnect(self, agent_id):
         if agent_id in self.agents:

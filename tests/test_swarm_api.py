@@ -101,7 +101,7 @@ class TestSwarmAPI(unittest.TestCase):
         meta_body = meta_resp.json()
         self.assertEqual(meta_body["status"], "success")
         self.assertEqual(meta_body["data"]["country"], "India")
-        self.assertEqual(meta_body["data"]["river"], "Yamuna River (Upper Yamuna Basin, Ganges Sub-basin)")
+        self.assertEqual(meta_body["data"]["river"], "Yamuna River (Upper Yamuna Basin)")
 
         run_resp = self.client.post("/api/swarm/replay/run", json={"event_id": "EVENT-IN-YAMUNA-2023", "step_index": 4})
         self.assertEqual(run_resp.status_code, 200)

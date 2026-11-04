@@ -30,7 +30,7 @@ class TestHistoricalReplay(unittest.TestCase):
         self.assertEqual(body["status"], "success")
         data = body["data"]
         self.assertEqual(data["country"], "India")
-        self.assertEqual(data["river"], "Yamuna River (Upper Yamuna Basin, Ganges Sub-basin)")
+        self.assertEqual(data["river"], "Yamuna River (Upper Yamuna Basin)")
         self.assertEqual(data["primary_gauge_station"]["station_id"], "YMN-DEL-ORB-01")
         self.assertEqual(data["primary_gauge_station"]["latitude"], 28.663)
         self.assertEqual(data["primary_gauge_station"]["longitude"], 77.234)
@@ -62,7 +62,11 @@ class TestHistoricalReplay(unittest.TestCase):
         self.assertEqual(frame4["date"], "2023-07-11")
         self.assertEqual(frame4["timeline_phase"], "HIGH_RISK_PEAK")
         self.assertEqual(frame4["vega_miti_risk_assessment"]["risk_level"], "CRITICAL")
-        self.assertIsNotNone(frame4["simulated_swarm_response"]["failure_event"])
+        fe = frame4["simulated_swarm_response"]["failure_event"]
+        self.assertIsNotNone(fe)
+        self.assertGreater(len(fe["reassigned_missions"]), 0)
+        self.assertGreater(len(fe["reallocations"]), 0)
+        self.assertNotEqual(fe["disconnected_agent"], fe["reallocations"][0]["agent_id"])
 
     def test_invalid_event_id(self):
         resp = self.client.post("/api/swarm/replay/run", json={"event_id": "NON_EXISTENT_EVENT"})

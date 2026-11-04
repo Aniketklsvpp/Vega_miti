@@ -72,6 +72,7 @@ class SwarmActivationEngine:
                     "mission_type": "EMERGENCY_CREST_VERIFICATION",
                     "priority": 1,
                     "target_station_id": st_id,
+                    "station_id": st_id,
                     "discharge_cfs": discharge,
                     "risk_level": level,
                     "data_quality_status": q_status,
@@ -85,6 +86,7 @@ class SwarmActivationEngine:
                     "mission_type": "DOWNSTREAM_SURVEILLANCE",
                     "priority": 1,
                     "target_station_id": st_id,
+                    "station_id": st_id,
                     "discharge_cfs": discharge,
                     "risk_level": level,
                     "data_quality_status": q_status,
@@ -99,6 +101,7 @@ class SwarmActivationEngine:
                     "mission_type": "SURFACE_FLOW_MONITORING",
                     "priority": 2,
                     "target_station_id": st_id,
+                    "station_id": st_id,
                     "discharge_cfs": discharge,
                     "risk_level": level,
                     "data_quality_status": q_status,
@@ -112,6 +115,7 @@ class SwarmActivationEngine:
                     "mission_type": "NETWORK_RELAY_BRIDGE",
                     "priority": 2,
                     "target_station_id": st_id,
+                    "station_id": st_id,
                     "discharge_cfs": discharge,
                     "risk_level": level,
                     "data_quality_status": q_status,
@@ -126,6 +130,7 @@ class SwarmActivationEngine:
                     "mission_type": "PREVENTIVE_RECONNAISSANCE",
                     "priority": 3,
                     "target_station_id": st_id,
+                    "station_id": st_id,
                     "discharge_cfs": discharge,
                     "risk_level": level,
                     "data_quality_status": q_status,
@@ -142,4 +147,3 @@ class SwarmActivationEngine:
         x = (hash_val % 16) + 2
         y = ((hash_val // 16) % 16) + 2
         return (abs(x), abs(y))
-

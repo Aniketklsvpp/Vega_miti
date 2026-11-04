@@ -192,7 +192,7 @@ def run_historical_replay(req: ReplayRunRequest):
         return envelope(error=res.get("error"))
     return envelope(res)
 
-app = FastAPI(title="DELTA-SWARM Simulation & Resilience API", version="1.0.0")
+app = FastAPI(title="VEGA-MITI Simulation & Resilience API", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

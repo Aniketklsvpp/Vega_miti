@@ -5,16 +5,16 @@
     20
   ],
   "coordinator_status": "ONLINE",
-  "active_missions_count": 0,
+  "active_missions_count": 2,
   "completed_missions_count": 0,
-  "synchronized_events_count": 0,
+  "synchronized_events_count": 4,
   "agents": [
     {
       "agent_id": "DRONE_AERIAL_1",
       "agent_type": "UAV",
       "capabilities": [
-        "AERIAL_OBSERVATION",
-        "VERIFICATION"
+        "VERIFICATION",
+        "AERIAL_OBSERVATION"
       ],
       "position": [
         1,
@@ -23,8 +23,8 @@
       "battery": 95.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-32E55E",
-      "path_remaining": 18,
+      "current_mission": "MSN-AF351B",
+      "path_remaining": 26,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
@@ -32,34 +32,34 @@
       "agent_type": "UAV",
       "capabilities": [
         "AREA_SURVEILLANCE",
-        "AERIAL_OBSERVATION",
-        "VERIFICATION"
+        "VERIFICATION",
+        "AERIAL_OBSERVATION"
       ],
       "position": [
         18,
         1
       ],
       "battery": 88.0,
-      "connectivity": "DISCONNECTED",
-      "status": "DISCONNECTED",
-      "current_mission": "MSN-900EA2",
-      "path_remaining": 12,
+      "connectivity": "CONNECTED",
+      "status": "ASSIGNED",
+      "current_mission": "MSN-35D980",
+      "path_remaining": 20,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
       "agent_id": "USV_RIVER_1",
       "agent_type": "USV",
       "capabilities": [
-        "VERIFICATION",
-        "RIVER_MONITORING"
+        "RIVER_MONITORING",
+        "VERIFICATION"
       ],
       "position": [
         5,
         10
       ],
       "battery": 92.0,
-      "connectivity": "DISCONNECTED",
-      "status": "DISCONNECTED",
+      "connectivity": "CONNECTED",
+      "status": "AVAILABLE",
       "current_mission": null,
       "path_remaining": 0,
       "coordinate_frame": "SIMULATED_20X20_GRID"
@@ -75,8 +75,8 @@
         10
       ],
       "battery": 85.0,
-      "connectivity": "DISCONNECTED",
-      "status": "DISCONNECTED",
+      "connectivity": "CONNECTED",
+      "status": "AVAILABLE",
       "current_mission": null,
       "path_remaining": 0,
       "coordinate_frame": "SIMULATED_20X20_GRID"
@@ -93,10 +93,10 @@
         5
       ],
       "battery": 90.0,
-      "connectivity": "DISCONNECTED",
-      "status": "DISCONNECTED",
-      "current_mission": "MSN-094902",
-      "path_remaining": 10,
+      "connectivity": "CONNECTED",
+      "status": "ASSIGNED",
+      "current_mission": "MSN-CCA89B",
+      "path_remaining": 3,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
@@ -111,8 +111,8 @@
         18
       ],
       "battery": 78.0,
-      "connectivity": "DISCONNECTED",
-      "status": "DISCONNECTED",
+      "connectivity": "CONNECTED",
+      "status": "AVAILABLE",
       "current_mission": null,
       "path_remaining": 0,
       "coordinate_frame": "SIMULATED_20X20_GRID"
