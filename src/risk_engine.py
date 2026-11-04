@@ -77,3 +77,4 @@ class HydrologicalRiskEngine:
             dt = row.get("date")
             results.append(self.assess_station_risk(st_id, val, date=dt))
         return pd.DataFrame(results)
+

@@ -106,3 +106,4 @@ class SwarmActivationEngine:
         x = (hash_val % 16) + 2
         y = ((hash_val // 16) % 16) + 2
         return (abs(x), abs(y))
+

@@ -151,3 +151,4 @@ class BasinshiftEvaluator:
                 "Evacuation routing validation unsupported"
             ]
         }
+
