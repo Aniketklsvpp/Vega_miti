@@ -1,0 +1,8 @@
+model_name,model_type,target_transform,overall_rmse,extreme_rmse,mae,r2,composite_score,validation_time_sec
+ExtraTrees (Raw),extra_trees,False,288.8845,883.5473,84.6673,0.7565,389.9862,1.15
+ExtraTrees (Log1p),extra_trees,True,293.083,896.2959,86.9728,0.7494,396.0225,1.11
+HistGradientBoosting (Log1p),hist_gb,True,302.4798,928.3294,90.2205,0.7331,410.2041,3.27
+RandomForest (Log1p),random_forest,True,311.4346,954.2027,101.6659,0.717,423.9975,1.56
+RandomForest (Raw),random_forest,False,312.2434,954.6927,102.5523,0.7156,424.66,1.53
+HistGradientBoosting (Raw),hist_gb,False,315.3165,967.6928,96.5445,0.7099,428.644,5.32
+Dummy (Mean),dummy,False,595.9549,1764.1568,287.6955,-0.0362,825.1681,0.21

@@ -1,0 +1,162 @@
+{
+  "project_name": "Vega_miti",
+  "model_name": "ExtraTrees (Raw)",
+  "model_type": "extra_trees",
+  "target_transform": false,
+  "validation_method": "LeaveOneGroupOut",
+  "validation_station_count": 5,
+  "total_folds": 5,
+  "aggregate_metrics": {
+    "overall_rmse": 288.8845,
+    "extreme_rmse": 883.5473,
+    "mae": 84.6673,
+    "r2": 0.7565,
+    "composite_score": 389.9862,
+    "n_total": 1220,
+    "n_extreme": 125
+  },
+  "fold_metrics": [
+    {
+      "overall_rmse": 108.7189,
+      "extreme_rmse": 339.4208,
+      "mae": 27.8015,
+      "r2": 0.9408,
+      "composite_score": 141.4659,
+      "n_total": 244,
+      "n_extreme": 25,
+      "fold": 1,
+      "val_stations": [
+        "USGS_0101"
+      ]
+    },
+    {
+      "overall_rmse": 96.1271,
+      "extreme_rmse": 299.387,
+      "mae": 29.4496,
+      "r2": 0.9555,
+      "composite_score": 124.6017,
+      "n_total": 244,
+      "n_extreme": 25,
+      "fold": 2,
+      "val_stations": [
+        "USGS_0102"
+      ]
+    },
+    {
+      "overall_rmse": 88.5323,
+      "extreme_rmse": 275.9318,
+      "mae": 25.2232,
+      "r2": 0.9403,
+      "composite_score": 113.8343,
+      "n_total": 244,
+      "n_extreme": 25,
+      "fold": 3,
+      "val_stations": [
+        "USGS_0103"
+      ]
+    },
+    {
+      "overall_rmse": 182.1849,
+      "extreme_rmse": 561.8085,
+      "mae": 71.6033,
+      "r2": 0.2683,
+      "composite_score": 253.054,
+      "n_total": 244,
+      "n_extreme": 25,
+      "fold": 4,
+      "val_stations": [
+        "USGS_0104"
+      ]
+    },
+    {
+      "overall_rmse": 595.9713,
+      "extreme_rmse": 1818.4259,
+      "mae": 269.2587,
+      "r2": 0.6516,
+      "composite_score": 831.2517,
+      "n_total": 244,
+      "n_extreme": 25,
+      "fold": 5,
+      "val_stations": [
+        "USGS_0105"
+      ]
+    }
+  ],
+  "per_station_metrics": {
+    "USGS_0101": {
+      "overall_rmse": 108.7189,
+      "extreme_rmse": 339.4208,
+      "mae": 27.8015,
+      "r2": 0.9408,
+      "composite_score": 141.4659,
+      "n_total": 244,
+      "n_extreme": 25
+    },
+    "USGS_0102": {
+      "overall_rmse": 96.1271,
+      "extreme_rmse": 299.387,
+      "mae": 29.4496,
+      "r2": 0.9555,
+      "composite_score": 124.6017,
+      "n_total": 244,
+      "n_extreme": 25
+    },
+    "USGS_0103": {
+      "overall_rmse": 88.5323,
+      "extreme_rmse": 275.9318,
+      "mae": 25.2232,
+      "r2": 0.9403,
+      "composite_score": 113.8343,
+      "n_total": 244,
+      "n_extreme": 25
+    },
+    "USGS_0104": {
+      "overall_rmse": 182.1849,
+      "extreme_rmse": 561.8085,
+      "mae": 71.6033,
+      "r2": 0.2683,
+      "composite_score": 253.054,
+      "n_total": 244,
+      "n_extreme": 25
+    },
+    "USGS_0105": {
+      "overall_rmse": 595.9713,
+      "extreme_rmse": 1818.4259,
+      "mae": 269.2587,
+      "r2": 0.6516,
+      "composite_score": 831.2517,
+      "n_total": 244,
+      "n_extreme": 25
+    }
+  },
+  "worst_performing_stations": [
+    "USGS_0105",
+    "USGS_0104",
+    "USGS_0101"
+  ],
+  "extreme_event_analysis": {
+    "underestimation_rate_pct": 49.6,
+    "extreme_mean_error_cfs": -266.68,
+    "normal_mean_error_cfs": -16.98,
+    "extreme_event_sample_count": 125,
+    "normal_sample_count": 1095
+  },
+  "feature_names": [
+    "precipitation_mm",
+    "temperature_c",
+    "soil_moisture",
+    "catchment_area_sqkm",
+    "elevation_m"
+  ],
+  "model_configuration": {
+    "random_state": 42,
+    "model_artifact": "outputs\\selected_model.joblib"
+  },
+  "training_timestamp": "2026-11-04T12:23:43.735515+00:00",
+  "dataset_status": "synthetic_fallback",
+  "is_synthetic": true,
+  "known_model_limitations": [
+    "Evaluated using station-held-out validation to simulate unseen stations",
+    "Extreme-event prediction constrained by historical station catchment attributes"
+  ]
+}
