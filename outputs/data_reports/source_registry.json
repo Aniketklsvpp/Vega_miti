@@ -16,9 +16,9 @@
       "limitations": "Provisional daily values verified against USGS quality flags"
     },
     {
-      "name": "Open-Meteo Historical Weather API & NASA POWER Global Reanalysis",
-      "official_url": "https://open-meteo.com/en/docs/historical-weather-api and https://power.larc.nasa.gov/",
-      "api_endpoint": "https://archive-api.open-meteo.com/v1/archive and https://power.larc.nasa.gov/api/temporal/daily/point",
+      "name": "NASA POWER Global Reanalysis",
+      "official_url": "https://power.larc.nasa.gov/",
+      "api_endpoint": "https://power.larc.nasa.gov/api/temporal/daily/point",
       "variables": [
         "precipitation_mm",
         "temp_max_c",
@@ -26,9 +26,9 @@
         "soil_moisture"
       ],
       "retrieval_date": "2026-11-04",
-      "station_coverage": "Exact station coordinates matching",
+      "station_coverage": "All 22 stations in data/processed/train.csv",
       "date_coverage": "2022-01-01 to 2023-12-31",
-      "limitations": "Hourly/daily reanalysis aggregated to daily totals and extremes with automatic rate-limit fallback"
+      "limitations": "Open-Meteo returned HTTP 429 during automated collection; fallback in src/data_acquisition.py routed all 22 stations to NASA POWER. Soil moisture uniformly represents NASA POWER GWETTOP surface wetness fraction (0.0 to 1.0)."
     }
   ]
 }

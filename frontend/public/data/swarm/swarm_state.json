@@ -1,0 +1,121 @@
+{
+  "environment_mode": "SIMULATED_AGENT_NETWORK",
+  "grid_dimensions": [
+    20,
+    20
+  ],
+  "coordinator_status": "ONLINE",
+  "active_missions_count": 2,
+  "completed_missions_count": 0,
+  "synchronized_events_count": 4,
+  "agents": [
+    {
+      "agent_id": "DRONE_AERIAL_1",
+      "agent_type": "UAV",
+      "capabilities": [
+        "AERIAL_OBSERVATION",
+        "VERIFICATION"
+      ],
+      "position": [
+        1,
+        1
+      ],
+      "battery": 95.0,
+      "connectivity": "DISCONNECTED",
+      "status": "DISCONNECTED",
+      "current_mission": "MSN-33AFE2",
+      "path_remaining": 11,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
+    },
+    {
+      "agent_id": "DRONE_AERIAL_2",
+      "agent_type": "UAV",
+      "capabilities": [
+        "AREA_SURVEILLANCE",
+        "AERIAL_OBSERVATION",
+        "VERIFICATION"
+      ],
+      "position": [
+        18,
+        1
+      ],
+      "battery": 88.0,
+      "connectivity": "CONNECTED",
+      "status": "ASSIGNED",
+      "current_mission": "MSN-5ABD14",
+      "path_remaining": 20,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
+    },
+    {
+      "agent_id": "USV_RIVER_1",
+      "agent_type": "USV",
+      "capabilities": [
+        "RIVER_MONITORING",
+        "VERIFICATION"
+      ],
+      "position": [
+        5,
+        10
+      ],
+      "battery": 92.0,
+      "connectivity": "CONNECTED",
+      "status": "AVAILABLE",
+      "current_mission": null,
+      "path_remaining": 0,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
+    },
+    {
+      "agent_id": "USV_RIVER_2",
+      "agent_type": "USV",
+      "capabilities": [
+        "RIVER_MONITORING"
+      ],
+      "position": [
+        12,
+        10
+      ],
+      "battery": 85.0,
+      "connectivity": "CONNECTED",
+      "status": "AVAILABLE",
+      "current_mission": null,
+      "path_remaining": 0,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
+    },
+    {
+      "agent_id": "RELAY_NODE_1",
+      "agent_type": "RELAY",
+      "capabilities": [
+        "DATA_RELAY",
+        "AERIAL_OBSERVATION"
+      ],
+      "position": [
+        10,
+        5
+      ],
+      "battery": 90.0,
+      "connectivity": "CONNECTED",
+      "status": "ASSIGNED",
+      "current_mission": "MSN-3C4097",
+      "path_remaining": 10,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
+    },
+    {
+      "agent_id": "GROUND_SCOUT_1",
+      "agent_type": "UGV",
+      "capabilities": [
+        "AREA_SURVEILLANCE",
+        "VERIFICATION"
+      ],
+      "position": [
+        2,
+        18
+      ],
+      "battery": 78.0,
+      "connectivity": "CONNECTED",
+      "status": "AVAILABLE",
+      "current_mission": null,
+      "path_remaining": 0,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
+    }
+  ]
+}

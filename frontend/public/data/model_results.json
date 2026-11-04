@@ -1,0 +1,118 @@
+{
+  "evaluation_title": "Vega_miti FLOODCAST Baseline Models",
+  "dataset": {
+    "path": "data/processed/train.csv",
+    "total_records": 16060,
+    "total_stations": 22,
+    "train_stations_count": 20,
+    "held_out_test_stations_count": 2,
+    "held_out_test_stations": [
+      "12119000",
+      "14211720"
+    ],
+    "weather_source": "NASA POWER Global Reanalysis (All 22 stations via automated fallback due to Open-Meteo HTTP 429 rate limit)",
+    "soil_moisture_definition": "NASA POWER GWETTOP top-layer wetness fraction (scale 0.0 - 1.0)"
+  },
+  "preserved_configurations": [
+    {
+      "name": "HistGradientBoosting + Log1p + Full Features",
+      "model_type": "HistGradientBoostingRegressor",
+      "target_transform": "log1p",
+      "feature_set": "Full 24 features (including same-day weather)",
+      "artifact_path": "outputs/hist_gb_log1p_full.joblib",
+      "features_count": 24,
+      "features": [
+        "precipitation_mm",
+        "temp_max_c",
+        "temp_min_c",
+        "soil_moisture",
+        "drainage_area_sqmi",
+        "mean_elevation_ft",
+        "day_of_year",
+        "month",
+        "day_of_week",
+        "season",
+        "sin_day_of_year",
+        "cos_day_of_year",
+        "temp_range",
+        "temp_avg",
+        "log_drainage_area",
+        "precip_lag_1",
+        "precip_lag_2",
+        "precip_lag_3",
+        "precip_roll_sum_3d",
+        "precip_roll_sum_7d",
+        "precip_roll_sum_14d",
+        "temp_avg_lag_1",
+        "soil_moisture_lag_1",
+        "soil_moisture_roll_mean_3d"
+      ],
+      "metrics": {
+        "overall_rmse": 9320.9762,
+        "extreme_rmse": 22211.4709,
+        "mae": 4257.857,
+        "r2": 0.387,
+        "composite_score": 11239.5333,
+        "n_total": 14600,
+        "n_extreme": 1463
+      }
+    },
+    {
+      "name": "ExtraTrees + Raw Target + Past-Only Features",
+      "model_type": "ExtraTreesRegressor",
+      "target_transform": "None",
+      "feature_set": "Past-only 18 features (strictly t-1 lags, rolling sums, catchment, seasonality)",
+      "artifact_path": "outputs/extra_trees_raw_past_only.joblib",
+      "features_count": 18,
+      "features": [
+        "drainage_area_sqmi",
+        "mean_elevation_ft",
+        "day_of_year",
+        "month",
+        "day_of_week",
+        "season",
+        "sin_day_of_year",
+        "cos_day_of_year",
+        "log_drainage_area",
+        "precip_lag_1",
+        "precip_lag_2",
+        "precip_lag_3",
+        "precip_roll_sum_3d",
+        "precip_roll_sum_7d",
+        "precip_roll_sum_14d",
+        "temp_avg_lag_1",
+        "soil_moisture_lag_1",
+        "soil_moisture_roll_mean_3d"
+      ],
+      "metrics": {
+        "overall_rmse": 9505.1578,
+        "extreme_rmse": 21701.6424,
+        "mae": 4944.9584,
+        "r2": 0.3625,
+        "composite_score": 11297.9223,
+        "n_total": 14600,
+        "n_extreme": 1463
+      }
+    }
+  ],
+  "predictions_provenance": {
+    "file": "predictions.csv",
+    "status": "SIMULATED_UNSEEN_STATION_EVALUATION",
+    "note": "Generated for unseen test stations 12119000 and 14211720 for verification only. NOT official competition submission.",
+    "row_count": 1460,
+    "target_leakage_check": "PASSED (discharge_cfs stripped before feature construction and inference)"
+  },
+  "model_name": "HistGradientBoosting (Log1p + Full Features)",
+  "validation_strategy": "GroupKFold (5 Folds)",
+  "overall": {
+    "rmse": 9320.9762,
+    "mae": 4257.857,
+    "r2": 0.387
+  },
+  "extreme": {
+    "rmse": 22211.4709,
+    "threshold_definition": "Top 10% daily discharge per station in evaluation ground truth"
+  },
+  "per_station": [],
+  "generated_at": "2026-11-04T13:22:54.419372+00:00"
+}

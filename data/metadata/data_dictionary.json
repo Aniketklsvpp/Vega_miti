@@ -1,0 +1,115 @@
+{
+  "dictionary_version": "1.0.0",
+  "project": "DELTA-SWARM",
+  "description": "Standardized hydrological and meteorological data dictionary with cross-regional unit conversion specifications",
+  "standard_internal_schema": {
+    "station_id": {
+      "type": "string",
+      "required": true,
+      "format": "namespaced_string (e.g. 'USGS:01570500', 'CARAVAN:camels_01570500', 'INDIA:CWC_1234')",
+      "description": "Unique global catchment/gauge station identifier prefixed with namespace"
+    },
+    "date": {
+      "type": "string",
+      "required": true,
+      "format": "YYYY-MM-DD (ISO-8601 calendar date)",
+      "description": "Observation date aligned to daily interval"
+    },
+    "discharge_cfs": {
+      "type": "float",
+      "required": false,
+      "unit": "cfs (ft3/s)",
+      "valid_range": [0.0, 5000000.0],
+      "description": "Volumetric streamflow discharge rate in cubic feet per second"
+    },
+    "discharge_m3_per_sec": {
+      "type": "float",
+      "required": false,
+      "unit": "m3/s (cumec)",
+      "valid_range": [0.0, 140000.0],
+      "description": "Volumetric streamflow discharge rate in cubic meters per second (SI standard)"
+    },
+    "discharge_mm_per_day": {
+      "type": "float",
+      "required": false,
+      "unit": "mm/day",
+      "valid_range": [0.0, 1000.0],
+      "description": "Catchment area-normalized specific runoff depth"
+    },
+    "precipitation_mm": {
+      "type": "float",
+      "required": true,
+      "unit": "mm",
+      "valid_range": [0.0, 1500.0],
+      "description": "Daily total precipitation accumulation"
+    },
+    "temp_max_c": {
+      "type": "float",
+      "required": false,
+      "unit": "deg C",
+      "valid_range": [-60.0, 60.0],
+      "description": "Daily maximum air temperature"
+    },
+    "temp_min_c": {
+      "type": "float",
+      "required": false,
+      "unit": "deg C",
+      "valid_range": [-60.0, 50.0],
+      "description": "Daily minimum air temperature"
+    },
+    "soil_moisture": {
+      "type": "float",
+      "required": false,
+      "unit": "dimensionless index or m3/m3",
+      "valid_range": [0.0, 1.0],
+      "description": "Topsoil moisture or surface wetness fraction"
+    },
+    "drainage_area_km2": {
+      "type": "float",
+      "required": false,
+      "unit": "km2",
+      "valid_range": [0.1, 5000000.0],
+      "description": "Catchment watershed contributing drainage area in square kilometers"
+    },
+    "drainage_area_sqmi": {
+      "type": "float",
+      "required": false,
+      "unit": "sq mi",
+      "valid_range": [0.038, 2000000.0],
+      "description": "Catchment watershed contributing drainage area in square miles"
+    },
+    "mean_elevation_m": {
+      "type": "float",
+      "required": false,
+      "unit": "meters",
+      "valid_range": [-100.0, 9000.0],
+      "description": "Catchment mean elevation or gauge datum above mean sea level"
+    },
+    "country_code": {
+      "type": "string",
+      "required": true,
+      "format": "ISO 3166-1 alpha-2 (e.g. 'US', 'IN')",
+      "description": "Country of station location"
+    },
+    "source_id": {
+      "type": "string",
+      "required": true,
+      "description": "Originating source key matching source_registry.json"
+    }
+  },
+  "unit_conversions": {
+    "cfs_to_m3_per_sec": "Q_m3s = Q_cfs * 0.028316846592",
+    "m3_per_sec_to_cfs": "Q_cfs = Q_m3s * 35.3146667215",
+    "m3_per_sec_to_mm_per_day": "q_mm_day = (Q_m3s * 86.4) / drainage_area_km2",
+    "cfs_to_mm_per_day": "q_mm_day = (Q_cfs * 0.028316846592 * 86.4) / (drainage_area_sqmi * 2.58998811)",
+    "sqmi_to_km2": "area_km2 = area_sqmi * 2.589988110336",
+    "km2_to_sqmi": "area_sqmi = area_km2 * 0.386102158542",
+    "feet_to_meters": "meters = feet * 0.3048",
+    "meters_to_feet": "feet = meters / 0.3048"
+  },
+  "missing_value_policy": {
+    "raw_missing_representations": ["NaN", "-999", "-999.0", "-9999", "empty string", "None"],
+    "standard_internal_missing": "np.nan",
+    "imputation_policy": "Fit strictly on training set catchments; never interpolate across station boundaries"
+  }
+}
