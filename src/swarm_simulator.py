@@ -255,9 +255,12 @@ class SwarmCoordinator:
                 "connectivity": a.connectivity,
                 "status": a.status,
                 "current_mission": a.current_mission,
-                "path_remaining": len(a.planned_path)
+                "path_remaining": len(a.planned_path),
+                "coordinate_frame": "SIMULATED_20X20_GRID"
             })
         return {
+            "environment_mode": "SIMULATED_AGENT_NETWORK",
+            "grid_dimensions": [self.planner.width, self.planner.height],
             "coordinator_status": "ONLINE" if self.coordinator_active else "OFFLINE",
             "active_missions_count": sum(1 for m in self.missions.values() if m["status"] == "IN_PROGRESS"),
             "completed_missions_count": sum(1 for m in self.missions.values() if m["status"] == "COMPLETED"),

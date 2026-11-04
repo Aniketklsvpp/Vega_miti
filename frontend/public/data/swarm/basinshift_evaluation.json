@@ -1,5 +1,5 @@
 {
-  "evaluation_title": "DELTA-SWARM Hydrological Evaluation Report",
+  "evaluation_title": "VEGA-MITI Hydrological Evaluation Report",
   "model_configuration": "A",
   "target_variable": "discharge_cfs",
   "evaluation_sample_count": 4380,
@@ -33,14 +33,14 @@
       "nse": -0.009
     },
     "persistence_baseline": {
-      "mae": 716.2217,
-      "rmse": 2339.5138,
-      "nmae_normalized_by_mean": 0.0828,
+      "mae": 715.2405,
+      "rmse": 2337.9108,
+      "nmae_normalized_by_mean": 0.0827,
       "nmae_normalized_by_range": 0.0048,
       "nse": 0.9755
     },
     "rmse_skill_score_vs_mean": 0.4508,
-    "rmse_skill_score_vs_persistence": -2.5245
+    "rmse_skill_score_vs_persistence": -2.527
   },
   "high_flow_event_detection": {
     "threshold_percentile": 0.9,
@@ -98,14 +98,14 @@
     }
   },
   "robustness_stress_testing": {
-    "gaussian_noise_injection_degradation_pct": 42.36,
-    "noisy_inputs_rmse": 11738.7696,
-    "missing_weather_degradation_pct": 5.84,
-    "missing_inputs_rmse": 8727.4451
+    "gaussian_noise_injection_degradation_pct": 45.89,
+    "noisy_inputs_rmse": 12029.8138,
+    "missing_weather_degradation_pct": 44.05,
+    "missing_inputs_rmse": 11878.079
   },
   "computational_efficiency": {
-    "total_inference_time_sec": 5.0654,
-    "latency_ms_per_1000_samples": 1156.49,
+    "total_inference_time_sec": 1.7409,
+    "latency_ms_per_1000_samples": 397.46,
     "model_artifact_size_bytes": 533348
   }
 }

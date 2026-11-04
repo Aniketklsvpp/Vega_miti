@@ -1,4 +1,9 @@
 {
+  "environment_mode": "SIMULATED_AGENT_NETWORK",
+  "grid_dimensions": [
+    20,
+    20
+  ],
   "coordinator_status": "ONLINE",
   "active_missions_count": 0,
   "completed_missions_count": 0,
@@ -18,16 +23,17 @@
       "battery": 95.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-355F07",
-      "path_remaining": 14
+      "current_mission": "MSN-81A725",
+      "path_remaining": 6,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
       "agent_id": "DRONE_AERIAL_2",
       "agent_type": "UAV",
       "capabilities": [
         "AERIAL_OBSERVATION",
-        "AREA_SURVEILLANCE",
-        "VERIFICATION"
+        "VERIFICATION",
+        "AREA_SURVEILLANCE"
       ],
       "position": [
         18,
@@ -36,8 +42,9 @@
       "battery": 88.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-DFFF1B",
-      "path_remaining": 13
+      "current_mission": "MSN-DF2321",
+      "path_remaining": 14,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
       "agent_id": "USV_RIVER_1",
@@ -53,8 +60,9 @@
       "battery": 92.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-8EA264",
-      "path_remaining": 14
+      "current_mission": null,
+      "path_remaining": 0,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
       "agent_id": "USV_RIVER_2",
@@ -69,8 +77,9 @@
       "battery": 85.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-325017",
-      "path_remaining": 5
+      "current_mission": null,
+      "path_remaining": 0,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
       "agent_id": "RELAY_NODE_1",
@@ -86,15 +95,16 @@
       "battery": 90.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-3DD1A3",
-      "path_remaining": 9
+      "current_mission": "MSN-2C1D28",
+      "path_remaining": 4,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
       "agent_id": "GROUND_SCOUT_1",
       "agent_type": "UGV",
       "capabilities": [
-        "AREA_SURVEILLANCE",
-        "VERIFICATION"
+        "VERIFICATION",
+        "AREA_SURVEILLANCE"
       ],
       "position": [
         2,
@@ -104,7 +114,8 @@
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
       "current_mission": null,
-      "path_remaining": 0
+      "path_remaining": 0,
+      "coordinate_frame": "SIMULATED_20X20_GRID"
     }
   ]
 }

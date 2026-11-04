@@ -11,7 +11,7 @@ from src.hydrological_evaluation import HydrologicalEvaluator
 from src.swarm_api import router as swarm_router
 
 app = FastAPI(
-    title="DELTA-SWARM Hydrological Intelligence API",
+    title="VEGA-MITI Hydrological Intelligence API",
     version="1.0.0",
     description="Operational Flood Prediction, Risk Classification, and Hydrological Evaluation API"
 )
@@ -45,7 +45,7 @@ def make_envelope(data=None, error=None, status="success"):
 @app.get("/api/health")
 def get_health():
     return make_envelope(data={
-        "service": "DELTA-SWARM Unified Hydrological & Swarm Intelligence API",
+        "service": "VEGA-MITI Unified Hydrological & Swarm Intelligence API",
         "status": "HEALTHY",
         "version": "1.0.0",
         "models_loaded": {
@@ -175,6 +175,11 @@ def post_predict(req: PredictionRequest):
         p["risk_level"] = risk_info["risk_level"]
         p["risk_explanation"] = risk_info["explanation"]
         p["thresholds"] = risk_info["thresholds"]
+        p["high_flow_threshold_cfs"] = risk_info["high_flow_threshold_cfs"]
+        p["critical_threshold_cfs"] = risk_info["critical_threshold_cfs"]
+        p["threshold_type"] = risk_info["threshold_type"]
+        p["regulatory_disclaimer"] = risk_info["regulatory_disclaimer"]
+        p["recommended_action"] = risk_info["recommended_action"]
         
     return make_envelope(data=res["data"])
 

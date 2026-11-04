@@ -5,9 +5,24 @@ class SwarmActivationEngine:
         self.current_state = "NORMAL"
 
     def evaluate_activation(self, risk_assessment_list):
-        critical_count = sum(1 for r in risk_assessment_list if r.get("risk_level") == "CRITICAL")
-        warning_count = sum(1 for r in risk_assessment_list if r.get("risk_level") == "WARNING")
-        watch_count = sum(1 for r in risk_assessment_list if r.get("risk_level") == "WATCH")
+        critical_count = 0
+        warning_count = 0
+        watch_count = 0
+
+        for r in risk_assessment_list:
+            q_status = r.get("data_quality_status", r.get("evidence_quality", "VALID_OBSERVATION"))
+            if q_status not in ("VALID", "VALID_OBSERVATION", "HIGH"):
+                continue
+            lvl = r.get("risk_level", "NORMAL")
+            is_prov = r.get("is_provisional", False)
+            if is_prov and lvl in ("CRITICAL", "WARNING"):
+                watch_count += 1
+            elif lvl == "CRITICAL":
+                critical_count += 1
+            elif lvl == "WARNING":
+                warning_count += 1
+            elif lvl == "WATCH":
+                watch_count += 1
 
         prev_state = self.current_state
         if critical_count > 0:
@@ -46,6 +61,10 @@ class SwarmActivationEngine:
             q_status = assess.get("data_quality_status", assess.get("evidence_quality", "VALID_OBSERVATION"))
             if q_status not in ("VALID", "VALID_OBSERVATION", "HIGH"):
                 continue
+
+            is_prov = assess.get("is_provisional", False)
+            if is_prov and level in ("CRITICAL", "WARNING"):
+                level = "WATCH"
 
             if level == "CRITICAL":
                 missions.append({

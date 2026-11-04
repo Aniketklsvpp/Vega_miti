@@ -3,320 +3,440 @@
     "station_id": "1570500",
     "date": "2023-12-31",
     "discharge_cfs": 8798.71,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "WATCH",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (8,798.7 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
+    "explanation": "Discharge (8,798.7 cfs) meets or exceeds the empirical demonstration WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline.",
+    "recommended_action": "INCREASE_MONITORING_FREQUENCY"
   },
   {
     "station_id": "1638500",
     "date": "2023-12-31",
     "discharge_cfs": 18297.53,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "WARNING",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (18,297.5 cfs) meets or exceeds the WARNING threshold (15,000.0 cfs, 95th percentile). Elevated high-flow event in progress."
+    "explanation": "Discharge (18,297.5 cfs) meets or exceeds the empirical demonstration WARNING threshold (15,000.0 cfs, 95th percentile). Elevated high-flow event in progress.",
+    "recommended_action": "PREPARE_VERIFICATION_MISSIONS"
   },
   {
     "station_id": "1646500",
     "date": "2023-12-31",
     "discharge_cfs": 18560.8,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "WARNING",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (18,560.8 cfs) meets or exceeds the WARNING threshold (15,000.0 cfs, 95th percentile). Elevated high-flow event in progress."
+    "explanation": "Discharge (18,560.8 cfs) meets or exceeds the empirical demonstration WARNING threshold (15,000.0 cfs, 95th percentile). Elevated high-flow event in progress.",
+    "recommended_action": "PREPARE_VERIFICATION_MISSIONS"
   },
   {
     "station_id": "2037500",
     "date": "2023-12-31",
     "discharge_cfs": 15695.68,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "WARNING",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (15,695.7 cfs) meets or exceeds the WARNING threshold (15,000.0 cfs, 95th percentile). Elevated high-flow event in progress."
+    "explanation": "Discharge (15,695.7 cfs) meets or exceeds the empirical demonstration WARNING threshold (15,000.0 cfs, 95th percentile). Elevated high-flow event in progress.",
+    "recommended_action": "PREPARE_VERIFICATION_MISSIONS"
   },
   {
     "station_id": "2146000",
     "date": "2023-12-31",
     "discharge_cfs": 13307.49,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "WATCH",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (13,307.5 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
+    "explanation": "Discharge (13,307.5 cfs) meets or exceeds the empirical demonstration WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline.",
+    "recommended_action": "INCREASE_MONITORING_FREQUENCY"
   },
   {
     "station_id": "2169500",
     "date": "2023-12-31",
     "discharge_cfs": 6382.36,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "WATCH",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (6,382.4 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
+    "explanation": "Discharge (6,382.4 cfs) meets or exceeds the empirical demonstration WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline.",
+    "recommended_action": "INCREASE_MONITORING_FREQUENCY"
   },
   {
     "station_id": "2202500",
     "date": "2023-12-31",
     "discharge_cfs": 1202.79,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "NORMAL",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (1,202.8 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
+    "explanation": "Discharge (1,202.8 cfs) is below empirical demonstration WATCH threshold (5,000.0 cfs). Normal river conditions.",
+    "recommended_action": "PASSIVE_MONITORING"
   },
   {
     "station_id": "3234500",
     "date": "2023-12-31",
     "discharge_cfs": 2532.74,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "NORMAL",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (2,532.7 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
+    "explanation": "Discharge (2,532.7 cfs) is below empirical demonstration WATCH threshold (5,000.0 cfs). Normal river conditions.",
+    "recommended_action": "PASSIVE_MONITORING"
   },
   {
     "station_id": "3374100",
     "date": "2023-12-31",
     "discharge_cfs": 5879.93,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "WATCH",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (5,879.9 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
+    "explanation": "Discharge (5,879.9 cfs) meets or exceeds the empirical demonstration WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline.",
+    "recommended_action": "INCREASE_MONITORING_FREQUENCY"
   },
   {
     "station_id": "5484500",
     "date": "2023-12-31",
     "discharge_cfs": 1395.94,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "NORMAL",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (1,395.9 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
+    "explanation": "Discharge (1,395.9 cfs) is below empirical demonstration WATCH threshold (5,000.0 cfs). Normal river conditions.",
+    "recommended_action": "PASSIVE_MONITORING"
   },
   {
     "station_id": "5527500",
     "date": "2023-12-31",
     "discharge_cfs": 4666.4,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "NORMAL",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (4,666.4 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
+    "explanation": "Discharge (4,666.4 cfs) is below empirical demonstration WATCH threshold (5,000.0 cfs). Normal river conditions.",
+    "recommended_action": "PASSIVE_MONITORING"
   },
   {
     "station_id": "5586100",
     "date": "2023-12-31",
     "discharge_cfs": 8501.81,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "WATCH",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (8,501.8 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
+    "explanation": "Discharge (8,501.8 cfs) meets or exceeds the empirical demonstration WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline.",
+    "recommended_action": "INCREASE_MONITORING_FREQUENCY"
   },
   {
     "station_id": "6192500",
     "date": "2023-12-31",
     "discharge_cfs": 61.02,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "NORMAL",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (61.0 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
+    "explanation": "Discharge (61.0 cfs) is below empirical demonstration WATCH threshold (5,000.0 cfs). Normal river conditions.",
+    "recommended_action": "PASSIVE_MONITORING"
   },
   {
     "station_id": "7144100",
     "date": "2023-12-31",
     "discharge_cfs": 431.93,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "NORMAL",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (431.9 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
+    "explanation": "Discharge (431.9 cfs) is below empirical demonstration WATCH threshold (5,000.0 cfs). Normal river conditions.",
+    "recommended_action": "PASSIVE_MONITORING"
   },
   {
     "station_id": "7196500",
     "date": "2023-12-31",
     "discharge_cfs": 208.35,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "NORMAL",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (208.4 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
+    "explanation": "Discharge (208.4 cfs) is below empirical demonstration WATCH threshold (5,000.0 cfs). Normal river conditions.",
+    "recommended_action": "PASSIVE_MONITORING"
   },
   {
     "station_id": "8116650",
     "date": "2023-12-31",
     "discharge_cfs": 237.97,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "NORMAL",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (238.0 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
+    "explanation": "Discharge (238.0 cfs) is below empirical demonstration WATCH threshold (5,000.0 cfs). Normal river conditions.",
+    "recommended_action": "PASSIVE_MONITORING"
   },
   {
     "station_id": "8158000",
     "date": "2023-12-31",
     "discharge_cfs": 2173.09,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "NORMAL",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (2,173.1 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
+    "explanation": "Discharge (2,173.1 cfs) is below empirical demonstration WATCH threshold (5,000.0 cfs). Normal river conditions.",
+    "recommended_action": "PASSIVE_MONITORING"
   },
   {
     "station_id": "9095500",
     "date": "2023-12-31",
     "discharge_cfs": 2708.35,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "NORMAL",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (2,708.3 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
+    "explanation": "Discharge (2,708.3 cfs) is below empirical demonstration WATCH threshold (5,000.0 cfs). Normal river conditions.",
+    "recommended_action": "PASSIVE_MONITORING"
   },
   {
     "station_id": "9180500",
     "date": "2023-12-31",
     "discharge_cfs": 6658.88,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "WATCH",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (6,658.9 cfs) meets or exceeds the WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
+    "explanation": "Discharge (6,658.9 cfs) meets or exceeds the empirical demonstration WATCH threshold (5,000.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline.",
+    "recommended_action": "INCREASE_MONITORING_FREQUENCY"
   },
   {
     "station_id": "9380000",
     "date": "2023-12-31",
     "discharge_cfs": 722.68,
+    "high_flow_threshold_cfs": 5000.0,
+    "critical_threshold_cfs": 35000.0,
     "risk_level": "NORMAL",
+    "threshold_type": "EMPIRICAL_DEMONSTRATION",
+    "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
     "thresholds": {
       "watch_p90_cfs": 5000.0,
       "warning_p95_cfs": 15000.0,
       "critical_p99_cfs": 35000.0,
       "median_cfs": 1000.0
     },
-    "threshold_source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+    "threshold_source": "PROVISIONAL_DEFAULT_DEMONSTRATION_THRESHOLD",
     "is_provisional": true,
+    "data_quality_status": "VALID_OBSERVATION",
     "evidence_quality": "HIGH",
-    "explanation": "Discharge (722.7 cfs) is below the WATCH threshold (5,000.0 cfs). Normal river conditions."
+    "explanation": "Discharge (722.7 cfs) is below empirical demonstration WATCH threshold (5,000.0 cfs). Normal river conditions.",
+    "recommended_action": "PASSIVE_MONITORING"
   }
 ]

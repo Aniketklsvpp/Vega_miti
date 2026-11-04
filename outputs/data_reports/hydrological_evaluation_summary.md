@@ -1,4 +1,4 @@
-# DELTA-SWARM — Hydrological Evaluation Summary
+# VEGA-MITI — Hydrological Evaluation Summary
 
 **Model Configuration:** A  
 **Evaluation Samples:** 4380 across 6 held-out stations  
@@ -13,7 +13,7 @@
 
 ## 2. Baseline Comparison
 - **Mean Baseline RMSE:** 15,013.44 cfs (Skill score: 0.7823)
-- **Persistence Baseline RMSE:** 2,339.51 cfs (Skill score: -0.3973)
+- **Persistence Baseline RMSE:** 2,337.91 cfs (Skill score: -0.3983)
 
 ## 3. High-Flow Event Detection (90th Percentile)
 - **Threshold Value:** 20,220.0 cfs
@@ -24,9 +24,9 @@
 - **Events Detected:** 405 predicted / 438 actual
 
 ## 4. Robustness Stress Testing
-- **Gaussian Noise Degradation:** 176.84% (RMSE: 9,050.18 cfs)
-- **25% Missing Weather Degradation:** 23.29% (RMSE: 4,030.34 cfs)
+- **Gaussian Noise Degradation:** 175.49% (RMSE: 9,006.22 cfs)
+- **25% Missing Weather Degradation:** 148.65% (RMSE: 8,128.49 cfs)
 
 ## 5. Computational Efficiency
-- **Latency:** 20.45 ms per 1,000 samples
+- **Latency:** 6.39 ms per 1,000 samples
 - **Model Size:** 531.3 KB

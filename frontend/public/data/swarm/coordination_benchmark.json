@@ -10,7 +10,7 @@
     "effective_coverage_rate_pct": 80.0,
     "communication_overhead_events": 0,
     "coordinator_fault_tolerant": false,
-    "runtime_sec": 0.001
+    "runtime_sec": 0.0
   },
   "adaptive_strategy": {
     "initial_missions_allocated": 5,

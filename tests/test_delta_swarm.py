@@ -91,5 +91,69 @@ class TestDeltaSwarm(unittest.TestCase):
         self.assertIn("adaptive_strategy", comparison)
         self.assertTrue(comparison["adaptive_strategy"]["coordinator_fault_tolerant"])
 
+    def test_six_agents_initialization_and_capabilities(self):
+        coordinator = SwarmCoordinator()
+        expected_agents = {
+            "DRONE_AERIAL_1": "UAV",
+            "DRONE_AERIAL_2": "UAV",
+            "USV_RIVER_1": "USV",
+            "USV_RIVER_2": "USV",
+            "RELAY_NODE_1": "RELAY",
+            "GROUND_SCOUT_1": "UGV"
+        }
+        self.assertEqual(len(coordinator.agents), 6)
+        for aid, atype in expected_agents.items():
+            self.assertIn(aid, coordinator.agents)
+            agent = coordinator.agents[aid]
+            self.assertEqual(agent.agent_type, atype)
+            self.assertEqual(agent.connectivity, "CONNECTED")
+            self.assertEqual(agent.status, "AVAILABLE")
+            self.assertGreater(len(agent.capabilities), 0)
+
+    def test_invalid_and_provisional_data_safeguards(self):
+        activation = SwarmActivationEngine()
+        invalid_assessments = [
+            {"station_id": "ST_INV", "risk_level": "CRITICAL", "data_quality_status": "INVALID_OR_MISSING"}
+        ]
+        res_inv = activation.evaluate_activation(invalid_assessments)
+        self.assertEqual(res_inv["current_state"], "NORMAL")
+        self.assertEqual(res_inv["critical_stations"], 0)
+        self.assertEqual(len(res_inv["missions"]), 0)
+
+        provisional_assessments = [
+            {"station_id": "ST_PROV", "risk_level": "CRITICAL", "data_quality_status": "VALID_OBSERVATION", "is_provisional": True}
+        ]
+        res_prov = activation.evaluate_activation(provisional_assessments)
+        self.assertEqual(res_prov["current_state"], "WATCH")
+        self.assertEqual(res_prov["critical_stations"], 0)
+        self.assertEqual(res_prov["watch_stations"], 1)
+        self.assertEqual(len(res_prov["missions"]), 1)
+        self.assertEqual(res_prov["missions"][0]["priority"], 3)
+        self.assertEqual(res_prov["missions"][0]["mission_type"], "PREVENTIVE_RECONNAISSANCE")
+
+    def test_mission_lifecycle_progression(self):
+        coordinator = SwarmCoordinator()
+        mission = {
+            "mission_id": "MSN-LC-1",
+            "priority": 1,
+            "target_position": (3, 3),
+            "required_capabilities": ["AERIAL_OBSERVATION", "VERIFICATION"]
+        }
+        coordinator.add_mission(mission)
+        self.assertEqual(coordinator.missions["MSN-LC-1"]["status"], "PENDING")
+
+        allocs = coordinator.allocate_missions(strategy="adaptive")
+        self.assertEqual(len(allocs), 1)
+        self.assertEqual(coordinator.missions["MSN-LC-1"]["status"], "IN_PROGRESS")
+
+        coordinator.simulate_agent_disconnect(allocs[0]["agent_id"])
+        reassigned = coordinator.check_heartbeats_and_leases(timeout_sec=0)
+        self.assertIn("MSN-LC-1", reassigned)
+        self.assertEqual(coordinator.missions["MSN-LC-1"]["status"], "REASSIGNED")
+
+        coordinator.missions["MSN-LC-1"]["status"] = "COMPLETED"
+        snapshot = coordinator.get_swarm_snapshot()
+        self.assertEqual(snapshot["completed_missions_count"], 1)
+
 if __name__ == "__main__":
     unittest.main()
