@@ -4,7 +4,7 @@ import { Header } from './components/layout/Header'
 import { LoadingState } from './components/common/LoadingState'
 import { ErrorBanner } from './components/common/ErrorBanner'
 import { OverviewView } from './views/OverviewView'
-import { StationDetailView } from './views/StationDetailView'
+import { StationDetailPanel } from './components/station/StationDetailPanel'
 import { ModelTrustView } from './views/ModelTrustView'
 import { PeakComparison } from './components/spotlight/PeakComparison'
 import { ArrowRight, Globe2, MapPin } from 'lucide-react'
@@ -28,6 +28,7 @@ const AppContent: React.FC = () => {
   }
 
   const { data } = status
+  const currentStation = data.stations.find((s) => s.station_id === selectedStationId) || data.stations[0]
 
   if (scene === 'globe') {
     return (
@@ -93,6 +94,7 @@ const AppContent: React.FC = () => {
     <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
       {activeTab === 'map' && (
         <OverviewView
+          region={data.region}
           stations={data.stations}
           selectedStationId={selectedStationId}
           onSelectStation={setSelectedStationId}
@@ -103,13 +105,15 @@ const AppContent: React.FC = () => {
         />
       )}
 
-      {activeTab === 'station' && (
-        <StationDetailView
+      {activeTab === 'station' && currentStation && (
+        <StationDetailPanel
+          station={currentStation}
           stations={data.stations}
           selectedStationId={selectedStationId}
           onSelectStation={setSelectedStationId}
-          predictions={data.predictions}
-          validationPredictions={data.validationPredictions}
+          onBackToMap={() => setActiveTab('map')}
+          validationRows={data.validationPredictions}
+          predictionRows={data.predictions}
         />
       )}
 

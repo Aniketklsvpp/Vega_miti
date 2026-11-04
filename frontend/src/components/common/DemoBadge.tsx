@@ -40,3 +40,4 @@ export const DemoBadge: React.FC<DemoBadgeProps> = ({ isDemo, isPrototype, regio
     </div>
   )
 }
+
