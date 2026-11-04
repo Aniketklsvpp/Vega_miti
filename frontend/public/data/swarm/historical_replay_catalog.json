@@ -20,11 +20,24 @@
     "longitude": 77.234,
     "total_days": 12,
     "data_provenance": {
-      "water_levels": "Central Water Commission (CWC) Daily River Stage Bulletins (July 2023)",
-      "barrage_outflow": "Haryana Irrigation and Water Resources Department Hathnikund Release Logs (July 2023)",
-      "rainfall": "India Meteorological Department (IMD) Safdarjung & Catchment Daily Precipitation Records"
+      "water_levels": {
+        "source": "Central Water Commission (CWC) Daily River Stage Bulletins (July 2023)",
+        "document_reference": "CWC Flood Forecast Monitoring Directorate Daily Bulletins, Station Old Railway Bridge Delhi",
+        "authority": "Central Water Commission (CWC), Ministry of Jal Shakti, Government of India"
+      },
+      "barrage_outflow": {
+        "source": "Haryana Irrigation and Water Resources Department Hathnikund Release Logs (July 2023)",
+        "document_reference": "Hathnikund Barrage Discharge Register & Flood Control Room Log, Yamunanagar, Haryana",
+        "authority": "Irrigation and Water Resources Department, Government of Haryana"
+      },
+      "rainfall": {
+        "source": "India Meteorological Department (IMD) Safdarjung & Catchment Daily Precipitation Records",
+        "document_reference": "IMD National Weather Forecasting Centre (NWFC) All-India Daily Weather Reports (July 2023)",
+        "authority": "India Meteorological Department, Ministry of Earth Sciences, Government of India"
+      }
     },
-    "is_partial_record": false,
+    "is_partial_record": true,
+    "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
     "regulatory_disclaimer": "204.50 m (Warning) and 205.33 m (Danger) are official CWC statutory reference levels. 206.50 m is a custom VEGA-MITI operational demonstration rule. Never presented as official flood forecast stages. Swarm movements on 20x20 grid are simulated research visualizations."
   },
   {
@@ -52,6 +65,7 @@
       "weather": "NASA POWER daily surface meteorology"
     },
     "is_partial_record": false,
+    "completeness_status": "COMPLETE",
     "regulatory_disclaimer": "Historical daily mean discharge from USGS NWIS verified records. Research simulation on discrete 20x20 grid."
   }
 ]

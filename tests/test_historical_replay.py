@@ -206,5 +206,43 @@ class TestHistoricalReplay(unittest.TestCase):
         self.assertEqual(frame["timeline_phase"], "HIGH_RISK_PEAK")
         self.assertEqual(frame["vega_miti_risk_assessment"]["risk_level"], "CRITICAL")
 
+    def test_yamuna_provenance_and_partial_record_audit(self):
+        resp = self.client.get("/api/swarm/replay/event/EVENT-IN-YAMUNA-2023")
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        data = body["data"]
+        self.assertTrue(data["is_partial_record"])
+        self.assertEqual(data["completeness_status"], "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE")
+        self.assertIn("in_situ_continuous_discharge_cfs", data["missing_measurements"])
+        self.assertIn("data_provenance", data)
+        self.assertIn("water_levels", data["data_provenance"])
+        self.assertIn("barrage_outflow", data["data_provenance"])
+        self.assertIn("rainfall", data["data_provenance"])
+
+        timeline = data["timeline_data"]
+        self.assertEqual(len(timeline), 12)
+        for step in timeline:
+            self.assertIn("observation_timestamp", step)
+            self.assertIn("publication_timestamp", step)
+            self.assertIn("water_level_m", step)
+            self.assertIn("upstream_release_cfs", step)
+            self.assertIsNone(step["in_situ_discharge_cfs"])
+            self.assertEqual(step["in_situ_discharge_status"], "UNMETERED_IN_SITU")
+            self.assertIn("rainfall_mm", step)
+
+    def test_coordinate_frame_disclaimer_in_replay(self):
+        resp = self.client.post("/api/swarm/replay/run", json={
+            "event_id": "EVENT-IN-YAMUNA-2023",
+            "step_index": 0
+        })
+        self.assertEqual(resp.status_code, 200)
+        data = resp.json()["data"]
+        frame = data["current_step_frame"]
+        sim_resp = frame["simulated_swarm_response"]
+        self.assertEqual(sim_resp["coordinate_frame"], "SIMULATED_20X20_GRID")
+        self.assertIn("simulated 20x20", sim_resp["coordinate_disclaimer"].lower())
+
 if __name__ == "__main__":
     unittest.main()
+

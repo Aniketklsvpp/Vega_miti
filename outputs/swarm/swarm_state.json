@@ -13,8 +13,8 @@
       "agent_id": "DRONE_AERIAL_1",
       "agent_type": "UAV",
       "capabilities": [
-        "AERIAL_OBSERVATION",
-        "VERIFICATION"
+        "VERIFICATION",
+        "AERIAL_OBSERVATION"
       ],
       "position": [
         1,
@@ -23,17 +23,17 @@
       "battery": 95.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-4CC900",
-      "path_remaining": 21,
+      "current_mission": "MSN-12198C",
+      "path_remaining": 16,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
       "agent_id": "DRONE_AERIAL_2",
       "agent_type": "UAV",
       "capabilities": [
+        "VERIFICATION",
         "AERIAL_OBSERVATION",
-        "AREA_SURVEILLANCE",
-        "VERIFICATION"
+        "AREA_SURVEILLANCE"
       ],
       "position": [
         18,
@@ -42,8 +42,8 @@
       "battery": 88.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-5B2DF4",
-      "path_remaining": 16,
+      "current_mission": "MSN-8C3242",
+      "path_remaining": 9,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
@@ -85,8 +85,8 @@
       "agent_id": "RELAY_NODE_1",
       "agent_type": "RELAY",
       "capabilities": [
-        "DATA_RELAY",
-        "AERIAL_OBSERVATION"
+        "AERIAL_OBSERVATION",
+        "DATA_RELAY"
       ],
       "position": [
         10,
@@ -95,16 +95,16 @@
       "battery": 90.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-29F19B",
-      "path_remaining": 5,
+      "current_mission": "MSN-A8004B",
+      "path_remaining": 10,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
       "agent_id": "GROUND_SCOUT_1",
       "agent_type": "UGV",
       "capabilities": [
-        "AREA_SURVEILLANCE",
-        "VERIFICATION"
+        "VERIFICATION",
+        "AREA_SURVEILLANCE"
       ],
       "position": [
         2,
