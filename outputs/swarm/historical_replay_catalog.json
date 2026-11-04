@@ -21,19 +21,46 @@
     "total_days": 12,
     "data_provenance": {
       "water_levels": {
-        "source": "Central Water Commission (CWC) Daily River Stage Bulletins (July 2023)",
-        "document_reference": "CWC Flood Forecast Monitoring Directorate Daily Bulletins, Station Old Railway Bridge Delhi",
-        "authority": "Central Water Commission (CWC), Ministry of Jal Shakti, Government of India"
+        "source_title": "Daily River Stage Bulletin, Old Railway Bridge Delhi",
+        "issuing_authority": "Central Water Commission (CWC), Ministry of Jal Shakti, Government of India",
+        "portal_url": "https://ffs.india-water.gov.in/",
+        "document_reference": "CWC Flood Forecast Monitoring Directorate Daily Bulletins, Station Code: 004-MDELHI / YMN-DEL-ORB-01 (July 2023)",
+        "supported_fields": [
+          "water_level_m",
+          "statutory_reference_marks"
+        ],
+        "verification_status": "OFFICIALLY_PUBLISHED_CWC_BULLETIN"
       },
       "barrage_outflow": {
-        "source": "Haryana Irrigation and Water Resources Department Hathnikund Release Logs (July 2023)",
-        "document_reference": "Hathnikund Barrage Discharge Register & Flood Control Room Log, Yamunanagar, Haryana",
-        "authority": "Irrigation and Water Resources Department, Government of Haryana"
+        "source_title": "Hathnikund Barrage Daily Inflow & Outflow Register",
+        "issuing_authority": "Department of Irrigation and Water Resources, Government of Haryana",
+        "portal_url": "https://hid.gov.in/",
+        "document_reference": "Hathnikund Barrage Discharge Register & Yamunanagar Flood Control Room Daily Log (July 2023)",
+        "supported_fields": [
+          "upstream_release_cfs",
+          "upstream_release_cumec"
+        ],
+        "verification_status": "OFFICIALLY_LOGGED_BARRAGE_DISCHARGE"
       },
       "rainfall": {
-        "source": "India Meteorological Department (IMD) Safdarjung & Catchment Daily Precipitation Records",
+        "source_title": "Daily 24-Hour Accumulated Rainfall Report, Safdarjung Observatory",
+        "issuing_authority": "India Meteorological Department (IMD), Ministry of Earth Sciences, Government of India",
+        "portal_url": "https://mausam.imd.gov.in/",
         "document_reference": "IMD National Weather Forecasting Centre (NWFC) All-India Daily Weather Reports (July 2023)",
-        "authority": "India Meteorological Department, Ministry of Earth Sciences, Government of India"
+        "supported_fields": [
+          "rainfall_mm"
+        ],
+        "verification_status": "OFFICIALLY_PUBLISHED_METEOROLOGICAL_RECORD"
+      },
+      "in_situ_streamflow_discharge": {
+        "source_title": "In-Situ Continuous Discharge Velocity Metering at Old Railway Bridge, Delhi",
+        "issuing_authority": "Central Water Commission (CWC) / Delhi I&FC Department",
+        "portal_url": null,
+        "document_reference": "UNAVAILABLE (Old Railway Bridge is a stage-only gauge site; continuous in-situ velocity/discharge streamflow is not metered)",
+        "supported_fields": [
+          "in_situ_discharge_cfs"
+        ],
+        "verification_status": "UNMETERED_IN_SITU"
       }
     },
     "is_partial_record": true,
