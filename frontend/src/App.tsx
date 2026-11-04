@@ -12,7 +12,7 @@ import { SwarmCommandView } from './views/SwarmCommandView'
 import { MissionControlView } from './views/MissionControlView'
 import { NetworkResilienceView } from './views/NetworkResilienceView'
 import { EvaluationBenchmarkView } from './views/EvaluationBenchmarkView'
-import { RealEarthGlobe } from './components/globe/RealEarthGlobe'
+import { TacticalGlobe3D } from './components/globe/TacticalGlobe3D'
 
 const AppContent: React.FC = () => {
   const {
@@ -48,7 +48,7 @@ const AppContent: React.FC = () => {
 
   if (scene === 'globe') {
     return (
-      <RealEarthGlobe
+      <TacticalGlobe3D
         onSelectRegion={(reg) => {
           setRegion(reg)
           setActiveTab('map')
