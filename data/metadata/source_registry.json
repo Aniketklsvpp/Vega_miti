@@ -1,0 +1,187 @@
+{
+  "project": "DELTA-SWARM (formerly Vega_miti)",
+  "registry_version": "1.0.0",
+  "last_updated": "2026-11-04",
+  "sources": [
+    {
+      "source_id": "usgs_nwis",
+      "name": "USGS National Water Information System (NWIS)",
+      "organization": "United States Geological Survey (USGS)",
+      "official_url": "https://waterdata.usgs.gov/",
+      "api_endpoints": {
+        "daily_values": "https://waterservices.usgs.gov/nwis/dv/",
+        "site_service": "https://waterservices.usgs.gov/nwis/site/"
+      },
+      "geographic_scope": "United States",
+      "spatial_coverage": "22 reference stations across 19 US states (East Coast, Midwest, Plains, Rockies, Pacific NW)",
+      "temporal_resolution": "Daily",
+      "date_range_current": "2022-01-01 to 2023-12-31",
+      "variables": [
+        {
+          "name": "discharge_cfs",
+          "usgs_parameter_code": "00060",
+          "description": "Daily mean streamflow discharge",
+          "units": "cfs (ft3/s)"
+        },
+        {
+          "name": "drainage_area_sqmi",
+          "description": "Contributing drainage basin area",
+          "units": "square miles (sq mi)"
+        },
+        {
+          "name": "mean_elevation_ft",
+          "description": "Gauge datum / elevation above NAVD88",
+          "units": "feet (ft)"
+        }
+      ],
+      "access_method": "REST API (Automated HTTP GET without API key)",
+      "format": "JSON / RDB",
+      "license": "Public Domain (U.S. Government Work)",
+      "status_in_repo": "Active & Ingested (16,060 rows in data/processed/train.csv)"
+    },
+    {
+      "source_id": "caravan",
+      "name": "Caravan: A global community dataset for large-sample hydrology",
+      "organization": "Kratzert et al. (Nature Scientific Data / Zenodo)",
+      "official_url": "https://doi.org/10.5281/zenodo.6578598",
+      "paper_reference": "Kratzert, F., Gauch, M., Nearing, G., Klotz, D., & Hochreiter, S. (2023). Caravan - A global community dataset for large-sample hydrology. Scientific Data, 10, 61.",
+      "code_repository": "https://github.com/kratzert/Caravan",
+      "geographic_scope": "Global (North America, South America, Europe, Australia)",
+      "spatial_coverage": "7,100+ catchments globally; includes CAMELS-US (531 catchments) overlapping USGS stations",
+      "temporal_resolution": "Daily",
+      "date_range_current": "1981-01-01 to 2020-12-31",
+      "variables": [
+        {
+          "name": "streamflow",
+          "description": "Area-normalized daily specific discharge runoff depth",
+          "units": "mm/day"
+        },
+        {
+          "name": "streamflow_volumetric",
+          "description": "Volumetric discharge derived via area conversion",
+          "units": "m3/s"
+        },
+        {
+          "name": "era5_land_forcings",
+          "description": "Gridded meteorological forcings: total precipitation, 2m temp, dewpoint, potential evaporation, solar radiation",
+          "units": "Precipitation in mm/day; Temp in deg C"
+        },
+        {
+          "name": "hydroatlas_attributes",
+          "description": "Comprehensive catchment physiographic, climatic, land cover, and soil properties",
+          "units": "Normalized indices and SI physical units"
+        }
+      ],
+      "access_method": "Zenodo Archive Download (Direct HTTP or zenodo-get / curl)",
+      "format": "NetCDF / CSV",
+      "license": "Creative Commons Attribution 4.0 International (CC-BY 4.0)",
+      "status_in_repo": "Documented & Registry Ready; Awaiting Raw Partition Download"
+    },
+    {
+      "source_id": "india_wris_cwc",
+      "name": "India Water Resources Information System (India-WRIS) / Central Water Commission (CWC)",
+      "organization": "Central Water Commission, Ministry of Jal Shakti, Government of India",
+      "official_url": "https://indiawris.gov.in/wris/",
+      "telemetry_portal": "https://ffs.india-water.gov.in/",
+      "geographic_scope": "India",
+      "spatial_coverage": "Major Indian river basins (Ganga, Brahmaputra, Godavari, Krishna, Mahanadi, Narmada, Tapi, Cauvery)",
+      "temporal_resolution": "Daily / Hourly telemetry during monsoon season (June to October)",
+      "date_range_current": "Variable historical archives (typically 1970–present for gauge sites)",
+      "variables": [
+        {
+          "name": "discharge_cumec",
+          "description": "Daily river discharge rate",
+          "units": "cumec (m3/s)"
+        },
+        {
+          "name": "water_level_m",
+          "description": "River stage / water level above mean sea level",
+          "units": "meters (m)"
+        },
+        {
+          "name": "warning_danger_level_m",
+          "description": "Station flood thresholds (Warning Level, Danger Level, Highest Flood Level)",
+          "units": "meters (m)"
+        }
+      ],
+      "access_method": "India-WRIS Web GIS Portal / Open Government Data Platform (data.gov.in)",
+      "format": "CSV / Excel / GeoJSON",
+      "license": "National Data Sharing and Accessibility Policy (NDSAP) - Open access for unclassified basins",
+      "status_in_repo": "Cataloged for Indian Regional Expansion; Awaiting Pilot Catchment Download"
+    },
+    {
+      "source_id": "imd_gridded",
+      "name": "India Meteorological Department (IMD) Gridded Weather Data",
+      "organization": "Ministry of Earth Sciences, Government of India",
+      "official_url": "https://imdpune.gov.in/cmpg/Griddata/Rainfall_25_Bin.html",
+      "geographic_scope": "India National Extent",
+      "spatial_coverage": "0.25 deg x 0.25 deg high-resolution rainfall grid; 1.0 deg x 1.0 deg temperature grid",
+      "temporal_resolution": "Daily",
+      "date_range_current": "1901 to present",
+      "variables": [
+        {
+          "name": "daily_rainfall_mm",
+          "description": "24-hour accumulated rainfall ending at 08:30 IST",
+          "units": "mm"
+        },
+        {
+          "name": "daily_max_temp_c",
+          "description": "Daily maximum air temperature",
+          "units": "deg C"
+        },
+        {
+          "name": "daily_min_temp_c",
+          "description": "Daily minimum air temperature",
+          "units": "deg C"
+        }
+      ],
+      "access_method": "IMD Pune Data Centre Portal / IMD Gridded Binary and NetCDF",
+      "format": "Binary (.GRD) / NetCDF",
+      "license": "Research and Academic Use with citation",
+      "status_in_repo": "Cataloged for Indian Regional Expansion"
+    },
+    {
+      "source_id": "nasa_power",
+      "name": "NASA POWER (Prediction of Worldwide Energy Resources)",
+      "organization": "NASA Langley Research Center",
+      "official_url": "https://power.larc.nasa.gov/",
+      "api_endpoints": {
+        "daily_point": "https://power.larc.nasa.gov/api/temporal/daily/point"
+      },
+      "geographic_scope": "Global (Universal cross-regional meteorology)",
+      "spatial_coverage": "0.5 deg x 0.625 deg MERRA-2 / GEOS satellite and reanalysis assimilation",
+      "temporal_resolution": "Daily",
+      "date_range_current": "1981-01-01 to present",
+      "variables": [
+        {
+          "name": "precipitation_mm",
+          "parameter_code": "PRECTOTCORR",
+          "description": "Precipitation corrected",
+          "units": "mm/day"
+        },
+        {
+          "name": "temp_max_c",
+          "parameter_code": "T2M_MAX",
+          "description": "Maximum 2-meter air temperature",
+          "units": "deg C"
+        },
+        {
+          "name": "temp_min_c",
+          "parameter_code": "T2M_MIN",
+          "description": "Minimum 2-meter air temperature",
+          "units": "deg C"
+        },
+        {
+          "name": "soil_moisture",
+          "parameter_code": "GWETTOP",
+          "description": "Surface soil wetness fraction",
+          "units": "fraction [0.0 - 1.0]"
+        }
+      ],
+      "access_method": "REST API (Automated HTTP GET without API key)",
+      "format": "JSON",
+      "license": "Open Data (NASA Open Science Data Policy)",
+      "status_in_repo": "Active & Integrated (Powers 19 US stations and cross-regional fallback)"
+    }
+  ]
+}

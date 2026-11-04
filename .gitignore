@@ -9,6 +9,7 @@ venv/
 *.log
 .ipynb_checkpoints/
 data/raw/
+data/interim/
 data/processed/
 .env
 *.rdb

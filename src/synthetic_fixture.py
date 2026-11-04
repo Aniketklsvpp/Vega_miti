@@ -17,7 +17,9 @@ def generate_synthetic_data(seed=42):
             
             for d in dates:
                 d_idx = (d - dates[0]).days
-                day_of_year = d.dayofyear
+                day_of_year = getattr(d, "day_of_year", None)
+                if day_of_year is None:
+                    day_of_year = d.dayofyear
                 seasonality = np.sin(2 * np.pi * day_of_year / 365.25)
                 
                 precip = rng.exponential(scale=3.5) if rng.rand() < 0.35 else 0.0
