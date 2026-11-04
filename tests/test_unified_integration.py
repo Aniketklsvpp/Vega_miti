@@ -97,5 +97,25 @@ class TestUnifiedEndToEnd(unittest.TestCase):
         self.assertEqual(replay_run_data["country"], "United States")
         self.assertGreater(replay_run_data["executed_steps_count"], 0)
 
+        status_resp = self.client.get("/api/swarm/status")
+        self.assertEqual(status_resp.status_code, 200)
+        self.assertEqual(status_resp.json()["data"]["coordinate_frame"], "SIMULATED_20X20_GRID")
+
+        step_resp = self.client.post("/api/swarm/step", json={"steps": 1})
+        self.assertEqual(step_resp.status_code, 200)
+        self.assertEqual(step_resp.json()["data"]["step_status"], "COMPLETED")
+
+        single_agent_resp = self.client.get("/api/swarm/agents/DRONE_AERIAL_1")
+        self.assertEqual(single_agent_resp.status_code, 200)
+        self.assertEqual(single_agent_resp.json()["data"]["agent_id"], "DRONE_AERIAL_1")
+
+        events_resp = self.client.get("/api/swarm/events?limit=10")
+        self.assertEqual(events_resp.status_code, 200)
+        self.assertIsInstance(events_resp.json()["data"]["events"], list)
+
+        fail_resp = self.client.post("/api/swarm/agents/DRONE_AERIAL_1/fail")
+        self.assertEqual(fail_resp.status_code, 200)
+        self.assertEqual(fail_resp.json()["data"]["failed_agent_id"], "DRONE_AERIAL_1")
+
 if __name__ == "__main__":
     unittest.main()

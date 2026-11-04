@@ -101,7 +101,7 @@ class TestSwarmAPI(unittest.TestCase):
         meta_body = meta_resp.json()
         self.assertEqual(meta_body["status"], "success")
         self.assertEqual(meta_body["data"]["country"], "India")
-        self.assertEqual(meta_body["data"]["river"], "Yamuna River (Upper Yamuna Basin, Ganges Sub-basin)")
+        self.assertEqual(meta_body["data"]["river"], "Yamuna River (Upper Yamuna Basin)")
 
         run_resp = self.client.post("/api/swarm/replay/run", json={"event_id": "EVENT-IN-YAMUNA-2023", "step_index": 4})
         self.assertEqual(run_resp.status_code, 200)
@@ -111,6 +111,68 @@ class TestSwarmAPI(unittest.TestCase):
         self.assertIn("current_step_frame", run_body["data"])
         self.assertIn("simulated_swarm_response", run_body["data"]["current_step_frame"])
         self.assertIn("observed_historical_state", run_body["data"]["current_step_frame"])
+
+    def test_swarm_status(self):
+        resp = self.client.get("/api/swarm/status")
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        self.assertIsNone(body["error"])
+        data = body["data"]
+        self.assertIn("simulation_state", data)
+        self.assertIn("active_agents", data)
+        self.assertIn("idle_agents", data)
+        self.assertIn("failed_agents", data)
+        self.assertEqual(data["total_agents"], 6)
+        self.assertEqual(data["coordinate_frame"], "SIMULATED_20X20_GRID")
+
+    def test_get_single_agent(self):
+        resp = self.client.get("/api/swarm/agents/DRONE_AERIAL_1")
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        self.assertEqual(body["data"]["agent_id"], "DRONE_AERIAL_1")
+        self.assertEqual(body["data"]["coordinate_frame"], "SIMULATED_20X20_GRID")
+
+        bad_resp = self.client.get("/api/swarm/agents/NON_EXISTENT_AGENT")
+        self.assertEqual(bad_resp.status_code, 404)
+
+    def test_agent_fail_endpoint(self):
+        payload = {
+            "assessments": [
+                {"station_id": "01570500", "risk_level": "CRITICAL", "data_quality_status": "VALID_OBSERVATION"}
+            ]
+        }
+        self.client.post("/api/swarm/activate", json=payload)
+        fail_resp = self.client.post("/api/swarm/agents/DRONE_AERIAL_1/fail")
+        self.assertEqual(fail_resp.status_code, 200)
+        fail_body = fail_resp.json()
+        self.assertEqual(fail_body["status"], "success")
+        self.assertEqual(fail_body["data"]["failed_agent_id"], "DRONE_AERIAL_1")
+        self.assertEqual(fail_body["data"]["status"], "DISCONNECTED")
+        self.assertIsInstance(fail_body["data"]["reassigned_missions"], list)
+
+        bad_fail = self.client.post("/api/swarm/agents/NON_EXISTENT_AGENT/fail")
+        self.assertEqual(bad_fail.status_code, 404)
+
+        self.client.post("/api/swarm/agent/reconnect", json={"agent_id": "DRONE_AERIAL_1"})
+
+    def test_swarm_step(self):
+        resp = self.client.post("/api/swarm/step", json={"steps": 2})
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        self.assertEqual(body["data"]["steps_executed"], 2)
+        self.assertEqual(body["data"]["agents_updated"], 6)
+        self.assertEqual(body["data"]["coordinate_frame"], "SIMULATED_20X20_GRID")
+
+    def test_get_swarm_events(self):
+        resp = self.client.get("/api/swarm/events?limit=5")
+        self.assertEqual(resp.status_code, 200)
+        body = resp.json()
+        self.assertEqual(body["status"], "success")
+        self.assertLessEqual(body["data"]["returned_count"], 5)
+        self.assertIsInstance(body["data"]["events"], list)
 
 if __name__ == "__main__":
     unittest.main()

@@ -30,7 +30,7 @@ class TestHistoricalReplay(unittest.TestCase):
         self.assertEqual(body["status"], "success")
         data = body["data"]
         self.assertEqual(data["country"], "India")
-        self.assertEqual(data["river"], "Yamuna River (Upper Yamuna Basin, Ganges Sub-basin)")
+        self.assertEqual(data["river"], "Yamuna River (Upper Yamuna Basin)")
         self.assertEqual(data["primary_gauge_station"]["station_id"], "YMN-DEL-ORB-01")
         self.assertEqual(data["primary_gauge_station"]["latitude"], 28.663)
         self.assertEqual(data["primary_gauge_station"]["longitude"], 77.234)
@@ -62,7 +62,11 @@ class TestHistoricalReplay(unittest.TestCase):
         self.assertEqual(frame4["date"], "2023-07-11")
         self.assertEqual(frame4["timeline_phase"], "HIGH_RISK_PEAK")
         self.assertEqual(frame4["vega_miti_risk_assessment"]["risk_level"], "CRITICAL")
-        self.assertIsNotNone(frame4["simulated_swarm_response"]["failure_event"])
+        fe = frame4["simulated_swarm_response"]["failure_event"]
+        self.assertIsNotNone(fe)
+        self.assertGreater(len(fe["reassigned_missions"]), 0)
+        self.assertGreater(len(fe["reallocations"]), 0)
+        self.assertNotEqual(fe["disconnected_agent"], fe["reallocations"][0]["agent_id"])
 
     def test_invalid_event_id(self):
         resp = self.client.post("/api/swarm/replay/run", json={"event_id": "NON_EXISTENT_EVENT"})
@@ -247,6 +251,77 @@ class TestHistoricalReplay(unittest.TestCase):
         sim_resp = frame["simulated_swarm_response"]
         self.assertEqual(sim_resp["coordinate_frame"], "SIMULATED_20X20_GRID")
         self.assertIn("simulated 20x20", sim_resp["coordinate_disclaimer"].lower())
+
+    def test_unambiguous_discharge_fields_regression(self):
+        resp = self.client.post("/api/swarm/replay/run", json={
+            "event_id": "EVENT-IN-YAMUNA-2023",
+            "step_index": 4,
+            "simulate_failure": False
+        })
+        self.assertEqual(resp.status_code, 200)
+        frame = resp.json()["data"]["current_step_frame"]
+        hist_state = frame["observed_historical_state"]
+        self.assertEqual(hist_state["upstream_release_cfs"], 359000.0)
+        self.assertIsNone(hist_state["in_situ_discharge_cfs"])
+        self.assertEqual(hist_state["in_situ_discharge_status"], "UNMETERED_IN_SITU")
+        self.assertIsNone(hist_state["discharge_cfs"])
+        self.assertEqual(hist_state["legacy_deprecated_discharge_cfs"], 359000.0)
+        self.assertIn("discharge_semantics_clarification", hist_state)
+
+        assess = frame["vega_miti_risk_assessment"]
+        self.assertEqual(assess["upstream_release_cfs"], 359000.0)
+        self.assertIsNone(assess["in_situ_discharge_cfs"])
+        self.assertIsNone(assess["discharge_cfs"])
+        self.assertEqual(assess["legacy_deprecated_discharge_cfs"], 359000.0)
+
+    def test_replay_timestamp_consistency_regression(self):
+        resp = self.client.post("/api/swarm/replay/run", json={
+            "event_id": "EVENT-IN-YAMUNA-2023",
+            "step_index": 4,
+            "simulate_failure": False
+        })
+        self.assertEqual(resp.status_code, 200)
+        frame = resp.json()["data"]["current_step_frame"]
+        clock = frame["simulated_swarm_response"]["simulation_clock"]
+        self.assertEqual(clock["event_step_date"], "2023-07-11")
+        self.assertIn("2023-07-11", clock["historical_observation_timestamp"])
+        self.assertIn("historical_event_epoch_sec", clock)
+        self.assertIn("runtime_simulation_wall_clock_sec", clock)
+        self.assertNotEqual(clock["historical_event_epoch_sec"], clock["runtime_simulation_wall_clock_sec"])
+
+        allocs = frame["simulated_swarm_response"]["allocations_in_step"]
+        if allocs:
+            for alloc in allocs:
+                import datetime
+                dt_obj = datetime.datetime.fromtimestamp(alloc["assigned_at"], tz=datetime.timezone.utc)
+                self.assertIn(dt_obj.strftime("%Y-%m-%d"), ("2023-07-10", "2023-07-11"))
+                self.assertEqual(alloc["timestamp_domain"], "HISTORICAL_EVENT_TIME")
+                self.assertIn("runtime_simulation_wall_clock_sec", alloc)
+
+    def test_evidence_quality_distinction_regression(self):
+        resp = self.client.post("/api/swarm/replay/run", json={
+            "event_id": "EVENT-IN-YAMUNA-2023",
+            "step_index": 4
+        })
+        self.assertEqual(resp.status_code, 200)
+        assess = resp.json()["data"]["current_step_frame"]["vega_miti_risk_assessment"]
+        self.assertEqual(assess["evidence_quality"], "HIGH")
+        self.assertIn("evidence_quality_breakdown", assess)
+        breakdown = assess["evidence_quality_breakdown"]
+        self.assertEqual(breakdown["individual_observation_confidence"], "HIGH")
+        self.assertEqual(breakdown["record_completeness"], "PARTIAL")
+        self.assertEqual(breakdown["in_situ_discharge_availability"], "UNMETERED_IN_SITU")
+        self.assertIn("POINT_OBSERVATION", breakdown["spatial_rainfall_coverage"])
+
+    def test_hydraulic_transit_time_context_regression(self):
+        resp = self.client.get("/api/swarm/replay/event/EVENT-IN-YAMUNA-2023")
+        self.assertEqual(resp.status_code, 200)
+        barrage = resp.json()["data"]["upstream_barrage"]
+        self.assertIn("hydraulic_transit_time_context", barrage)
+        ctx = barrage["hydraulic_transit_time_context"]
+        self.assertEqual(ctx["classification"], "APPROXIMATE_CONTEXTUAL_ASSUMPTION")
+        self.assertIn("48 to 72 hours", ctx["empirical_estimate_hours"])
+        self.assertIn("causal_disclaimer", ctx)
 
 if __name__ == "__main__":
     unittest.main()

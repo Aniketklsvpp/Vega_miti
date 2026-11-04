@@ -165,6 +165,7 @@ class SwarmCoordinator:
                     best_agent.status = "ASSIGNED"
                     best_agent.current_mission = mid
                     best_agent.planned_path = path
+                    was_reassigned = (m.get("status") == "REASSIGNED")
                     m["status"] = "IN_PROGRESS"
                     m["assigned_agent_id"] = best_agent.agent_id
                     now = time.time()
@@ -181,29 +182,109 @@ class SwarmCoordinator:
                         "bid_score": round(best_bid, 2)
                     }
                     allocations.append(alloc)
-                    best_agent.record_event("MISSION_ASSIGNED", alloc)
+                    if was_reassigned:
+                        best_agent.record_event("MISSION_REASSIGNED_TAKEOVER", alloc)
+                    else:
+                        best_agent.record_event("MISSION_ASSIGNED", alloc)
 
         return allocations
 
     def check_heartbeats_and_leases(self, timeout_sec=20):
         now = time.time()
         reassigned = []
-        for aid, agent in self.agents.items():
-            if now - agent.last_heartbeat > timeout_sec and agent.connectivity == "CONNECTED":
-                agent.connectivity = "DISCONNECTED"
-                agent.status = "DISCONNECTED"
-                agent.record_event("AGENT_HEARTBEAT_LOST", {"last_heartbeat": agent.last_heartbeat})
+        if timeout_sec is not None and timeout_sec > 0:
+            for aid, agent in self.agents.items():
+                if now - agent.last_heartbeat > timeout_sec and agent.connectivity == "CONNECTED":
+                    agent.connectivity = "DISCONNECTED"
+                    agent.status = "DISCONNECTED"
+                    agent.record_event("AGENT_HEARTBEAT_LOST", {"last_heartbeat": agent.last_heartbeat})
 
         for mid, lease in list(self.task_leases.items()):
             agent = self.agents.get(lease["agent_id"])
             if now > lease["expires_at"] or (agent and agent.connectivity == "DISCONNECTED"):
-                if mid in self.missions and self.missions[mid]["status"] == "IN_PROGRESS":
+                if mid in self.missions and self.missions[mid]["status"] in ("IN_PROGRESS", "ASSIGNED"):
                     self.missions[mid]["status"] = "REASSIGNED"
                     self.missions[mid]["assigned_agent_id"] = None
                     reassigned.append(mid)
                 del self.task_leases[mid]
 
         return reassigned
+
+    def complete_mission(self, mission_id):
+        if mission_id in self.missions:
+            m = self.missions[mission_id]
+            m["status"] = "COMPLETED"
+            aid = m.get("assigned_agent_id")
+            if aid and aid in self.agents:
+                agent = self.agents[aid]
+                if agent.status == "ASSIGNED" and agent.connectivity == "CONNECTED":
+                    agent.status = "AVAILABLE"
+                    agent.current_mission = None
+                    agent.planned_path = []
+                    if m.get("target_position"):
+                        agent.position = m["target_position"]
+                    agent.record_event("MISSION_COMPLETED", {"mission_id": mission_id, "position": agent.position})
+            if mission_id in self.task_leases:
+                del self.task_leases[mission_id]
+
+    def step_simulation(self):
+        moved_agents = []
+        completed_missions = []
+        for aid, agent in self.agents.items():
+            if agent.status == "ASSIGNED" and agent.connectivity == "CONNECTED" and agent.planned_path:
+                prev_pos = agent.position
+                if len(agent.planned_path) > 1:
+                    agent.position = agent.planned_path[1]
+                    agent.planned_path = agent.planned_path[1:]
+                    agent.battery = max(0.0, round(agent.battery - 0.5, 2))
+                    agent.record_event("AGENT_MOVED", {
+                        "from_position": prev_pos,
+                        "to_position": agent.position,
+                        "remaining_path_length": len(agent.planned_path) - 1
+                    })
+                    moved_agents.append({
+                        "agent_id": aid,
+                        "previous_position": prev_pos,
+                        "current_position": agent.position,
+                        "battery": agent.battery,
+                        "remaining_steps": len(agent.planned_path) - 1
+                    })
+                    if len(agent.planned_path) == 1:
+                        mid = agent.current_mission
+                        self.complete_mission(mid)
+                        completed_missions.append(mid)
+                else:
+                    mid = agent.current_mission
+                    self.complete_mission(mid)
+                    completed_missions.append(mid)
+
+        for aid, agent in self.agents.items():
+            if agent.connectivity == "CONNECTED" and agent.event_buffer:
+                self.synchronize_agent(aid)
+
+        return {
+            "step_status": "COMPLETED",
+            "moved_agents": moved_agents,
+            "completed_missions": completed_missions,
+            "coordinate_frame": "SIMULATED_20X20_GRID",
+            "active_missions_count": sum(1 for m in self.missions.values() if m["status"] in ("PENDING", "IN_PROGRESS", "ASSIGNED", "REASSIGNED")),
+            "completed_missions_count": sum(1 for m in self.missions.values() if m["status"] == "COMPLETED"),
+            "agents": [
+                {
+                    "agent_id": a.agent_id,
+                    "agent_type": a.agent_type,
+                    "capabilities": sorted(list(a.capabilities)),
+                    "position": a.position,
+                    "battery": a.battery,
+                    "status": a.status,
+                    "connectivity": a.connectivity,
+                    "current_mission": a.current_mission,
+                    "planned_path": a.planned_path,
+                    "remaining_steps": max(0, len(a.planned_path) - 1)
+                }
+                for a in self.agents.values()
+            ]
+        }
 
     def simulate_agent_disconnect(self, agent_id):
         if agent_id in self.agents:
@@ -218,6 +299,7 @@ class SwarmCoordinator:
             a.connectivity = "CONNECTED"
             a.status = "AVAILABLE" if not a.current_mission else "ASSIGNED"
             a.send_heartbeat()
+            a.record_event("NETWORK_RECONNECTED", {"position": a.position})
             self.synchronize_agent(agent_id)
 
     def simulate_coordinator_failure(self):

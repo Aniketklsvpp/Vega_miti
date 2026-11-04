@@ -1,4 +1,5 @@
 import os
+import time
 import pandas as pd
 from typing import Dict, List, Any, Optional
 
@@ -12,7 +13,8 @@ HISTORICAL_EVENTS_CATALOG = {
         "title": "July 2023 Yamuna River Mega-Flood (Delhi NCR & Haryana, India)",
         "country": "India",
         "state_or_region": "National Capital Territory of Delhi / Haryana",
-        "river": "Yamuna River (Upper Yamuna Basin, Ganges Sub-basin)",
+        "river": "Yamuna River (Upper Yamuna Basin)",
+        "sub_basin": "Ganges Sub-basin",
         "start_date": "2023-07-07",
         "end_date": "2023-07-18",
         "peak_date": "2023-07-13",
@@ -47,7 +49,14 @@ HISTORICAL_EVENTS_CATALOG = {
             "latitude": 30.315,
             "longitude": 77.583,
             "peak_barrage_release_cfs": 359000.0,
-            "distance_upstream_km": 228.0
+            "distance_upstream_km": 228.0,
+            "hydraulic_transit_time_context": {
+                "empirical_estimate_hours": "48 to 72 hours",
+                "classification": "APPROXIMATE_CONTEXTUAL_ASSUMPTION",
+                "technical_basis": "Empirical operational guideline historically referenced in CWC and DDMA flood advisories based on 228 river km distance and estimated 3.5-5.0 km/h monsoonal high-flow channel propagation velocities.",
+                "scientific_limitation": "Not a constant or deterministic hydrodynamic routing parameter. Velocity varies dynamically with antecedent baseflow, flood volume, cross-section geometry, and backwater throttling from downstream barrages.",
+                "causal_disclaimer": "VEGA-MITI does not assert an instantaneous or deterministic causal relationship between upstream release and local Delhi stage."
+            }
         },
         "downstream_infrastructure": [
             {"name": "Wazirabad Barrage", "latitude": 28.711, "longitude": 77.231},
@@ -56,19 +65,36 @@ HISTORICAL_EVENTS_CATALOG = {
         ],
         "data_provenance": {
             "water_levels": {
-                "source": "Central Water Commission (CWC) Daily River Stage Bulletins (July 2023)",
-                "document_reference": "CWC Flood Forecast Monitoring Directorate Daily Bulletins, Station Old Railway Bridge Delhi",
-                "authority": "Central Water Commission (CWC), Ministry of Jal Shakti, Government of India"
+                "source_title": "Daily River Stage Bulletin, Old Railway Bridge Delhi",
+                "issuing_authority": "Central Water Commission (CWC), Ministry of Jal Shakti, Government of India",
+                "portal_url": "https://ffs.india-water.gov.in/",
+                "document_reference": "CWC Flood Forecast Monitoring Directorate Daily Bulletins, Station Code: 004-MDELHI / YMN-DEL-ORB-01 (July 2023)",
+                "supported_fields": ["water_level_m", "statutory_reference_marks"],
+                "verification_status": "OFFICIALLY_PUBLISHED_CWC_BULLETIN"
             },
             "barrage_outflow": {
-                "source": "Haryana Irrigation and Water Resources Department Hathnikund Release Logs (July 2023)",
-                "document_reference": "Hathnikund Barrage Discharge Register & Flood Control Room Log, Yamunanagar, Haryana",
-                "authority": "Irrigation and Water Resources Department, Government of Haryana"
+                "source_title": "Hathnikund Barrage Daily Inflow & Outflow Register",
+                "issuing_authority": "Department of Irrigation and Water Resources, Government of Haryana",
+                "portal_url": "https://hid.gov.in/",
+                "document_reference": "Hathnikund Barrage Discharge Register & Yamunanagar Flood Control Room Daily Log (July 2023)",
+                "supported_fields": ["upstream_release_cfs", "upstream_release_cumec"],
+                "verification_status": "OFFICIALLY_LOGGED_BARRAGE_DISCHARGE"
             },
             "rainfall": {
-                "source": "India Meteorological Department (IMD) Safdarjung & Catchment Daily Precipitation Records",
+                "source_title": "Daily 24-Hour Accumulated Rainfall Report, Safdarjung Observatory",
+                "issuing_authority": "India Meteorological Department (IMD), Ministry of Earth Sciences, Government of India",
+                "portal_url": "https://mausam.imd.gov.in/",
                 "document_reference": "IMD National Weather Forecasting Centre (NWFC) All-India Daily Weather Reports (July 2023)",
-                "authority": "India Meteorological Department, Ministry of Earth Sciences, Government of India"
+                "supported_fields": ["rainfall_mm"],
+                "verification_status": "OFFICIALLY_PUBLISHED_METEOROLOGICAL_RECORD"
+            },
+            "in_situ_streamflow_discharge": {
+                "source_title": "In-Situ Continuous Discharge Velocity Metering at Old Railway Bridge, Delhi",
+                "issuing_authority": "Central Water Commission (CWC) / Delhi I&FC Department",
+                "portal_url": None,
+                "document_reference": "UNAVAILABLE (Old Railway Bridge is a stage-only gauge site; continuous in-situ velocity/discharge streamflow is not metered)",
+                "supported_fields": ["in_situ_discharge_cfs"],
+                "verification_status": "UNMETERED_IN_SITU"
             }
         },
         "is_partial_record": True,
@@ -517,13 +543,24 @@ class HistoricalReplayEngine:
                 "upstream_release_status": row.get("upstream_release_status", "REPORTED_BY_BARRAGE_LOG"),
                 "in_situ_discharge_cfs": None,
                 "in_situ_discharge_status": "UNMETERED_IN_SITU",
+                "discharge_cfs": None,
+                "legacy_deprecated_discharge_cfs": rel_val,
+                "discharge_semantics_clarification": "discharge_cfs is null because in-situ velocity is not metered at Old Railway Bridge Delhi. Upstream barrage outflow is reported in upstream_release_cfs (located 228 km upstream at Hathnikund). legacy_deprecated_discharge_cfs is preserved solely for backward compatibility.",
                 "rainfall_mm": precip_mm,
                 "rainfall_status": row.get("rainfall_status", "OBSERVED"),
-                "discharge_cfs": None,
+
                 "risk_level": risk_level,
                 "evidence_sources": evidence_sources,
                 "evidence_quality": "HIGH",
                 "data_quality_status": "VALID_OBSERVATION",
+                "evidence_quality_breakdown": {
+                    "individual_observation_confidence": "HIGH",
+                    "observation_confidence_basis": "Stage measured by CWC verified gauge; barrage release logged by Haryana Irrigation Flood Control Room; rainfall recorded by IMD Safdarjung Observatory.",
+                    "record_completeness": "PARTIAL",
+                    "in_situ_discharge_availability": "UNMETERED_IN_SITU",
+                    "spatial_rainfall_coverage": "POINT_OBSERVATION_ONLY (Safdarjung Observatory, IMD; upper-basin gridded radar unavailable)",
+                    "overall_evidence_synthesis": "Individual point observations have HIGH verification confidence, but overall basinwide hydrological record is PARTIAL due to absence of local Delhi in-situ streamflow velocity metering."
+                },
                 "completeness_status": "PARTIAL_RECORD_STAGE_AND_UPSTREAM_BARRAGE_DISCHARGE",
                 "threshold_source": "CENTRAL_WATER_COMMISSION_AND_VEGA_MITI_OPERATIONAL",
                 "is_provisional": False,
@@ -591,6 +628,16 @@ class HistoricalReplayEngine:
         for idx, row in enumerate(steps_to_run):
             dt = row["date"]
             phase = row["phase"]
+            obs_ts = row.get("observation_timestamp") or f"{dt}T08:30:00+05:30"
+            pub_ts = row.get("publication_timestamp") or f"{dt}T11:30:00+05:30"
+            hist_epoch = float(pd.Timestamp(obs_ts).timestamp())
+            wall_clock_now = float(time.time())
+
+            if idx > 0:
+                for mid, m in list(coordinator.missions.items()):
+                    if m["status"] == "IN_PROGRESS":
+                        coordinator.complete_mission(mid)
+
             assessment = self.assess_event_observation(event_id, row)
             
             activation_result = activation_engine.evaluate_activation([assessment])
@@ -600,6 +647,11 @@ class HistoricalReplayEngine:
                 coordinator.add_mission(m)
 
             allocations = coordinator.allocate_missions(strategy="adaptive")
+            for alloc in allocations:
+                alloc["assigned_at"] = hist_epoch
+                alloc["assigned_at_iso"] = obs_ts
+                alloc["runtime_simulation_wall_clock_sec"] = wall_clock_now
+                alloc["timestamp_domain"] = "HISTORICAL_EVENT_TIME"
 
             reassigned_missions = []
             failure_event = None
@@ -608,6 +660,11 @@ class HistoricalReplayEngine:
                 coordinator.simulate_agent_disconnect(target_agent)
                 reassigned = coordinator.check_heartbeats_and_leases(timeout_sec=0)
                 reallocations = coordinator.allocate_missions(strategy="adaptive")
+                for re_alloc in reallocations:
+                    re_alloc["assigned_at"] = hist_epoch
+                    re_alloc["assigned_at_iso"] = obs_ts
+                    re_alloc["runtime_simulation_wall_clock_sec"] = wall_clock_now
+                    re_alloc["timestamp_domain"] = "HISTORICAL_EVENT_TIME"
                 failure_applied = True
                 reassigned_missions = reassigned
                 failure_event = {
@@ -629,15 +686,17 @@ class HistoricalReplayEngine:
                 "timeline_phase": phase,
                 "observed_historical_state": {
                     "key_observation": row.get("key_observation", ""),
-                    "observation_timestamp": row.get("observation_timestamp"),
-                    "publication_timestamp": row.get("publication_timestamp"),
+                    "observation_timestamp": obs_ts,
+                    "publication_timestamp": pub_ts,
                     "rainfall_mm": row.get("rainfall_mm"),
                     "water_level_m": row.get("water_level_m"),
                     "upstream_release_cfs": row.get("upstream_release_cfs"),
                     "upstream_release_cumec": row.get("upstream_release_cumec"),
                     "in_situ_discharge_cfs": None if event_id == "EVENT-IN-YAMUNA-2023" else row.get("discharge_cfs"),
                     "in_situ_discharge_status": "UNMETERED_IN_SITU" if event_id == "EVENT-IN-YAMUNA-2023" else "OBSERVED",
-                    "discharge_cfs": None if event_id == "EVENT-IN-YAMUNA-2023" else row.get("discharge_cfs")
+                    "discharge_cfs": None if event_id == "EVENT-IN-YAMUNA-2023" else row.get("discharge_cfs"),
+                    "legacy_deprecated_discharge_cfs": row.get("upstream_release_cfs") if event_id == "EVENT-IN-YAMUNA-2023" else row.get("discharge_cfs"),
+                    "discharge_semantics_clarification": "For Old Railway Bridge Delhi, discharge_cfs is null because in-situ velocity is not metered. Upstream release is reported in upstream_release_cfs." if event_id == "EVENT-IN-YAMUNA-2023" else "USGS NWIS observed streamflow discharge."
                 },
                 "available_evidence": {
                     "cutoff_date": dt,
@@ -651,6 +710,14 @@ class HistoricalReplayEngine:
                 "simulated_swarm_response": {
                     "coordinate_frame": "SIMULATED_20X20_GRID",
                     "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
+                    "simulation_clock": {
+                        "event_step_date": dt,
+                        "historical_observation_timestamp": obs_ts,
+                        "historical_publication_timestamp": pub_ts,
+                        "historical_event_epoch_sec": hist_epoch,
+                        "runtime_simulation_wall_clock_sec": wall_clock_now,
+                        "clock_domain_clarification": "historical_event_epoch_sec represents historical event time (July 2023). runtime_simulation_wall_clock_sec represents host execution wall-clock time."
+                    },
                     "activation_state": current_state,
                     "active_missions_count": snapshot["active_missions_count"],
                     "completed_missions_count": snapshot["completed_missions_count"],

@@ -151,7 +151,16 @@ class TestDeltaSwarm(unittest.TestCase):
         self.assertIn("MSN-LC-1", reassigned)
         self.assertEqual(coordinator.missions["MSN-LC-1"]["status"], "REASSIGNED")
 
-        coordinator.missions["MSN-LC-1"]["status"] = "COMPLETED"
+        reallocs = coordinator.allocate_missions(strategy="adaptive")
+        self.assertEqual(len(reallocs), 1)
+        self.assertEqual(reallocs[0]["agent_id"], "DRONE_AERIAL_2")
+        self.assertEqual(coordinator.missions["MSN-LC-1"]["status"], "IN_PROGRESS")
+        self.assertEqual(coordinator.missions["MSN-LC-1"]["assigned_agent_id"], "DRONE_AERIAL_2")
+
+        coordinator.complete_mission("MSN-LC-1")
+        self.assertEqual(coordinator.missions["MSN-LC-1"]["status"], "COMPLETED")
+        self.assertEqual(coordinator.agents["DRONE_AERIAL_2"].status, "AVAILABLE")
+        self.assertIsNone(coordinator.agents["DRONE_AERIAL_2"].current_mission)
         snapshot = coordinator.get_swarm_snapshot()
         self.assertEqual(snapshot["completed_missions_count"], 1)
 
