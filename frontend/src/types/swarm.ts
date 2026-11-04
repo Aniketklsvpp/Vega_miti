@@ -85,6 +85,9 @@ export interface FloodRiskAssessment {
     upper: number
   }
   riskLevel: FloodRiskLevel
+  riskBasisDiscrepancy?: 'MATCH' | 'MISMATCH' | string
+  observedRiskLevel?: FloodRiskLevel | string
+  predictedRiskLevel?: FloodRiskLevel | string
   thresholdValue: number
   thresholdSource: string
   isProvisionalThreshold: boolean

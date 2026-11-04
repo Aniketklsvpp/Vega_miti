@@ -2,6 +2,7 @@ export type RegionType = 'usa' | 'india'
 export type SceneType = 'globe' | 'map'
 export type AnalysisTab =
   | 'flood'
+  | 'replay'
   | 'swarm'
   | 'missions'
   | 'resilience'

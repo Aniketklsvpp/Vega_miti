@@ -390,48 +390,75 @@ class HistoricalReplayEngine:
         self._populate_us_timeline(train_path)
 
     def _populate_us_timeline(self, train_path: str):
-        if not os.path.exists(train_path):
-            return
-        df = pd.read_csv(train_path, dtype={"station_id": str})
-        sub = df[(df["station_id"] == "01570500") & (df["date"] >= "2023-12-14") & (df["date"] <= "2023-12-26")].sort_values("date")
-        
         timeline = []
-        for _, r in sub.iterrows():
-            dt = str(r["date"])
-            q = float(r["discharge_cfs"])
-            precip = float(r["precipitation_mm"])
-            
-            if dt in ("2023-12-14", "2023-12-15", "2023-12-16"):
-                phase = "BEFORE_FLOOD"
-                obs = "Advisory winter baseflow; dry conditions preceding frontal storm"
-                retro = "Catchment baseflow conditions before precipitation system"
-            elif dt in ("2023-12-17", "2023-12-18"):
-                phase = "RISING_RISK"
-                obs = f"Intense atmospheric storm brings heavy rainfall ({precip:.1f} mm); basin saturated"
-                retro = "Direct precipitation runoff initiates hydrograph climb"
-            elif dt in ("2023-12-19", "2023-12-20", "2023-12-21"):
-                phase = "HIGH_RISK_PEAK"
-                obs = f"Runoff convergence causes massive discharge crest ({q:,.0f} cfs); river exceeds historical 99th percentile"
-                retro = "Crest propagation down the lower mainstem"
-            elif dt in ("2023-12-22", "2023-12-23"):
-                phase = "RECESSION"
-                obs = "Discharge recedes from flood crest; cold front stabilizes catchment"
-                retro = "Declining hydrograph recession limb"
-            else:
-                phase = "RECOVERY"
-                obs = "Flow normalizes toward seasonal median; post-event inspection"
-                retro = "Post-event baseflow stabilization"
+        if os.path.exists(train_path):
+            try:
+                df = pd.read_csv(train_path, dtype={"station_id": str})
+                sub = df[(df["station_id"] == "01570500") & (df["date"] >= "2023-12-14") & (df["date"] <= "2023-12-26")].sort_values("date")
+                for _, r in sub.iterrows():
+                    dt = str(r["date"])
+                    q = float(r["discharge_cfs"])
+                    precip = float(r["precipitation_mm"])
+                    
+                    if dt in ("2023-12-14", "2023-12-15", "2023-12-16"):
+                        phase = "BEFORE_FLOOD"
+                        obs = "Advisory winter baseflow; dry conditions preceding frontal storm"
+                        retro = "Catchment baseflow conditions before precipitation system"
+                    elif dt in ("2023-12-17", "2023-12-18"):
+                        phase = "RISING_RISK"
+                        obs = f"Intense atmospheric storm brings heavy rainfall ({precip:.1f} mm); basin saturated"
+                        retro = "Direct precipitation runoff initiates hydrograph climb"
+                    elif dt in ("2023-12-19", "2023-12-20", "2023-12-21"):
+                        phase = "HIGH_RISK_PEAK"
+                        obs = f"Runoff convergence causes massive discharge crest ({q:,.0f} cfs); river exceeds historical 99th percentile"
+                        retro = "Crest propagation down the lower mainstem"
+                    elif dt in ("2023-12-22", "2023-12-23"):
+                        phase = "RECESSION"
+                        obs = "Discharge recedes from flood crest; cold front stabilizes catchment"
+                        retro = "Declining hydrograph recession limb"
+                    else:
+                        phase = "RECOVERY"
+                        obs = "Flow normalizes toward seasonal median; post-event inspection"
+                        retro = "Post-event baseflow stabilization"
 
-            timeline.append({
-                "date": dt,
-                "phase": phase,
-                "rainfall_mm": round(precip, 2),
-                "discharge_cfs": round(q, 2),
-                "temp_max_c": float(r["temp_max_c"]) if pd.notna(r.get("temp_max_c")) else None,
-                "temp_min_c": float(r["temp_min_c"]) if pd.notna(r.get("temp_min_c")) else None,
-                "key_observation": obs,
-                "retrospective_context": retro
-            })
+                    timeline.append({
+                        "date": dt,
+                        "phase": phase,
+                        "rainfall_mm": round(precip, 2),
+                        "discharge_cfs": round(q, 2),
+                        "temp_max_c": float(r["temp_max_c"]) if pd.notna(r.get("temp_max_c")) else None,
+                        "temp_min_c": float(r["temp_min_c"]) if pd.notna(r.get("temp_min_c")) else None,
+                        "key_observation": obs,
+                        "retrospective_context": retro
+                    })
+            except Exception:
+                pass
+
+        if not timeline:
+            susq_json = os.path.join("outputs", "swarm", "replay_susquehanna_2023.json")
+            if not os.path.exists(susq_json):
+                susq_json = os.path.join("frontend", "public", "data", "swarm", "replay_susquehanna_2023.json")
+            if os.path.exists(susq_json):
+                import json
+                try:
+                    with open(susq_json, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    frames = data.get("timeline_frames", [])
+                    for fr in frames:
+                        obs_state = fr.get("observed_historical_state", {})
+                        timeline.append({
+                            "date": fr["date"],
+                            "phase": fr.get("timeline_phase", "NORMAL"),
+                            "rainfall_mm": float(obs_state.get("rainfall_mm") or 0.0),
+                            "discharge_cfs": float(obs_state.get("discharge_cfs") or 0.0),
+                            "temp_max_c": 12.0,
+                            "temp_min_c": 2.0,
+                            "key_observation": obs_state.get("key_observation", ""),
+                            "retrospective_context": fr.get("retrospective_event_outcome", {}).get("context", "")
+                        })
+                except Exception:
+                    pass
+
         HISTORICAL_EVENTS_CATALOG["EVENT-US-SUSQUEHANNA-2023"]["timeline_data"] = timeline
 
     def get_available_events(self) -> List[Dict[str, Any]]:

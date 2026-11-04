@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react'
 import {
   AlertTriangle,
   CheckCircle2,
-  Cpu,
   Gauge,
-  Layers,
   Radio,
   Send,
-  TrendingUp,
 } from 'lucide-react'
 import {
   AreaChart,
@@ -169,6 +166,37 @@ export const FloodIntelligenceView: React.FC<FloodIntelligenceViewProps> = ({
         </div>
       ) : (
         <>
+          {riskData.riskBasisDiscrepancy === 'MISMATCH' && (
+            <div className="p-4 bg-amber-50 border-2 border-amber-300 rounded-xl text-xs text-amber-950 flex items-start gap-3 shadow-xs">
+              <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div className="flex-1 space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-extrabold font-mono uppercase tracking-wider text-amber-800">
+                    Discrepancy Detected (MISMATCH)
+                  </span>
+                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-200 text-amber-900">
+                    RISK ENGINE ALERT
+                  </span>
+                </div>
+                <p className="leading-relaxed">
+                  Observed in-situ risk basis evaluates to <b>{riskData.observedRiskLevel || 'NORMAL'}</b> ({riskData.currentDischarge.toLocaleString()} cfs), whereas model forecast predicts <b>{riskData.predictedRiskLevel || 'NORMAL'}</b> ({riskData.predictedDischarge.toLocaleString()} cfs).
+                  This discrepancy triggers autonomous verification mission dispatch to inspect river gauge telemetry.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {(activeStation.station_id.includes('YMN') ||
+            activeStation.station_name.toLowerCase().includes('yamuna') ||
+            activeStation.station_id === 'IND-BR-01') && (
+            <div className="p-3.5 bg-sky-50 border border-sky-200 rounded-xl text-xs text-sky-950 flex items-start gap-2.5">
+              <span className="w-2 h-2 rounded-full bg-sky-600 mt-1.5 shrink-0" />
+              <div className="leading-relaxed">
+                <span className="font-bold">Yamuna Delhi ORB Site:</span> Statutory stage metric is metres above Mean Sea Level (m MSL). In-situ Delhi velocity is unmetered. Hathnikund Barrage discharge releases (~359,000 cfs) originate 228 km upstream in Haryana (~48-72h hydraulic transit time) and are not local Delhi discharge.
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="bg-white p-5 rounded-xl border border-[#DCE4E9] shadow-xs flex flex-col justify-between">
               <div>
@@ -310,138 +338,65 @@ export const FloodIntelligenceView: React.FC<FloodIntelligenceViewProps> = ({
                   }`}
                 >
                   <Send className="w-3.5 h-3.5" />
-                  <span>{dispatchStatus || 'Dispatch Swarm Verification Mission'}</span>
+                  <span>{dispatchStatus || 'Dispatch Verification Drone'}</span>
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 bg-white p-5 rounded-xl border border-[#DCE4E9] shadow-xs">
-              <div className="flex items-center justify-between pb-3 border-b border-[#DCE4E9]">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4 text-[#28A6A1]" />
-                  <span className="text-xs font-bold text-[#19364A]">Discharge Hydrograph & Horizon Forecast</span>
-                </div>
-                <div className="flex items-center gap-4 text-[11px]">
-                  <span className="flex items-center gap-1.5 text-[#19364A]">
-                    <span className="w-3 h-0.5 bg-[#19364A] inline-block"></span> Observed
-                  </span>
-                  <span className="flex items-center gap-1.5 text-[#28A6A1]">
-                    <span className="w-3 h-0.5 bg-[#28A6A1] inline-block border-b border-dashed"></span> Model Prediction
-                  </span>
-                  <span className="flex items-center gap-1.5 text-[#C94C55]">
-                    <span className="w-3 h-0.5 bg-[#C94C55] inline-block"></span> Provisional P95 Threshold
-                  </span>
-                </div>
+          <div className="bg-white p-5 rounded-xl border border-[#DCE4E9] shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#DCE4E9]">
+              <div>
+                <span className="text-xs font-bold text-[#647786] uppercase tracking-wider">Hydrograph Hydrodynamics</span>
+                <h4 className="text-sm font-bold text-[#19364A]">Temporal Outflow: Observed vs Model Inference</h4>
               </div>
-
-              <div className="h-64 mt-4 w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                    <defs>
-                      <linearGradient id="predArea" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#28A6A1" stopOpacity={0.25} />
-                        <stop offset="95%" stopColor="#28A6A1" stopOpacity={0.0} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#EAF0F3" />
-                    <XAxis dataKey="time" stroke="#647786" fontSize={11} />
-                    <YAxis stroke="#647786" fontSize={11} domain={['dataMin - 5000', 'dataMax + 8000']} />
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: '#FFFFFF',
-                        border: '1px solid #DCE4E9',
-                        borderRadius: '8px',
-                        fontSize: '11px',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.06)',
-                      }}
-                    />
-                    <ReferenceLine
-                      y={riskData.thresholdValue}
-                      stroke="#C94C55"
-                      strokeDasharray="4 4"
-                      label={{ value: 'Provisional P95 Threshold', fill: '#C94C55', fontSize: 10, position: 'insideTopRight' }}
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="predicted"
-                      stroke="#28A6A1"
-                      strokeWidth={2}
-                      strokeDasharray="4 4"
-                      fillOpacity={1}
-                      fill="url(#predArea)"
-                      name="Predicted cfs"
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="observed"
-                      stroke="#19364A"
-                      strokeWidth={2.5}
-                      fillOpacity={0}
-                      name="Observed cfs"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-
-              <div className="mt-2 flex items-center justify-between text-[11px] text-[#647786] pt-2 border-t border-[#DCE4E9]">
-                <span>Historical lookback window: 24h &bull; Forecast window: +24h</span>
-                <span>Values rendered from hydrological validation runs and live telemetry</span>
+              <div className="flex items-center gap-4 text-xs">
+                <span className="flex items-center gap-1.5 text-[#647786]">
+                  <span className="w-3 h-0.5 bg-[#19364A] inline-block"></span> Observed (In-situ)
+                </span>
+                <span className="flex items-center gap-1.5 text-[#28A6A1]">
+                  <span className="w-3 h-0.5 bg-[#28A6A1] inline-block border-b border-dashed"></span> Model Horizon
+                </span>
               </div>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-[#DCE4E9] shadow-xs flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-2 pb-3 border-b border-[#DCE4E9]">
-                  <Cpu className="w-4 h-4 text-[#19364A]" />
-                  <span className="text-xs font-bold text-[#19364A]">Model & Inference Topology</span>
-                </div>
-
-                <div className="mt-3 space-y-3">
-                  <div>
-                    <span className="text-[11px] font-semibold text-[#647786] block">Model Architecture</span>
-                    <p className="text-xs font-bold text-[#19364A] mt-0.5">{riskData.modelConfig.modelType}</p>
-                  </div>
-
-                  <div>
-                    <span className="text-[11px] font-semibold text-[#647786] block">Temporal Lookback & Horizon</span>
-                    <p className="text-xs font-mono font-bold text-[#19364A] mt-0.5">
-                      {riskData.modelConfig.featureLookbackDays} Days Past Window &rarr; +{riskData.modelConfig.targetHorizonHours}h Target
-                    </p>
-                  </div>
-
-                  <div>
-                    <span className="text-[11px] font-semibold text-[#647786] block">Training Baseline</span>
-                    <p className="text-xs font-mono text-[#647786] mt-0.5">{riskData.modelConfig.trainingDataRange}</p>
-                  </div>
-
-                  <div>
-                    <span className="text-[11px] font-semibold text-[#647786] block">Exogenous Weather Telemetry</span>
-                    <div className="flex flex-wrap gap-1.5 mt-1">
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-[#EAF0F3] text-[#19364A] font-medium border border-[#DCE4E9]">
-                        ERA5 Precipitation
-                      </span>
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-[#EAF0F3] text-[#19364A] font-medium border border-[#DCE4E9]">
-                        Soil Moisture P20
-                      </span>
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-[#EAF0F3] text-[#19364A] font-medium border border-[#DCE4E9]">
-                        Upstream Gauge Lag
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-4 p-3 rounded-lg bg-[#EAF0F3]/60 border border-[#DCE4E9] text-xs">
-                <div className="flex items-center gap-1.5 font-bold text-[#19364A]">
-                  <Layers className="w-3.5 h-3.5 text-[#28A6A1]" />
-                  <span>Swarm Autonomous Link</span>
-                </div>
-                <p className="text-[11px] text-[#647786] mt-1">
-                  Elevated risk triggers automated drone sensor deployment to verify embankment integrity.
-                </p>
-              </div>
+            <div className="h-64 w-full mt-4">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="predGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#28A6A1" stopOpacity={0.2} />
+                      <stop offset="95%" stopColor="#28A6A1" stopOpacity={0.0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#EAE1D2" vertical={false} />
+                  <XAxis dataKey="time" stroke="#647786" fontSize={11} tickLine={false} />
+                  <YAxis stroke="#647786" fontSize={11} tickLine={false} unit=" cfs" />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#FFFFFF',
+                      borderColor: '#DCE4E9',
+                      borderRadius: '8px',
+                      fontSize: '12px',
+                    }}
+                  />
+                  <ReferenceLine
+                    y={riskData.thresholdValue}
+                    stroke="#C94C55"
+                    strokeDasharray="4 4"
+                    label={{ value: 'CRITICAL THRESHOLD', fill: '#C94C55', fontSize: 10, position: 'insideTopRight' }}
+                  />
+                  <Area type="monotone" dataKey="observed" stroke="#19364A" strokeWidth={2} fillOpacity={0} />
+                  <Area
+                    type="monotone"
+                    dataKey="predicted"
+                    stroke="#28A6A1"
+                    strokeWidth={2}
+                    strokeDasharray="4 4"
+                    fill="url(#predGrad)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             </div>
           </div>
         </>

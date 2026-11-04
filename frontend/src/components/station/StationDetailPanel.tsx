@@ -3,6 +3,7 @@ import type { EnrichedStation, ModelResults, PredictionRow, ValidationPrediction
 import { Hydrograph } from './Hydrograph'
 import { DateScrubber } from './DateScrubber'
 import {
+  AlertTriangle,
   Award,
   ChevronLeft,
   CloudRain,
@@ -11,6 +12,7 @@ import {
   Droplet,
   Flame,
   Gauge,
+  Info,
   MapPin,
   Mountain,
   Search,
@@ -44,6 +46,11 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
 }) => {
   const [stationSearch, setStationSearch] = useState('')
 
+  const isYamuna =
+    station.station_id.includes('YMN') ||
+    station.station_name.toLowerCase().includes('yamuna') ||
+    station.station_id === 'IND-BR-01'
+
   const stationValRows = useMemo(
     () => validationRows.filter((r) => r.station_id === station.station_id),
     [validationRows, station.station_id]
@@ -69,14 +76,27 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
   const selectedDate = allDates[scrubberIndex]
   const curVal = stationValRows.find((r) => r.date === selectedDate)
   const curPred = stationPredRows.find((r) => r.date === selectedDate)
-  const dischargeValue = curVal?.predicted ?? curPred?.discharge_cfs ?? station.currentDischarge ?? 0
-  const isExtremeAtDate = station.metrics
-    ? dischargeValue >= station.metrics.extreme_threshold_cfs
-    : false
 
-  const filteredStations = stations.filter((s) =>
-    s.station_name.toLowerCase().includes(stationSearch.toLowerCase()) ||
-    s.station_id.toLowerCase().includes(stationSearch.toLowerCase())
+  // Explicit missing data handling: do NOT default to 0 or NORMAL
+  const dischargeValue = curVal?.predicted ?? curPred?.discharge_cfs ?? station.currentDischarge ?? null
+  const actualValue = curVal?.actual ?? null
+
+  const thresholdCfs = station.metrics?.extreme_threshold_cfs ?? null
+  const isExtremeAtDate =
+    dischargeValue != null && thresholdCfs != null ? dischargeValue >= thresholdCfs : false
+
+  // Discrepancy detection between observed reading and predicted inference
+  const hasDiscrepancy = useMemo(() => {
+    if (actualValue == null || dischargeValue == null || thresholdCfs == null) return false
+    const obsExtreme = actualValue >= thresholdCfs
+    const predExtreme = dischargeValue >= thresholdCfs
+    return obsExtreme !== predExtreme
+  }, [actualValue, dischargeValue, thresholdCfs])
+
+  const filteredStations = stations.filter(
+    (s) =>
+      s.station_name.toLowerCase().includes(stationSearch.toLowerCase()) ||
+      s.station_id.toLowerCase().includes(stationSearch.toLowerCase())
   )
 
   return (
@@ -94,12 +114,72 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
         </div>
       )}
 
+      {/* Discrepancy Banner: Observed vs Predicted Mismatch */}
+      {hasDiscrepancy && (
+        <div className="p-4 bg-amber-50 border-2 border-amber-300 rounded-xl text-xs text-amber-950 flex items-start gap-3 shadow-xs">
+          <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="flex-1 space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold font-mono uppercase tracking-wider text-amber-800">
+                Risk Basis Discrepancy Detected (MISMATCH)
+              </span>
+              <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-amber-200 text-amber-900">
+                DATE: {selectedDate}
+              </span>
+            </div>
+            <p className="leading-relaxed">
+              Observed in-situ hydrometric reading ({actualValue?.toFixed(1)} cfs &mdash;{' '}
+              {actualValue! >= thresholdCfs! ? 'EXTREME FLOW' : 'NORMAL BASELINE'}) diverges from model predicted inference ({dischargeValue?.toFixed(1)} cfs &mdash;{' '}
+              {dischargeValue! >= thresholdCfs! ? 'EXTREME FLOW' : 'NORMAL BASELINE'}).
+              This mismatch signals potential sensor calibration lag or rapid upstream catchment surge. Autonomous drone verification mission recommended.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Yamuna Specific Hydrological & Upstream Barrage Disclaimer */}
+      {isYamuna && (
+        <div className="p-4 bg-sky-50 border border-sky-200 rounded-xl text-xs text-sky-950 flex items-start gap-3 shadow-xs">
+          <Info className="w-5 h-5 text-sky-600 shrink-0 mt-0.5" />
+          <div className="flex-1 space-y-1.5">
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold font-mono uppercase text-sky-800">
+                Yamuna River (Delhi ORB) Stage-Only Hydrometric Station
+              </span>
+              <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-sky-200 text-sky-800">
+                CWC STATUTORY GAUGE
+              </span>
+            </div>
+            <p className="leading-relaxed text-[11.5px]">
+              <b>Stage-Only Monitoring:</b> Water level at the Old Railway Bridge (ORB) is officially measured in <b>metres above Mean Sea Level (m MSL)</b>. In-situ discharge velocity is unmetered.
+            </p>
+            <p className="leading-relaxed text-[11px] text-sky-900/80">
+              <b>Upstream Release Distinction:</b> Hathnikund Barrage releases (peak ~359,000 cfs in July 2023) occur <b>228 km upstream</b> in Haryana (~48&ndash;72h hydraulic transit time) and are strictly <b>not local Delhi discharge</b>. Local stage and upstream barrage releases are presented separately in the Historical Replay module.
+            </p>
+            <div className="flex flex-wrap gap-2 pt-1 font-mono text-[11px]">
+              <span className="px-2 py-0.5 rounded bg-white border border-sky-300 text-sky-900 font-bold">
+                Warning Level: 204.50 m
+              </span>
+              <span className="px-2 py-0.5 rounded bg-amber-100 border border-amber-300 text-amber-900 font-bold">
+                Danger Level: 205.33 m
+              </span>
+              <span className="px-2 py-0.5 rounded bg-orange-100 border border-orange-300 text-orange-900 font-bold">
+                1978 Record: 207.49 m
+              </span>
+              <span className="px-2 py-0.5 rounded bg-rose-100 border border-rose-300 text-rose-900 font-bold">
+                2023 Crest: 208.66 m
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-[#FAF6EE] border border-[#DDD1BF] shadow-xs">
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToMap}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EAE1D2] hover:bg-[#DDD1BF] text-[#1F2A33] text-xs font-semibold border border-[#DDD1BF] transition"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EAE1D2] hover:bg-[#DDD1BF] text-[#1F2A33] text-xs font-semibold border border-[#DDD1BF] transition cursor-pointer"
             title="Return to river map"
           >
             <ChevronLeft className="w-4 h-4 text-[#2F7F8F]" />
@@ -119,13 +199,18 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
                   DEMO DATA
                 </span>
               )}
+              <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-[#EAF0F3] text-[#19364A] border border-[#DCE4E9]">
+                {isYamuna ? 'CWC INDIA' : 'USGS NWIS'}
+              </span>
             </div>
             <h2 className="text-lg font-bold text-[#1F2A33]">{station.station_name}</h2>
             <div className="flex items-center gap-2 text-xs text-[#526573] mt-0.5">
               <MapPin className="w-3.5 h-3.5 text-[#2F7F8F]" />
               <span>{station.river_name || 'Catchment Basin'}, {station.state}</span>
               <span className="text-[#DDD1BF]">|</span>
-              <span className="font-mono">{station.latitude.toFixed(4)}°N, {Math.abs(station.longitude).toFixed(4)}°E</span>
+              <span className="font-mono">
+                {station.latitude.toFixed(4)}°N, {Math.abs(station.longitude).toFixed(4)}°{station.longitude >= 0 ? 'E' : 'W'}
+              </span>
             </div>
           </div>
         </div>
@@ -147,7 +232,7 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
             id="station-dropdown"
             value={station.station_id}
             onChange={(e) => onSelectStation(e.target.value)}
-            className="bg-[#FAF6EE] border border-[#DDD1BF] text-[#1F2A33] text-xs font-semibold rounded-lg px-3 py-1.5 focus:outline-hidden focus:border-[#2F7F8F] shadow-xs"
+            className="bg-[#FAF6EE] border border-[#DDD1BF] text-[#1F2A33] text-xs font-semibold rounded-lg px-3 py-1.5 focus:outline-hidden focus:border-[#2F7F8F] shadow-xs cursor-pointer"
           >
             {filteredStations.map((s) => (
               <option key={s.station_id} value={s.station_id}>
@@ -162,24 +247,44 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-xl p-4 shadow-xs">
           <div className="flex items-center justify-between text-[#526573] mb-1">
-            <span className="text-[11px] font-medium uppercase">Model estimate (selected date)</span>
+            <span className="text-[11px] font-medium uppercase">
+              {isYamuna ? 'River Stage Level' : 'Model Estimate Flow'}
+            </span>
             <Droplet className="w-3.5 h-3.5 text-[#2F7F8F]" />
           </div>
           <div className="text-xl font-bold font-mono text-[#1F2A33]">
-            {dischargeValue.toFixed(1)} cfs
+            {dischargeValue != null ? (
+              isYamuna ? (
+                `${dischargeValue.toFixed(2)} m MSL`
+              ) : (
+                `${dischargeValue.toFixed(1)} cfs`
+              )
+            ) : (
+              <span className="text-amber-700 text-sm font-semibold">DATA UNAVAILABLE</span>
+            )}
           </div>
-          <div className="text-[10.5px] text-[#526573] mt-0.5">{selectedDate} Estimate</div>
+          <div className="text-[10.5px] text-[#526573] mt-0.5">
+            {selectedDate ? `${selectedDate} Telemetry` : 'Current Observation'}
+          </div>
         </div>
 
         <div className="bg-[#FAF6EE] border border-[#D8432B]/30 rounded-xl p-4 shadow-xs">
           <div className="flex items-center justify-between text-[#526573] mb-1">
-            <span className="text-[11px] font-medium uppercase text-[#D8432B]">Extreme Cutoff (10%)</span>
+            <span className="text-[11px] font-medium uppercase text-[#D8432B]">
+              {isYamuna ? 'CWC Danger Mark' : 'Extreme Cutoff (10%)'}
+            </span>
             <Flame className="w-3.5 h-3.5 text-[#D8432B]" />
           </div>
           <div className="text-xl font-bold font-mono text-[#D8432B]">
-            {station.metrics?.extreme_threshold_cfs.toFixed(0) ?? 'N/A'} cfs
+            {isYamuna
+              ? '205.33 m MSL'
+              : thresholdCfs != null
+                ? `${thresholdCfs.toFixed(0)} cfs`
+                : 'N/A'}
           </div>
-          <div className="text-[10.5px] text-[#526573] mt-0.5">90th %ile Threshold</div>
+          <div className="text-[10.5px] text-[#526573] mt-0.5">
+            {isYamuna ? 'Statutory CWC Evacuation Threshold' : '90th %ile Extreme Threshold'}
+          </div>
         </div>
 
         <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-xl p-4 shadow-xs">
@@ -188,9 +293,9 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
             <Gauge className="w-3.5 h-3.5 text-[#2F7F8F]" />
           </div>
           <div className="text-xl font-bold font-mono text-[#1F2A33]">
-            {station.metrics?.rmse.toFixed(1) ?? 'N/A'} cfs
+            {station.metrics?.rmse != null ? `${station.metrics.rmse.toFixed(1)} cfs` : 'N/A (Provisional)'}
           </div>
-          <div className="text-[10.5px] text-[#526573] mt-0.5">Held-Out Error</div>
+          <div className="text-[10.5px] text-[#526573] mt-0.5">Held-Out Catchment Error</div>
         </div>
 
         <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-xl p-4 shadow-xs">
@@ -199,9 +304,9 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
             <Award className="w-3.5 h-3.5 text-[#2F7F8F]" />
           </div>
           <div className="text-xl font-bold font-mono text-[#1F2A33]">
-            {station.metrics?.r2.toFixed(3) ?? 'N/A'}
+            {station.metrics?.r2 != null ? station.metrics.r2.toFixed(3) : 'N/A'}
           </div>
-          <div className="text-[10.5px] text-[#526573] mt-0.5">Goodness of Fit</div>
+          <div className="text-[10.5px] text-[#526573] mt-0.5">Hydrological Goodness of Fit</div>
         </div>
       </div>
 
@@ -264,13 +369,17 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
                 <span className="flex items-center gap-1.5">
                   <Mountain className="w-3.5 h-3.5 text-[#2F7F8F]" /> Drainage Basin Area:
                 </span>
-                <span className="font-mono font-bold text-[#1F2A33]">24,100 sq mi</span>
+                <span className="font-mono font-bold text-[#1F2A33]">
+                  {isYamuna ? '18,900 sq km (Upper Yamuna)' : '24,100 sq mi'}
+                </span>
               </div>
               <div className="flex justify-between items-center py-1">
                 <span className="flex items-center gap-1.5">
-                  <Compass className="w-3.5 h-3.5 text-[#B8893B]" /> Elevation:
+                  <Compass className="w-3.5 h-3.5 text-[#B8893B]" /> Datum Elevation:
                 </span>
-                <span className="font-mono font-bold text-[#1F2A33]">320 m ASL</span>
+                <span className="font-mono font-bold text-[#1F2A33]">
+                  {isYamuna ? '200.0 m MSL' : '320 m ASL'}
+                </span>
               </div>
             </div>
           </div>
@@ -293,7 +402,7 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
                   Model Architecture
                 </span>
                 <span className="font-bold text-[#1F2A33] block mt-0.5">
-                  {modelResults?.model_name || 'HydroBoost Ensemble v1.4'}
+                  {modelResults?.model_name || 'HistGradientBoostingRegressor (Config A)'}
                 </span>
               </div>
 

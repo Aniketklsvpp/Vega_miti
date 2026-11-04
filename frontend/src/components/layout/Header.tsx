@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Gauge,
   Globe2,
+  History,
   Layers,
   MapPin,
   Network,
@@ -22,6 +23,7 @@ export const Header: React.FC = () => {
     { id: 'station', label: 'Station Hydrograph', icon: <Gauge className="w-4 h-4" /> },
     { id: 'trust', label: 'Model Trust', icon: <ShieldCheck className="w-4 h-4" /> },
     { id: 'flood', label: 'Flood Intelligence', icon: <Layers className="w-4 h-4" /> },
+    { id: 'replay', label: 'Historical Replay', icon: <History className="w-4 h-4" /> },
     { id: 'swarm', label: 'Swarm Command', icon: <Target className="w-4 h-4" /> },
     { id: 'missions', label: 'Missions', icon: <Target className="w-4 h-4" /> },
     { id: 'resilience', label: 'Resilience', icon: <Network className="w-4 h-4" /> },
