@@ -6,11 +6,13 @@ from typing import List, Optional, Dict, Any
 from src.swarm_simulator import SwarmCoordinator, run_coordination_comparison
 from src.swarm_activation import SwarmActivationEngine
 from src.risk_engine import FloodRiskEngine
+from src.historical_replay import HistoricalReplayEngine
 
 router = APIRouter(prefix="/api/swarm", tags=["swarm"])
 coordinator = SwarmCoordinator(grid_size=(20, 20), lease_duration_sec=45)
 activation_engine = SwarmActivationEngine()
 risk_engine = FloodRiskEngine()
+replay_engine = HistoricalReplayEngine()
 
 def envelope(data=None, error=None):
     if error:
@@ -25,6 +27,11 @@ class AgentReconnectRequest(BaseModel):
 
 class SwarmActivationRequest(BaseModel):
     assessments: Optional[List[Dict[str, Any]]] = None
+
+class ReplayRunRequest(BaseModel):
+    event_id: str = "EVENT-IN-YAMUNA-2023"
+    step_index: Optional[int] = None
+    simulate_failure: Optional[bool] = True
 
 @router.get("/agents")
 def get_agents():
@@ -153,6 +160,29 @@ def compare_strategies():
         {"mission_id": "MSN-BENCH-5", "priority": 3, "target_position": (11, 12), "required_capabilities": ["RIVER_MONITORING"]}
     ]
     res = run_coordination_comparison(sample_missions)
+    return envelope(res)
+
+@router.get("/replay/events")
+def get_replay_events():
+    events = replay_engine.get_available_events()
+    return envelope(events)
+
+@router.get("/replay/event/{event_id}")
+def get_replay_event(event_id: str):
+    meta = replay_engine.get_event_metadata(event_id)
+    if not meta:
+        return envelope(error=f"Historical event '{event_id}' not found.")
+    return envelope(meta)
+
+@router.post("/replay/run")
+def run_historical_replay(req: ReplayRunRequest):
+    res = replay_engine.execute_replay(
+        event_id=req.event_id,
+        step_index=req.step_index,
+        simulate_failure=True if req.simulate_failure is None else req.simulate_failure
+    )
+    if res.get("status") == "error":
+        return envelope(error=res.get("error"))
     return envelope(res)
 
 app = FastAPI(title="DELTA-SWARM Simulation & Resilience API", version="1.0.0")

@@ -87,6 +87,20 @@ def run():
     with open("outputs/swarm/coordination_benchmark.json", "w", encoding="utf-8") as f:
         json.dump(benchmark_comparison, f, indent=2)
 
+    from src.historical_replay import HistoricalReplayEngine
+    replay_engine = HistoricalReplayEngine()
+    replay_catalog = replay_engine.get_available_events()
+    with open("outputs/swarm/historical_replay_catalog.json", "w", encoding="utf-8") as f:
+        json.dump(replay_catalog, f, indent=2)
+
+    replay_yamuna = replay_engine.execute_replay("EVENT-IN-YAMUNA-2023")
+    with open("outputs/swarm/replay_yamuna_2023.json", "w", encoding="utf-8") as f:
+        json.dump(replay_yamuna, f, indent=2)
+
+    replay_susq = replay_engine.execute_replay("EVENT-US-SUSQUEHANNA-2023")
+    with open("outputs/swarm/replay_susquehanna_2023.json", "w", encoding="utf-8") as f:
+        json.dump(replay_susq, f, indent=2)
+
     for fn in os.listdir("outputs/swarm"):
         src_path = os.path.join("outputs/swarm", fn)
         dst_path = os.path.join("frontend/public/data/swarm", fn)

@@ -98,14 +98,14 @@
     }
   },
   "robustness_stress_testing": {
-    "gaussian_noise_injection_degradation_pct": 45.89,
-    "noisy_inputs_rmse": 12029.8138,
-    "missing_weather_degradation_pct": 44.05,
-    "missing_inputs_rmse": 11878.079
+    "gaussian_noise_injection_degradation_pct": 44.59,
+    "noisy_inputs_rmse": 11922.2272,
+    "missing_weather_degradation_pct": 43.05,
+    "missing_inputs_rmse": 11795.7371
   },
   "computational_efficiency": {
-    "total_inference_time_sec": 1.7409,
-    "latency_ms_per_1000_samples": 397.46,
+    "total_inference_time_sec": 1.8391,
+    "latency_ms_per_1000_samples": 419.89,
     "model_artifact_size_bytes": 533348
   }
 }

@@ -91,5 +91,11 @@ class TestUnifiedEndToEnd(unittest.TestCase):
             bench_data["static_strategy"]["effective_coverage_rate_pct"]
         )
 
+        replay_run_resp = self.client.post("/api/swarm/replay/run", json={"event_id": "EVENT-US-SUSQUEHANNA-2023"})
+        self.assertEqual(replay_run_resp.status_code, 200)
+        replay_run_data = replay_run_resp.json()["data"]
+        self.assertEqual(replay_run_data["country"], "United States")
+        self.assertGreater(replay_run_data["executed_steps_count"], 0)
+
 if __name__ == "__main__":
     unittest.main()

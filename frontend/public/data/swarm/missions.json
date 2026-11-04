@@ -1,6 +1,6 @@
 [
   {
-    "mission_id": "MSN-81A725",
+    "mission_id": "MSN-4D3B23",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "1570500",
@@ -9,7 +9,7 @@
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
       2,
-      5
+      2
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -19,7 +19,7 @@
     "assigned_agent_id": null
   },
   {
-    "mission_id": "MSN-2C1D28",
+    "mission_id": "MSN-7732B0",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "1638500",
@@ -27,8 +27,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      13,
-      5
+      5,
+      2
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -38,7 +38,7 @@
     "assigned_agent_id": null
   },
   {
-    "mission_id": "MSN-DF2321",
+    "mission_id": "MSN-E97815",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "1646500",
@@ -46,8 +46,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      7,
-      3
+      9,
+      4
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -57,7 +57,7 @@
     "assigned_agent_id": null
   },
   {
-    "mission_id": "MSN-B05C77",
+    "mission_id": "MSN-2C294B",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "2037500",
@@ -65,8 +65,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      4,
-      4
+      16,
+      15
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -75,7 +75,7 @@
     "status": "PENDING"
   },
   {
-    "mission_id": "MSN-15A646",
+    "mission_id": "MSN-93C661",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "2146000",
@@ -83,8 +83,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      14,
-      16
+      3,
+      9
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -93,7 +93,7 @@
     "status": "PENDING"
   },
   {
-    "mission_id": "MSN-E920E2",
+    "mission_id": "MSN-FBE6A0",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "2169500",
@@ -101,8 +101,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      12,
-      11
+      10,
+      13
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -111,7 +111,7 @@
     "status": "PENDING"
   },
   {
-    "mission_id": "MSN-97EE93",
+    "mission_id": "MSN-E4CC1E",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "3374100",
@@ -119,8 +119,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      15,
-      3
+      17,
+      14
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -129,7 +129,7 @@
     "status": "PENDING"
   },
   {
-    "mission_id": "MSN-577C04",
+    "mission_id": "MSN-0318EE",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "5586100",
@@ -137,8 +137,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      4,
-      10
+      10,
+      14
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -147,7 +147,7 @@
     "status": "PENDING"
   },
   {
-    "mission_id": "MSN-B33C5F",
+    "mission_id": "MSN-D6B988",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "9180500",
@@ -156,7 +156,7 @@
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
       10,
-      3
+      9
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
