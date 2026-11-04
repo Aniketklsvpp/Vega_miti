@@ -43,7 +43,7 @@ export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Pro
   let prefix = ''
 
   if (region === 'usa') {
-    metaRaw = await tryFetchText('/data/station_metadata.csv')
+    metaRaw = (await tryFetchText('/data/station_metadata.csv')) || (await tryFetchText('/data/station_coverage.csv'))
     predRaw = await tryFetchText('/data/predictions.csv')
     valRaw = await tryFetchText('/data/validation_predictions.csv')
     modelRaw = await tryFetchJson('/data/model_results.json')
@@ -83,11 +83,9 @@ export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Pro
   const metaParsed = Papa.parse<Record<string, string>>(metaRaw.trim(), { header: true, skipEmptyLines: true })
   const metaVal = validateCsvColumns('station_metadata.csv', metaParsed.meta.fields || [], [
     'station_id',
-    'station_name',
-    'latitude',
-    'longitude',
-    'state',
-    'river_name',
+    ['station_name', 'name'],
+    ['latitude', 'lat'],
+    ['longitude', 'lon', 'long'],
   ])
   if (!metaVal.valid) {
     return { success: false, error: metaVal.error, missingField: metaVal.missingField, file: 'station_metadata.csv' }
@@ -97,7 +95,7 @@ export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Pro
   const predVal = validateCsvColumns('predictions.csv', predParsed.meta.fields || [], [
     'station_id',
     'date',
-    'discharge_cfs',
+    ['discharge_cfs', 'predicted_discharge_cfs', 'predicted'],
   ])
   if (!predVal.valid) {
     return { success: false, error: predVal.error, missingField: predVal.missingField, file: 'predictions.csv' }
@@ -107,8 +105,8 @@ export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Pro
   const valVal = validateCsvColumns('validation_predictions.csv', valParsed.meta.fields || [], [
     'station_id',
     'date',
-    'actual',
-    'predicted',
+    ['actual', 'actual_discharge_cfs'],
+    ['predicted', 'predicted_discharge_cfs'],
   ])
   if (!valVal.valid) {
     return {
@@ -128,35 +126,40 @@ export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Pro
   const metadataMap = new Map<string, StationMetadata>()
 
   for (const row of metaParsed.data) {
-    if (!row.station_id) continue
-    metadataMap.set(row.station_id.trim(), {
-      station_id: row.station_id.trim(),
-      station_name: (row.station_name || row.station_id).trim(),
-      latitude: Number.parseFloat(row.latitude) || 0,
-      longitude: Number.parseFloat(row.longitude) || 0,
+    const id = (row.station_id || row.site_no || '').trim()
+    if (!id) continue
+    metadataMap.set(id, {
+      station_id: id,
+      station_name: (row.station_name || row.name || id).trim(),
+      latitude: Number.parseFloat(row.latitude || row.lat) || 0,
+      longitude: Number.parseFloat(row.longitude || row.lon || row.long) || 0,
       state: (row.state || '').trim(),
-      river_name: (row.river_name || '').trim(),
+      river_name: (row.river_name || row.station_name || 'USGS Catchment').trim(),
     })
   }
 
   const predictions: PredictionRow[] = []
   for (const row of predParsed.data) {
     if (!row.station_id || !row.date) continue
+    const discharge =
+      Number.parseFloat(row.discharge_cfs || row.predicted_discharge_cfs || row.predicted) || 0
     predictions.push({
       station_id: row.station_id.trim(),
       date: row.date.trim(),
-      discharge_cfs: Number.parseFloat(row.discharge_cfs) || 0,
+      discharge_cfs: discharge,
     })
   }
 
   const validationPredictions: ValidationPredictionRow[] = []
   for (const row of valParsed.data) {
     if (!row.station_id || !row.date) continue
+    const act = Number.parseFloat(row.actual || row.actual_discharge_cfs) || 0
+    const pred = Number.parseFloat(row.predicted || row.predicted_discharge_cfs) || 0
     validationPredictions.push({
       station_id: row.station_id.trim(),
       date: row.date.trim(),
-      actual: Number.parseFloat(row.actual) || 0,
-      predicted: Number.parseFloat(row.predicted) || 0,
+      actual: act,
+      predicted: pred,
     })
   }
 
@@ -168,6 +171,19 @@ export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Pro
   const stationMetricMap = new Map<string, (typeof modelResults.per_station)[0]>()
   for (const sm of modelResults.per_station) {
     stationMetricMap.set(sm.station_id, sm)
+  }
+
+  for (const p of predictions) {
+    if (!metadataMap.has(p.station_id)) {
+      metadataMap.set(p.station_id, {
+        station_id: p.station_id,
+        station_name: `Gauging Station ${p.station_id}`,
+        latitude: 40.0,
+        longitude: -80.0,
+        state: 'US',
+        river_name: 'Monitored Basin',
+      })
+    }
   }
 
   const currentValues = Array.from(latestPredByStation.values()).sort((a, b) => a - b)
