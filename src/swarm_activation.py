@@ -14,6 +14,8 @@ class SwarmActivationEngine:
             if q_status not in ("VALID", "VALID_OBSERVATION", "HIGH"):
                 continue
             lvl = r.get("risk_level", "NORMAL")
+            if lvl in ("UNKNOWN", "INSUFFICIENT_DATA"):
+                continue
             is_prov = r.get("is_provisional", False)
             if is_prov and lvl in ("CRITICAL", "WARNING"):
                 watch_count += 1
@@ -56,6 +58,8 @@ class SwarmActivationEngine:
 
         for assess in assessments:
             level = assess.get("risk_level", "NORMAL")
+            if level in ("UNKNOWN", "INSUFFICIENT_DATA", "NORMAL"):
+                continue
             st_id = str(assess.get("station_id", "UNKNOWN"))
             discharge = assess.get("discharge_cfs", assess.get("predicted_discharge_cfs"))
             q_status = assess.get("data_quality_status", assess.get("evidence_quality", "VALID_OBSERVATION"))
@@ -76,6 +80,8 @@ class SwarmActivationEngine:
                     "discharge_cfs": discharge,
                     "risk_level": level,
                     "data_quality_status": q_status,
+                    "is_simulated": True,
+                    "coordinate_frame": "SIMULATED_20X20_GRID",
                     "target_position": self._station_to_grid(st_id),
                     "required_capabilities": ["AERIAL_OBSERVATION", "VERIFICATION"],
                     "estimated_duration_sec": 120,
@@ -90,6 +96,8 @@ class SwarmActivationEngine:
                     "discharge_cfs": discharge,
                     "risk_level": level,
                     "data_quality_status": q_status,
+                    "is_simulated": True,
+                    "coordinate_frame": "SIMULATED_20X20_GRID",
                     "target_position": (self._station_to_grid(st_id)[0] + 1, self._station_to_grid(st_id)[1] + 1),
                     "required_capabilities": ["AREA_SURVEILLANCE"],
                     "estimated_duration_sec": 180,
@@ -105,6 +113,8 @@ class SwarmActivationEngine:
                     "discharge_cfs": discharge,
                     "risk_level": level,
                     "data_quality_status": q_status,
+                    "is_simulated": True,
+                    "coordinate_frame": "SIMULATED_20X20_GRID",
                     "target_position": self._station_to_grid(st_id),
                     "required_capabilities": ["RIVER_MONITORING"],
                     "estimated_duration_sec": 150,
@@ -119,6 +129,8 @@ class SwarmActivationEngine:
                     "discharge_cfs": discharge,
                     "risk_level": level,
                     "data_quality_status": q_status,
+                    "is_simulated": True,
+                    "coordinate_frame": "SIMULATED_20X20_GRID",
                     "target_position": (self._station_to_grid(st_id)[0] - 1, self._station_to_grid(st_id)[1]),
                     "required_capabilities": ["DATA_RELAY"],
                     "estimated_duration_sec": 240,
@@ -134,6 +146,8 @@ class SwarmActivationEngine:
                     "discharge_cfs": discharge,
                     "risk_level": level,
                     "data_quality_status": q_status,
+                    "is_simulated": True,
+                    "coordinate_frame": "SIMULATED_20X20_GRID",
                     "target_position": self._station_to_grid(st_id),
                     "required_capabilities": ["AERIAL_OBSERVATION"],
                     "estimated_duration_sec": 90,

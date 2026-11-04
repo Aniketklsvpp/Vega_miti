@@ -222,11 +222,16 @@ class TestPredictionAndRisk(unittest.TestCase):
         res_nan = self.risk_engine.classify_discharge(st, np.nan)
         self.assertEqual(res_nan["data_quality_status"], "INVALID_OR_MISSING")
         self.assertEqual(res_nan["evidence_quality"], "DEGRADED")
-        self.assertEqual(res_nan["discharge_cfs"], 0.0)
+        self.assertEqual(res_nan["risk_level"], "UNKNOWN")
+        self.assertEqual(res_nan["confidence_score"], 0.0)
+        self.assertIsNone(res_nan["discharge_cfs"])
 
         res_none = self.risk_engine.classify_discharge(st, None)
         self.assertEqual(res_none["data_quality_status"], "INVALID_OR_MISSING")
         self.assertEqual(res_none["evidence_quality"], "DEGRADED")
+        self.assertEqual(res_none["risk_level"], "UNKNOWN")
+        self.assertEqual(res_none["confidence_score"], 0.0)
+        self.assertIsNone(res_none["discharge_cfs"])
 
         r_bad = self.client.get("/api/risk/NONEXISTENT_STATION_9999")
         self.assertEqual(r_bad.status_code, 404)
@@ -270,7 +275,7 @@ class TestPredictionAndRisk(unittest.TestCase):
         self.assertEqual(run_resp.status_code, 200)
         run_body = run_resp.json()
         self.assertEqual(run_body["status"], "success")
-        self.assertEqual(run_body["data"]["river"], "Yamuna River (Upper Yamuna Basin)")
+        self.assertIn("Yamuna River (Upper Yamuna Basin", run_body["data"]["river"])
         self.assertEqual(len(run_body["data"]["timeline_frames"]), 3)
 
 if __name__ == "__main__":

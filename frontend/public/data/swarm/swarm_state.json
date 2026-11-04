@@ -13,8 +13,8 @@
       "agent_id": "DRONE_AERIAL_1",
       "agent_type": "UAV",
       "capabilities": [
-        "AERIAL_OBSERVATION",
-        "VERIFICATION"
+        "VERIFICATION",
+        "AERIAL_OBSERVATION"
       ],
       "position": [
         1,
@@ -23,17 +23,17 @@
       "battery": 95.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-4D3B23",
-      "path_remaining": 3,
+      "current_mission": "MSN-12198C",
+      "path_remaining": 16,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
       "agent_id": "DRONE_AERIAL_2",
       "agent_type": "UAV",
       "capabilities": [
-        "AREA_SURVEILLANCE",
+        "VERIFICATION",
         "AERIAL_OBSERVATION",
-        "VERIFICATION"
+        "AREA_SURVEILLANCE"
       ],
       "position": [
         18,
@@ -42,16 +42,16 @@
       "battery": 88.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-E97815",
-      "path_remaining": 13,
+      "current_mission": "MSN-8C3242",
+      "path_remaining": 9,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
       "agent_id": "USV_RIVER_1",
       "agent_type": "USV",
       "capabilities": [
-        "VERIFICATION",
-        "RIVER_MONITORING"
+        "RIVER_MONITORING",
+        "VERIFICATION"
       ],
       "position": [
         5,
@@ -95,16 +95,16 @@
       "battery": 90.0,
       "connectivity": "DISCONNECTED",
       "status": "DISCONNECTED",
-      "current_mission": "MSN-7732B0",
-      "path_remaining": 9,
+      "current_mission": "MSN-A8004B",
+      "path_remaining": 10,
       "coordinate_frame": "SIMULATED_20X20_GRID"
     },
     {
       "agent_id": "GROUND_SCOUT_1",
       "agent_type": "UGV",
       "capabilities": [
-        "AREA_SURVEILLANCE",
-        "VERIFICATION"
+        "VERIFICATION",
+        "AREA_SURVEILLANCE"
       ],
       "position": [
         2,

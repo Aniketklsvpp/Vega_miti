@@ -1,6 +1,6 @@
 [
   {
-    "mission_id": "MSN-4D3B23",
+    "mission_id": "MSN-12198C",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "1570500",
@@ -8,8 +8,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      2,
-      2
+      3,
+      14
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -19,7 +19,7 @@
     "assigned_agent_id": null
   },
   {
-    "mission_id": "MSN-7732B0",
+    "mission_id": "MSN-A8004B",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "1638500",
@@ -27,8 +27,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      5,
-      2
+      14,
+      10
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -38,7 +38,7 @@
     "assigned_agent_id": null
   },
   {
-    "mission_id": "MSN-E97815",
+    "mission_id": "MSN-8C3242",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "1646500",
@@ -46,8 +46,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      9,
-      4
+      12,
+      3
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -57,7 +57,7 @@
     "assigned_agent_id": null
   },
   {
-    "mission_id": "MSN-2C294B",
+    "mission_id": "MSN-D149ED",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "2037500",
@@ -65,8 +65,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      16,
-      15
+      6,
+      16
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -75,7 +75,7 @@
     "status": "PENDING"
   },
   {
-    "mission_id": "MSN-93C661",
+    "mission_id": "MSN-73A9B4",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "2146000",
@@ -83,8 +83,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      3,
-      9
+      15,
+      4
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -93,7 +93,7 @@
     "status": "PENDING"
   },
   {
-    "mission_id": "MSN-FBE6A0",
+    "mission_id": "MSN-5461CA",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "2169500",
@@ -101,8 +101,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      10,
-      13
+      13,
+      3
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -111,7 +111,7 @@
     "status": "PENDING"
   },
   {
-    "mission_id": "MSN-E4CC1E",
+    "mission_id": "MSN-E83FFA",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "3374100",
@@ -119,8 +119,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      17,
-      14
+      7,
+      9
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -129,7 +129,7 @@
     "status": "PENDING"
   },
   {
-    "mission_id": "MSN-0318EE",
+    "mission_id": "MSN-B2E369",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "5586100",
@@ -137,8 +137,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      10,
-      14
+      11,
+      5
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"
@@ -147,7 +147,7 @@
     "status": "PENDING"
   },
   {
-    "mission_id": "MSN-D6B988",
+    "mission_id": "MSN-292396",
     "mission_type": "PREVENTIVE_RECONNAISSANCE",
     "priority": 3,
     "target_station_id": "9180500",
@@ -155,8 +155,8 @@
     "risk_level": "WATCH",
     "data_quality_status": "VALID_OBSERVATION",
     "target_position": [
-      10,
-      9
+      11,
+      13
     ],
     "required_capabilities": [
       "AERIAL_OBSERVATION"

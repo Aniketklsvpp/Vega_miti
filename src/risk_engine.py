@@ -1,32 +1,48 @@
-from pathlib import Path
 import numpy as np
 import pandas as pd
+from pathlib import Path
+from typing import Dict, Any, Optional
 
 class FloodRiskEngine:
-    def __init__(self, train_path="data/processed/train.csv"):
-        self.train_path = Path(train_path)
+    def __init__(self, data_path: Optional[str] = None, train_path: Optional[str] = None):
+        self.default_thresholds = {
+            "watch": 25000.0,
+            "warning": 50000.0,
+            "critical": 100000.0
+        }
         self.station_thresholds = {}
-        self.default_thresholds = {"watch": 5000.0, "warning": 15000.0, "critical": 35000.0}
-        self._load_or_compute_thresholds()
+        target_path = data_path or train_path or "data/processed/train.csv"
+        if target_path and Path(target_path).is_file():
+            self._calibrate_from_historical_data(target_path)
 
-    def _load_or_compute_thresholds(self):
-        if self.train_path.is_file():
-            df = pd.read_csv(self.train_path, dtype={"station_id": str})
-            if "station_id" in df.columns and "discharge_cfs" in df.columns:
-                for st, group in df.groupby("station_id"):
-                    clean = group["discharge_cfs"].dropna()
-                    if len(clean) > 0:
-                        self.station_thresholds[str(st)] = {
-                            "median": float(clean.median()),
-                            "watch": float(clean.quantile(0.90)),
-                            "warning": float(clean.quantile(0.95)),
-                            "critical": float(clean.quantile(0.99)),
-                            "max": float(clean.max()),
-                            "source": "USGS_HISTORICAL_2022_2023_EMPIRICAL_DEMONSTRATION_PERCENTILES",
-                            "is_provisional": False
-                        }
+    def _calibrate_from_historical_data(self, csv_path: str):
+        try:
+            df = pd.read_csv(csv_path)
+            if "station_id" not in df.columns or "discharge_cfs" not in df.columns:
+                return
+            df["station_id"] = df["station_id"].astype(str).str.zfill(8)
+            for st, grp in df.groupby("station_id"):
+                q = grp["discharge_cfs"].dropna()
+                if len(q) < 10:
+                    continue
+                p50 = float(np.percentile(q, 50))
+                p90 = float(np.percentile(q, 90))
+                p95 = float(np.percentile(q, 95))
+                p99 = float(np.percentile(q, 99))
+                q_max = float(q.max())
+                self.station_thresholds[st] = {
+                    "median": p50,
+                    "watch": p90,
+                    "warning": p95,
+                    "critical": p99,
+                    "max": q_max,
+                    "source": "HISTORICAL_PERCENTILES",
+                    "is_provisional": False
+                }
+        except Exception:
+            pass
 
-    def get_thresholds_for_station(self, station_id):
+    def get_thresholds_for_station(self, station_id: str) -> Dict[str, Any]:
         st_clean = str(station_id).strip()
         if st_clean in self.station_thresholds:
             return self.station_thresholds[st_clean]
@@ -44,30 +60,64 @@ class FloodRiskEngine:
         st_clean = str(station_id).strip()
         thresh = self.get_thresholds_for_station(st_clean)
         
-        is_valid = pd.notna(discharge_cfs) and np.isfinite(float(discharge_cfs))
-        q_val = float(discharge_cfs) if is_valid else 0.0
-        
+        is_valid = pd.notna(discharge_cfs)
+        if is_valid:
+            try:
+                q_val = float(discharge_cfs)
+                if not np.isfinite(q_val):
+                    is_valid = False
+            except (ValueError, TypeError):
+                is_valid = False
+
+        if not is_valid:
+            return {
+                "station_id": st_clean,
+                "date": str(date) if date is not None else None,
+                "discharge_cfs": None,
+                "high_flow_threshold_cfs": round(thresh["watch"], 2),
+                "critical_threshold_cfs": round(thresh["critical"], 2),
+                "risk_level": "UNKNOWN",
+                "risk_state": "INSUFFICIENT_DATA",
+                "confidence_score": 0.0,
+                "risk_score": 0.0,
+                "threshold_type": "EMPIRICAL_DEMONSTRATION",
+                "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages. Swarm agent activities are simulated research models on a discrete 20x20 grid, not actual drone dispatches or emergency management interventions.",
+                "thresholds": {
+                    "watch_p90_cfs": round(thresh["watch"], 2),
+                    "warning_p95_cfs": round(thresh["warning"], 2),
+                    "critical_p99_cfs": round(thresh["critical"], 2),
+                    "median_cfs": round(thresh["median"], 2)
+                },
+                "threshold_source": thresh["source"],
+                "is_provisional": thresh["is_provisional"],
+                "data_quality_status": "INVALID_OR_MISSING",
+                "evidence_quality": "DEGRADED",
+                "explanation": "Discharge measurement is missing, null, or invalid. Risk state is UNKNOWN due to insufficient data.",
+                "recommended_action": "REQUEST_IMMEDIATE_SENSOR_TELEMETRY"
+            }
+
+        q_val = float(discharge_cfs)
         if q_val >= thresh["critical"]:
             risk_level = "CRITICAL"
             explanation = (
                 f"Discharge ({q_val:,.1f} cfs) meets or exceeds the empirical demonstration CRITICAL threshold "
-                f"({thresh['critical']:,.1f} cfs, 99th percentile). Severe flood conditions indicated."
+                f"({thresh['critical']:,.1f} cfs, 99th percentile). Severe high-flow conditions indicated."
             )
-            action = "HIGH_PRIORITY_RESPONSE_MISSIONS"
+            action = "SIMULATED_HIGH_PRIORITY_SURVEY_MISSIONS"
         elif q_val >= thresh["warning"]:
             risk_level = "WARNING"
             explanation = (
                 f"Discharge ({q_val:,.1f} cfs) meets or exceeds the empirical demonstration WARNING threshold "
                 f"({thresh['warning']:,.1f} cfs, 95th percentile). Elevated high-flow event in progress."
             )
-            action = "PREPARE_VERIFICATION_MISSIONS"
+            action = "SIMULATED_VERIFICATION_MISSIONS"
         elif q_val >= thresh["watch"]:
             risk_level = "WATCH"
             explanation = (
                 f"Discharge ({q_val:,.1f} cfs) meets or exceeds the empirical demonstration WATCH threshold "
                 f"({thresh['watch']:,.1f} cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
             )
-            action = "INCREASE_MONITORING_FREQUENCY"
+            action = "INCREASE_SIMULATED_MONITORING_FREQUENCY"
         else:
             risk_level = "NORMAL"
             explanation = (
@@ -88,7 +138,7 @@ class FloodRiskEngine:
             "critical_threshold_cfs": round(thresh["critical"], 2),
             "risk_level": risk_level,
             "threshold_type": "EMPIRICAL_DEMONSTRATION",
-            "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages.",
+            "regulatory_disclaimer": "Empirical demonstration thresholds based on 2022-2023 historical distribution percentiles (P90/P95/P99). NOT certified NWS/NOAA or official flood warning stages. Swarm agent activities are simulated research models on a discrete 20x20 grid, not actual drone dispatches or emergency management interventions.",
             "thresholds": {
                 "watch_p90_cfs": round(thresh["watch"], 2),
                 "warning_p95_cfs": round(thresh["warning"], 2),
@@ -99,6 +149,7 @@ class FloodRiskEngine:
             "is_provisional": thresh["is_provisional"],
             "data_quality_status": quality_status,
             "evidence_quality": "HIGH" if quality_status == "VALID_OBSERVATION" else "DEGRADED",
+            "confidence_score": 1.0 if not thresh["is_provisional"] else 0.70,
             "explanation": explanation,
             "recommended_action": action
         }

@@ -1,9 +1,15 @@
 {
   "status": "success",
   "event_id": "EVENT-US-SUSQUEHANNA-2023",
-  "title": "December 2023 Susquehanna River Flood Event (Harrisburg, PA, US)",
+  "title": "December 2023 Susquehanna River High-Flow Event (Harrisburg, PA, US)",
   "country": "United States",
   "river": "Susquehanna River",
+  "timezone": "EST (UTC-05:00)",
+  "measurement_units": {
+    "river_discharge": "cubic feet per second (cfs)",
+    "precipitation": "millimetres (mm)",
+    "temperature": "degrees Celsius (C)"
+  },
   "geographic_context": {
     "latitude": 40.252,
     "longitude": -76.883,
@@ -15,13 +21,25 @@
     "step_index": 12,
     "date": "2023-12-26",
     "timeline_phase": "RECOVERY",
-    "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
-    "historical_metrics": {
+    "observed_historical_state": {
+      "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
+      "observation_timestamp": null,
+      "publication_timestamp": null,
       "rainfall_mm": 3.26,
       "water_level_m": null,
+      "upstream_release_cfs": null,
+      "upstream_release_cumec": null,
+      "in_situ_discharge_cfs": 50900.0,
+      "in_situ_discharge_status": "OBSERVED",
       "discharge_cfs": 50900.0
     },
-    "risk_assessment": {
+    "available_evidence": {
+      "cutoff_date": "2023-12-26",
+      "evidence_sources": [
+        "USGS_NWIS_DISCHARGE"
+      ]
+    },
+    "vega_miti_risk_assessment": {
       "station_id": "01570500",
       "date": "2023-12-26",
       "discharge_cfs": 50900.0,
@@ -43,7 +61,13 @@
       "explanation": "Discharge (50,900.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
       "recommended_action": "PASSIVE_MONITORING"
     },
-    "swarm_state": {
+    "retrospective_event_outcome": {
+      "context": "Post-event baseflow stabilization",
+      "event_peak_date": "2023-12-20"
+    },
+    "simulated_swarm_response": {
+      "coordinate_frame": "SIMULATED_20X20_GRID",
+      "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
       "activation_state": "NORMAL",
       "active_missions_count": 0,
       "completed_missions_count": 0,
@@ -56,8 +80,8 @@
           "agent_id": "DRONE_AERIAL_1",
           "agent_type": "UAV",
           "capabilities": [
-            "AERIAL_OBSERVATION",
-            "VERIFICATION"
+            "VERIFICATION",
+            "AERIAL_OBSERVATION"
           ],
           "position": [
             1,
@@ -66,17 +90,17 @@
           "battery": 95.0,
           "connectivity": "DISCONNECTED",
           "status": "DISCONNECTED",
-          "current_mission": "MSN-98A6B3",
-          "path_remaining": 18,
+          "current_mission": null,
+          "path_remaining": 0,
           "coordinate_frame": "SIMULATED_20X20_GRID"
         },
         {
           "agent_id": "DRONE_AERIAL_2",
           "agent_type": "UAV",
           "capabilities": [
-            "AREA_SURVEILLANCE",
+            "VERIFICATION",
             "AERIAL_OBSERVATION",
-            "VERIFICATION"
+            "AREA_SURVEILLANCE"
           ],
           "position": [
             18,
@@ -85,16 +109,16 @@
           "battery": 88.0,
           "connectivity": "DISCONNECTED",
           "status": "DISCONNECTED",
-          "current_mission": null,
-          "path_remaining": 0,
+          "current_mission": "MSN-546AED",
+          "path_remaining": 17,
           "coordinate_frame": "SIMULATED_20X20_GRID"
         },
         {
           "agent_id": "USV_RIVER_1",
           "agent_type": "USV",
           "capabilities": [
-            "VERIFICATION",
-            "RIVER_MONITORING"
+            "RIVER_MONITORING",
+            "VERIFICATION"
           ],
           "position": [
             5,
@@ -146,8 +170,8 @@
           "agent_id": "GROUND_SCOUT_1",
           "agent_type": "UGV",
           "capabilities": [
-            "AREA_SURVEILLANCE",
-            "VERIFICATION"
+            "VERIFICATION",
+            "AREA_SURVEILLANCE"
           ],
           "position": [
             2,
@@ -156,8 +180,8 @@
           "battery": 78.0,
           "connectivity": "DISCONNECTED",
           "status": "DISCONNECTED",
-          "current_mission": "MSN-C248E0",
-          "path_remaining": 16,
+          "current_mission": "MSN-71D92F",
+          "path_remaining": 18,
           "coordinate_frame": "SIMULATED_20X20_GRID"
         }
       ]
@@ -168,13 +192,25 @@
       "step_index": 0,
       "date": "2023-12-14",
       "timeline_phase": "BEFORE_FLOOD",
-      "key_observation": "Advisory winter baseflow; dry conditions preceding frontal storm",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Advisory winter baseflow; dry conditions preceding frontal storm",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 0.0,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 63700.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 63700.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-14",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-14",
         "discharge_cfs": 63700.0,
@@ -196,7 +232,13 @@
         "explanation": "Discharge (63,700.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
         "recommended_action": "PASSIVE_MONITORING"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Catchment baseflow conditions before precipitation system",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "NORMAL",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -209,8 +251,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -227,9 +269,9 @@
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -246,8 +288,8 @@
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -299,8 +341,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -320,13 +362,25 @@
       "step_index": 1,
       "date": "2023-12-15",
       "timeline_phase": "BEFORE_FLOOD",
-      "key_observation": "Advisory winter baseflow; dry conditions preceding frontal storm",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Advisory winter baseflow; dry conditions preceding frontal storm",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 0.0,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 54600.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 54600.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-15",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-15",
         "discharge_cfs": 54600.0,
@@ -348,7 +402,13 @@
         "explanation": "Discharge (54,600.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
         "recommended_action": "PASSIVE_MONITORING"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Catchment baseflow conditions before precipitation system",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "NORMAL",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -361,8 +421,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -379,9 +439,9 @@
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -398,8 +458,8 @@
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -451,8 +511,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -472,13 +532,25 @@
       "step_index": 2,
       "date": "2023-12-16",
       "timeline_phase": "BEFORE_FLOOD",
-      "key_observation": "Advisory winter baseflow; dry conditions preceding frontal storm",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Advisory winter baseflow; dry conditions preceding frontal storm",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 0.01,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 46600.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 46600.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-16",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-16",
         "discharge_cfs": 46600.0,
@@ -500,7 +572,13 @@
         "explanation": "Discharge (46,600.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
         "recommended_action": "PASSIVE_MONITORING"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Catchment baseflow conditions before precipitation system",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "NORMAL",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -513,8 +591,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -531,9 +609,9 @@
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -550,8 +628,8 @@
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -603,8 +681,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -624,13 +702,25 @@
       "step_index": 3,
       "date": "2023-12-17",
       "timeline_phase": "RISING_RISK",
-      "key_observation": "Intense atmospheric river system brings heavy rainfall (24.2 mm); basin saturated",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Intense atmospheric storm brings heavy rainfall (24.2 mm); basin saturated",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 24.22,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 41000.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 41000.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-17",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-17",
         "discharge_cfs": 41000.0,
@@ -652,7 +742,13 @@
         "explanation": "Discharge (41,000.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
         "recommended_action": "PASSIVE_MONITORING"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Direct precipitation runoff initiates hydrograph climb",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "NORMAL",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -665,8 +761,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -683,9 +779,9 @@
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -702,8 +798,8 @@
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -755,8 +851,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -776,13 +872,25 @@
       "step_index": 4,
       "date": "2023-12-18",
       "timeline_phase": "RISING_RISK",
-      "key_observation": "Intense atmospheric river system brings heavy rainfall (33.6 mm); basin saturated",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Intense atmospheric storm brings heavy rainfall (33.6 mm); basin saturated",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 33.65,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 62500.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 62500.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-18",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-18",
         "discharge_cfs": 62500.0,
@@ -804,7 +912,13 @@
         "explanation": "Discharge (62,500.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
         "recommended_action": "PASSIVE_MONITORING"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Direct precipitation runoff initiates hydrograph climb",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "NORMAL",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -817,8 +931,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -835,9 +949,9 @@
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -854,8 +968,8 @@
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -907,8 +1021,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -928,13 +1042,25 @@
       "step_index": 5,
       "date": "2023-12-19",
       "timeline_phase": "HIGH_RISK_PEAK",
-      "key_observation": "Runoff convergence causes massive discharge crest (169,000 cfs); river exceeds historical 99th percentile",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Runoff convergence causes massive discharge crest (169,000 cfs); river exceeds historical 99th percentile",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 0.55,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 169000.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 169000.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-19",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-19",
         "discharge_cfs": 169000.0,
@@ -956,96 +1082,98 @@
         "explanation": "Discharge (169,000.0 cfs) meets or exceeds the empirical demonstration CRITICAL threshold (137,840.0 cfs, 99th percentile). Severe flood conditions indicated.",
         "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Crest propagation down the lower mainstem",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "CRITICAL",
         "active_missions_count": 0,
         "completed_missions_count": 0,
         "new_missions_generated": 2,
         "allocations_in_step": [
           {
-            "mission_id": "MSN-98A6B3",
-            "agent_id": "DRONE_AERIAL_1",
-            "path_length": 18,
+            "mission_id": "MSN-546AED",
+            "agent_id": "DRONE_AERIAL_2",
+            "path_length": 17,
             "path": [
               [
-                1,
+                18,
                 1
               ],
               [
-                1,
+                17,
+                1
+              ],
+              [
+                16,
+                1
+              ],
+              [
+                15,
+                1
+              ],
+              [
+                15,
                 2
               ],
               [
-                1,
+                15,
                 3
               ],
               [
-                1,
+                15,
                 4
               ],
               [
-                1,
+                15,
                 5
               ],
               [
-                1,
+                15,
                 6
               ],
               [
-                1,
+                15,
                 7
               ],
               [
-                2,
-                7
-              ],
-              [
-                3,
-                7
-              ],
-              [
-                4,
-                7
-              ],
-              [
-                5,
-                7
-              ],
-              [
-                6,
-                7
-              ],
-              [
-                7,
-                7
-              ],
-              [
-                8,
-                7
-              ],
-              [
-                8,
+                15,
                 8
               ],
               [
-                8,
+                15,
                 9
               ],
               [
-                8,
+                15,
                 10
               ],
               [
-                9,
-                10
+                15,
+                11
+              ],
+              [
+                15,
+                12
+              ],
+              [
+                15,
+                13
+              ],
+              [
+                15,
+                14
               ]
             ],
-            "bid_score": 287.0
+            "bid_score": 287.2
           },
           {
-            "mission_id": "MSN-C248E0",
+            "mission_id": "MSN-71D92F",
             "agent_id": "GROUND_SCOUT_1",
-            "path_length": 16,
+            "path_length": 18,
             "path": [
               [
                 2,
@@ -1064,66 +1192,74 @@
                 15
               ],
               [
-                2,
-                14
-              ],
-              [
-                2,
-                13
-              ],
-              [
-                2,
-                12
-              ],
-              [
-                2,
-                11
-              ],
-              [
                 3,
-                11
+                15
               ],
               [
                 4,
-                11
+                15
               ],
               [
                 5,
-                11
+                15
               ],
               [
                 6,
-                11
+                15
               ],
               [
                 7,
-                11
+                15
               ],
               [
                 8,
-                11
+                15
               ],
               [
                 9,
-                11
+                15
               ],
               [
                 10,
-                11
+                15
+              ],
+              [
+                11,
+                15
+              ],
+              [
+                12,
+                15
+              ],
+              [
+                13,
+                15
+              ],
+              [
+                14,
+                15
+              ],
+              [
+                15,
+                15
+              ],
+              [
+                16,
+                15
               ]
             ],
-            "bid_score": 286.2
+            "bid_score": 280.2
           }
         ],
         "reassigned_in_step": [
-          "MSN-98A6B3",
-          "MSN-C248E0"
+          "MSN-546AED",
+          "MSN-71D92F"
         ],
         "failure_event": {
-          "disconnected_agent": "DRONE_AERIAL_1",
+          "disconnected_agent": "DRONE_AERIAL_2",
           "reassigned_missions": [
-            "MSN-98A6B3",
-            "MSN-C248E0"
+            "MSN-546AED",
+            "MSN-71D92F"
           ],
           "reallocations": []
         },
@@ -1132,8 +1268,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -1142,17 +1278,17 @@
             "battery": 95.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-98A6B3",
-            "path_remaining": 18,
+            "current_mission": null,
+            "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -1161,16 +1297,16 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "current_mission": "MSN-546AED",
+            "path_remaining": 17,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -1222,8 +1358,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -1232,8 +1368,8 @@
             "battery": 78.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-C248E0",
-            "path_remaining": 16,
+            "current_mission": "MSN-71D92F",
+            "path_remaining": 18,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -1243,13 +1379,25 @@
       "step_index": 6,
       "date": "2023-12-20",
       "timeline_phase": "HIGH_RISK_PEAK",
-      "key_observation": "Runoff convergence causes massive discharge crest (179,000 cfs); river exceeds historical 99th percentile",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Runoff convergence causes massive discharge crest (179,000 cfs); river exceeds historical 99th percentile",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 0.0,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 179000.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 179000.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-20",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-20",
         "discharge_cfs": 179000.0,
@@ -1271,7 +1419,13 @@
         "explanation": "Discharge (179,000.0 cfs) meets or exceeds the empirical demonstration CRITICAL threshold (137,840.0 cfs, 99th percentile). Severe flood conditions indicated.",
         "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Crest propagation down the lower mainstem",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "CRITICAL",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -1284,8 +1438,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -1294,17 +1448,17 @@
             "battery": 95.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-98A6B3",
-            "path_remaining": 18,
+            "current_mission": null,
+            "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -1313,16 +1467,16 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "current_mission": "MSN-546AED",
+            "path_remaining": 17,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -1374,8 +1528,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -1384,8 +1538,8 @@
             "battery": 78.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-C248E0",
-            "path_remaining": 16,
+            "current_mission": "MSN-71D92F",
+            "path_remaining": 18,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -1395,13 +1549,25 @@
       "step_index": 7,
       "date": "2023-12-21",
       "timeline_phase": "HIGH_RISK_PEAK",
-      "key_observation": "Runoff convergence causes massive discharge crest (139,000 cfs); river exceeds historical 99th percentile",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Runoff convergence causes massive discharge crest (139,000 cfs); river exceeds historical 99th percentile",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 0.0,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 139000.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 139000.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-21",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-21",
         "discharge_cfs": 139000.0,
@@ -1423,7 +1589,13 @@
         "explanation": "Discharge (139,000.0 cfs) meets or exceeds the empirical demonstration CRITICAL threshold (137,840.0 cfs, 99th percentile). Severe flood conditions indicated.",
         "recommended_action": "HIGH_PRIORITY_RESPONSE_MISSIONS"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Crest propagation down the lower mainstem",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "CRITICAL",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -1436,8 +1608,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -1446,17 +1618,17 @@
             "battery": 95.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-98A6B3",
-            "path_remaining": 18,
+            "current_mission": null,
+            "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -1465,16 +1637,16 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "current_mission": "MSN-546AED",
+            "path_remaining": 17,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -1526,8 +1698,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -1536,8 +1708,8 @@
             "battery": 78.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-C248E0",
-            "path_remaining": 16,
+            "current_mission": "MSN-71D92F",
+            "path_remaining": 18,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -1547,13 +1719,25 @@
       "step_index": 8,
       "date": "2023-12-22",
       "timeline_phase": "RECESSION",
-      "key_observation": "Discharge recedes from flood crest; cold front stabilizes catchment",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Discharge recedes from flood crest; cold front stabilizes catchment",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 0.0,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 105000.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 105000.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-22",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-22",
         "discharge_cfs": 105000.0,
@@ -1575,7 +1759,13 @@
         "explanation": "Discharge (105,000.0 cfs) meets or exceeds the empirical demonstration WARNING threshold (87,830.0 cfs, 95th percentile). Elevated high-flow event in progress.",
         "recommended_action": "PREPARE_VERIFICATION_MISSIONS"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Declining hydrograph recession limb",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "WARNING",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -1588,8 +1778,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -1598,17 +1788,17 @@
             "battery": 95.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-98A6B3",
-            "path_remaining": 18,
+            "current_mission": null,
+            "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -1617,16 +1807,16 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "current_mission": "MSN-546AED",
+            "path_remaining": 17,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -1678,8 +1868,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -1688,8 +1878,8 @@
             "battery": 78.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-C248E0",
-            "path_remaining": 16,
+            "current_mission": "MSN-71D92F",
+            "path_remaining": 18,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -1699,13 +1889,25 @@
       "step_index": 9,
       "date": "2023-12-23",
       "timeline_phase": "RECESSION",
-      "key_observation": "Discharge recedes from flood crest; cold front stabilizes catchment",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Discharge recedes from flood crest; cold front stabilizes catchment",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 0.18,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 84900.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 84900.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-23",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-23",
         "discharge_cfs": 84900.0,
@@ -1727,7 +1929,13 @@
         "explanation": "Discharge (84,900.0 cfs) meets or exceeds the empirical demonstration WATCH threshold (69,520.0 cfs, 90th percentile). Flow is elevated above normal seasonal baseline.",
         "recommended_action": "INCREASE_MONITORING_FREQUENCY"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Declining hydrograph recession limb",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "WATCH",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -1740,8 +1948,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -1750,17 +1958,17 @@
             "battery": 95.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-98A6B3",
-            "path_remaining": 18,
+            "current_mission": null,
+            "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -1769,16 +1977,16 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "current_mission": "MSN-546AED",
+            "path_remaining": 17,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -1830,8 +2038,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -1840,8 +2048,8 @@
             "battery": 78.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-C248E0",
-            "path_remaining": 16,
+            "current_mission": "MSN-71D92F",
+            "path_remaining": 18,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -1851,13 +2059,25 @@
       "step_index": 10,
       "date": "2023-12-24",
       "timeline_phase": "RECOVERY",
-      "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 0.1,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 66800.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 66800.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-24",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-24",
         "discharge_cfs": 66800.0,
@@ -1879,7 +2099,13 @@
         "explanation": "Discharge (66,800.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
         "recommended_action": "PASSIVE_MONITORING"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Post-event baseflow stabilization",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "RISK_REDUCTION",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -1892,8 +2118,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -1902,17 +2128,17 @@
             "battery": 95.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-98A6B3",
-            "path_remaining": 18,
+            "current_mission": null,
+            "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -1921,16 +2147,16 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "current_mission": "MSN-546AED",
+            "path_remaining": 17,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -1982,8 +2208,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -1992,8 +2218,8 @@
             "battery": 78.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-C248E0",
-            "path_remaining": 16,
+            "current_mission": "MSN-71D92F",
+            "path_remaining": 18,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -2003,13 +2229,25 @@
       "step_index": 11,
       "date": "2023-12-25",
       "timeline_phase": "RECOVERY",
-      "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 0.03,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 56400.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 56400.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-25",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-25",
         "discharge_cfs": 56400.0,
@@ -2031,7 +2269,13 @@
         "explanation": "Discharge (56,400.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
         "recommended_action": "PASSIVE_MONITORING"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Post-event baseflow stabilization",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "NORMAL",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -2044,8 +2288,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -2054,17 +2298,17 @@
             "battery": 95.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-98A6B3",
-            "path_remaining": 18,
+            "current_mission": null,
+            "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -2073,16 +2317,16 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "current_mission": "MSN-546AED",
+            "path_remaining": 17,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -2134,8 +2378,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -2144,8 +2388,8 @@
             "battery": 78.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-C248E0",
-            "path_remaining": 16,
+            "current_mission": "MSN-71D92F",
+            "path_remaining": 18,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]
@@ -2155,13 +2399,25 @@
       "step_index": 12,
       "date": "2023-12-26",
       "timeline_phase": "RECOVERY",
-      "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
-      "historical_metrics": {
+      "observed_historical_state": {
+        "key_observation": "Flow normalizes toward seasonal median; post-event inspection",
+        "observation_timestamp": null,
+        "publication_timestamp": null,
         "rainfall_mm": 3.26,
         "water_level_m": null,
+        "upstream_release_cfs": null,
+        "upstream_release_cumec": null,
+        "in_situ_discharge_cfs": 50900.0,
+        "in_situ_discharge_status": "OBSERVED",
         "discharge_cfs": 50900.0
       },
-      "risk_assessment": {
+      "available_evidence": {
+        "cutoff_date": "2023-12-26",
+        "evidence_sources": [
+          "USGS_NWIS_DISCHARGE"
+        ]
+      },
+      "vega_miti_risk_assessment": {
         "station_id": "01570500",
         "date": "2023-12-26",
         "discharge_cfs": 50900.0,
@@ -2183,7 +2439,13 @@
         "explanation": "Discharge (50,900.0 cfs) is below empirical demonstration WATCH threshold (69,520.0 cfs). Normal river conditions.",
         "recommended_action": "PASSIVE_MONITORING"
       },
-      "swarm_state": {
+      "retrospective_event_outcome": {
+        "context": "Post-event baseflow stabilization",
+        "event_peak_date": "2023-12-20"
+      },
+      "simulated_swarm_response": {
+        "coordinate_frame": "SIMULATED_20X20_GRID",
+        "coordinate_disclaimer": "Agent positions represent a simulated 20x20 discrete mission coordinate frame, not actual geographical latitude/longitude.",
         "activation_state": "NORMAL",
         "active_missions_count": 0,
         "completed_missions_count": 0,
@@ -2196,8 +2458,8 @@
             "agent_id": "DRONE_AERIAL_1",
             "agent_type": "UAV",
             "capabilities": [
-              "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AERIAL_OBSERVATION"
             ],
             "position": [
               1,
@@ -2206,17 +2468,17 @@
             "battery": 95.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-98A6B3",
-            "path_remaining": 18,
+            "current_mission": null,
+            "path_remaining": 0,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "DRONE_AERIAL_2",
             "agent_type": "UAV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
+              "VERIFICATION",
               "AERIAL_OBSERVATION",
-              "VERIFICATION"
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               18,
@@ -2225,16 +2487,16 @@
             "battery": 88.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": null,
-            "path_remaining": 0,
+            "current_mission": "MSN-546AED",
+            "path_remaining": 17,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           },
           {
             "agent_id": "USV_RIVER_1",
             "agent_type": "USV",
             "capabilities": [
-              "VERIFICATION",
-              "RIVER_MONITORING"
+              "RIVER_MONITORING",
+              "VERIFICATION"
             ],
             "position": [
               5,
@@ -2286,8 +2548,8 @@
             "agent_id": "GROUND_SCOUT_1",
             "agent_type": "UGV",
             "capabilities": [
-              "AREA_SURVEILLANCE",
-              "VERIFICATION"
+              "VERIFICATION",
+              "AREA_SURVEILLANCE"
             ],
             "position": [
               2,
@@ -2296,8 +2558,8 @@
             "battery": 78.0,
             "connectivity": "DISCONNECTED",
             "status": "DISCONNECTED",
-            "current_mission": "MSN-C248E0",
-            "path_remaining": 16,
+            "current_mission": "MSN-71D92F",
+            "path_remaining": 18,
             "coordinate_frame": "SIMULATED_20X20_GRID"
           }
         ]

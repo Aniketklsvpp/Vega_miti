@@ -32,6 +32,7 @@ class ReplayRunRequest(BaseModel):
     event_id: str = "EVENT-IN-YAMUNA-2023"
     step_index: Optional[int] = None
     simulate_failure: Optional[bool] = True
+    action: Optional[str] = "run"
 
 @router.get("/agents")
 def get_agents():
@@ -176,6 +177,12 @@ def get_replay_event(event_id: str):
 
 @router.post("/replay/run")
 def run_historical_replay(req: ReplayRunRequest):
+    if req.action == "reset":
+        return envelope({
+            "reset_status": "COMPLETED",
+            "event_id": req.event_id,
+            "message": "Replay timeline reset to initial step."
+        })
     res = replay_engine.execute_replay(
         event_id=req.event_id,
         step_index=req.step_index,

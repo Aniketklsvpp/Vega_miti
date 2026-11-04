@@ -10,6 +10,22 @@ class PredictionService:
         self.processed_data_path = Path(processed_data_path)
         self._cached_train = None
 
+    @property
+    def model_a(self):
+        return self.predictor.models.get("A")
+
+    @property
+    def model_b(self):
+        return self.predictor.models.get("B")
+
+    def _get_station_metadata(self):
+        meta_path = Path("data/raw/usgs_streamflow_metadata.csv")
+        if meta_path.is_file():
+            return pd.read_csv(meta_path, dtype={"station_id": str})
+        df_train = self._get_train_data()
+        unique_st = sorted(df_train["station_id"].unique())
+        return pd.DataFrame([{"station_id": s, "station_name": f"Station {s}"} for s in unique_st])
+
     def _get_train_data(self):
         if self._cached_train is None:
             if not self.processed_data_path.is_file():

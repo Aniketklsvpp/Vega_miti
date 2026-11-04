@@ -43,6 +43,14 @@ class RiverDischargePredictor:
             self.models["B"] = art_b["model"] if isinstance(art_b, dict) and "model" in art_b else art_b
             self.models["past_only"] = self.models["B"]
 
+    @property
+    def model_a(self):
+        return self.models.get("A")
+
+    @property
+    def model_b(self):
+        return self.models.get("B")
+
     def get_required_features(self, config="A"):
         cfg_key = str(config).upper()
         if cfg_key in ("B", "PAST_ONLY", "PAST"):
