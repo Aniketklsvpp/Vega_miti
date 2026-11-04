@@ -1,8 +1,15 @@
-model_name,model_type,target_transform,overall_rmse,extreme_rmse,mae,r2,composite_score,validation_time_sec
-ExtraTrees (Raw),extra_trees,False,297.3145,910.9983,87.9451,0.7421,402.3932,0.86
-ExtraTrees (Log1p),extra_trees,True,300.1723,919.6309,87.2512,0.7371,406.0372,0.75
-HistGradientBoosting (Log1p),hist_gb,True,306.3946,941.4909,94.4499,0.7261,416.6339,4.4
-RandomForest (Raw),random_forest,False,314.2249,961.4534,101.1938,0.7119,427.2454,1.83
-RandomForest (Log1p),random_forest,True,314.3952,964.7834,100.3276,0.7116,428.1423,1.35
-HistGradientBoosting (Raw),hist_gb,False,316.8438,971.9427,99.116,0.7071,431.0724,8.52
-Dummy (Mean),dummy,False,595.9549,1764.1568,287.6955,-0.0362,825.1681,0.17
+model_name,model_type,target_transform,feature_set,overall_rmse,extreme_rmse,mae,r2,composite_score,validation_time_sec
+HistGradientBoosting (Log1p),hist_gb,True,with_soil_moisture,9320.9762,22211.4709,4257.857,0.387,11239.5333,6.83
+ExtraTrees (Raw),extra_trees,False,with_soil_moisture,9409.7314,21893.0869,4904.5335,0.3753,11308.9727,9.27
+RandomForest (Log1p),random_forest,True,with_soil_moisture,9239.0568,22579.7274,4446.416,0.3977,11354.847,11.39
+ExtraTrees (Log1p),extra_trees,True,with_soil_moisture,9250.2543,23422.1715,4068.7368,0.3963,11536.538,10.2
+ExtraTrees (Raw),extra_trees,False,without_soil_moisture,10481.238,21556.7147,5293.5376,0.2249,11715.9684,2.42
+ExtraTrees (Log1p),extra_trees,True,without_soil_moisture,9760.6733,23429.256,4468.5484,0.3278,11823.4779,2.33
+HistGradientBoosting (Raw),hist_gb,False,with_soil_moisture,10746.5384,23278.602,5625.554,0.1851,12405.4553,12.15
+RandomForest (Raw),random_forest,False,with_soil_moisture,11408.6131,23747.6306,6207.318,0.0816,12928.3816,7.52
+RandomForest (Log1p),random_forest,True,without_soil_moisture,11584.5228,24387.5318,5793.5531,0.0531,13108.2482,6.69
+HistGradientBoosting (Log1p),hist_gb,True,without_soil_moisture,11250.5894,25536.1312,5313.5621,0.1069,13222.7184,11.77
+HistGradientBoosting (Raw),hist_gb,False,without_soil_moisture,12882.8704,23989.0632,7028.8912,-0.171,13755.6454,9.38
+Dummy (Mean),dummy,False,with_soil_moisture,12077.5661,28344.4976,6870.4485,-0.0292,14708.4654,0.32
+Dummy (Mean),dummy,False,without_soil_moisture,12077.5661,28344.4976,6870.4485,-0.0292,14708.4654,0.22
+RandomForest (Raw),random_forest,False,without_soil_moisture,14450.8963,26777.3673,7705.0864,-0.4734,15354.586,14.83
