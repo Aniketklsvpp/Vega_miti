@@ -145,8 +145,46 @@ class TestPredictionAndRisk(unittest.TestCase):
         body = r.json()
         self.assertEqual(body["status"], "success")
         self.assertIn("forecast_skill_pooled", body["data"])
-        self.assertIn("baseline_comparisons", body["data"])
+        self.assertIn("model_comparison", body["data"])
         self.assertIn("robustness_stress_testing", body["data"])
+
+    def test_end_to_end_flow_and_swarm_integration(self):
+        pred_resp = self.client.post("/api/predict", json={
+            "station_id": "01570500",
+            "start_date": "2023-01-01",
+            "end_date": "2023-01-02",
+            "config": "A"
+        })
+        self.assertEqual(pred_resp.status_code, 200)
+        pred_data = pred_resp.json()["data"]["predictions"]
+        
+        simulated_assessment = {
+            "station_id": "01570500",
+            "date": "2023-01-01",
+            "discharge_cfs": 112000.0,
+            "risk_level": "WARNING",
+            "data_quality_status": "VALID_OBSERVATION"
+        }
+        
+        act_resp = self.client.post("/api/swarm/activate", json={"assessments": [simulated_assessment]})
+        self.assertEqual(act_resp.status_code, 200)
+        act_body = act_resp.json()["data"]
+        self.assertEqual(act_body["activation_state"], "WARNING")
+        self.assertGreater(act_body["missions_generated"], 0)
+        
+        missions_resp = self.client.get("/api/swarm/missions")
+        self.assertEqual(missions_resp.status_code, 200)
+        missions = missions_resp.json()["data"]["missions"]
+        self.assertGreater(len(missions), 0)
+        
+        for m in missions:
+            if m.get("station_id") == "01570500":
+                self.assertEqual(m["station_id"], "01570500")
+                self.assertEqual(m["target_station_id"], "01570500")
+                self.assertEqual(m["discharge_cfs"], 112000.0)
+                self.assertEqual(m["risk_level"], "WARNING")
+                self.assertEqual(m["data_quality_status"], "VALID_OBSERVATION")
+                break
 
 if __name__ == "__main__":
     unittest.main()

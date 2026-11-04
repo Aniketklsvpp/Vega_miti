@@ -11,9 +11,9 @@ from src.hydrological_evaluation import HydrologicalEvaluator
 from src.swarm_api import router as swarm_router
 
 app = FastAPI(
-    title="VEGA-MITI Hydrological Intelligence API",
+    title="VEGA-MITI Unified Hydrological Intelligence & Swarm API",
     version="1.0.0",
-    description="Operational Flood Prediction, Risk Classification, and Hydrological Evaluation API"
+    description="Operational Flood Prediction, Risk Classification, Hydrological Evaluation, and Swarm Simulation API"
 )
 
 app.add_middleware(
@@ -23,6 +23,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+app.include_router(swarm_router)
 
 pred_service = PredictionService()
 risk_engine = FloodRiskEngine()
@@ -171,30 +173,53 @@ def post_predict(req: PredictionRequest):
         
     preds = res["data"]["predictions"]
     for p in preds:
-        risk_info = risk_engine.classify_discharge(p["station_id"], p["predicted_discharge_cfs"], date=p["date"])
-        p["risk_level"] = risk_info["risk_level"]
-        p["risk_explanation"] = risk_info["explanation"]
-        p["thresholds"] = risk_info["thresholds"]
-        p["high_flow_threshold_cfs"] = risk_info["high_flow_threshold_cfs"]
-        p["critical_threshold_cfs"] = risk_info["critical_threshold_cfs"]
-        p["threshold_type"] = risk_info["threshold_type"]
-        p["regulatory_disclaimer"] = risk_info["regulatory_disclaimer"]
-        p["recommended_action"] = risk_info["recommended_action"]
+        pred_risk = risk_engine.classify_discharge(p["station_id"], p["predicted_discharge_cfs"], date=p["date"])
+        p["predicted_risk_level"] = pred_risk["risk_level"]
+        p["risk_level"] = pred_risk["risk_level"]
+        p["risk_explanation"] = pred_risk["explanation"]
+        p["thresholds"] = pred_risk["thresholds"]
+        p["high_flow_threshold_cfs"] = pred_risk["high_flow_threshold_cfs"]
+        p["critical_threshold_cfs"] = pred_risk["critical_threshold_cfs"]
+        p["threshold_type"] = pred_risk["threshold_type"]
+        p["regulatory_disclaimer"] = pred_risk["regulatory_disclaimer"]
+        p["recommended_action"] = pred_risk["recommended_action"]
+        
+        if p.get("actual_discharge_cfs") is not None and pd.notna(p["actual_discharge_cfs"]):
+            obs_risk = risk_engine.classify_discharge(p["station_id"], p["actual_discharge_cfs"], date=p["date"])
+            p["observed_risk_level"] = obs_risk["risk_level"]
+            p["observed_recommended_action"] = obs_risk["recommended_action"]
+            p["risk_basis_discrepancy"] = "MISMATCH" if pred_risk["risk_level"] != obs_risk["risk_level"] else "ALIGNED"
+        else:
+            p["observed_risk_level"] = None
+            p["observed_recommended_action"] = None
+            p["risk_basis_discrepancy"] = "OBSERVATION_UNAVAILABLE"
         
     return make_envelope(data=res["data"])
 
 @app.get("/api/risk/{station_id}")
-def get_station_risk(station_id: str):
+def get_station_risk(station_id: str, basis: Optional[str] = Query("observed")):
     df_all = pred_service._get_train_data()
     sub = df_all[df_all["station_id"].astype(str) == str(station_id).strip()]
     if sub.empty:
         raise HTTPException(status_code=404, detail=f"Station '{station_id}' not found.")
         
     latest_row = sub.sort_values("date").iloc[-1]
-    discharge = float(latest_row["discharge_cfs"])
+    actual_discharge = float(latest_row["discharge_cfs"])
     dt_str = str(latest_row["date"])
     
-    risk_info = risk_engine.classify_discharge(station_id, discharge, date=dt_str)
+    pred_res = pred_service.predict_station(station_id, start_date=dt_str, end_date=dt_str, config="A")
+    pred_val = pred_res["data"]["predictions"][0]["predicted_discharge_cfs"] if pred_res.get("status") == "success" and pred_res.get("data", {}).get("predictions") else actual_discharge
+    
+    eval_discharge = pred_val if str(basis).lower() == "predicted" else actual_discharge
+    risk_info = risk_engine.classify_discharge(station_id, eval_discharge, date=dt_str)
+    
+    risk_info["assessment_basis"] = "PREDICTED" if str(basis).lower() == "predicted" else "OBSERVED"
+    risk_info["actual_discharge_cfs"] = round(actual_discharge, 2)
+    risk_info["predicted_discharge_cfs"] = round(pred_val, 2)
+    risk_info["observed_risk_level"] = risk_engine.classify_discharge(station_id, actual_discharge)["risk_level"]
+    risk_info["predicted_risk_level"] = risk_engine.classify_discharge(station_id, pred_val)["risk_level"]
+    risk_info["risk_basis_discrepancy"] = "MISMATCH" if risk_info["predicted_risk_level"] != risk_info["observed_risk_level"] else "ALIGNED"
+    
     return make_envelope(data=risk_info)
 
 @app.get("/api/evaluation/hydrology")
