@@ -1,80 +1,110 @@
-import os
-import pandas as pd
+from pathlib import Path
 import numpy as np
+import pandas as pd
 
-class HydrologicalRiskEngine:
-    def __init__(self, coverage_csv_path="outputs/data_reports/station_coverage.csv"):
-        self.thresholds = {}
-        if os.path.exists(coverage_csv_path):
-            cov_df = pd.read_csv(coverage_csv_path)
-            for _, r in cov_df.iterrows():
-                st_id = str(r["station_id"])
-                p90 = float(r["p90_cfs"])
-                median = float(r["median_cfs"])
-                max_cfs = float(r["max_cfs"])
-                p75 = median + 0.5 * (p90 - median)
-                p98 = p90 + 0.5 * (max_cfs - p90)
-                self.thresholds[st_id] = {
-                    "p75": p75,
-                    "p90": p90,
-                    "p98": p98,
-                    "median": median,
-                    "max": max_cfs,
-                    "source": "USGS_HISTORICAL_QUANTILES"
-                }
+class FloodRiskEngine:
+    def __init__(self, train_path="data/processed/train.csv"):
+        self.train_path = Path(train_path)
+        self.station_thresholds = {}
+        self.default_thresholds = {"watch": 5000.0, "warning": 15000.0, "critical": 35000.0}
+        self._load_or_compute_thresholds()
 
-    def assess_station_risk(self, station_id, discharge_cfs, date=None):
-        st_id = str(station_id)
-        val = float(discharge_cfs) if discharge_cfs is not None else 0.0
-        
-        st_th = self.thresholds.get(st_id)
-        if not st_th:
-            p75 = 2000.0
-            p90 = 5000.0
-            p98 = 15000.0
-            source = "FALLBACK_REGIONAL_HEURISTIC"
-        else:
-            p75 = st_th["p75"]
-            p90 = st_th["p90"]
-            p98 = st_th["p98"]
-            source = st_th["source"]
+    def _load_or_compute_thresholds(self):
+        if self.train_path.is_file():
+            df = pd.read_csv(self.train_path, dtype={"station_id": str})
+            if "station_id" in df.columns and "discharge_cfs" in df.columns:
+                for st, group in df.groupby("station_id"):
+                    clean = group["discharge_cfs"].dropna()
+                    if len(clean) > 0:
+                        self.station_thresholds[str(st)] = {
+                            "median": float(clean.median()),
+                            "watch": float(clean.quantile(0.90)),
+                            "warning": float(clean.quantile(0.95)),
+                            "critical": float(clean.quantile(0.99)),
+                            "max": float(clean.max()),
+                            "source": "USGS_HISTORICAL_DISTRIBUTION_2022_2023_EMPIRICAL_PERCENTILES",
+                            "is_provisional": False
+                        }
 
-        if val >= p98:
-            risk_level = "CRITICAL"
-            explanation = f"Discharge ({val:.1f} cfs) exceeds 98th percentile flood threshold ({p98:.1f} cfs)"
-            action = "HIGH_PRIORITY_RESPONSE_MISSIONS"
-        elif val >= p90:
-            risk_level = "WARNING"
-            explanation = f"Discharge ({val:.1f} cfs) exceeds 90th percentile high-flow threshold ({p90:.1f} cfs)"
-            action = "PREPARE_VERIFICATION_MISSIONS"
-        elif val >= p75:
-            risk_level = "WATCH"
-            explanation = f"Discharge ({val:.1f} cfs) exceeds 75th percentile advisory threshold ({p75:.1f} cfs)"
-            action = "INCREASE_MONITORING_FREQUENCY"
-        else:
-            risk_level = "NORMAL"
-            explanation = f"Discharge ({val:.1f} cfs) within normal historical bounds (< {p75:.1f} cfs)"
-            action = "PASSIVE_MONITORING"
-
+    def get_thresholds_for_station(self, station_id):
+        st_clean = str(station_id).strip()
+        if st_clean in self.station_thresholds:
+            return self.station_thresholds[st_clean]
         return {
-            "station_id": st_id,
-            "date": str(date) if date else None,
-            "discharge_cfs": round(val, 2),
-            "high_flow_threshold_cfs": round(p90, 2),
-            "critical_threshold_cfs": round(p98, 2),
-            "risk_level": risk_level,
-            "threshold_source": source,
-            "data_quality_status": "VALID_OBSERVATION" if np.isfinite(val) else "INVALID_OR_MISSING",
-            "explanation": explanation,
-            "recommended_action": action
+            "median": 1000.0,
+            "watch": self.default_thresholds["watch"],
+            "warning": self.default_thresholds["warning"],
+            "critical": self.default_thresholds["critical"],
+            "max": 50000.0,
+            "source": "PROVISIONAL_DEFAULT_THRESHOLD_DEMO",
+            "is_provisional": True
         }
 
-    def assess_batch(self, predictions_df):
-        results = []
-        for _, row in predictions_df.iterrows():
-            st_id = row.get("station_id")
-            val = row.get("discharge_cfs", row.get("predicted_discharge_cfs"))
-            dt = row.get("date")
-            results.append(self.assess_station_risk(st_id, val, date=dt))
-        return pd.DataFrame(results)
+    def classify_discharge(self, station_id, discharge_cfs, date=None, data_quality_status="VALID"):
+        st_clean = str(station_id).strip()
+        thresh = self.get_thresholds_for_station(st_clean)
+        
+        q_val = float(discharge_cfs) if pd.notna(discharge_cfs) else 0.0
+        
+        if q_val >= thresh["critical"]:
+            risk_level = "CRITICAL"
+            explanation = (
+                f"Discharge ({q_val:,.1f} cfs) meets or exceeds the CRITICAL threshold "
+                f"({thresh['critical']:,.1f} cfs, 99th percentile). Severe flood conditions indicated."
+            )
+        elif q_val >= thresh["warning"]:
+            risk_level = "WARNING"
+            explanation = (
+                f"Discharge ({q_val:,.1f} cfs) meets or exceeds the WARNING threshold "
+                f"({thresh['warning']:,.1f} cfs, 95th percentile). Elevated high-flow event in progress."
+            )
+        elif q_val >= thresh["watch"]:
+            risk_level = "WATCH"
+            explanation = (
+                f"Discharge ({q_val:,.1f} cfs) meets or exceeds the WATCH threshold "
+                f"({thresh['watch']:,.1f} cfs, 90th percentile). Flow is elevated above normal seasonal baseline."
+            )
+        else:
+            risk_level = "NORMAL"
+            explanation = (
+                f"Discharge ({q_val:,.1f} cfs) is below the WATCH threshold "
+                f"({thresh['watch']:,.1f} cfs). Normal river conditions."
+            )
 
+        evidence_quality = "HIGH" if data_quality_status == "VALID" else "DEGRADED"
+
+        return {
+            "station_id": st_clean,
+            "date": str(date) if date is not None else None,
+            "discharge_cfs": round(q_val, 2),
+            "risk_level": risk_level,
+            "thresholds": {
+                "watch_p90_cfs": round(thresh["watch"], 2),
+                "warning_p95_cfs": round(thresh["warning"], 2),
+                "critical_p99_cfs": round(thresh["critical"], 2),
+                "median_cfs": round(thresh["median"], 2)
+            },
+            "threshold_source": thresh["source"],
+            "is_provisional": thresh["is_provisional"],
+            "evidence_quality": evidence_quality,
+            "explanation": explanation
+        }
+
+    def detect_risk_transition(self, prev_risk_level, current_risk_level):
+        hierarchy = {"NORMAL": 0, "WATCH": 1, "WARNING": 2, "CRITICAL": 3}
+        prev_idx = hierarchy.get(str(prev_risk_level).upper(), 0)
+        curr_idx = hierarchy.get(str(current_risk_level).upper(), 0)
+
+        if curr_idx > prev_idx:
+            status = "ESCALATION"
+        elif curr_idx < prev_idx:
+            status = "REDUCTION"
+        else:
+            status = "STEADY"
+
+        return {
+            "previous_risk": prev_risk_level,
+            "current_risk": current_risk_level,
+            "transition": status,
+            "severity_delta": curr_idx - prev_idx
+        }

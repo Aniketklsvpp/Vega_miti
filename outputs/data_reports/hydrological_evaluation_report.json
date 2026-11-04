@@ -1,0 +1,111 @@
+{
+  "evaluation_title": "DELTA-SWARM Hydrological Evaluation Report",
+  "model_configuration": "A",
+  "target_variable": "discharge_cfs",
+  "evaluation_sample_count": 4380,
+  "held_out_stations_count": 6,
+  "held_out_stations": [
+    "08158000",
+    "09095500",
+    "09180500",
+    "09380000",
+    "12119000",
+    "14211720"
+  ],
+  "forecast_skill_pooled": {
+    "mae": 1405.9301,
+    "rmse": 3269.1145,
+    "nmae_normalized_by_mean": 0.1625,
+    "nmae_normalized_by_range": 0.0095,
+    "nse": 0.9522
+  },
+  "forecast_skill_macro_station_average": {
+    "macro_mae": 1405.9301,
+    "macro_rmse": 2426.9688,
+    "macro_nse": 0.7864
+  },
+  "baseline_comparisons": {
+    "training_mean_baseline": {
+      "mae": 8255.5444,
+      "rmse": 15013.4387,
+      "nmae_normalized_by_mean": 0.9543,
+      "nmae_normalized_by_range": 0.0558,
+      "nse": -0.009
+    },
+    "persistence_baseline": {
+      "mae": 716.2217,
+      "rmse": 2339.5138,
+      "nmae_normalized_by_mean": 0.0828,
+      "nmae_normalized_by_range": 0.0048,
+      "nse": 0.9755
+    },
+    "rmse_skill_score_vs_mean": 0.7823,
+    "rmse_skill_score_vs_persistence": -0.3973
+  },
+  "high_flow_event_detection": {
+    "threshold_percentile": 0.9,
+    "threshold_value_cfs": 20220.0,
+    "precision": 0.9086,
+    "recall": 0.8402,
+    "f1_score": 0.8731,
+    "auprc": 0.9565,
+    "actual_event_count": 438,
+    "predicted_event_count": 405,
+    "total_observations": 4380
+  },
+  "per_station_generalization": {
+    "08158000": {
+      "mae": 414.1507,
+      "rmse": 757.5114,
+      "nmae_normalized_by_mean": 0.4438,
+      "nmae_normalized_by_range": 0.0524,
+      "nse": 0.5637
+    },
+    "09095500": {
+      "mae": 661.1807,
+      "rmse": 1192.7154,
+      "nmae_normalized_by_mean": 0.188,
+      "nmae_normalized_by_range": 0.0411,
+      "nse": 0.8956
+    },
+    "09180500": {
+      "mae": 1832.5919,
+      "rmse": 3940.9699,
+      "nmae_normalized_by_mean": 0.2924,
+      "nmae_normalized_by_range": 0.0471,
+      "nse": 0.7157
+    },
+    "09380000": {
+      "mae": 1036.8584,
+      "rmse": 1920.1049,
+      "nmae_normalized_by_mean": 0.0949,
+      "nmae_normalized_by_range": 0.0314,
+      "nse": 0.7523
+    },
+    "12119000": {
+      "mae": 122.9752,
+      "rmse": 203.2278,
+      "nmae_normalized_by_mean": 0.1923,
+      "nmae_normalized_by_range": 0.0344,
+      "nse": 0.8567
+    },
+    "14211720": {
+      "mae": 4367.824,
+      "rmse": 6547.2831,
+      "nmae_normalized_by_mean": 0.1474,
+      "nmae_normalized_by_range": 0.0305,
+      "nse": 0.9345
+    }
+  },
+  "robustness_stress_testing": {
+    "gaussian_noise_injection_degradation_pct": 176.84,
+    "noisy_inputs_rmse": 9050.1831,
+    "missing_weather_degradation_pct": 23.29,
+    "missing_inputs_rmse": 4030.344
+  },
+  "computational_efficiency": {
+    "total_inference_time_sec": 0.0896,
+    "latency_ms_per_1000_samples": 20.45,
+    "model_artifact_size_bytes": 544085
+  }
+}

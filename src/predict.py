@@ -26,12 +26,19 @@ CONFIG_B_FEATURES = [
 
 class RiverDischargePredictor:
     def __init__(self, config_a_path=CONFIG_A_PATH, config_b_path=CONFIG_B_PATH):
+        self.config_a_path = config_a_path
+        self.config_b_path = config_b_path
         self.models = {}
-        if os.path.exists(config_a_path):
-            self.models["A"] = joblib.load(config_a_path)
+        self._load_models()
+
+    def _load_models(self):
+        if os.path.exists(self.config_a_path):
+            art_a = joblib.load(self.config_a_path)
+            self.models["A"] = art_a["model"] if isinstance(art_a, dict) and "model" in art_a else art_a
             self.models["primary"] = self.models["A"]
-        if os.path.exists(config_b_path):
-            self.models["B"] = joblib.load(config_b_path)
+        if os.path.exists(self.config_b_path):
+            art_b = joblib.load(self.config_b_path)
+            self.models["B"] = art_b["model"] if isinstance(art_b, dict) and "model" in art_b else art_b
             self.models["past_only"] = self.models["B"]
 
     def get_required_features(self, config="A"):
@@ -44,6 +51,8 @@ class RiverDischargePredictor:
         cfg_key = str(config).upper()
         model_key = "B" if cfg_key in ("B", "PAST_ONLY", "PAST") else "A"
         
+        if model_key not in self.models:
+            self._load_models()
         if model_key not in self.models:
             raise RuntimeError(f"Model artifact for configuration '{config}' not loaded.")
         
@@ -61,7 +70,10 @@ class RiverDischargePredictor:
             X_arr = X_mat.values
         else:
             X_arr = np.asarray(X, dtype=float)
-            if X_arr.shape[1] != len(req_features):
+            if X_arr.shape[1] == 24 and len(req_features) == 18:
+                indices = [CONFIG_A_FEATURES.index(c) for c in req_features]
+                X_arr = X_arr[:, indices]
+            elif X_arr.shape[1] != len(req_features):
                 raise ValueError(f"Input feature array has {X_arr.shape[1]} columns, expected {len(req_features)}")
             nan_mask = ~np.isfinite(X_arr)
             if np.any(nan_mask):
