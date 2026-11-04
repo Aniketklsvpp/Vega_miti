@@ -186,6 +186,93 @@ class TestPredictionAndRisk(unittest.TestCase):
                 self.assertEqual(m["data_quality_status"], "VALID_OBSERVATION")
                 break
 
+    def test_observed_vs_predicted_risk_discrepancy(self):
+        r_obs = self.client.get("/api/risk/01570500?basis=observed")
+        self.assertEqual(r_obs.status_code, 200)
+        data_obs = r_obs.json()["data"]
+        self.assertEqual(data_obs["assessment_basis"], "OBSERVED")
+        self.assertIn("observed_risk_level", data_obs)
+        self.assertIn("predicted_risk_level", data_obs)
+        self.assertIn("risk_basis_discrepancy", data_obs)
+
+        r_pred = self.client.get("/api/risk/01570500?basis=predicted")
+        self.assertEqual(r_pred.status_code, 200)
+        data_pred = r_pred.json()["data"]
+        self.assertEqual(data_pred["assessment_basis"], "PREDICTED")
+        self.assertIn("risk_basis_discrepancy", data_pred)
+
+    def test_risk_threshold_exact_boundaries(self):
+        st = "01570500"
+        thresh = self.risk_engine.get_thresholds_for_station(st)
+        
+        below_watch = self.risk_engine.classify_discharge(st, thresh["watch"] - 0.01)
+        self.assertEqual(below_watch["risk_level"], "NORMAL")
+        
+        exact_watch = self.risk_engine.classify_discharge(st, thresh["watch"])
+        self.assertEqual(exact_watch["risk_level"], "WATCH")
+        
+        exact_warning = self.risk_engine.classify_discharge(st, thresh["warning"])
+        self.assertEqual(exact_warning["risk_level"], "WARNING")
+        
+        exact_critical = self.risk_engine.classify_discharge(st, thresh["critical"])
+        self.assertEqual(exact_critical["risk_level"], "CRITICAL")
+
+    def test_missing_and_invalid_discharge_handling(self):
+        st = "01570500"
+        res_nan = self.risk_engine.classify_discharge(st, np.nan)
+        self.assertEqual(res_nan["data_quality_status"], "INVALID_OR_MISSING")
+        self.assertEqual(res_nan["evidence_quality"], "DEGRADED")
+        self.assertEqual(res_nan["discharge_cfs"], 0.0)
+
+        res_none = self.risk_engine.classify_discharge(st, None)
+        self.assertEqual(res_none["data_quality_status"], "INVALID_OR_MISSING")
+        self.assertEqual(res_none["evidence_quality"], "DEGRADED")
+
+        r_bad = self.client.get("/api/risk/NONEXISTENT_STATION_9999")
+        self.assertEqual(r_bad.status_code, 404)
+
+    def test_provisional_labeling_and_disclaimer(self):
+        st = "01570500"
+        res = self.risk_engine.classify_discharge(st, 50000.0)
+        self.assertEqual(res["threshold_type"], "EMPIRICAL_DEMONSTRATION")
+        self.assertIn("regulatory_disclaimer", res)
+        self.assertIn("NOT certified NWS/NOAA", res["regulatory_disclaimer"])
+        self.assertFalse(res["is_provisional"])
+
+        unknown = self.risk_engine.classify_discharge("UNSEEN_GAUGE", 50000.0)
+        self.assertTrue(unknown["is_provisional"])
+        self.assertIn("regulatory_disclaimer", unknown)
+
+    def test_persistence_evaluation_metrics_and_reproducibility(self):
+        evaluator = HydrologicalEvaluator()
+        rep = evaluator.run_leakage_safe_evaluation(random_state=42, save_predictions_csv=None)
+        self.assertEqual(rep["evaluation_type"], "LEAKAGE_SAFE_HELD_OUT_STATION_GENERALIZATION")
+        self.assertEqual(rep["training_station_count"], 16)
+        self.assertEqual(rep["held_out_stations_count"], 6)
+        self.assertEqual(len(rep["leakage_safety_audit"]["train_test_station_intersection"]), 0)
+        
+        persist = rep["model_comparison"]["persistence_baseline_1day_lag"]["pooled_metrics"]
+        cfg_a = rep["model_comparison"]["config_a_hist_gb_log1p_24features"]["pooled_metrics"]
+        self.assertLess(persist["rmse"], cfg_a["rmse"])
+        self.assertGreater(persist["nse"], cfg_a["nse"])
+
+    def test_api_replay_endpoints_unified(self):
+        events_resp = self.client.get("/api/swarm/replay/events")
+        self.assertEqual(events_resp.status_code, 200)
+        events_body = events_resp.json()
+        self.assertEqual(events_body["status"], "success")
+        self.assertGreaterEqual(len(events_body["data"]), 2)
+        event_ids = [e["event_id"] for e in events_body["data"]]
+        self.assertIn("EVENT-IN-YAMUNA-2023", event_ids)
+        self.assertIn("EVENT-US-SUSQUEHANNA-2023", event_ids)
+
+        run_resp = self.client.post("/api/swarm/replay/run", json={"event_id": "EVENT-IN-YAMUNA-2023", "step_index": 2})
+        self.assertEqual(run_resp.status_code, 200)
+        run_body = run_resp.json()
+        self.assertEqual(run_body["status"], "success")
+        self.assertEqual(run_body["data"]["river"], "Yamuna River (Upper Yamuna Basin)")
+        self.assertEqual(len(run_body["data"]["timeline_frames"]), 3)
+
 if __name__ == "__main__":
     unittest.main()
 
