@@ -40,9 +40,11 @@ class SwarmActivationEngine:
             return missions
 
         for assess in assessments:
-            level = assess["risk_level"]
-            st_id = assess["station_id"]
-            if assess.get("data_quality_status") != "VALID_OBSERVATION":
+            level = assess.get("risk_level", "NORMAL")
+            st_id = str(assess.get("station_id", "UNKNOWN"))
+            discharge = assess.get("discharge_cfs", assess.get("predicted_discharge_cfs"))
+            q_status = assess.get("data_quality_status", "VALID_OBSERVATION")
+            if q_status != "VALID_OBSERVATION":
                 continue
 
             if level == "CRITICAL":
@@ -51,6 +53,9 @@ class SwarmActivationEngine:
                     "mission_type": "EMERGENCY_CREST_VERIFICATION",
                     "priority": 1,
                     "target_station_id": st_id,
+                    "discharge_cfs": discharge,
+                    "risk_level": level,
+                    "data_quality_status": q_status,
                     "target_position": self._station_to_grid(st_id),
                     "required_capabilities": ["AERIAL_OBSERVATION", "VERIFICATION"],
                     "estimated_duration_sec": 120,
@@ -61,6 +66,9 @@ class SwarmActivationEngine:
                     "mission_type": "DOWNSTREAM_SURVEILLANCE",
                     "priority": 1,
                     "target_station_id": st_id,
+                    "discharge_cfs": discharge,
+                    "risk_level": level,
+                    "data_quality_status": q_status,
                     "target_position": (self._station_to_grid(st_id)[0] + 1, self._station_to_grid(st_id)[1] + 1),
                     "required_capabilities": ["AREA_SURVEILLANCE"],
                     "estimated_duration_sec": 180,
@@ -72,6 +80,9 @@ class SwarmActivationEngine:
                     "mission_type": "SURFACE_FLOW_MONITORING",
                     "priority": 2,
                     "target_station_id": st_id,
+                    "discharge_cfs": discharge,
+                    "risk_level": level,
+                    "data_quality_status": q_status,
                     "target_position": self._station_to_grid(st_id),
                     "required_capabilities": ["RIVER_MONITORING"],
                     "estimated_duration_sec": 150,
@@ -82,6 +93,9 @@ class SwarmActivationEngine:
                     "mission_type": "NETWORK_RELAY_BRIDGE",
                     "priority": 2,
                     "target_station_id": st_id,
+                    "discharge_cfs": discharge,
+                    "risk_level": level,
+                    "data_quality_status": q_status,
                     "target_position": (self._station_to_grid(st_id)[0] - 1, self._station_to_grid(st_id)[1]),
                     "required_capabilities": ["DATA_RELAY"],
                     "estimated_duration_sec": 240,
@@ -93,6 +107,9 @@ class SwarmActivationEngine:
                     "mission_type": "PREVENTIVE_RECONNAISSANCE",
                     "priority": 3,
                     "target_station_id": st_id,
+                    "discharge_cfs": discharge,
+                    "risk_level": level,
+                    "data_quality_status": q_status,
                     "target_position": self._station_to_grid(st_id),
                     "required_capabilities": ["AERIAL_OBSERVATION"],
                     "estimated_duration_sec": 90,

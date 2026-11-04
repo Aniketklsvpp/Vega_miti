@@ -105,17 +105,17 @@
   },
   "robustness": {
     "baseline_rmse_cfs": 5688.65,
-    "noisy_inputs_rmse_cfs": 5712.97,
-    "noise_degradation_pct": 0.43,
-    "missing_inputs_rmse_cfs": 5697.6,
-    "missing_degradation_pct": 0.16,
+    "noisy_inputs_rmse_cfs": 5732.09,
+    "noise_degradation_pct": 0.76,
+    "missing_inputs_rmse_cfs": 5707.81,
+    "missing_degradation_pct": 0.34,
     "delayed_inputs_rmse_cfs": 5689.38,
     "delay_degradation_pct": 0.01
   },
   "efficiency": {
     "total_benchmark_samples": 16060,
-    "inference_latency_us_per_sample": 30.42,
-    "throughput_samples_per_sec": 32870.9,
+    "inference_latency_us_per_sample": 14.08,
+    "throughput_samples_per_sec": 70997.9,
     "artifact_size_kb": 520.85
   },
   "unsupported_metrics_disclosure": [
