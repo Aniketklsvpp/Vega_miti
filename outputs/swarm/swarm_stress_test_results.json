@@ -1,0 +1,343 @@
+{
+  "metadata": {
+    "timestamp": "2026-11-05T05:02:43Z",
+    "framework": "VEGA-MITI Swarm Stress Test & Reliability Audit",
+    "target_host": "http://127.0.0.1:8000",
+    "environment": "SIMULATION"
+  },
+  "summary": {
+    "overall_status": "PASS",
+    "section_statuses": {
+      "multi_agent_coordination": "PASS",
+      "failure_recovery": "PASS",
+      "stress_and_edge_cases": "PASS",
+      "historical_replay_validation": "PASS",
+      "api_reliability": "PASS"
+    },
+    "total_audit_tests": 46,
+    "passed_audit_tests": 46,
+    "pass_rate_pct": 100.0
+  },
+  "sections": {
+    "multi_agent_coordination": {
+      "status": "PASS",
+      "tests": [
+        {
+          "name": "six_heterogeneous_agents_initialization",
+          "passed": true,
+          "details": "Verified 6 agents with types UAV, USV, RELAY, UGV and distinct capabilities."
+        },
+        {
+          "name": "mission_priority_ordering",
+          "passed": true,
+          "details": "Priority 1 allocated before Priority 3: True"
+        },
+        {
+          "name": "simultaneous_mission_allocation_no_conflicts",
+          "passed": true,
+          "details": "Allocated 5 simultaneous missions to 5 distinct agents without duplicate assignment."
+        },
+        {
+          "name": "astar_obstacle_avoidance_pathfinding",
+          "passed": true,
+          "details": "A* generated valid collision-free path circumventing obstacle barrier: True"
+        },
+        {
+          "name": "mission_lifecycle_and_battery_drain",
+          "passed": true,
+          "details": "Battery drained from 95.0% to 94.5%, mission completed, agent returned to AVAILABLE."
+        }
+      ]
+    },
+    "failure_recovery": {
+      "status": "PASS",
+      "tests": [
+        {
+          "name": "uav_failure_and_takeover",
+          "passed": true,
+          "details": "Failed UAV (DRONE_AERIAL_1) triggered reassignment to replacement UAV (RELAY_NODE_1)."
+        },
+        {
+          "name": "usv_failure_and_takeover",
+          "passed": true,
+          "details": "Failed USV (USV_RIVER_1) triggered takeover by secondary USV (USV_RIVER_2)."
+        },
+        {
+          "name": "ugv_failure_and_takeover",
+          "passed": true,
+          "details": "Failed UGV (GROUND_SCOUT_1) triggered reassignment to capable backup agent (DRONE_AERIAL_2)."
+        },
+        {
+          "name": "failed_agent_execution_halt",
+          "passed": true,
+          "details": "Failed agent remained stationary at (1, 1) without executing mission steps while disconnected."
+        },
+        {
+          "name": "agent_reconnection_and_event_sync",
+          "passed": true,
+          "details": "Reconnected DRONE_AERIAL_1, synchronized buffered events, recorded NETWORK_RECONNECTED."
+        }
+      ]
+    },
+    "stress_and_edge_cases": {
+      "status": "PASS",
+      "tests": [
+        {
+          "name": "simultaneous_22_station_critical_activation",
+          "passed": true,
+          "details": "Generated 44 unique missions for 22 simultaneous CRITICAL stations."
+        },
+        {
+          "name": "repeated_activation_and_stepping_25_cycles",
+          "passed": true,
+          "details": "Completed 25 repeated activation/allocation/step cycles without exceptions."
+        },
+        {
+          "name": "rapid_risk_level_transitions",
+          "passed": true,
+          "details": "Cycled through NORMAL->WATCH->WARNING->CRITICAL->NORMAL 10 times without state degradation."
+        },
+        {
+          "name": "mission_queue_oversubscription_handling",
+          "passed": true,
+          "details": "Handled 30 missions for 6 agents: 3 assigned, 27 queued as PENDING safely."
+        },
+        {
+          "name": "mass_agent_disconnection_handling",
+          "passed": true,
+          "details": "All 6 agents disconnected; allocation returned empty list safely without crashes."
+        },
+        {
+          "name": "empty_mission_queue_operations",
+          "passed": true,
+          "details": "Allocations, simulation steps, and lease timeouts executed cleanly on empty queues."
+        },
+        {
+          "name": "out_of_bounds_target_safety",
+          "passed": true,
+          "details": "Out-of-bounds target (999, 999) handled gracefully without infinite loop or crash."
+        }
+      ]
+    },
+    "historical_replay_validation": {
+      "status": "PASS",
+      "tests": [
+        {
+          "name": "yamuna_12_step_count_verification",
+          "passed": true,
+          "details": "Yamuna 2023 replay contains exactly 12 frames (expected 12)."
+        },
+        {
+          "name": "yamuna_provenance_and_peak_discharge_distinction",
+          "passed": true,
+          "details": "Hathnikund peak release 359,000 cfs logged on 2023-07-11; all-time peak crest 208.66m on 2023-07-13; local in-situ discharge strictly UNMETERED_IN_SITU."
+        },
+        {
+          "name": "susquehanna_13_step_count_verification",
+          "passed": true,
+          "details": "Susquehanna 2023 replay contains exactly 13 frames (expected 13)."
+        },
+        {
+          "name": "susquehanna_peak_crest_and_risk_progression",
+          "passed": true,
+          "details": "Peak flow 179,000 cfs on 2023-12-20 correctly categorized as CRITICAL."
+        },
+        {
+          "name": "historical_replay_live_swarm_isolation",
+          "passed": true,
+          "details": "Live swarm coordinator state remained strictly isolated and invariant across replay executions."
+        },
+        {
+          "name": "replay_execution_idempotency",
+          "passed": true,
+          "details": "Repeated replay execution produced identical deterministic observation frames."
+        }
+      ]
+    },
+    "api_reliability": {
+      "status": "PASS",
+      "tests": [
+        {
+          "endpoint": "GET /api/health",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "GET /api/swarm/status",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "GET /api/swarm/agents",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "GET /api/swarm/agents/DRONE_AERIAL_1",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "GET /api/swarm/agents/NON_EXISTENT_AGENT",
+          "expected_status": 404,
+          "received_status": 404,
+          "passed": true
+        },
+        {
+          "endpoint": "GET /api/swarm/missions",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "POST /api/swarm/step",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "POST /api/swarm/step",
+          "expected_status": 422,
+          "received_status": 422,
+          "passed": true
+        },
+        {
+          "endpoint": "POST /api/swarm/step",
+          "expected_status": 422,
+          "received_status": 422,
+          "passed": true
+        },
+        {
+          "endpoint": "POST /api/swarm/agents/DRONE_AERIAL_1/fail",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "POST /api/swarm/agents/NON_EXISTENT_AGENT/fail",
+          "expected_status": 404,
+          "received_status": 404,
+          "passed": true
+        },
+        {
+          "endpoint": "POST /api/swarm/agent/reconnect",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "GET /api/swarm/events?limit=10",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "POST /api/swarm/coordinator/fail",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "POST /api/swarm/coordinator/restore",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "GET /api/swarm/benchmarks",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "GET /api/swarm/replay/events",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "GET /api/swarm/replay/event/EVENT-IN-YAMUNA-2023",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "GET /api/swarm/replay/event/NON_EXISTENT_EVENT",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "POST /api/swarm/replay/run",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "POST /api/swarm/replay/run",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "endpoint": "POST /api/swarm/reset",
+          "expected_status": 200,
+          "received_status": 200,
+          "passed": true
+        },
+        {
+          "name": "burst_request_stability_30_calls",
+          "passed": true,
+          "average_latency_ms": 10.33,
+          "details": "Executed 30 consecutive status requests with 100% success rate (mean 10.33 ms)."
+        }
+      ]
+    }
+  },
+  "performance_benchmarks": {
+    "mission_allocation_latency_ms": {
+      "mean": 0.038,
+      "min": 0.004,
+      "max": 0.145
+    },
+    "swarm_cycle_step_latency_ms": {
+      "mean": 0.012,
+      "min": 0.011,
+      "max": 0.017
+    },
+    "mission_reassignment_latency_ms": {
+      "mean": 0.023,
+      "min": 0.006,
+      "max": 0.086
+    },
+    "api_endpoint_latencies": {
+      "/api/swarm/status": {
+        "p50_ms": 15.4,
+        "mean_ms": 14.1,
+        "p95_ms": 27.85
+      },
+      "/api/swarm/agents": {
+        "p50_ms": 5.01,
+        "mean_ms": 6.88,
+        "p95_ms": 16.18
+      },
+      "/api/swarm/missions": {
+        "p50_ms": 15.27,
+        "mean_ms": 11.64,
+        "p95_ms": 26.67
+      },
+      "/api/swarm/benchmarks": {
+        "p50_ms": 16.26,
+        "mean_ms": 15.51,
+        "p95_ms": 29.37
+      }
+    },
+    "hundred_cycle_simulation_total_ms": 3.56
+  },
+  "edge_case_results": {},
+  "failures_and_fixes": []
+}
