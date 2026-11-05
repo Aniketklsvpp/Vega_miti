@@ -8,6 +8,7 @@ import {
   Target,
 } from 'lucide-react'
 import { SwarmApi } from '../api/swarmApi'
+import StatsCounter from '../components/ui/stats-counter'
 import type { MissionPriority, MissionStatus, SwarmMission } from '../types/swarm'
 
 export const MissionControlView: React.FC = () => {
@@ -107,29 +108,59 @@ export const MissionControlView: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 rounded-xl border border-[#DCE4E9] shadow-xs">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-[#EAF0F3] border border-[#DCE4E9] flex items-center justify-center text-[#19364A]">
-            <Target className="w-5 h-5 text-[#28A6A1]" />
+    <div className="space-y-8 max-w-7xl mx-auto pb-12 font-sans">
+      {/* Prominent Centered Editorial Page Heading matching Station Hydrograph Telemetry */}
+      <div className="flex flex-col items-center text-center pt-2 pb-4">
+        <h1 className="font-black italic uppercase tracking-tighter text-4xl sm:text-5xl lg:text-6xl text-black leading-none select-none sm:whitespace-nowrap">
+          MISSION CONTROL &amp; TASK LEASES.
+        </h1>
+
+        {/* Blue Wave Accent Line matching Reference */}
+        <div className="py-2.5">
+          <svg
+            className="w-24 h-4 text-[#2563EB]"
+            viewBox="0 0 96 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2 8C8 2 16 2 22 8C28 14 36 14 42 8C48 2 56 2 62 8C68 14 76 14 82 8C88 2 94 2 94 8"
+              stroke="#2563EB"
+              strokeWidth="3.2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+
+        <p className="text-sm font-medium text-black/75 max-w-2xl mx-auto leading-relaxed">
+          Autonomous task allocation, bounded lease durations, priority queues, and dynamic failover reassignment
+        </p>
+      </div>
+
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-black/10 shadow-xs">
+        <div className="flex items-center gap-3.5">
+          <div className="p-3 rounded-xl bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/20">
+            <Target className="w-6 h-6 text-[#2563EB]" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-bold text-[#19364A]">Mission Control & Task Leases</h2>
-              <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#EAF0F3] text-[#19364A] border border-[#DCE4E9]">
+              <span className="text-xs font-mono font-bold text-[#2563EB] bg-[#2563EB]/10 px-2.5 py-0.5 rounded-lg border border-[#2563EB]/25 uppercase">
+                TASK DISPATCH
+              </span>
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-black/5 text-black border border-black/10 uppercase">
                 PHASE C &middot; P1
               </span>
             </div>
-            <p className="text-xs text-[#647786]">
-              Autonomous task allocation, bounded lease durations, priority queues, and dynamic failover reassignment.
-            </p>
+            <h2 className="text-xl sm:text-2xl font-black text-black tracking-tight mt-1 select-none">
+              Swarm Directive Allocation &amp; Lease Timers
+            </h2>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#19364A] hover:bg-[#28A6A1] text-white text-xs font-bold shadow-xs transition"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-black hover:bg-black/85 text-white text-xs font-bold shadow-xs transition cursor-pointer"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Deploy Custom Mission</span>
@@ -137,7 +168,7 @@ export const MissionControlView: React.FC = () => {
           <button
             onClick={loadData}
             title="Refresh missions"
-            className="p-2 rounded-lg bg-[#F5F7F8] hover:bg-[#EAF0F3] border border-[#DCE4E9] text-[#19364A] transition"
+            className="p-2 rounded-xl bg-black/5 hover:bg-black/10 border border-black/10 text-black transition cursor-pointer"
           >
             <RefreshCw className="w-4 h-4" />
           </button>
@@ -147,24 +178,26 @@ export const MissionControlView: React.FC = () => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="bg-white p-4 rounded-xl border border-[#DCE4E9] shadow-xs">
           <span className="text-xs text-[#647786] block">Total In Queue</span>
-          <span className="text-2xl font-black text-[#19364A] font-mono mt-1 block">{missions.length}</span>
+          <span className="text-2xl font-black text-[#19364A] font-mono mt-1 block">
+            <StatsCounter value={missions.length} />
+          </span>
         </div>
         <div className="bg-white p-4 rounded-xl border border-[#DCE4E9] shadow-xs">
           <span className="text-xs text-[#647786] block">In Progress</span>
           <span className="text-2xl font-black text-[#28A6A1] font-mono mt-1 block">
-            {missions.filter((m) => m.status === 'IN_PROGRESS').length}
+            <StatsCounter value={missions.filter((m) => m.status === 'IN_PROGRESS').length} />
           </span>
         </div>
         <div className="bg-white p-4 rounded-xl border border-[#DCE4E9] shadow-xs">
           <span className="text-xs text-[#647786] block">Critical Tasks</span>
           <span className="text-2xl font-black text-[#C94C55] font-mono mt-1 block">
-            {missions.filter((m) => m.priority === 'CRITICAL').length}
+            <StatsCounter value={missions.filter((m) => m.priority === 'CRITICAL').length} />
           </span>
         </div>
         <div className="bg-white p-4 rounded-xl border border-[#DCE4E9] shadow-xs">
           <span className="text-xs text-[#647786] block">Reassigned Failovers</span>
           <span className="text-2xl font-black text-purple-600 font-mono mt-1 block">
-            {missions.filter((m) => m.status === 'REASSIGNED').length}
+            <StatsCounter value={missions.filter((m) => m.status === 'REASSIGNED').length} />
           </span>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo, useId } from 'react'
 import type { RegionType } from '../../types/data'
-import { Compass, ChevronRight, ShieldCheck } from 'lucide-react'
+import { Compass, ChevronRight } from 'lucide-react'
 
 // Country dictionary mapping numeric ISO string to [ISO3, Country Name]
 const CD: Record<string, [string, string]> = {
@@ -928,20 +928,7 @@ export const TacticalGlobe3D: React.FC<TacticalGlobe3DProps> = ({ onSelectRegion
 
       {/* Top Tactical HUD Bar */}
       <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-4 bg-gradient-to-b from-[#0a0c0e]/90 via-[#0a0c0e]/40 to-transparent pointer-events-none">
-        <div className="flex items-center gap-3 pointer-events-auto">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#28A6A1] animate-ping" />
-          <div>
-            <div className="text-xs font-bold tracking-widest text-[#7ec8ff] uppercase flex items-center gap-2">
-              <span>DELTA-SWARM</span>
-              <span className="text-[#526573]">//</span>
-              <span className="text-[#d8ddd9]">TACTICAL GLOBE 3D</span>
-            </div>
-            <div className="text-[10px] text-[#8C9BA5] flex items-center gap-2 mt-0.5">
-              <ShieldCheck className="w-3 h-3 text-[#28A6A1]" />
-              <span>ORBITAL RECONNAISSANCE &bull; 2 BASINSHIFT SECTORS ACTIVE</span>
-            </div>
-          </div>
-        </div>
+        <div />
 
         {/* Live Coordinate Telemetry */}
         <div className="hidden md:flex items-center gap-4 text-xs font-mono text-[#8C9BA5] bg-[#121417]/80 border border-[#39424c]/40 rounded-lg px-3 py-1.5 backdrop-blur-sm">

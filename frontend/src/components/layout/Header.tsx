@@ -40,42 +40,7 @@ export const Header: React.FC = () => {
 
   return (
     <header className="bg-white px-4 sm:px-8 lg:px-12 py-4 border-b border-black/5 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* Brand Logo & Title */}
-        <button
-          onClick={() => {
-            setActiveTab('dashboard')
-            setScene('map')
-          }}
-          className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
-        >
-          <div className="w-10 h-10 flex items-center justify-center">
-            {/* Custom organic double-wave logo in vibrant blue matching reference */}
-            <svg
-              className="w-9 h-9 text-[#2563EB] transition-transform group-hover:scale-105"
-              viewBox="0 0 36 36"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4 20C7 11 12 11 16 20C20 29 25 29 29 20C31 15.5 33 15 35 17"
-                stroke="#2563EB"
-                strokeWidth="5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-          <div>
-            <div className="font-black text-xl tracking-tight text-black leading-none">
-              VEGA-MITI
-            </div>
-            <div className="text-[11px] text-black/60 font-medium tracking-tight mt-0.5">
-              Flood Intelligence & Swarm Coordination
-            </div>
-          </div>
-        </button>
-
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-end gap-4">
         {/* Minimal Rounded Pill Navigation matching Reference Images 1 & 2 */}
         <div className="flex flex-wrap items-center gap-2">
           {!isCatchmentView ? (

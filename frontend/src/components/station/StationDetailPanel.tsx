@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import type { EnrichedStation, ModelResults, PredictionRow, ValidationPredictionRow } from '../../types/data'
 import { Hydrograph } from './Hydrograph'
 import { DateScrubber } from './DateScrubber'
+import StatsCounter from '../ui/stats-counter'
 import {
   AlertTriangle,
   Award,
@@ -42,7 +43,6 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
   predictionRows,
   modelResults,
   isDemo = true,
-  isPrototype = false,
 }) => {
   const [stationSearch, setStationSearch] = useState('')
 
@@ -101,19 +101,6 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Prototype Banner for India */}
-      {isPrototype && (
-        <div className="p-3.5 bg-[#FAF6EE] border-2 border-[#B8893B] rounded-xl text-xs text-[#1F2A33] flex items-center justify-between shadow-xs">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#B8893B] animate-pulse"></span>
-            <span className="font-bold">Prototype region: concept demo, model trained on US data.</span>
-          </div>
-          <span className="text-[10px] font-mono font-bold bg-[#B8893B]/20 text-[#B8893B] px-2 py-0.5 rounded border border-[#B8893B]/30">
-            PROTOTYPE ACTIVE
-          </span>
-        </div>
-      )}
-
       {/* Discrepancy Banner: Observed vs Predicted Mismatch */}
       {hasDiscrepancy && (
         <div className="p-4 bg-amber-50 border-2 border-amber-300 rounded-xl text-xs text-amber-950 flex items-start gap-3 shadow-xs">
@@ -175,40 +162,44 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
       )}
 
       {/* Header bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-[#FAF6EE] border border-[#DDD1BF] shadow-xs">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-white border border-black/10 shadow-xs">
+        <div className="flex items-center gap-4">
           <button
             onClick={onBackToMap}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EAE1D2] hover:bg-[#DDD1BF] text-[#1F2A33] text-xs font-semibold border border-[#DDD1BF] transition cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-black/5 text-black text-xs font-bold border border-black/15 transition cursor-pointer shadow-2xs"
             title="Return to river map"
           >
-            <ChevronLeft className="w-4 h-4 text-[#2F7F8F]" />
+            <ChevronLeft className="w-4 h-4 text-[#2563EB]" />
             <span>River Map</span>
           </button>
 
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono font-bold text-[#2F7F8F] uppercase">{station.station_id}</span>
+              <span className="text-xs font-mono font-bold text-[#2563EB] bg-[#2563EB]/10 px-2.5 py-0.5 rounded-lg border border-[#2563EB]/20 uppercase">
+                {station.station_id}
+              </span>
               {station.isExtreme && (
-                <span className="px-2 py-0.5 rounded bg-[#FBECE9] text-[#D8432B] border border-[#D8432B]/30 text-[10px] font-bold flex items-center gap-1">
+                <span className="px-2.5 py-0.5 rounded-lg bg-[#D9531E]/10 text-[#D9531E] border border-[#D9531E]/30 text-[10.5px] font-bold flex items-center gap-1 shadow-2xs">
                   <Flame className="w-3 h-3" /> EXTREME DISCHARGE REACHED
                 </span>
               )}
               {isDemo && (
-                <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-[#B8893B]/15 text-[#B8893B] border border-[#B8893B]/30">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-black/5 text-black/70 border border-black/10">
                   DEMO DATA
                 </span>
               )}
-              <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-[#EAF0F3] text-[#19364A] border border-[#DCE4E9]">
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-black/5 text-black border border-black/10">
                 {isYamuna ? 'CWC INDIA' : 'USGS NWIS'}
               </span>
             </div>
-            <h2 className="text-lg font-bold text-[#1F2A33]">{station.station_name}</h2>
-            <div className="flex items-center gap-2 text-xs text-[#526573] mt-0.5">
-              <MapPin className="w-3.5 h-3.5 text-[#2F7F8F]" />
-              <span>{station.river_name || 'Catchment Basin'}, {station.state}</span>
-              <span className="text-[#DDD1BF]">|</span>
-              <span className="font-mono">
+            <h2 className="text-2xl sm:text-3xl font-black text-black tracking-tight mt-1 select-none">
+              {station.station_name}
+            </h2>
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-black/60 mt-1">
+              <MapPin className="w-4 h-4 text-[#2563EB]" />
+              <span className="font-medium text-black/80">{station.river_name || 'Catchment Basin'}, {station.state}</span>
+              <span className="text-black/20">|</span>
+              <span className="font-mono text-xs">
                 {station.latitude.toFixed(4)}°N, {Math.abs(station.longitude).toFixed(4)}°{station.longitude >= 0 ? 'E' : 'W'}
               </span>
             </div>
@@ -216,15 +207,15 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
         </div>
 
         {/* Searchable Dropdown */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
           <div className="relative">
-            <Search className="w-3.5 h-3.5 text-[#526573] absolute left-2.5 top-2.5" />
+            <Search className="w-4 h-4 text-black/40 absolute left-3 top-3" />
             <input
               type="text"
               placeholder="Search station..."
               value={stationSearch}
               onChange={(e) => setStationSearch(e.target.value)}
-              className="pl-8 pr-2 py-1.5 text-xs bg-[#F3EBDD] border border-[#DDD1BF] rounded-lg text-[#1F2A33] focus:outline-hidden focus:border-[#2F7F8F] w-40"
+              className="pl-9 pr-3 py-2 text-xs bg-white border border-black/15 rounded-xl text-black placeholder:text-black/40 focus:outline-hidden focus:border-[#2563EB] w-48 shadow-2xs font-medium"
             />
           </div>
 
@@ -232,7 +223,7 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
             id="station-dropdown"
             value={station.station_id}
             onChange={(e) => onSelectStation(e.target.value)}
-            className="bg-[#FAF6EE] border border-[#DDD1BF] text-[#1F2A33] text-xs font-semibold rounded-lg px-3 py-1.5 focus:outline-hidden focus:border-[#2F7F8F] shadow-xs cursor-pointer"
+            className="bg-white border border-black/15 text-black text-xs font-bold rounded-xl px-4 py-2 focus:outline-hidden focus:border-[#2563EB] shadow-xs cursor-pointer max-w-xs truncate"
           >
             {filteredStations.map((s) => (
               <option key={s.station_id} value={s.station_id}>
@@ -243,70 +234,77 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
         </div>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-xl p-4 shadow-xs">
-          <div className="flex items-center justify-between text-[#526573] mb-1">
-            <span className="text-[11px] font-medium uppercase">
+      {/* KPI Cards — Matching River Catchment Map Typography and Separate Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="bg-white border border-black/10 rounded-2xl p-6 shadow-xs flex flex-col justify-between hover:border-black/25 transition">
+          <div className="flex items-center justify-between text-black/60 mb-1.5">
+            <span className="text-[11px] font-bold font-mono uppercase tracking-wider">
               {isYamuna ? 'River Stage Level' : 'Model Estimate Flow'}
             </span>
-            <Droplet className="w-3.5 h-3.5 text-[#2F7F8F]" />
+            <Droplet className="w-4 h-4 text-[#2563EB]" />
           </div>
-          <div className="text-xl font-bold font-mono text-[#1F2A33]">
+          <div className="text-3xl sm:text-4xl font-black font-mono text-black mt-1 tracking-tight">
             {dischargeValue != null ? (
-              isYamuna ? (
-                `${dischargeValue.toFixed(2)} m MSL`
-              ) : (
-                `${dischargeValue.toFixed(1)} cfs`
-              )
+              <StatsCounter
+                value={dischargeValue}
+                decimals={isYamuna ? 2 : 1}
+                suffix={isYamuna ? ' m MSL' : ' cfs'}
+              />
             ) : (
               <span className="text-amber-700 text-sm font-semibold">DATA UNAVAILABLE</span>
             )}
           </div>
-          <div className="text-[10.5px] text-[#526573] mt-0.5">
+          <div className="text-xs text-black/50 mt-3 pt-2.5 border-t border-black/10">
             {selectedDate ? `${selectedDate} Telemetry` : 'Current Observation'}
           </div>
         </div>
 
-        <div className="bg-[#FAF6EE] border border-[#D8432B]/30 rounded-xl p-4 shadow-xs">
-          <div className="flex items-center justify-between text-[#526573] mb-1">
-            <span className="text-[11px] font-medium uppercase text-[#D8432B]">
+        <div className="bg-white border border-[#D9531E]/30 rounded-2xl p-6 shadow-xs flex flex-col justify-between hover:border-[#D9531E]/60 transition">
+          <div className="flex items-center justify-between text-[#D9531E] mb-1.5">
+            <span className="text-[11px] font-bold font-mono uppercase tracking-wider text-[#D9531E]">
               {isYamuna ? 'CWC Danger Mark' : 'Extreme Cutoff (10%)'}
             </span>
-            <Flame className="w-3.5 h-3.5 text-[#D8432B]" />
+            <Flame className="w-4 h-4 text-[#D9531E]" />
           </div>
-          <div className="text-xl font-bold font-mono text-[#D8432B]">
-            {isYamuna
-              ? '205.33 m MSL'
-              : thresholdCfs != null
-                ? `${thresholdCfs.toFixed(0)} cfs`
-                : 'N/A'}
+          <div className="text-3xl sm:text-4xl font-black font-mono text-[#D9531E] mt-1 tracking-tight">
+            {isYamuna ? (
+              <StatsCounter value={205.33} decimals={2} suffix=" m MSL" />
+            ) : thresholdCfs != null ? (
+              <StatsCounter value={thresholdCfs} decimals={0} suffix=" cfs" />
+            ) : (
+              'N/A'
+            )}
           </div>
-          <div className="text-[10.5px] text-[#526573] mt-0.5">
+          <div className="text-xs text-black/50 mt-3 pt-2.5 border-t border-black/10">
             {isYamuna ? 'Statutory CWC Evacuation Threshold' : '90th %ile Extreme Threshold'}
           </div>
         </div>
 
-        <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-xl p-4 shadow-xs">
-          <div className="flex items-center justify-between text-[#526573] mb-1">
-            <span className="text-[11px] font-medium uppercase">Validation RMSE</span>
-            <Gauge className="w-3.5 h-3.5 text-[#2F7F8F]" />
+        <div className="bg-white border border-black/10 rounded-2xl p-6 shadow-xs flex flex-col justify-between hover:border-black/25 transition">
+          <div className="flex items-center justify-between text-black/60 mb-1.5">
+            <span className="text-[11px] font-bold font-mono uppercase tracking-wider">Validation RMSE</span>
+            <Gauge className="w-4 h-4 text-[#2563EB]" />
           </div>
-          <div className="text-xl font-bold font-mono text-[#1F2A33]">
-            {station.metrics?.rmse != null ? `${station.metrics.rmse.toFixed(1)} cfs` : 'N/A (Provisional)'}
+          <div className="text-3xl sm:text-4xl font-black font-mono text-black mt-1 tracking-tight">
+            <StatsCounter
+              value={station.metrics?.rmse}
+              decimals={1}
+              suffix=" cfs"
+              fallback="N/A (Provisional)"
+            />
           </div>
-          <div className="text-[10.5px] text-[#526573] mt-0.5">Held-Out Catchment Error</div>
+          <div className="text-xs text-black/50 mt-3 pt-2.5 border-t border-black/10">Held-Out Catchment Error</div>
         </div>
 
-        <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-xl p-4 shadow-xs">
-          <div className="flex items-center justify-between text-[#526573] mb-1">
-            <span className="text-[11px] font-medium uppercase">Validation R²</span>
-            <Award className="w-3.5 h-3.5 text-[#2F7F8F]" />
+        <div className="bg-white border border-black/10 rounded-2xl p-6 shadow-xs flex flex-col justify-between hover:border-black/25 transition">
+          <div className="flex items-center justify-between text-black/60 mb-1.5">
+            <span className="text-[11px] font-bold font-mono uppercase tracking-wider">Validation R²</span>
+            <Award className="w-4 h-4 text-[#2563EB]" />
           </div>
-          <div className="text-xl font-bold font-mono text-[#1F2A33]">
-            {station.metrics?.r2 != null ? station.metrics.r2.toFixed(3) : 'N/A'}
+          <div className="text-3xl sm:text-4xl font-black font-mono text-black mt-1 tracking-tight">
+            <StatsCounter value={station.metrics?.r2} decimals={3} fallback="N/A" />
           </div>
-          <div className="text-[10.5px] text-[#526573] mt-0.5">Hydrological Goodness of Fit</div>
+          <div className="text-xs text-black/50 mt-3 pt-2.5 border-t border-black/10">Hydrological Goodness of Fit</div>
         </div>
       </div>
 
@@ -320,8 +318,8 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
       />
 
       {/* Main Hydrograph Chart with Weather & Model info beside it */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-8">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-7">
+        <div className="xl:col-span-8">
           <Hydrograph
             stationName={station.station_name}
             stationId={station.station_id}
@@ -333,51 +331,51 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
         </div>
 
         {/* Side Panel: Weather, Catchment & Model Configuration */}
-        <div className="lg:col-span-4 space-y-4">
+        <div className="xl:col-span-4 space-y-6">
           {/* Weather & Catchment Card */}
-          <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-2xl p-5 shadow-xs space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-[#DDD1BF]">
-              <div className="flex items-center gap-1.5 font-bold text-xs text-[#1F2A33]">
-                <CloudRain className="w-4 h-4 text-[#2F7F8F]" />
+          <div className="bg-white border border-black/10 rounded-2xl p-6 shadow-xs space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-black/10">
+              <div className="flex items-center gap-2 font-black text-xs uppercase tracking-wider text-black">
+                <CloudRain className="w-4 h-4 text-[#2563EB]" />
                 <span>Weather & Catchment Info</span>
               </div>
-              <span className="text-[10px] font-mono font-bold bg-[#EAE1D2] px-1.5 py-0.2 rounded text-[#526573]">
+              <span className="text-[10px] font-mono font-bold bg-black/5 px-2 py-0.5 rounded text-black/70 border border-black/10">
                 TELEMETRY
               </span>
             </div>
 
-            <div className="space-y-2 text-xs text-[#526573]">
-              <div className="flex justify-between items-center py-1 border-b border-[#DDD1BF]/50">
-                <span className="flex items-center gap-1.5">
-                  <CloudRain className="w-3.5 h-3.5 text-[#2F7F8F]" /> 24h Precipitation:
+            <div className="space-y-3 text-xs sm:text-sm text-black/70">
+              <div className="flex justify-between items-center py-1.5 border-b border-black/5">
+                <span className="flex items-center gap-2">
+                  <CloudRain className="w-4 h-4 text-[#2563EB]" /> 24h Precipitation:
                 </span>
-                <span className="font-mono font-bold text-[#1F2A33]">18.4 mm</span>
+                <span className="font-mono font-bold text-black">18.4 mm</span>
               </div>
-              <div className="flex justify-between items-center py-1 border-b border-[#DDD1BF]/50">
-                <span className="flex items-center gap-1.5">
-                  <Thermometer className="w-3.5 h-3.5 text-[#B8893B]" /> Surface Temperature:
+              <div className="flex justify-between items-center py-1.5 border-b border-black/5">
+                <span className="flex items-center gap-2">
+                  <Thermometer className="w-4 h-4 text-[#D97745]" /> Surface Temperature:
                 </span>
-                <span className="font-mono font-bold text-[#1F2A33]">21.5°C</span>
+                <span className="font-mono font-bold text-black">21.5°C</span>
               </div>
-              <div className="flex justify-between items-center py-1 border-b border-[#DDD1BF]/50">
-                <span className="flex items-center gap-1.5">
-                  <Wind className="w-3.5 h-3.5 text-[#526573]" /> Soil Saturation:
+              <div className="flex justify-between items-center py-1.5 border-b border-black/5">
+                <span className="flex items-center gap-2">
+                  <Wind className="w-4 h-4 text-black/60" /> Soil Saturation:
                 </span>
-                <span className="font-mono font-bold text-[#1F2A33]">68.2%</span>
+                <span className="font-mono font-bold text-black">68.2%</span>
               </div>
-              <div className="flex justify-between items-center py-1 border-b border-[#DDD1BF]/50">
-                <span className="flex items-center gap-1.5">
-                  <Mountain className="w-3.5 h-3.5 text-[#2F7F8F]" /> Drainage Basin Area:
+              <div className="flex justify-between items-center py-1.5 border-b border-black/5">
+                <span className="flex items-center gap-2">
+                  <Mountain className="w-4 h-4 text-[#2563EB]" /> Drainage Basin Area:
                 </span>
-                <span className="font-mono font-bold text-[#1F2A33]">
+                <span className="font-mono font-bold text-black">
                   {isYamuna ? '18,900 sq km (Upper Yamuna)' : '24,100 sq mi'}
                 </span>
               </div>
               <div className="flex justify-between items-center py-1">
-                <span className="flex items-center gap-1.5">
-                  <Compass className="w-3.5 h-3.5 text-[#B8893B]" /> Datum Elevation:
+                <span className="flex items-center gap-2">
+                  <Compass className="w-4 h-4 text-[#D97745]" /> Datum Elevation:
                 </span>
-                <span className="font-mono font-bold text-[#1F2A33]">
+                <span className="font-mono font-bold text-black">
                   {isYamuna ? '200.0 m MSL' : '320 m ASL'}
                 </span>
               </div>
@@ -385,55 +383,55 @@ export const StationDetailPanel: React.FC<StationDetailPanelProps> = ({
           </div>
 
           {/* Model Configuration Card */}
-          <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-2xl p-5 shadow-xs space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-[#DDD1BF]">
-              <div className="flex items-center gap-1.5 font-bold text-xs text-[#1F2A33]">
-                <Cpu className="w-4 h-4 text-[#B8893B]" />
+          <div className="bg-white border border-black/10 rounded-2xl p-6 shadow-xs space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-black/10">
+              <div className="flex items-center gap-2 font-black text-xs uppercase tracking-wider text-black">
+                <Cpu className="w-4 h-4 text-[#D97745]" />
                 <span>Model & Configuration</span>
               </div>
-              <span className="text-[10px] font-mono font-bold bg-[#EAE1D2] px-1.5 py-0.2 rounded text-[#526573]">
+              <span className="text-[10px] font-mono font-bold bg-black/5 px-2 py-0.5 rounded text-black/70 border border-black/10">
                 CONFIG
               </span>
             </div>
 
-            <div className="space-y-2 text-xs text-[#526573]">
+            <div className="space-y-3 text-xs sm:text-sm text-black/70">
               <div>
-                <span className="text-[10px] font-semibold text-[#526573] block uppercase tracking-wider">
+                <span className="text-[10.5px] font-bold font-mono text-black/50 block uppercase tracking-wider">
                   Model Architecture
                 </span>
-                <span className="font-bold text-[#1F2A33] block mt-0.5">
+                <span className="font-bold text-black block mt-1 text-sm">
                   {modelResults?.model_name || 'HistGradientBoostingRegressor (Config A)'}
                 </span>
               </div>
 
               <div>
-                <span className="text-[10px] font-semibold text-[#526573] block uppercase tracking-wider">
+                <span className="text-[10.5px] font-bold font-mono text-black/50 block uppercase tracking-wider">
                   Validation Strategy
                 </span>
-                <span className="font-mono text-[11px] text-[#1F2A33] block mt-0.5">
+                <span className="font-mono text-xs text-black block mt-1">
                   {modelResults?.validation_strategy || 'Spatial-Temporal Held-Out Catchment K-Fold'}
                 </span>
               </div>
 
               <div>
-                <span className="text-[10px] font-semibold text-[#526573] block uppercase tracking-wider">
+                <span className="text-[10.5px] font-bold font-mono text-black/50 block uppercase tracking-wider">
                   Exogenous Features
                 </span>
-                <div className="flex flex-wrap gap-1 mt-1">
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#EAE1D2] text-[#1F2A33] font-mono">
+                <div className="flex flex-wrap gap-1.5 mt-1.5">
+                  <span className="text-[11px] px-2 py-0.5 rounded-md bg-black/5 text-black font-mono font-semibold border border-black/10">
                     ERA5 Precip
                   </span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#EAE1D2] text-[#1F2A33] font-mono">
+                  <span className="text-[11px] px-2 py-0.5 rounded-md bg-black/5 text-black font-mono font-semibold border border-black/10">
                     Soil Moisture
                   </span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#EAE1D2] text-[#1F2A33] font-mono">
+                  <span className="text-[11px] px-2 py-0.5 rounded-md bg-black/5 text-black font-mono font-semibold border border-black/10">
                     Lag-7d Flow
                   </span>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-[#DDD1BF]/60 text-[11px] text-[#526573]">
-                <span>Training: <b>2018–2022</b> &bull; Test: <b>2023–2024</b></span>
+              <div className="pt-2.5 border-t border-black/10 text-xs text-black/60">
+                <span>Training: <b className="text-black">2018–2022</b> &bull; Test: <b className="text-black">2023–2024</b></span>
               </div>
             </div>
           </div>

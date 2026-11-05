@@ -142,20 +142,52 @@ const AppContent: React.FC = () => {
         />
       )}
 
-      {/* 3. STATION HYDROGRAPH & DETAIL VIEW */}
+      {/* 3. STATION HYDROGRAPH & DETAIL VIEW: EXACT MATCH TO RIVER CATCHMENT MAP THEME */}
       {activeTab === 'station' && currentStation && (
-        <div className="space-y-6">
+        <div className="space-y-8 w-full max-w-7xl mx-auto">
+          {/* Top Navigation Row: Cleanly separated so button never overlaps heading */}
           <div className="flex items-center justify-between pb-4 border-b border-black/10">
-            <div>
-              <h2 className="text-2xl font-black text-black">Station Hydrograph Telemetry</h2>
-              <p className="text-xs text-black/60 font-medium">Real-time discharge observations vs predictive AI baseline</p>
-            </div>
             <button
               onClick={() => setActiveTab('map')}
-              className="px-4 py-2 rounded-full border border-black/20 hover:border-black text-xs font-bold text-black transition cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/15 hover:border-black bg-white text-xs font-bold text-black transition shadow-xs cursor-pointer hover:bg-black/5"
             >
               &larr; Return to Catchment Map
             </button>
+
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/5 border border-black/10 text-[11px] font-mono font-bold text-black uppercase">
+                <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse" />
+                {data.region === 'india' ? 'INDIA PROTOTYPE GAUGE' : 'USGS 22 BASIN GAUGE'}
+              </span>
+            </div>
+          </div>
+
+          {/* Prominent Centered Editorial Heading matching River Catchment Map */}
+          <div className="flex flex-col items-center text-center pt-2 pb-6">
+            <h1 className="font-black italic uppercase tracking-tighter text-4xl sm:text-5xl lg:text-6xl text-black leading-none select-none">
+              STATION HYDROGRAPH TELEMETRY.
+            </h1>
+
+            {/* Blue Wave Accent Line matching Reference */}
+            <div className="py-2.5">
+              <svg
+                className="w-24 h-4 text-[#2563EB]"
+                viewBox="0 0 96 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2 8C8 2 16 2 22 8C28 14 36 14 42 8C48 2 56 2 62 8C68 14 76 14 82 8C88 2 94 2 94 8"
+                  stroke="#2563EB"
+                  strokeWidth="3.2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+
+            <p className="text-sm font-medium text-black/75 max-w-2xl mx-auto leading-relaxed">
+              Real-time discharge observations vs predictive AI baseline with empirical backtest confidence intervals
+            </p>
           </div>
 
           <StationDetailPanel
@@ -168,7 +200,6 @@ const AppContent: React.FC = () => {
             predictionRows={data.predictions}
             modelResults={data.modelResults}
             isDemo={data.isDemo}
-            isPrototype={data.isPrototype}
           />
         </div>
       )}

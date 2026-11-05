@@ -1,0 +1,21 @@
+{
+  "source": "Terrarium SRTM-derived elevation zoom 11",
+  "isFallback": false,
+  "station_id": "01570500",
+  "station_name": "Susquehanna River at Harrisburg, PA",
+  "bounds": {
+    "minLon": -77.21357694794996,
+    "maxLon": -76.55842305205003,
+    "minLat": 40.0047,
+    "maxLat": 40.5047
+  },
+  "elevation_m": {
+    "min": 38.06230163574219,
+    "max": 502.0481262207031,
+    "relief": 463.98582458496094
+  },
+  "tileWidthMetres": 55670.0,
+  "tileWidthWorld": 10.0,
+  "width": 512,
+  "height": 512
+}

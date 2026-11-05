@@ -14,6 +14,7 @@ import {
   Zap,
 } from 'lucide-react'
 import { SwarmApi } from '../api/swarmApi'
+import StatsCounter from '../components/ui/stats-counter'
 import type { CoordinatorState, SwarmAgent, SwarmMission } from '../types/swarm'
 
 interface SwarmCommandViewProps {
@@ -153,25 +154,52 @@ export const SwarmCommandView: React.FC<SwarmCommandViewProps> = ({
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 rounded-xl border border-[#DCE4E9] shadow-xs">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-[#EAF0F3] border border-[#DCE4E9] flex items-center justify-center text-[#19364A]">
-            <Layers className="w-5 h-5 text-[#28A6A1]" />
+    <div className="space-y-8 max-w-7xl mx-auto pb-12 font-sans">
+      {/* Prominent Centered Editorial Page Heading matching Station Hydrograph Telemetry */}
+      <div className="flex flex-col items-center text-center pt-2 pb-4">
+        <h1 className="font-black italic uppercase tracking-tighter text-4xl sm:text-5xl lg:text-6xl text-black leading-none select-none sm:whitespace-nowrap">
+          SWARM COMMAND CENTER.
+        </h1>
+
+        {/* Blue Wave Accent Line matching Reference */}
+        <div className="py-2.5">
+          <svg
+            className="w-24 h-4 text-[#2563EB]"
+            viewBox="0 0 96 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2 8C8 2 16 2 22 8C28 14 36 14 42 8C48 2 56 2 62 8C68 14 76 14 82 8C88 2 94 2 94 8"
+              stroke="#2563EB"
+              strokeWidth="3.2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+
+        <p className="text-sm font-medium text-black/75 max-w-2xl mx-auto leading-relaxed">
+          Real-time telemetry, mesh connectivity, and lease monitoring for 6 simulated autonomous agents on a discrete 20&times;20 research grid
+        </p>
+      </div>
+
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-black/10 shadow-xs">
+        <div className="flex items-center gap-3.5">
+          <div className="p-3 rounded-xl bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/20">
+            <Layers className="w-6 h-6 text-[#2563EB]" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-bold text-[#19364A]">Swarm Command Center</h2>
-              <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#EAF0F3] text-[#19364A] border border-[#DCE4E9]">
+              <span className="text-xs font-mono font-bold text-[#2563EB] bg-[#2563EB]/10 px-2.5 py-0.5 rounded-lg border border-[#2563EB]/25 uppercase">
                 PHASE B &middot; 20&times;20 CARTESIAN GRID
               </span>
-              <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+              <span className="text-[10px] font-mono font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-lg border border-amber-200 uppercase">
                 DIGITAL MULTI-AGENT SIMULATION
               </span>
             </div>
-            <p className="text-xs text-[#647786]">
-              Real-time telemetry, mesh connectivity, and lease monitoring for 6 simulated autonomous agents on a discrete 20&times;20 research grid.
-            </p>
+            <h2 className="text-xl sm:text-2xl font-black text-black tracking-tight mt-1 select-none">
+              Autonomous Swarm Fleet &amp; Grid Telemetry
+            </h2>
           </div>
         </div>
 
@@ -221,7 +249,7 @@ export const SwarmCommandView: React.FC<SwarmCommandViewProps> = ({
               <span>Step (+5)</span>
             </button>
             <span className="text-[10.5px] font-mono text-[#647786] px-2 py-0.5 font-semibold">
-              Step #{stepCount}
+              Step #<StatsCounter value={stepCount} />
             </span>
           </div>
 
@@ -441,7 +469,7 @@ export const SwarmCommandView: React.FC<SwarmCommandViewProps> = ({
             <div className="flex items-center justify-between pb-2 border-b border-[#DCE4E9]">
               <span className="text-xs font-bold text-[#19364A]">Swarm Fleet Status Summary</span>
               <span className="text-[11px] font-mono font-bold text-[#28A6A1]">
-                {agents.filter((a) => a.connectivity === 'CONNECTED').length} / {agents.length} AGENTS ONLINE
+                <StatsCounter value={agents.filter((a) => a.connectivity === 'CONNECTED').length} /> / <StatsCounter value={agents.length} /> AGENTS ONLINE
               </span>
             </div>
             <div className="grid grid-cols-3 gap-2 mt-3">
@@ -452,13 +480,13 @@ export const SwarmCommandView: React.FC<SwarmCommandViewProps> = ({
               >
                 <span className="text-[10px] text-[#647786] block">Active Missions</span>
                 <span className="text-lg font-black text-[#19364A] font-mono">
-                  {missions.filter((m) => m.status === 'IN_PROGRESS' || m.status === 'ASSIGNED').length}
+                  <StatsCounter value={missions.filter((m) => m.status === 'IN_PROGRESS' || m.status === 'ASSIGNED').length} />
                 </span>
               </button>
               <div className="p-2.5 rounded-lg bg-[#F5F7F8] border border-[#DCE4E9] text-center">
                 <span className="text-[10px] text-[#647786] block">Connected</span>
                 <span className="text-lg font-black text-emerald-600 font-mono">
-                  {agents.filter((a) => a.connectivity === 'CONNECTED').length} / {agents.length}
+                  <StatsCounter value={agents.filter((a) => a.connectivity === 'CONNECTED').length} /> / <StatsCounter value={agents.length} />
                 </span>
               </div>
               <button
@@ -468,7 +496,7 @@ export const SwarmCommandView: React.FC<SwarmCommandViewProps> = ({
               >
                 <span className="text-[10px] text-[#647786] block">Disconnected</span>
                 <span className="text-lg font-black text-[#C94C55] font-mono">
-                  {agents.filter((a) => a.connectivity === 'DISCONNECTED').length}
+                  <StatsCounter value={agents.filter((a) => a.connectivity === 'DISCONNECTED').length} />
                 </span>
               </button>
             </div>

@@ -55,142 +55,195 @@ export const Hydrograph: React.FC<HydrographProps> = ({
 
   const unitStr = isYamuna ? ' m MSL' : ' cfs'
 
+  // Custom polished tooltip matching River Catchment Map design
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white/95 backdrop-blur-md border border-black/10 rounded-xl p-3.5 shadow-xl text-xs space-y-2 min-w-[220px]">
+          <div className="flex items-center justify-between border-b border-black/10 pb-1.5 font-mono text-[11px] text-black/60">
+            <span className="font-bold text-black">{label}</span>
+            <span className="font-semibold">{isYamuna ? 'CWC Gauge' : 'USGS NWIS'}</span>
+          </div>
+
+          <div className="space-y-1.5">
+            {payload.map((entry: any, i: number) => {
+              if (entry.value == null) return null
+              return (
+                <div key={i} className="flex items-center justify-between gap-3">
+                  <span className="flex items-center gap-1.5 text-black/70 font-medium">
+                    <span
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{ backgroundColor: entry.color }}
+                    />
+                    {entry.name}:
+                  </span>
+                  <span className="font-bold font-mono text-black">
+                    {Number(entry.value).toFixed(isYamuna ? 2 : 1)}
+                    {unitStr}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+
+          {isYamuna && payload[0]?.value != null && (
+            <div className="text-[10.5px] font-semibold text-black/70 pt-1.5 border-t border-black/10">
+              {Number(payload[0].value) >= 208.66 ? (
+                <span className="text-[#991B1B] font-bold">★ All-Time 2023 Crest Breached</span>
+              ) : Number(payload[0].value) >= 205.33 ? (
+                <span className="text-[#D9531E] font-bold">⚠ Danger Level Exceeded (Evacuation)</span>
+              ) : Number(payload[0].value) >= 204.5 ? (
+                <span className="text-[#D97745] font-bold">⚡ Warning Mark Exceeded</span>
+              ) : (
+                <span className="text-emerald-700 font-bold">✔ Below Statutory Warning Mark</span>
+              )}
+            </div>
+          )}
+        </div>
+      )
+    }
+    return null
+  }
+
   return (
-    <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-2xl p-6 shadow-xs space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#DDD1BF] pb-4">
+    <div className="bg-white border border-black/10 rounded-2xl p-6 sm:p-8 shadow-xs space-y-6">
+      {/* Top Station Hydrograph Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/10 pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-[#2F7F8F] uppercase">{stationId}</span>
+            <span className="text-xs font-mono font-bold text-[#2563EB] bg-[#2563EB]/10 px-2 py-0.5 rounded border border-[#2563EB]/25 uppercase">
+              {stationId}
+            </span>
             {isDemo && (
-              <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-[#B8893B]/15 text-[#B8893B] border border-[#B8893B]/30">
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-black/5 text-black/70 border border-black/10">
                 DEMO DATA
               </span>
             )}
             {isYamuna && (
-              <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-sky-100 text-sky-800 border border-sky-300">
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/25">
                 STAGE GAUGE (METRES MSL)
               </span>
             )}
           </div>
-          <h2 className="text-xl font-bold text-[#1F2A33] tracking-tight mt-0.5">{stationName}</h2>
+          <h2 className="text-2xl sm:text-3xl font-black text-black tracking-tight mt-1 select-none">
+            {stationName}
+          </h2>
         </div>
 
         {isYamuna ? (
           <div className="flex flex-wrap items-center gap-2">
-            <div className="px-2.5 py-1 rounded-lg bg-rose-50 border border-rose-300 text-rose-800 text-xs font-mono font-semibold">
+            <div className="px-3 py-1.5 rounded-xl bg-rose-50 border border-rose-300 text-rose-800 text-xs font-mono font-bold shadow-2xs">
               Danger: <b>205.33 m</b>
             </div>
-            <div className="px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-300 text-amber-800 text-xs font-mono font-semibold">
+            <div className="px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-800 text-xs font-mono font-bold shadow-2xs">
               Warning: <b>204.50 m</b>
             </div>
           </div>
         ) : (
           extremeThreshold && (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#D8432B]/10 border border-[#D8432B]/30 text-[#D8432B] text-xs font-mono font-semibold">
-              <span className="w-2 h-2 rounded-full bg-[#D8432B]" />
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#D9531E]/10 border border-[#D9531E]/30 text-[#D9531E] text-xs font-mono font-bold shadow-2xs">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#D9531E] animate-pulse" />
               <span>
-                Extreme Flow Cutoff (P90): <b>{extremeThreshold.toFixed(1)} cfs</b>
+                Extreme Cutoff (P90): <b>{extremeThreshold.toFixed(1)} cfs</b>
               </span>
             </div>
           )
         )}
       </div>
 
-      <div className="h-[420px] w-full pt-2">
+      {/* Large Hydrograph Visualization */}
+      <div className="h-[500px] sm:h-[540px] w-full pt-1">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={chartData} margin={{ top: 15, right: 25, left: 10, bottom: 25 }}>
             <defs>
-              <linearGradient id="actualGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#1F2A33" stopOpacity={0.15} />
-                <stop offset="95%" stopColor="#1F2A33" stopOpacity={0.0} />
+              {/* Subtle Area Gradient for Dark Navy Observed Discharge */}
+              <linearGradient id="observedNavyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#0F172A" stopOpacity={0.12} />
+                <stop offset="95%" stopColor="#0F172A" stopOpacity={0.0} />
+              </linearGradient>
+
+              {/* Subtle Area Gradient for Forecast Horizon */}
+              <linearGradient id="forecastGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#D97745" stopOpacity={0.15} />
+                <stop offset="95%" stopColor="#D97745" stopOpacity={0.0} />
               </linearGradient>
             </defs>
 
-            <CartesianGrid strokeDasharray="3 3" stroke="#EAE1D2" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
             <XAxis
               dataKey="date"
-              stroke="#526573"
-              tick={{ fill: '#526573', fontSize: 11, fontFamily: 'system-ui, sans-serif' }}
-              tickLine={{ stroke: '#DDD1BF' }}
+              stroke="#64748B"
+              tick={{ fill: '#64748B', fontSize: 11, fontFamily: 'monospace' }}
+              tickLine={{ stroke: '#E2E8F0' }}
+              axisLine={{ stroke: '#E2E8F0' }}
             />
             <YAxis
-              stroke="#526573"
-              tick={{ fill: '#526573', fontSize: 11, fontFamily: 'system-ui, sans-serif' }}
-              tickLine={{ stroke: '#DDD1BF' }}
+              stroke="#64748B"
+              tick={{ fill: '#64748B', fontSize: 11, fontFamily: 'monospace' }}
+              tickLine={{ stroke: '#E2E8F0' }}
+              axisLine={{ stroke: '#E2E8F0' }}
               unit={unitStr}
               domain={isYamuna ? [200, 210] : ['auto', 'auto']}
             />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: '#FAF6EE',
-                borderColor: '#DDD1BF',
-                borderRadius: '8px',
-                color: '#1F2A33',
-                fontSize: '12px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
-              }}
-              formatter={(value: any) =>
-                value != null ? [`${Number(value).toFixed(2)}${unitStr}`, 'Value'] : ['DATA UNAVAILABLE', 'Value']
-              }
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend
               verticalAlign="top"
-              height={36}
-              wrapperStyle={{ fontSize: '12px', color: '#1F2A33' }}
+              height={40}
+              wrapperStyle={{ fontSize: '12px', color: '#0F172A', fontWeight: 700 }}
             />
 
             {/* Yamuna Statutory Threshold Reference Lines */}
             {isYamuna && (
               <>
                 <ReferenceLine
-                  y={204.50}
+                  y={204.5}
                   stroke="#D97745"
                   strokeDasharray="4 4"
-                  strokeWidth={1.5}
+                  strokeWidth={1.8}
                   label={{
                     value: 'Warning (204.50m)',
                     fill: '#D97745',
                     position: 'top',
-                    fontSize: 10,
+                    fontSize: 10.5,
                     fontWeight: 700,
                   }}
                 />
                 <ReferenceLine
                   y={205.33}
-                  stroke="#C94C55"
+                  stroke="#D9531E"
                   strokeDasharray="4 4"
-                  strokeWidth={2}
+                  strokeWidth={2.2}
                   label={{
                     value: 'Danger (205.33m)',
-                    fill: '#C94C55',
+                    fill: '#D9531E',
                     position: 'top',
-                    fontSize: 10,
-                    fontWeight: 700,
+                    fontSize: 10.5,
+                    fontWeight: 800,
                   }}
                 />
                 <ReferenceLine
                   y={207.49}
-                  stroke="#7A2E35"
-                  strokeDasharray="2 2"
-                  strokeWidth={1.5}
+                  stroke="#7C3AED"
+                  strokeDasharray="3 3"
+                  strokeWidth={1.8}
                   label={{
                     value: '1978 Record (207.49m)',
-                    fill: '#7A2E35',
+                    fill: '#7C3AED',
                     position: 'top',
-                    fontSize: 10,
-                    fontWeight: 600,
+                    fontSize: 10.5,
+                    fontWeight: 700,
                   }}
                 />
                 <ReferenceLine
                   y={208.66}
                   stroke="#991B1B"
-                  strokeWidth={2}
+                  strokeWidth={2.5}
                   label={{
                     value: '2023 Peak Crest (208.66m)',
                     fill: '#991B1B',
                     position: 'top',
-                    fontSize: 10,
-                    fontWeight: 800,
+                    fontSize: 11,
+                    fontWeight: 900,
                   }}
                 />
               </>
@@ -199,74 +252,84 @@ export const Hydrograph: React.FC<HydrographProps> = ({
             {!isYamuna && extremeThreshold && (
               <ReferenceLine
                 y={extremeThreshold}
-                stroke="#D8432B"
+                stroke="#D9531E"
                 strokeDasharray="4 4"
-                strokeWidth={2}
+                strokeWidth={2.2}
                 label={{
-                  value: `Extreme Cutoff (${extremeThreshold} cfs)`,
-                  fill: '#D8432B',
+                  value: `Extreme Cutoff (${extremeThreshold.toFixed(1)} cfs)`,
+                  fill: '#D9531E',
                   position: 'top',
                   fontSize: 11,
-                  fontWeight: 600,
+                  fontWeight: 800,
                 }}
               />
             )}
 
-            {/* Historical (observed) = solid ink */}
+            {/* 1. Observed Discharge: Dark Navy Curve with Subtle Area Fill */}
             <Area
               type="monotone"
               dataKey="actual"
-              name={isYamuna ? 'Observed Stage Level' : 'Historical (observed)'}
-              stroke="#1F2A33"
-              strokeWidth={2.5}
-              fill="url(#actualGrad)"
+              name={isYamuna ? 'Observed Stage Level' : 'Observed Discharge'}
+              stroke="#0F172A"
+              strokeWidth={3}
+              fill="url(#observedNavyGrad)"
               connectNulls={false}
+              isAnimationActive={true}
+              animationDuration={1200}
+              animationEasing="ease-out"
             />
 
-            {/* Backtest (validation prediction) = dashed teal */}
+            {/* 2. Backtest Predictions: Distinct Blue/Teal Dashed Curve */}
             <Line
               type="monotone"
               dataKey="predicted"
-              name={isYamuna ? 'Backtest Hydrograph' : 'Backtest (validation prediction)'}
-              stroke="#2F7F8F"
-              strokeWidth={2}
-              strokeDasharray="4 4"
+              name={isYamuna ? 'Backtest Hydrograph' : 'Backtest (Prediction)'}
+              stroke="#2563EB"
+              strokeWidth={2.5}
+              strokeDasharray="6 4"
               dot={false}
               connectNulls={false}
+              isAnimationActive={true}
+              animationDuration={1200}
+              animationEasing="ease-out"
             />
 
-            {/* Test-period prediction = ochre with markers */}
+            {/* 3. Forecast Horizon Estimates: Warm Ochre with Smooth Markers */}
             <Line
               type="monotone"
               dataKey="futurePrediction"
               name="Forecast Horizon Estimate"
-              stroke="#B8893B"
-              strokeWidth={2.5}
-              dot={{ r: 4, fill: '#B8893B', stroke: '#FAF6EE', strokeWidth: 1.5 }}
+              stroke="#D97745"
+              strokeWidth={3}
+              dot={{ r: 4.5, fill: '#D97745', stroke: '#FFFFFF', strokeWidth: 2 }}
               connectNulls={false}
+              isAnimationActive={true}
+              animationDuration={1200}
+              animationEasing="ease-out"
             />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="text-xs text-[#526573] text-center flex flex-wrap items-center justify-center gap-6 pt-1 border-t border-[#DDD1BF]/60">
-        <span className="flex items-center gap-1.5 font-medium">
-          <span className="w-3.5 h-0.5 bg-[#1F2A33] inline-block" /> Historical (observed) &mdash; Solid Ink
+      {/* Bottom Graph Legend & Data Indicators */}
+      <div className="text-xs text-black/60 text-center flex flex-wrap items-center justify-center gap-6 pt-3 border-t border-black/10">
+        <span className="flex items-center gap-1.5 font-bold text-[#0F172A]">
+          <span className="w-4 h-1 bg-[#0F172A] rounded-full inline-block" /> Observed Discharge &mdash; Solid Dark Navy
         </span>
-        <span className="flex items-center gap-1.5 font-medium">
-          <span className="w-3.5 h-0.5 bg-[#2F7F8F] inline-block border-b border-dashed" /> Backtest Prediction &mdash; Dashed Teal
+        <span className="flex items-center gap-1.5 font-bold text-[#2563EB]">
+          <span className="w-4 h-0.5 bg-[#2563EB] inline-block border-b-2 border-dashed border-[#2563EB]" /> Backtest Prediction &mdash; Dashed Blue
         </span>
-        <span className="flex items-center gap-1.5 font-medium">
-          <span className="w-3.5 h-0.5 bg-[#B8893B] inline-block" /> Forecast Horizon &mdash; Ochre with markers
+        <span className="flex items-center gap-1.5 font-bold text-[#D97745]">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#D97745] inline-block" /> Forecast Horizon &mdash; Warm Ochre
         </span>
         {isYamuna ? (
-          <span className="text-[#C94C55] font-semibold flex items-center gap-1.5">
-            <span className="w-3.5 h-0.5 bg-[#C94C55] inline-block border-b border-dashed" /> Statutory CWC Warning/Danger Lines
+          <span className="text-[#D9531E] font-bold flex items-center gap-1.5">
+            <span className="w-4 h-0.5 bg-[#D9531E] inline-block border-b-2 border-dashed border-[#D9531E]" /> Statutory CWC Warning/Danger Lines
           </span>
         ) : (
           extremeThreshold && (
-            <span className="text-[#D8432B] font-semibold flex items-center gap-1.5">
-              <span className="w-3.5 h-0.5 bg-[#D8432B] inline-block border-b border-dotted" /> Extreme vermilion cutoff
+            <span className="text-[#D9531E] font-bold flex items-center gap-1.5">
+              <span className="w-4 h-0.5 bg-[#D9531E] inline-block border-b-2 border-dotted border-[#D9531E]" /> Extreme Cutoff (P90)
             </span>
           )
         )}
@@ -274,3 +337,5 @@ export const Hydrograph: React.FC<HydrographProps> = ({
     </div>
   )
 }
+
+export default Hydrograph

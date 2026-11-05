@@ -1,6 +1,7 @@
 import React from 'react'
 import type { EnrichedStation, RegionType } from '../types/data'
 import { Terrain3DScene } from '../components/terrain/Terrain3DScene'
+import StatsCounter from '../components/ui/stats-counter'
 import { ArrowRight } from 'lucide-react'
 
 interface OverviewViewProps {
@@ -91,7 +92,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             GAUGING NETWORK
           </div>
           <div className="text-3xl sm:text-4xl font-black text-black tracking-tight">
-            {stations.length} Stations
+            <StatsCounter value={stations.length} /> Stations
           </div>
         </div>
 
@@ -101,7 +102,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             MEAN CATCHMENT FLOW
           </div>
           <div className="text-3xl sm:text-4xl font-black text-black tracking-tight">
-            {avgDischarge.toFixed(1)} cfs
+            <StatsCounter value={avgDischarge} decimals={1} /> cfs
           </div>
         </div>
 
@@ -111,7 +112,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             PEAK CATCHMENT FLOW
           </div>
           <div className="text-3xl sm:text-4xl font-black text-black tracking-tight">
-            {maxDischargeStation?.currentDischarge?.toFixed(1) ?? 'N/A'} cfs
+            <StatsCounter value={maxDischargeStation?.currentDischarge} decimals={1} fallback="N/A" /> cfs
           </div>
         </div>
 
@@ -121,7 +122,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             EXTREME FLOW EVENTS
           </div>
           <div className="text-3xl sm:text-4xl font-black text-[#D9531E] tracking-tight">
-            {extremeStations.length} Stations
+            <StatsCounter value={extremeStations.length} /> Stations
           </div>
         </div>
       </div>
@@ -130,7 +131,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
       <div className="bg-black/[0.02] border border-black/10 rounded-2xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-bold text-black uppercase tracking-wider font-mono">
-            Catchment Gauging Directory ({stations.length} Active Stations)
+            Catchment Gauging Directory (<StatsCounter value={stations.length} /> Active Stations)
           </h3>
           <span className="text-xs text-black/50">Click station to inspect hydrograph</span>
         </div>
