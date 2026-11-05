@@ -8,8 +8,10 @@ import {
   Layers,
   Play,
   RefreshCw,
+  RotateCcw,
   Wifi,
   WifiOff,
+  Zap,
 } from 'lucide-react'
 import { SwarmApi } from '../api/swarmApi'
 import type { CoordinatorState, SwarmAgent, SwarmMission } from '../types/swarm'
@@ -47,6 +49,31 @@ export const SwarmCommandView: React.FC<SwarmCommandViewProps> = ({
     }, 2000)
     return () => clearInterval(timer)
   }, [])
+
+  const handleResetSimulation = async () => {
+    setIsStepping(true)
+    try {
+      await SwarmApi.resetSimulation()
+      setStepCount(0)
+      setLastStepStatus('Simulation reset to baseline state (20x20 grid).')
+      await refreshData()
+    } finally {
+      setIsStepping(false)
+    }
+  }
+
+  const handleActivateSwarm = async () => {
+    setIsStepping(true)
+    try {
+      const res = await SwarmApi.activateSwarm()
+      if (res.status === 'success') {
+        setLastStepStatus('Swarm Activated: Autonomous missions generated & allocated across active agents.')
+      }
+      await refreshData()
+    } finally {
+      setIsStepping(false)
+    }
+  }
 
   const handleStepSimulation = async (steps: number = 1) => {
     setIsStepping(true)
@@ -162,6 +189,17 @@ export const SwarmCommandView: React.FC<SwarmCommandViewProps> = ({
             </div>
           )}
 
+          {/* Swarm Activation Trigger */}
+          <button
+            onClick={handleActivateSwarm}
+            disabled={isStepping}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg bg-[#28A6A1] hover:bg-[#208b87] text-white shadow-2xs transition disabled:opacity-50 cursor-pointer"
+            title="Trigger autonomous swarm activation for critical reaches"
+          >
+            <Zap className="w-3.5 h-3.5 fill-current" />
+            <span>Activate Swarm</span>
+          </button>
+
           {/* Step Simulation Controls */}
           <div className="flex items-center gap-1.5 bg-[#F5F7F8] p-1 rounded-lg border border-[#DCE4E9]">
             <button
@@ -187,6 +225,15 @@ export const SwarmCommandView: React.FC<SwarmCommandViewProps> = ({
             </span>
           </div>
 
+          <button
+            onClick={handleResetSimulation}
+            disabled={isStepping}
+            title="Reset swarm simulation to initial state"
+            className="flex items-center gap-1 px-2.5 py-1 text-xs font-bold rounded-lg bg-[#F5F7F8] hover:bg-[#EAF0F3] border border-[#DCE4E9] text-[#647786] transition cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Reset</span>
+          </button>
           <button
             onClick={refreshData}
             title="Poll telemetry state"

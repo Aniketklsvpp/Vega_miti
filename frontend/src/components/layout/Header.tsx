@@ -1,124 +1,193 @@
-import React from 'react'
-import {
-  Gauge,
-  Globe2,
-  History,
-  Layers,
-  MapPin,
-  Network,
-  RefreshCw,
-  Scale,
-  ShieldCheck,
-  Target,
-} from 'lucide-react'
+import React, { useState } from 'react'
+import { ChevronDown, RefreshCw } from 'lucide-react'
 import { useRiverData } from '../../context/RiverDataContext'
 import type { AnalysisTab } from '../../types/data'
-import { DemoBadge } from '../common/DemoBadge'
 
 export const Header: React.FC = () => {
-  const { status, scene, setScene, region, setRegion, activeTab, setActiveTab, reload } = useRiverData()
+  const {
+    scene,
+    setScene,
+    region,
+    activeTab,
+    setActiveTab,
+    switchRegionAndEnterMap,
+    reload,
+  } = useRiverData()
 
-  const tabs: { id: AnalysisTab; label: string; icon: React.ReactNode }[] = [
-    { id: 'map', label: 'River Catchment Map', icon: <MapPin className="w-4 h-4" /> },
-    { id: 'station', label: 'Station Hydrograph', icon: <Gauge className="w-4 h-4" /> },
-    { id: 'trust', label: 'Model Trust', icon: <ShieldCheck className="w-4 h-4" /> },
-    { id: 'flood', label: 'Flood Intelligence', icon: <Layers className="w-4 h-4" /> },
-    { id: 'replay', label: 'Historical Replay', icon: <History className="w-4 h-4" /> },
-    { id: 'swarm', label: 'Swarm Command', icon: <Target className="w-4 h-4" /> },
-    { id: 'missions', label: 'Missions', icon: <Target className="w-4 h-4" /> },
-    { id: 'resilience', label: 'Resilience', icon: <Network className="w-4 h-4" /> },
-    { id: 'benchmarks', label: 'Benchmarks', icon: <Scale className="w-4 h-4" /> },
+  const [regionMenuOpen, setRegionMenuOpen] = useState(false)
+
+  // When on catchment map or deeper analysis, show analysis tabs matching Image 2
+  const isCatchmentView = activeTab === 'map' || activeTab === 'station' || activeTab === 'trust' || activeTab === 'flood'
+
+  const dashboardTabs = [
+    { id: 'dashboard' as AnalysisTab, label: 'Dashboard' },
+    { id: 'map' as AnalysisTab, label: 'Globe' },
+    { id: 'swarm' as AnalysisTab, label: 'Swarm' },
+    { id: 'missions' as AnalysisTab, label: 'Missions' },
+    { id: 'replay' as AnalysisTab, label: 'Replay' },
+    { id: 'benchmarks' as AnalysisTab, label: 'Evaluation' },
+    { id: 'station' as AnalysisTab, label: 'Data' },
   ]
 
-  const isReady = status.status === 'ready'
-  const isDemo = isReady ? status.data.isDemo : true
-  const isPrototype = isReady ? status.data.isPrototype : region === 'india'
+  const catchmentTabs = [
+    { id: 'dashboard' as AnalysisTab, label: 'Dashboard' },
+    { id: 'globe' as const, label: 'Globe' },
+    { id: 'map' as AnalysisTab, label: 'Catchment Map' },
+    { id: 'station' as AnalysisTab, label: 'Station Hydrograph' },
+    { id: 'trust' as AnalysisTab, label: 'Model Trust' },
+    { id: 'flood' as AnalysisTab, label: 'Flood Intelligence' },
+  ]
 
   return (
-    <header className="border-b border-[#DDD1BF] bg-[#FAF6EE] sticky top-0 z-50 px-4 sm:px-6 py-2.5 shadow-xs">
-      <div className="max-w-7xl mx-auto flex flex-col xl:flex-row xl:items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setScene('globe')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EAE1D2] hover:bg-[#DDD1BF] text-[#1F2A33] text-xs font-semibold border border-[#DDD1BF] transition cursor-pointer"
-            title="Return to 3D Earth Globe"
-          >
-            <Globe2 className="w-4 h-4 text-[#2F7F8F]" />
-            <span>3D Earth Globe</span>
-          </button>
-
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#1F2A33] flex items-center justify-center text-[#FAF6EE] shadow-xs">
-              <Layers className="w-4 h-4 text-[#2F7F8F]" />
+    <header className="bg-white px-4 sm:px-8 lg:px-12 py-4 border-b border-black/5 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* Brand Logo & Title */}
+        <button
+          onClick={() => {
+            setActiveTab('dashboard')
+            setScene('map')
+          }}
+          className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
+        >
+          <div className="w-10 h-10 flex items-center justify-center">
+            {/* Custom organic double-wave logo in vibrant blue matching reference */}
+            <svg
+              className="w-9 h-9 text-[#2563EB] transition-transform group-hover:scale-105"
+              viewBox="0 0 36 36"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 20C7 11 12 11 16 20C20 29 25 29 29 20C31 15.5 33 15 35 17"
+                stroke="#2563EB"
+                strokeWidth="5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+          <div>
+            <div className="font-black text-xl tracking-tight text-black leading-none">
+              VEGA-MITI
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-base tracking-tight text-[#1F2A33]">
-                  DELTA<span className="text-[#2F7F8F]">-</span>SWARM
-                </span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#EAE1D2] text-[#1F2A33] font-mono font-bold border border-[#DDD1BF]">
-                  BASINSHIFT
-                </span>
-              </div>
-              <p className="text-[10px] text-[#526573]">Flood Intelligence & Multi-Agent Coordination</p>
+            <div className="text-[11px] text-black/60 font-medium tracking-tight mt-0.5">
+              Flood Intelligence & Swarm Coordination
             </div>
           </div>
-        </div>
+        </button>
 
-        {scene === 'map' && (
-          <nav className="flex items-center gap-1 bg-[#F3EBDD] p-1 rounded-xl border border-[#DDD1BF] overflow-x-auto max-w-full">
-            {tabs.map((tab) => {
-              const isActive = activeTab === tab.id
+        {/* Minimal Rounded Pill Navigation matching Reference Images 1 & 2 */}
+        <div className="flex flex-wrap items-center gap-2">
+          {!isCatchmentView ? (
+            // Reference Image 1 Pills
+            dashboardTabs.map((t) => {
+              const isActive = (activeTab === 'dashboard' && t.id === 'dashboard') ||
+                               (activeTab === t.id && t.id !== 'dashboard')
               return (
                 <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition whitespace-nowrap cursor-pointer ${
+                  key={t.id}
+                  onClick={() => {
+                    if (t.id === 'map') {
+                      switchRegionAndEnterMap(region)
+                    } else {
+                      setActiveTab(t.id)
+                      setScene('map')
+                    }
+                  }}
+                  className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition cursor-pointer ${
                     isActive
-                      ? 'bg-[#FAF6EE] text-[#1F2A33] shadow-xs border border-[#DDD1BF] font-bold'
-                      : 'text-[#526573] hover:text-[#1F2A33] hover:bg-[#FAF6EE]/60'
+                      ? 'bg-black text-white shadow-xs'
+                      : 'bg-white text-black border border-black/30 hover:border-black hover:bg-black/5'
                   }`}
                 >
-                  <span className={isActive ? 'text-[#2F7F8F]' : ''}>{tab.icon}</span>
-                  {tab.label}
+                  {t.label}
                 </button>
               )
-            })}
-          </nav>
-        )}
+            })
+          ) : (
+            // Reference Image 2 Pills
+            <>
+              {catchmentTabs.map((t) => {
+                const isActive = t.id === 'globe'
+                  ? scene === 'globe'
+                  : activeTab === t.id && scene !== 'globe'
 
-        <div className="flex items-center gap-2.5 self-end xl:self-auto">
-          <div className="flex items-center bg-[#F3EBDD] border border-[#DDD1BF] rounded-lg p-0.5 text-xs">
-            <button
-              onClick={() => setRegion('usa')}
-              className={`px-2.5 py-1 rounded transition text-xs cursor-pointer ${
-                region === 'usa'
-                  ? 'bg-[#FAF6EE] text-[#1F2A33] font-bold border border-[#DDD1BF] shadow-xs'
-                  : 'text-[#526573] hover:text-[#1F2A33]'
-              }`}
-            >
-              USA (22 Stations)
-            </button>
-            <button
-              onClick={() => setRegion('india')}
-              className={`px-2.5 py-1 rounded transition text-xs cursor-pointer ${
-                region === 'india'
-                  ? 'bg-[#FAF6EE] text-[#1F2A33] font-bold border border-[#DDD1BF] shadow-xs'
-                  : 'text-[#526573] hover:text-[#1F2A33]'
-              }`}
-            >
-              India (Prototype)
-            </button>
-          </div>
+                return (
+                  <button
+                    key={t.id}
+                    onClick={() => {
+                      if (t.id === 'globe') {
+                        setScene('globe')
+                      } else if (t.id === 'dashboard') {
+                        setActiveTab('dashboard')
+                        setScene('map')
+                      } else {
+                        setActiveTab(t.id)
+                        setScene('map')
+                      }
+                    }}
+                    className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition cursor-pointer whitespace-nowrap ${
+                      isActive
+                        ? 'bg-black text-white shadow-xs'
+                        : 'bg-white text-black border border-black/30 hover:border-black hover:bg-black/5'
+                    }`}
+                  >
+                    {t.label}
+                  </button>
+                )
+              })}
 
-          <DemoBadge isDemo={isDemo} isPrototype={isPrototype} region={region} />
+              <div className="h-5 w-[1px] bg-black/25 mx-1 hidden sm:block" />
 
+              {/* Region Selector Pill matching Image 2 */}
+              <div className="relative">
+                <button
+                  onClick={() => setRegionMenuOpen(!regionMenuOpen)}
+                  className="px-4 py-1.5 sm:py-2 rounded-full text-xs font-semibold bg-white text-black border border-black/30 hover:border-black flex items-center gap-1.5 transition cursor-pointer"
+                >
+                  <span>Region: {region === 'india' ? 'India' : 'USA'}</span>
+                  <ChevronDown className="w-3.5 h-3.5 text-black/70" />
+                </button>
+
+                {regionMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-black/20 rounded-2xl shadow-xl py-1 z-50">
+                    <button
+                      onClick={() => {
+                        switchRegionAndEnterMap('usa')
+                        setRegionMenuOpen(false)
+                      }}
+                      className={`w-full px-4 py-2 text-left text-xs font-semibold flex items-center justify-between hover:bg-black/5 cursor-pointer ${
+                        region === 'usa' ? 'text-[#2563EB] font-bold' : 'text-black'
+                      }`}
+                    >
+                      <span>USA (22 Stations)</span>
+                      {region === 'usa' && <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />}
+                    </button>
+                    <button
+                      onClick={() => {
+                        switchRegionAndEnterMap('india')
+                        setRegionMenuOpen(false)
+                      }}
+                      className={`w-full px-4 py-2 text-left text-xs font-semibold flex items-center justify-between hover:bg-black/5 cursor-pointer ${
+                        region === 'india' ? 'text-[#2563EB] font-bold' : 'text-black'
+                      }`}
+                    >
+                      <span>India (Catchment Demo)</span>
+                      {region === 'india' && <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Quick Telemetry Refresh */}
           <button
             onClick={reload}
-            title="Reload telemetry datasets"
-            className="p-1.5 rounded-lg bg-[#FAF6EE] hover:bg-[#EAE1D2] text-[#1F2A33] border border-[#DDD1BF] transition cursor-pointer"
+            title="Refresh hydrological telemetry"
+            className="p-2 rounded-full text-black hover:bg-black/5 border border-black/20 transition cursor-pointer"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>

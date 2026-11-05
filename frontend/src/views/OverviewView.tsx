@@ -1,7 +1,7 @@
 import React from 'react'
 import type { EnrichedStation, RegionType } from '../types/data'
 import { Terrain3DScene } from '../components/terrain/Terrain3DScene'
-import { Activity, ArrowRight, Compass, Droplet, Flame } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 interface OverviewViewProps {
   region: RegionType
@@ -30,105 +30,144 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
       : 0
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-xl p-4 shadow-xs">
-          <div className="flex items-center justify-between text-[#526573] mb-1">
-            <span className="text-xs font-mono uppercase font-semibold">Gauging Network</span>
-            <Compass className="w-4 h-4 text-[#2F7F8F]" />
+    <div className="space-y-10">
+      {/* Editorial Split Layout matching Reference Image 2 */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        {/* Left Column: Bold Editorial Typography & Wavy Accent */}
+        <div className="lg:col-span-4 flex flex-col justify-center space-y-4">
+          <h1 className="font-black italic uppercase tracking-tighter text-5xl sm:text-6xl text-black leading-[0.88] select-none">
+            RIVER<br />
+            CATCHMENT<br />
+            MAP.
+          </h1>
+
+          {/* Blue Wave Accent Line matching Reference */}
+          <div className="py-1">
+            <svg
+              className="w-24 h-4 text-[#2563EB]"
+              viewBox="0 0 96 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2 8C8 2 16 2 22 8C28 14 36 14 42 8C48 2 56 2 62 8C68 14 76 14 82 8C88 2 94 2 94 8"
+                stroke="#2563EB"
+                strokeWidth="3.2"
+                strokeLinecap="round"
+              />
+            </svg>
           </div>
-          <div className="text-2xl font-bold font-mono text-[#1F2A33]">{stations.length} Stations</div>
-          <div className="text-[11px] text-[#526573] mt-1">
-            {region === 'india' ? 'India Catchment Monitoring' : 'USGS Monitored Catchments (22 Active)'}
+
+          <p className="text-sm font-medium text-black/75 leading-relaxed max-w-sm">
+            Real-time river catchment intelligence, flow dynamics and flood risk insights.
+          </p>
+
+          <div className="pt-2">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/5 border border-black/10 text-[11px] font-mono font-bold text-black uppercase">
+              <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse" />
+              {region === 'india' ? 'INDIA PROTOTYPE BASIN' : 'USGS 22 BASIN NETWORK'}
+            </span>
           </div>
         </div>
 
-        <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-xl p-4 shadow-xs">
-          <div className="flex items-center justify-between text-[#526573] mb-1">
-            <span className="text-xs font-mono uppercase font-semibold">Mean Catchment Flow</span>
-            <Droplet className="w-4 h-4 text-[#2F7F8F]" />
+        {/* Right Column: Large Rounded 3D Terrain Container matching Reference Image 2 */}
+        <div className="lg:col-span-8">
+          <div className="w-full rounded-[2.2rem] border border-black/80 overflow-hidden bg-white shadow-xl relative aspect-[16/10] min-h-[460px]">
+            <Terrain3DScene
+              region={region}
+              stations={stations}
+              selectedStationId={selectedStationId}
+              onSelectStation={onSelectStation}
+            />
           </div>
-          <div className="text-2xl font-bold font-mono text-[#1F2A33]">{avgDischarge.toFixed(1)} cfs</div>
-          <div className="text-[11px] text-[#526573] mt-1">Cross-Station Average</div>
+        </div>
+      </div>
+
+      {/* Horizontal Metrics Row matching Reference Image 2 */}
+      <div className="border-t border-b border-black/10 py-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+        {/* Metric 1: Gauging Network */}
+        <div className="pr-4 md:border-r border-black/15">
+          <div className="text-[11px] font-bold font-mono tracking-wider uppercase text-black/70 mb-1">
+            GAUGING NETWORK
+          </div>
+          <div className="text-3xl sm:text-4xl font-black text-black tracking-tight">
+            {stations.length} Stations
+          </div>
         </div>
 
-        <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-xl p-4 shadow-xs">
-          <div className="flex items-center justify-between text-[#526573] mb-1">
-            <span className="text-xs font-mono uppercase font-semibold">Peak Catchment Flow</span>
-            <Activity className="w-4 h-4 text-[#B8893B]" />
+        {/* Metric 2: Mean Catchment Flow */}
+        <div className="pr-4 md:border-r border-black/15">
+          <div className="text-[11px] font-bold font-mono tracking-wider uppercase text-black/70 mb-1">
+            MEAN CATCHMENT FLOW
           </div>
-          <div className="text-2xl font-bold font-mono text-[#1F2A33]">
+          <div className="text-3xl sm:text-4xl font-black text-black tracking-tight">
+            {avgDischarge.toFixed(1)} cfs
+          </div>
+        </div>
+
+        {/* Metric 3: Peak Catchment Flow */}
+        <div className="pr-4 md:border-r border-black/15">
+          <div className="text-[11px] font-bold font-mono tracking-wider uppercase text-black/70 mb-1">
+            PEAK CATCHMENT FLOW
+          </div>
+          <div className="text-3xl sm:text-4xl font-black text-black tracking-tight">
             {maxDischargeStation?.currentDischarge?.toFixed(1) ?? 'N/A'} cfs
           </div>
-          <div className="text-[11px] text-[#526573] mt-1 truncate">
-            {maxDischargeStation?.station_name ?? 'N/A'}
-          </div>
         </div>
 
-        <div className="bg-[#FAF6EE] border border-[#D8432B]/30 rounded-xl p-4 shadow-xs">
-          <div className="flex items-center justify-between text-[#526573] mb-1">
-            <span className="text-xs font-mono uppercase font-semibold text-[#D8432B]">Extreme Flow Events</span>
-            <Flame className="w-4 h-4 text-[#D8432B]" />
+        {/* Metric 4: Extreme Flow Events */}
+        <div>
+          <div className="text-[11px] font-bold font-mono tracking-wider uppercase text-[#D9531E] mb-1">
+            EXTREME FLOW EVENTS
           </div>
-          <div className="text-2xl font-bold font-mono text-[#D8432B]">
-            {extremeStations.length} {extremeStations.length === 1 ? 'Station' : 'Stations'}
+          <div className="text-3xl sm:text-4xl font-black text-[#D9531E] tracking-tight">
+            {extremeStations.length} Stations
           </div>
-          <div className="text-[11px] text-[#526573] mt-1">Top 10% Historical Cutoff</div>
         </div>
       </div>
 
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-base font-bold text-[#1F2A33] tracking-tight">
-              {region === 'india' ? 'India 3D Hypsometric River Basin Terrain' : 'USGS 3D River Catchment Elevation Model'}
-            </h2>
-            <p className="text-xs text-[#526573]">
-              Real SRTM elevation mesh &middot; Drag to orbit &middot; Right-drag to pan &middot; Scroll to zoom &middot; Click station to fly-in
-            </p>
-          </div>
-          <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-[#EAE1D2] text-[#1F2A33] font-semibold border border-[#DDD1BF]">
-            {region.toUpperCase()} 3D TERRAIN
-          </span>
+      {/* Real Monitoring Station Directory */}
+      <div className="bg-black/[0.02] border border-black/10 rounded-2xl p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-sm font-bold text-black uppercase tracking-wider font-mono">
+            Catchment Gauging Directory ({stations.length} Active Stations)
+          </h3>
+          <span className="text-xs text-black/50">Click station to inspect hydrograph</span>
         </div>
-        <Terrain3DScene
-          region={region}
-          stations={stations}
-          selectedStationId={selectedStationId}
-          onSelectStation={onSelectStation}
-          onNavigateToStation={onNavigateToStation}
-        />
-      </div>
-
-      <div className="bg-[#FAF6EE] border border-[#DDD1BF] rounded-2xl p-5 shadow-xs">
-        <h3 className="text-sm font-bold text-[#1F2A33] mb-3">Monitoring Station Directory</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {stations.map((s) => (
-            <button
-              key={s.station_id}
-              onClick={() => {
-                onSelectStation(s.station_id)
-                onNavigateToStation(s.station_id)
-              }}
-              className="p-3 rounded-xl border border-[#DDD1BF] hover:border-[#2F7F8F] bg-[#F3EBDD]/40 hover:bg-[#FAF6EE] text-left transition flex items-center justify-between group cursor-pointer"
-            >
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-mono font-bold text-[#2F7F8F]">{s.station_id}</span>
-                  {s.isExtreme && (
-                    <span className="w-2 h-2 rounded-full bg-[#D8432B]" title="Extreme discharge" />
-                  )}
+          {stations.map((s) => {
+            const isSelected = s.station_id === selectedStationId
+            return (
+              <button
+                key={s.station_id}
+                onClick={() => {
+                  onSelectStation(s.station_id)
+                  onNavigateToStation(s.station_id)
+                }}
+                className={`p-3.5 rounded-xl border text-left transition flex items-center justify-between group cursor-pointer ${
+                  isSelected
+                    ? 'border-[#2563EB] bg-[#2563EB]/5 shadow-xs'
+                    : 'border-black/10 bg-white hover:border-black/40 hover:bg-black/[0.02]'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-mono font-bold text-[#2563EB]">{s.station_id}</span>
+                    {s.isExtreme && (
+                      <span className="w-2 h-2 rounded-full bg-[#D9531E]" title="Extreme discharge" />
+                    )}
+                  </div>
+                  <div className="text-xs font-bold text-black truncate max-w-[220px] mt-0.5">
+                    {s.station_name}
+                  </div>
+                  <div className="text-[11px] text-black/60 mt-0.5">
+                    {s.river_name} &bull; {s.state} &bull; <span className="font-mono font-semibold">{s.currentDischarge?.toFixed(1) ?? 'N/A'} cfs</span>
+                  </div>
                 </div>
-                <div className="text-xs font-semibold text-[#1F2A33] truncate max-w-[200px] mt-0.5">
-                  {s.station_name}
-                </div>
-                <div className="text-[10px] text-[#526573] mt-0.5">
-                  {s.river_name} &bull; {s.state}
-                </div>
-              </div>
-              <ArrowRight className="w-3.5 h-3.5 text-[#526573] group-hover:text-[#2F7F8F] group-hover:translate-x-0.5 transition" />
-            </button>
-          ))}
+                <ArrowRight className="w-4 h-4 text-black/40 group-hover:text-[#2563EB] group-hover:translate-x-0.5 transition" />
+              </button>
+            )
+          })}
         </div>
       </div>
     </div>

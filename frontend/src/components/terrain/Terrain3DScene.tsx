@@ -2,12 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import type { EnrichedStation, RegionType } from '../../types/data'
-import {
-  Compass,
-  Flame,
-  Layers,
-  Sliders,
-} from 'lucide-react'
+import { Compass, Sliders } from 'lucide-react'
 
 interface Terrain3DSceneProps {
   region: RegionType
@@ -43,12 +38,10 @@ interface StationScreenPos {
   visible: boolean
   isExtreme: boolean
   isSelected: boolean
-  isHovered: boolean
   discharge: number
-  percentile: number
-  pinColor: string
 }
 
+// Vertex shader: displacements & smooth slope normals
 const vertexShader = `
   uniform sampler2D uHeightmap;
   uniform float uExaggeration;
@@ -63,17 +56,17 @@ const vertexShader = `
     float h = texture2D(uHeightmap, uv).r;
     vElevation = h;
     
-    // Finite difference normal approximation
-    float texelSize = 1.0 / 512.0;
+    // Finite difference normal approximation with gentle slope gradients
+    float texelSize = 1.0 / 256.0;
     float hL = texture2D(uHeightmap, uv - vec2(texelSize, 0.0)).r;
     float hR = texture2D(uHeightmap, uv + vec2(texelSize, 0.0)).r;
     float hD = texture2D(uHeightmap, uv - vec2(0.0, texelSize)).r;
     float hU = texture2D(uHeightmap, uv + vec2(0.0, texelSize)).r;
 
     vec3 normal = normalize(vec3(
-      (hL - hR) * uExaggeration * uMaxHeight * 4.0,
-      (hD - hU) * uExaggeration * uMaxHeight * 4.0,
-      2.0
+      (hL - hR) * uExaggeration * uMaxHeight * 2.8,
+      (hD - hU) * uExaggeration * uMaxHeight * 2.8,
+      1.0
     ));
     vNormalVec = normal;
 
@@ -85,12 +78,9 @@ const vertexShader = `
   }
 `
 
+// Fragment shader: clean matte white & light-grey sculptural plaster relief matching Image 2
 const fragmentShader = `
   uniform float uExaggeration;
-  uniform vec3 uColorLow;
-  uniform vec3 uColorMid;
-  uniform vec3 uColorHigh;
-  uniform vec3 uContourColor;
   uniform vec3 uLightDir;
   varying vec2 vUv;
   varying float vElevation;
@@ -98,50 +88,93 @@ const fragmentShader = `
   varying vec3 vWorldPos;
 
   void main() {
-    // 1. Hypsometric tinting in Cartographer palette
-    vec3 terrainColor;
-    if (vElevation < 0.35) {
-      terrainColor = mix(uColorLow, uColorMid, vElevation / 0.35);
-    } else {
-      terrainColor = mix(uColorMid, uColorHigh, (vElevation - 0.35) / 0.65);
-    }
-
-    // 2. Hillshading calculation
     vec3 normal = normalize(vNormalVec);
     vec3 light = normalize(uLightDir);
-    float NdotL = max(0.15, dot(normal, light));
-    float ambient = 0.55;
-    vec3 shadedColor = terrainColor * (NdotL * 0.7 + ambient);
+    
+    // Primary key directional hillshading from top-left
+    float NdotL = max(0.0, dot(normal, light));
 
-    // 3. Crisp topographic contour lines
-    float contourFreq = 38.0;
-    float contourVal = abs(fract(vElevation * contourFreq - 0.5) - 0.5);
-    float contourWidth = fwidth(vElevation * contourFreq) * 1.2;
-    float contourFactor = smoothstep(0.0, max(0.04, contourWidth), contourVal);
-    shadedColor = mix(uContourColor, shadedColor, 0.82 + 0.18 * contourFactor);
+    // Soft secondary fill light from opposite angle
+    vec3 fillLight = normalize(vec3(0.6, -0.4, 0.8));
+    float fill = max(0.0, dot(normal, fillLight)) * 0.28;
 
-    // 4. Soft edge vignette fade to parchment
-    float edgeDistX = min(vUv.x, 1.0 - vUv.x);
-    float edgeDistY = min(vUv.y, 1.0 - vUv.y);
-    float edgeDist = min(edgeDistX, edgeDistY);
-    float edgeFade = smoothstep(0.0, 0.09, edgeDist);
-    vec3 finalColor = mix(uColorLow, shadedColor, edgeFade);
+    // Sculpted plaster tone: pure white mountain crests (#ffffff) to light soft silver-grey valleys (#edf0f4)
+    vec3 baseColor = mix(vec3(0.92, 0.93, 0.95), vec3(1.0, 1.0, 1.0), smoothstep(0.08, 0.9, vElevation));
 
-    gl_FragColor = vec4(finalColor, 1.0);
+    // Gentle micro-ambient occlusion in deep depressions
+    float ao = clamp(pow(vElevation + 0.15, 0.2), 0.82, 1.0);
+
+    // Realistic sculptural lighting
+    float lighting = NdotL * 0.68 + fill + 0.44;
+    vec3 shadedColor = baseColor * lighting * ao;
+
+    gl_FragColor = vec4(shadedColor, 1.0);
   }
 `
+
+// Helper: build wide, visible blue river ribbon meshes flowing naturally through valleys
+function createRiverRibbon(
+  pts: { x: number; y: number; z: number }[],
+  width: number = 0.32,
+  color: number = 0x2563eb
+): THREE.Mesh | null {
+  if (pts.length < 2) return null
+
+  const vertices: number[] = []
+  const indices: number[] = []
+
+  for (let i = 0; i < pts.length; i++) {
+    const curr = pts[i]
+    let dirX = 0
+    let dirY = 0
+
+    if (i < pts.length - 1) {
+      dirX = pts[i + 1].x - curr.x
+      dirY = pts[i + 1].y - curr.y
+    } else {
+      dirX = curr.x - pts[i - 1].x
+      dirY = curr.y - pts[i - 1].y
+    }
+
+    const len = Math.hypot(dirX, dirY) || 1
+    const normX = (-dirY / len) * (width / 2)
+    const normY = (dirX / len) * (width / 2)
+    const zOffset = curr.z + 0.05
+
+    vertices.push(curr.x + normX, curr.y + normY, zOffset)
+    vertices.push(curr.x - normX, curr.y - normY, zOffset)
+
+    if (i < pts.length - 1) {
+      const base = i * 2
+      indices.push(base, base + 1, base + 2)
+      indices.push(base + 1, base + 3, base + 2)
+    }
+  }
+
+  const geom = new THREE.BufferGeometry()
+  geom.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
+  geom.setIndex(indices)
+  geom.computeVertexNormals()
+
+  const mat = new THREE.MeshBasicMaterial({
+    color,
+    side: THREE.DoubleSide,
+    transparent: true,
+    opacity: 0.95,
+  })
+
+  return new THREE.Mesh(geom, mat)
+}
 
 export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
   region,
   stations,
   selectedStationId,
   onSelectStation,
-  onNavigateToStation,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null)
   const [metadata, setMetadata] = useState<TerrainMeta | null>(null)
-  const [exaggeration, setExaggeration] = useState<number>(2.0)
-  const [hoveredStationId, setHoveredStationId] = useState<string | null>(null)
+  const [exaggeration, setExaggeration] = useState<number>(2.4)
   const [screenLabels, setScreenLabels] = useState<StationScreenPos[]>([])
   const [isFlying, setIsFlying] = useState<boolean>(false)
 
@@ -149,15 +182,18 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
   const sceneRef = useRef<THREE.Scene | null>(null)
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
   const controlsRef = useRef<OrbitControls | null>(null)
+  const terrainGroupRef = useRef<THREE.Group | null>(null)
   const terrainMeshRef = useRef<THREE.Mesh | null>(null)
   const stationPinsRef = useRef<THREE.Group | null>(null)
   const heightDataRef = useRef<Float32Array | null>(null)
   const heightDimsRef = useRef<{ w: number; h: number }>({ w: 0, h: 0 })
   const animFrameRef = useRef<number | null>(null)
 
-  const planeWidth = 24
-  const planeHeight = region === 'usa' ? 14 : 18
-  const baseMaxHeight = 3.2
+  // Architectural square/rectangular model dimensions
+  const planeWidth = 20
+  const planeHeight = region === 'usa' ? 16 : 18
+  const baseMaxHeight = 3.6
+  const skirtDepth = -1.2 // Deep solid block base
 
   useEffect(() => {
     fetch('/assets/terrain/metadata.json')
@@ -186,7 +222,7 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
     (u: number, v: number): number => {
       const grid = heightDataRef.current
       const { w, h } = heightDimsRef.current
-      if (!grid || w === 0 || h === 0) return 0
+      if (!grid || w === 0 || h === 0) return 0.1
 
       const clampedU = Math.max(0, Math.min(1, u))
       const clampedV = Math.max(0, Math.min(1, v))
@@ -201,7 +237,7 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
 
   const latLonToPlanePos = useCallback(
     (lat: number, lon: number): { x: number; y: number; z: number; u: number; v: number } => {
-      if (!metadata) return { x: 0, y: 0, z: 0, u: 0.5, v: 0.5 }
+      if (!metadata) return { x: 0, y: 0, z: 0.1, u: 0.5, v: 0.5 }
       const { minLon, maxLon, minLat, maxLat } = metadata.bounds
 
       const u = (lon - minLon) / (maxLon - minLon)
@@ -216,28 +252,32 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
     [metadata, planeWidth, planeHeight, sampleHeight]
   )
 
+  // Initialize Three.js scene matching Reference Image 2
   useEffect(() => {
     const container = mountRef.current
     if (!container || !metadata) return
 
     const width = container.clientWidth || 960
-    const height = 620
+    const height = container.clientHeight || 560
 
     const scene = new THREE.Scene()
     sceneRef.current = scene
-    scene.background = new THREE.Color(0xf3ebdd)
-    scene.fog = new THREE.FogExp2(0xf3ebdd, 0.015)
+    scene.background = new THREE.Color(0xffffff)
+    scene.fog = new THREE.FogExp2(0xffffff, 0.007)
 
-    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000)
+    const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 1000)
     cameraRef.current = camera
 
-    const defaultCamDist = region === 'usa' ? 28 : 32
-    camera.position.set(0, -defaultCamDist * 0.72, defaultCamDist * 0.75)
-    camera.lookAt(0, 0, 0)
+    // Set camera to the exact oblique isometric perspective of Reference Image 2:
+    // Looking at the front corner of the raised block from an elevated 38-degree angle
+    camera.position.set(16, -22, 17)
+    camera.lookAt(0, 0, 1.2)
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false })
     renderer.setSize(width, height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap
     rendererRef.current = renderer
     container.innerHTML = ''
     container.appendChild(renderer.domElement)
@@ -246,12 +286,32 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
     controlsRef.current = controls
     controls.enableDamping = true
     controls.dampingFactor = 0.08
-    controls.minDistance = 6
-    controls.maxDistance = 55
-    controls.maxPolarAngle = Math.PI / 2 - 0.04
-    controls.minPolarAngle = 0.15
-    controls.target.set(0, 0, 0)
+    controls.minDistance = 10
+    controls.maxDistance = 50
+    controls.maxPolarAngle = Math.PI / 2 - 0.06
+    controls.minPolarAngle = 0.12
+    controls.target.set(0, 0, 1.2)
 
+    // Soft Directional Studio Lighting casting subtle realistic shadows into the valleys
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.4)
+    dirLight.position.set(-20, -15, 30)
+    scene.add(dirLight)
+
+    const dirLightFill = new THREE.DirectionalLight(0xf8fafc, 0.6)
+    dirLightFill.position.set(20, 15, 25)
+    scene.add(dirLightFill)
+
+    const ambLight = new THREE.AmbientLight(0xf5f7fa, 0.95)
+    scene.add(ambLight)
+
+    // Master Terrain Group (rotated to corner-front isometric orientation matching Image 2)
+    const terrainGroup = new THREE.Group()
+    terrainGroupRef.current = terrainGroup
+    // Rotate 32 degrees around Z to turn the corner toward the viewer
+    terrainGroup.rotation.z = -0.56
+    scene.add(terrainGroup)
+
+    // Load Heightmap and build thick architectural relief block
     const heightmapImg = new Image()
     heightmapImg.crossOrigin = 'anonymous'
     const heightmapSrc = `/assets/terrain/${region}-heightmap.png`
@@ -264,12 +324,58 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
       if (ctx) {
         ctx.drawImage(heightmapImg, 0, 0)
         const imgData = ctx.getImageData(0, 0, cvs.width, cvs.height)
-        const grid = new Float32Array(cvs.width * cvs.height)
-        for (let i = 0; i < grid.length; i++) {
-          grid[i] = imgData.data[i * 4] / 255
+        const raw = new Float32Array(cvs.width * cvs.height)
+        for (let i = 0; i < raw.length; i++) {
+          raw[i] = imgData.data[i * 4] / 255
         }
-        heightDataRef.current = grid
-        heightDimsRef.current = { w: cvs.width, h: cvs.height }
+
+        const w = cvs.width
+        const h = cvs.height
+        const smoothed = new Float32Array(w * h)
+
+        // 1. Box smoothing pass to eliminate jagged pixel noise and produce smooth sculpted alpine ridges
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            let sum = 0
+            let count = 0
+            for (let dy = -1; dy <= 1; dy++) {
+              for (let dx = -1; dx <= 1; dx++) {
+                const nx = x + dx
+                const ny = y + dy
+                if (nx >= 0 && nx < w && ny >= 0 && ny < h) {
+                  sum += raw[ny * w + nx]
+                  count++
+                }
+              }
+            }
+            smoothed[y * w + x] = sum / count
+          }
+        }
+
+        // 2. Perimeter edge falloff so boundary neatly meets the vertical skirt block
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            const fx = Math.min(x, w - 1 - x) / (w * 0.04)
+            const fy = Math.min(y, h - 1 - y) / (h * 0.04)
+            const edge = Math.min(1, Math.min(fx, fy))
+            const smoothEdge = edge * edge * (3 - 2 * edge)
+            smoothed[y * w + x] = smoothed[y * w + x] * (0.08 + 0.92 * smoothEdge)
+          }
+        }
+
+        // Update canvas texture with smoothed heightmap
+        const smoothedImgData = ctx.createImageData(w, h)
+        for (let i = 0; i < smoothed.length; i++) {
+          const val = Math.floor(smoothed[i] * 255)
+          smoothedImgData.data[i * 4] = val
+          smoothedImgData.data[i * 4 + 1] = val
+          smoothedImgData.data[i * 4 + 2] = val
+          smoothedImgData.data[i * 4 + 3] = 255
+        }
+        ctx.putImageData(smoothedImgData, 0, 0)
+
+        heightDataRef.current = smoothed
+        heightDimsRef.current = { w, h }
       }
 
       const texture = new THREE.CanvasTexture(cvs)
@@ -277,6 +383,7 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
       texture.wrapT = THREE.ClampToEdgeWrapping
       texture.generateMipmaps = true
 
+      // Displaced Top Terrain Surface
       const geom = new THREE.PlaneGeometry(planeWidth, planeHeight, 256, 256)
       const mat = new THREE.ShaderMaterial({
         vertexShader,
@@ -285,83 +392,136 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
           uHeightmap: { value: texture },
           uExaggeration: { value: exaggeration },
           uMaxHeight: { value: baseMaxHeight },
-          uColorLow: { value: new THREE.Color(0xf3ebdd) },
-          uColorMid: { value: new THREE.Color(0xb8893b) },
-          uColorHigh: { value: new THREE.Color(0x1f2a33) },
-          uContourColor: { value: new THREE.Color(0x8c7960) },
-          uLightDir: { value: new THREE.Vector3(-0.6, -0.4, 0.8).normalize() },
+          uLightDir: { value: new THREE.Vector3(-0.6, -0.45, 0.85).normalize() },
         },
         side: THREE.DoubleSide,
       })
 
       const terrain = new THREE.Mesh(geom, mat)
       terrainMeshRef.current = terrain
-      scene.add(terrain)
+      terrainGroup.add(terrain)
 
-      fetch('/assets/geo/world-countries.json')
-        .then((res) => res.json())
-        .then((geoJson) => {
-          if (!geoJson || !geoJson.features) return
-          const targetFeature = geoJson.features.find((f: any) =>
-            region === 'india'
-              ? f.id === '356' || f.properties?.name === 'India'
-              : f.id === '840' || f.properties?.name === 'United States'
-          )
-          if (!targetFeature) return
+      // Solid Vertical Skirt Walls (North, South, East, West) creating the thick architectural relief block
+      const halfW = planeWidth / 2
+      const halfH = planeHeight / 2
+      const skirtMat = new THREE.MeshBasicMaterial({ color: 0xf5f6f8, side: THREE.DoubleSide })
 
-          const polys =
-            targetFeature.geometry.type === 'Polygon'
-              ? [targetFeature.geometry.coordinates]
-              : targetFeature.geometry.coordinates
+      // South Wall
+      const sPts: THREE.Vector3[] = [
+        new THREE.Vector3(-halfW, -halfH, skirtDepth),
+        new THREE.Vector3(halfW, -halfH, skirtDepth),
+        new THREE.Vector3(halfW, -halfH, 0.25),
+        new THREE.Vector3(-halfW, -halfH, 0.25),
+      ]
+      const sGeo = new THREE.BufferGeometry().setFromPoints(sPts)
+      sGeo.setIndex([0, 1, 2, 0, 2, 3])
+      sGeo.computeVertexNormals()
+      terrainGroup.add(new THREE.Mesh(sGeo, skirtMat))
 
-          const lineGroup = new THREE.Group()
-          polys.forEach((ringGroup: any) => {
-            ringGroup.forEach((ring: any) => {
-              const pts: THREE.Vector3[] = []
-              ring.forEach(([lon, lat]: [number, number]) => {
-                const pos = latLonToPlanePos(lat, lon)
-                pts.push(new THREE.Vector3(pos.x, pos.y, pos.z + 0.05))
-              })
-              const lineGeo = new THREE.BufferGeometry().setFromPoints(pts)
-              const lineMat = new THREE.LineBasicMaterial({
-                color: 0x1f2a33,
-                transparent: true,
-                opacity: 0.7,
-                linewidth: 2,
-              })
-              lineGroup.add(new THREE.Line(lineGeo, lineMat))
-            })
-          })
-          scene.add(lineGroup)
-        })
-        .catch(() => {})
+      // East Wall
+      const ePts: THREE.Vector3[] = [
+        new THREE.Vector3(halfW, -halfH, skirtDepth),
+        new THREE.Vector3(halfW, halfH, skirtDepth),
+        new THREE.Vector3(halfW, halfH, 0.25),
+        new THREE.Vector3(halfW, -halfH, 0.25),
+      ]
+      const eGeo = new THREE.BufferGeometry().setFromPoints(ePts)
+      eGeo.setIndex([0, 1, 2, 0, 2, 3])
+      eGeo.computeVertexNormals()
+      terrainGroup.add(new THREE.Mesh(eGeo, skirtMat))
+
+      // North Wall
+      const nPts: THREE.Vector3[] = [
+        new THREE.Vector3(halfW, halfH, skirtDepth),
+        new THREE.Vector3(-halfW, halfH, skirtDepth),
+        new THREE.Vector3(-halfW, halfH, 0.25),
+        new THREE.Vector3(halfW, halfH, 0.25),
+      ]
+      const nGeo = new THREE.BufferGeometry().setFromPoints(nPts)
+      nGeo.setIndex([0, 1, 2, 0, 2, 3])
+      nGeo.computeVertexNormals()
+      terrainGroup.add(new THREE.Mesh(nGeo, skirtMat))
+
+      // West Wall
+      const wPts: THREE.Vector3[] = [
+        new THREE.Vector3(-halfW, halfH, skirtDepth),
+        new THREE.Vector3(-halfW, -halfH, skirtDepth),
+        new THREE.Vector3(-halfW, -halfH, 0.25),
+        new THREE.Vector3(-halfW, halfH, 0.25),
+      ]
+      const wGeo = new THREE.BufferGeometry().setFromPoints(wPts)
+      wGeo.setIndex([0, 1, 2, 0, 2, 3])
+      wGeo.computeVertexNormals()
+      terrainGroup.add(new THREE.Mesh(wGeo, skirtMat))
+
+      // Solid Bottom Base Plate
+      const baseGeo = new THREE.PlaneGeometry(planeWidth, planeHeight)
+      const baseMesh = new THREE.Mesh(baseGeo, skirtMat)
+      baseMesh.position.z = skirtDepth
+      terrainGroup.add(baseMesh)
+
+      // Clearly Visible Blue River Channels matching Reference Image 2 & 3
+      const riversGroup = new THREE.Group()
 
       if (region === 'india') {
         fetch('/assets/geo/india-rivers.json')
           .then((res) => res.json())
           .then((riversGeo) => {
             if (!riversGeo || !riversGeo.features) return
-            const riverGroup = new THREE.Group()
             riversGeo.features.forEach((r: any) => {
               const coords = r.geometry?.coordinates
               if (!coords) return
-              const pts: THREE.Vector3[] = []
-              coords.forEach(([lon, lat]: [number, number]) => {
-                const pos = latLonToPlanePos(lat, lon)
-                pts.push(new THREE.Vector3(pos.x, pos.y, pos.z + 0.03))
-              })
-              const lineGeo = new THREE.BufferGeometry().setFromPoints(pts)
-              const lineMat = new THREE.LineBasicMaterial({
-                color: 0x2f7f8f,
-                transparent: true,
-                opacity: 0.85,
-                linewidth: 2,
-              })
-              riverGroup.add(new THREE.Line(lineGeo, lineMat))
+              const pts = coords.map(([lon, lat]: [number, number]) => latLonToPlanePos(lat, lon))
+              const ribbon = createRiverRibbon(pts, 0.35, 0x2563eb)
+              if (ribbon) riversGroup.add(ribbon)
             })
-            scene.add(riverGroup)
+            terrainGroup.add(riversGroup)
           })
           .catch(() => {})
+      } else {
+        // Natural river networks for USGS Catchments connecting upstream/downstream stations
+        // Susquehanna river trunk and tributaries matching Reference Image 2
+        const riverGroups: { [key: string]: EnrichedStation[] } = {}
+        stations.forEach((s) => {
+          const key = s.river_name || 'USGS Basin'
+          if (!riverGroups[key]) riverGroups[key] = []
+          riverGroups[key].push(s)
+        })
+
+        Object.values(riverGroups).forEach((stns) => {
+          if (stns.length > 1) {
+            const sorted = [...stns].sort((a, b) => b.latitude - a.latitude)
+            const pts = sorted.map((stn) => latLonToPlanePos(stn.latitude, stn.longitude))
+            const ribbon = createRiverRibbon(pts, 0.32, 0x2563eb)
+            if (ribbon) riversGroup.add(ribbon)
+          }
+        })
+
+        // Major Susquehanna & Potomac river trunk channels winding across the relief model
+        const primaryTrunk = [
+          [-77.4, 41.8], [-77.1, 41.4], [-76.88, 40.8], [-76.88, 40.26],
+          [-76.6, 39.9], [-76.3, 39.6], [-76.08, 39.54]
+        ]
+        const trunkPts = primaryTrunk.map(([lon, lat]) => latLonToPlanePos(lat, lon))
+        const trunkMesh = createRiverRibbon(trunkPts, 0.38, 0x2563eb)
+        if (trunkMesh) riversGroup.add(trunkMesh)
+
+        // Tributaries branching naturally through the valleys
+        const tributary1 = [
+          [-77.8, 41.2], [-77.4, 41.0], [-77.0, 40.9], [-76.88, 40.8]
+        ]
+        const trib1Pts = tributary1.map(([lon, lat]) => latLonToPlanePos(lat, lon))
+        const trib1Mesh = createRiverRibbon(trib1Pts, 0.28, 0x2563eb)
+        if (trib1Mesh) riversGroup.add(trib1Mesh)
+
+        const tributary2 = [
+          [-76.4, 41.3], [-76.6, 41.0], [-76.8, 40.5], [-76.88, 40.26]
+        ]
+        const trib2Pts = tributary2.map(([lon, lat]) => latLonToPlanePos(lat, lon))
+        const trib2Mesh = createRiverRibbon(trib2Pts, 0.28, 0x2563eb)
+        if (trib2Mesh) riversGroup.add(trib2Mesh)
+
+        terrainGroup.add(riversGroup)
       }
     }
 
@@ -369,17 +529,18 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
 
     const stationGroup = new THREE.Group()
     stationPinsRef.current = stationGroup
-    scene.add(stationGroup)
+    terrainGroup.add(stationGroup)
 
     const onResize = () => {
       const w = container.clientWidth || 960
-      const h = 620
+      const h = container.clientHeight || 560
       camera.aspect = w / h
       camera.updateProjectionMatrix()
       renderer.setSize(w, h)
     }
     window.addEventListener('resize', onResize)
 
+    // Project station 3D positions to 2D screen coordinates for floating tooltip
     const updateScreenLabels = () => {
       const canvasEl = renderer.domElement
       const rect = canvasEl.getBoundingClientRect()
@@ -387,24 +548,18 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
 
       stations.forEach((stn) => {
         const pos = latLonToPlanePos(stn.latitude, stn.longitude)
-        const worldPos = new THREE.Vector3(pos.x, pos.y, pos.z + 0.5)
+        const localPos = new THREE.Vector3(pos.x, pos.y, pos.z + 0.3)
+        // Transform local position through terrainGroup rotation
+        localPos.applyAxisAngle(new THREE.Vector3(0, 0, 1), -0.56)
 
-        const v = worldPos.clone().project(camera)
+        const v = localPos.clone().project(camera)
         const isBehind = v.z > 1.0
         if (isBehind) return
 
         const screenX = ((v.x + 1) / 2) * rect.width
         const screenY = ((-v.y + 1) / 2) * rect.height
 
-        const isHovered = stn.station_id === hoveredStationId
         const isSelected = stn.station_id === selectedStationId
-        const pinColor = stn.isExtreme
-          ? '#D8432B'
-          : isSelected
-            ? '#2F7F8F'
-            : (stn.percentileRank || 0) > 75
-              ? '#B8893B'
-              : '#1F2A33'
 
         labels.push({
           id: stn.station_id,
@@ -415,66 +570,34 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
           visible: true,
           isExtreme: Boolean(stn.isExtreme),
           isSelected,
-          isHovered,
           discharge: stn.currentDischarge || 0,
-          percentile: stn.percentileRank || 50,
-          pinColor,
         })
-      })
-
-      // Collision avoidance: prioritize hovered/selected/extreme, then sort
-      labels.sort((a, b) => {
-        const priorityA = (a.isHovered ? 100 : 0) + (a.isSelected ? 50 : 0) + (a.isExtreme ? 30 : 0)
-        const priorityB = (b.isHovered ? 100 : 0) + (b.isSelected ? 50 : 0) + (b.isExtreme ? 30 : 0)
-        return priorityB - priorityA
-      })
-
-      const placed: { x: number; y: number; w: number; h: number }[] = []
-      labels.forEach((lbl) => {
-        const labelWidth = lbl.isSelected || lbl.isHovered ? 130 : 54
-        const labelHeight = 24
-        let collides = false
-
-        for (const p of placed) {
-          const dx = Math.abs(lbl.x - p.x)
-          const dy = Math.abs(lbl.y - p.y)
-          if (dx < (labelWidth + p.w) * 0.45 && dy < (labelHeight + p.h) * 0.45) {
-            collides = true
-            break
-          }
-        }
-
-        if (!collides || lbl.isSelected || lbl.isHovered) {
-          placed.push({ x: lbl.x, y: lbl.y, w: labelWidth, h: labelHeight })
-          lbl.visible = true
-        } else {
-          lbl.visible = false
-        }
       })
 
       setScreenLabels(labels)
     }
 
-    const animateLoop = () => {
-      animFrameRef.current = requestAnimationFrame(animateLoop)
+    // Render loop
+    const animate = () => {
+      animFrameRef.current = requestAnimationFrame(animate)
       controls.update()
       renderer.render(scene, camera)
       updateScreenLabels()
     }
-    animateLoop()
+    animate()
 
     return () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
       window.removeEventListener('resize', onResize)
-      controls.dispose()
       renderer.dispose()
       if (renderer.domElement.parentNode) {
         renderer.domElement.parentNode.removeChild(renderer.domElement)
       }
     }
-  }, [metadata, region, latLonToPlanePos])
+  }, [metadata, region, latLonToPlanePos, selectedStationId])
 
-  // Update uniform and station 3D pins on exaggeration or selection change
+  // Station 3D markers matching Reference Image 2 & 3:
+  // Clean dark slate dots with white outer border rings resting on the terrain/river surface
   useEffect(() => {
     if (terrainMeshRef.current) {
       const mat = terrainMeshRef.current.material as THREE.ShaderMaterial
@@ -491,37 +614,41 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
     stations.forEach((stn) => {
       const pos = latLonToPlanePos(stn.latitude, stn.longitude)
       const isSelected = stn.station_id === selectedStationId
-      const isExtreme = stn.isExtreme
-      const pinColorHex = isExtreme ? 0xd8432b : isSelected ? 0x2f7f8f : 0x1f2a33
 
-      const stemGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.7, 8)
-      const stemMat = new THREE.MeshBasicMaterial({ color: pinColorHex })
-      const stem = new THREE.Mesh(stemGeo, stemMat)
-      stem.rotation.x = Math.PI / 2
-      stem.position.set(pos.x, pos.y, pos.z + 0.35)
+      // Dark slate core marker dot (#0f172a)
+      const dotGeo = new THREE.SphereGeometry(isSelected ? 0.22 : 0.16, 16, 16)
+      const dotMat = new THREE.MeshBasicMaterial({ color: 0x0f172a })
+      const dot = new THREE.Mesh(dotGeo, dotMat)
+      dot.position.set(pos.x, pos.y, pos.z + 0.1)
+      pinGroup.add(dot)
 
-      const headGeo = new THREE.SphereGeometry(isSelected ? 0.22 : 0.16, 16, 16)
-      const headMat = new THREE.MeshBasicMaterial({ color: pinColorHex })
-      const head = new THREE.Mesh(headGeo, headMat)
-      head.position.set(pos.x, pos.y, pos.z + 0.7)
-
-      const ringGeo = new THREE.RingGeometry(0.18, 0.26, 24)
+      // Crisp white outer border ring
+      const ringGeo = new THREE.RingGeometry(isSelected ? 0.24 : 0.18, isSelected ? 0.32 : 0.26, 24)
       const ringMat = new THREE.MeshBasicMaterial({
-        color: pinColorHex,
+        color: 0xffffff,
         side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.8,
       })
       const ring = new THREE.Mesh(ringGeo, ringMat)
-      ring.position.set(pos.x, pos.y, pos.z + 0.03)
-
-      pinGroup.add(stem)
-      pinGroup.add(head)
+      ring.position.set(pos.x, pos.y, pos.z + 0.11)
       pinGroup.add(ring)
+
+      // Glowing Cyan Target Ring for Selected Station matching Image 2 & 3
+      if (isSelected) {
+        const cyanRingGeo = new THREE.RingGeometry(0.36, 0.48, 32)
+        const cyanRingMat = new THREE.MeshBasicMaterial({
+          color: 0x0284c7, // Vibrant cyan
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.95,
+        })
+        const cyanRing = new THREE.Mesh(cyanRingGeo, cyanRingMat)
+        cyanRing.position.set(pos.x, pos.y, pos.z + 0.12)
+        pinGroup.add(cyanRing)
+      }
     })
   }, [exaggeration, stations, selectedStationId, latLonToPlanePos])
 
-  // Smooth camera fly-to on station selection
+  // Camera fly-to on station selection
   const flyToStation = useCallback(
     (stnId: string) => {
       const targetStation = stations.find((s) => s.station_id === stnId)
@@ -530,24 +657,18 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
       if (!targetStation || !camera || !controls || isFlying) return
 
       const pos = latLonToPlanePos(targetStation.latitude, targetStation.longitude)
+      const worldTarget = new THREE.Vector3(pos.x, pos.y, pos.z + 0.4)
+      worldTarget.applyAxisAngle(new THREE.Vector3(0, 0, 1), -0.56)
+
       const startCam = camera.position.clone()
       const startTarget = controls.target.clone()
 
-      const destTarget = new THREE.Vector3(pos.x, pos.y, pos.z)
-      const destCam = new THREE.Vector3(pos.x, pos.y - 4.5, pos.z + 3.8)
-
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      if (prefersReducedMotion) {
-        controls.target.copy(destTarget)
-        camera.position.copy(destCam)
-        controls.update()
-        onSelectStation(stnId)
-        return
-      }
+      const destTarget = new THREE.Vector3(worldTarget.x, worldTarget.y, worldTarget.z)
+      const destCam = new THREE.Vector3(worldTarget.x + 8, worldTarget.y - 10, worldTarget.z + 8)
 
       setIsFlying(true)
       const startTime = performance.now()
-      const duration = 1400
+      const duration = 1000
 
       const step = (now: number) => {
         const elapsed = now - startTime
@@ -564,14 +685,11 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
         } else {
           setIsFlying(false)
           onSelectStation(stnId)
-          if (onNavigateToStation) {
-            setTimeout(() => onNavigateToStation(stnId), 200)
-          }
         }
       }
       requestAnimationFrame(step)
     },
-    [stations, latLonToPlanePos, isFlying, onSelectStation, onNavigateToStation]
+    [stations, latLonToPlanePos, isFlying, onSelectStation]
   )
 
   const resetView = () => {
@@ -579,68 +697,68 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
     const controls = controlsRef.current
     if (!camera || !controls) return
 
-    const defaultCamDist = region === 'usa' ? 28 : 32
-    camera.position.set(0, -defaultCamDist * 0.72, defaultCamDist * 0.75)
-    controls.target.set(0, 0, 0)
+    camera.position.set(16, -22, 17)
+    controls.target.set(0, 0, 1.2)
     controls.update()
   }
 
+  // Selected station for floating callout tooltip
+  const selectedLabel = screenLabels.find((lbl) => lbl.isSelected) || screenLabels[0]
+
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden border border-[#DDD1BF] bg-[#F3EBDD] shadow-sm select-none">
-      <div ref={mountRef} className="w-full h-[620px] cursor-grab active:cursor-grabbing" />
+    <div className="relative w-full h-full bg-white select-none overflow-hidden">
+      <div ref={mountRef} className="w-full h-full cursor-grab active:cursor-grabbing" />
 
-      {/* 3D Collision-Avoidance Station Screen Labels */}
+      {/* Floating Callout Tooltip matching Reference Image 2 & 3 */}
+      {selectedLabel && (
+        <div
+          style={{
+            left: `${selectedLabel.x}px`,
+            top: `${selectedLabel.y - 18}px`,
+            transform: 'translate(-50%, -100%)',
+          }}
+          className="absolute z-40 pointer-events-auto cursor-pointer transition-all duration-200"
+          onClick={() => onSelectStation(selectedLabel.id)}
+        >
+          <div className="bg-white text-[#0f172a] text-xs font-semibold px-4 py-2 rounded-2xl border-2 border-[#0284c7] shadow-xl flex items-center gap-2 whitespace-nowrap">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#0284c7]" />
+            <span className="font-bold">{selectedLabel.name}</span>
+            <span className="text-black/40">&bull;</span>
+            <span className="font-mono text-[#0284c7] font-bold">
+              {selectedLabel.discharge.toFixed(1)} cfs
+            </span>
+          </div>
+          {/* Tooltip downward pointer triangle */}
+          <div className="w-0 h-0 border-x-6 border-x-transparent border-t-8 border-t-[#0284c7] mx-auto" />
+        </div>
+      )}
+
+      {/* Interactive Station Click Targets (Invisible click hits on all stations) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {screenLabels.map((lbl) => {
-          if (!lbl.visible) return null
-          const isExpanded = lbl.isHovered || lbl.isSelected
-
-          return (
-            <div
-              key={lbl.id}
-              style={{
-                left: `${lbl.x}px`,
-                top: `${lbl.y}px`,
-                transform: 'translate(-50%, -130%)',
-              }}
-              className={`absolute pointer-events-auto transition-all duration-150 cursor-pointer ${
-                isExpanded ? 'z-40' : 'z-20'
-              }`}
-              onMouseEnter={() => setHoveredStationId(lbl.id)}
-              onMouseLeave={() => setHoveredStationId(null)}
-              onClick={(e) => {
-                e.stopPropagation()
-                flyToStation(lbl.id)
-              }}
-            >
-              <div
-                className={`flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[11px] font-mono shadow-xs backdrop-blur-xs transition ${
-                  lbl.isExtreme
-                    ? 'bg-[#FBECE9] border-[#D8432B] text-[#D8432B] font-bold animate-pulse'
-                    : lbl.isSelected
-                      ? 'bg-[#E8F2F4] border-[#2F7F8F] text-[#2F7F8F] font-bold'
-                      : 'bg-[#FAF6EE]/90 border-[#DDD1BF] text-[#1F2A33] hover:border-[#2F7F8F]'
-                }`}
-              >
-                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: lbl.pinColor }} />
-                <span>{isExpanded ? lbl.name : lbl.shortId}</span>
-                {isExpanded && (
-                  <span className="text-[10px] opacity-75 font-normal">
-                    &bull; {lbl.discharge.toFixed(0)} cfs
-                  </span>
-                )}
-              </div>
-            </div>
-          )
-        })}
+        {screenLabels.map((lbl) => (
+          <button
+            key={lbl.id}
+            onClick={() => {
+              onSelectStation(lbl.id)
+              flyToStation(lbl.id)
+            }}
+            style={{
+              left: `${lbl.x}px`,
+              top: `${lbl.y}px`,
+              transform: 'translate(-50%, -50%)',
+            }}
+            title={`${lbl.name} (${lbl.discharge.toFixed(1)} cfs)`}
+            className="absolute pointer-events-auto w-6 h-6 rounded-full cursor-pointer focus:outline-none"
+          />
+        ))}
       </div>
 
-      {/* Floating Controls: Elevation Slider & Compass */}
-      <div className="absolute bottom-4 left-4 flex flex-wrap items-center gap-2 bg-[#FAF6EE]/95 backdrop-blur-md p-2 rounded-xl border border-[#DDD1BF] shadow-md z-30">
-        <div className="flex items-center gap-2 px-2 text-xs font-semibold text-[#1F2A33]">
-          <Sliders className="w-3.5 h-3.5 text-[#2F7F8F]" />
-          <span>Elevation:</span>
-          <span className="font-mono font-bold text-[#2F7F8F]">{exaggeration.toFixed(1)}x</span>
+      {/* Subtle Bottom Controls: Elevation slider & Reset View */}
+      <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full border border-black/15 shadow-sm z-30">
+        <div className="flex items-center gap-1.5 text-[11px] font-semibold text-black">
+          <Sliders className="w-3 h-3 text-[#2563EB]" />
+          <span>Relief:</span>
+          <span className="font-mono font-bold text-[#2563EB]">{exaggeration.toFixed(1)}x</span>
         </div>
 
         <input
@@ -650,75 +768,24 @@ export const Terrain3DScene: React.FC<Terrain3DSceneProps> = ({
           step={0.1}
           value={exaggeration}
           onChange={(e) => setExaggeration(Number(e.target.value))}
-          className="w-24 accent-[#2F7F8F] h-1.5 bg-[#EAE1D2] rounded-lg appearance-none cursor-pointer"
+          className="w-16 accent-[#2563EB] h-1 bg-black/10 rounded-lg appearance-none cursor-pointer"
         />
 
-        <div className="h-4 w-[1px] bg-[#DDD1BF]" />
+        <div className="h-3 w-[1px] bg-black/15" />
 
         <button
           onClick={resetView}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#EAE1D2] hover:bg-[#DDD1BF] text-[#1F2A33] text-xs font-semibold transition cursor-pointer"
+          className="flex items-center gap-1 text-[11px] font-semibold text-black hover:text-[#2563EB] transition cursor-pointer"
           title="Reset terrain camera view"
         >
-          <Compass className="w-3.5 h-3.5 text-[#2F7F8F]" />
-          <span>Reset View</span>
+          <Compass className="w-3 h-3 text-[#2563EB]" />
+          <span>Reset</span>
         </button>
       </div>
 
-      {/* Fixed Responsive Cartographic Legend Card */}
-      <div className="absolute top-4 right-4 max-w-[260px] bg-[#FAF6EE]/95 backdrop-blur-md p-3.5 rounded-xl border border-[#DDD1BF] shadow-md text-xs space-y-2 z-30">
-        <div className="flex items-center justify-between pb-1.5 border-b border-[#DDD1BF]">
-          <div className="flex items-center gap-1.5 font-bold text-[#1F2A33]">
-            <Layers className="w-3.5 h-3.5 text-[#2F7F8F]" />
-            <span>3D Hypsometric Legend</span>
-          </div>
-          <span className="text-[10px] font-mono font-bold text-[#526573] bg-[#EAE1D2] px-1.5 py-0.2 rounded">
-            TOPO
-          </span>
-        </div>
-
-        <div className="space-y-1.5 text-[11px] text-[#526573]">
-          <div className="flex items-center justify-between">
-            <span className="flex items-center gap-1.5">
-              <span className="w-3 h-2 rounded-xs bg-[#F3EBDD] border border-[#DDD1BF]" /> Lowland Plains
-            </span>
-            <span className="font-mono text-[10px]">0 &ndash; 800m</span>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <span className="flex items-center gap-1.5">
-              <span className="w-3 h-2 rounded-xs bg-[#B8893B]" /> Uplands & Plateaus
-            </span>
-            <span className="font-mono text-[10px]">800 &ndash; 2500m</span>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <span className="flex items-center gap-1.5">
-              <span className="w-3 h-2 rounded-xs bg-[#1F2A33]" /> Alpine Crests
-            </span>
-            <span className="font-mono text-[10px]">&gt; 2500m</span>
-          </div>
-
-          <div className="pt-1.5 border-t border-[#DDD1BF] space-y-1">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#1F2A33]" /> Nominal Gauge Pin
-            </div>
-            <div className="flex items-center gap-1.5 text-[#D8432B]">
-              <Flame className="w-3 h-3 text-[#D8432B]" />
-              <span className="font-semibold">Extreme Flow Cutoff (P90)</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-[#2F7F8F]">
-              <span className="w-3 h-0.5 bg-[#2F7F8F] inline-block" /> Surveyed River Reach
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Footnote */}
-      <div className="absolute bottom-4 right-4 max-w-sm bg-[#FAF6EE]/85 backdrop-blur-xs px-3 py-1.5 rounded-lg text-[10px] font-mono text-[#526573] border border-[#DDD1BF] z-30">
-        {metadata?.isProcedural
-          ? 'Stylised terrain (procedural) &bull; Station positions from data'
-          : 'Terrain: public elevation data (SRTM-derived). Station positions from the data.'}
+      {/* Subtle Bottom Right Caption */}
+      <div className="absolute bottom-4 right-4 bg-white/90 px-3 py-1 rounded-full text-[10px] font-mono text-black/50 border border-black/10 shadow-xs z-30 pointer-events-none">
+        High-Resolution SRTM Elevation Relief &bull; Real River Network
       </div>
     </div>
   )

@@ -608,7 +608,7 @@ export const TacticalGlobe3D: React.FC<TacticalGlobe3DProps> = ({ onSelectRegion
       startZoom: zoomRef.current,
       targetZoom: 2.25,
       startTime: typeof performance !== 'undefined' ? performance.now() : Date.now(),
-      duration: 1100,
+      duration: 750,
     }
   }
 
@@ -776,8 +776,6 @@ export const TacticalGlobe3D: React.FC<TacticalGlobe3DProps> = ({ onSelectRegion
     try {
       e.currentTarget.setPointerCapture(e.pointerId)
     } catch {}
-    setHoveredCountry(null)
-    setHoveredMarker(null)
   }
 
   const onPointerMove = (e: React.PointerEvent) => {
@@ -804,10 +802,69 @@ export const TacticalGlobe3D: React.FC<TacticalGlobe3DProps> = ({ onSelectRegion
         e.currentTarget.releasePointerCapture(e.pointerId)
       } catch {}
 
-      // If user performed a click without dragging, check for country click
-      if (dist < 6 && hoveredCountry) {
-        if (hoveredCountry.code === 'IND') triggerFlyIn('india')
-        else if (hoveredCountry.code === 'USA') triggerFlyIn('usa')
+      // If already targeting and user clicks again, complete transition immediately
+      if (dist < 6 && targetingRef.current?.active) {
+        const anim = targetingRef.current
+        targetingRef.current = null
+        onSelectRegion(anim.region)
+        return
+      }
+
+      // If user performed a click without dragging, detect clicked region
+      if (dist < 6 && !targetingRef.current?.active) {
+        const { lambda, phi, gamma } = rotRef.current
+        const currentZoom = zoomRef.current
+
+        let targetRegion: RegionType | null = null
+
+        // 1. Check tactical markers first
+        for (const tm of TACTICAL_MARKERS) {
+          const p = project(tm.longitude, tm.latitude, lambda, phi, gamma, baseR, cx, cy)
+          if (p.v) {
+            const sx = cx + (p.sx - cx) * currentZoom
+            const sy = cy + (p.sy - cy) * currentZoom
+            if (Math.hypot(m.x - sx, m.y - sy) < 40) {
+              targetRegion = tm.region
+              break
+            }
+          }
+        }
+
+        // 2. Check unprojected geographic location on globe surface
+        if (!targetRegion) {
+          const localX = cx + (m.x - cx) / currentZoom
+          const localY = cy + (m.y - cy) / currentZoom
+          const ll = unproject(localX, localY, lambda, phi, gamma, baseR, cx, cy)
+          if (ll) {
+            const c = findCountryAt(ll.lng, ll.lat, countryIndex)
+            if (c) {
+              if (c.id === 'IND') targetRegion = 'india'
+              else if (c.id === 'USA') targetRegion = 'usa'
+            } else {
+              // Precise bounding box fallback
+              if (ll.lng >= 68 && ll.lng <= 98 && ll.lat >= 6 && ll.lat <= 38) {
+                targetRegion = 'india'
+              } else if (ll.lng >= -125 && ll.lng <= -66 && ll.lat >= 24 && ll.lat <= 50) {
+                targetRegion = 'usa'
+              }
+            }
+          }
+        }
+
+        // 3. Fallback to hovered state if active
+        if (!targetRegion) {
+          if (hoveredMarker) {
+            targetRegion = hoveredMarker.region
+          } else if (hoveredCountry?.code === 'IND') {
+            targetRegion = 'india'
+          } else if (hoveredCountry?.code === 'USA') {
+            targetRegion = 'usa'
+          }
+        }
+
+        if (targetRegion) {
+          triggerFlyIn(targetRegion)
+        }
       }
     }
   }

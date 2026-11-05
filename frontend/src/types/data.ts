@@ -1,6 +1,7 @@
 export type RegionType = 'usa' | 'india'
 export type SceneType = 'globe' | 'map'
 export type AnalysisTab =
+  | 'dashboard'
   | 'flood'
   | 'replay'
   | 'swarm'
