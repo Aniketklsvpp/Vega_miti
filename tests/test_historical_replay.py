@@ -323,6 +323,30 @@ class TestHistoricalReplay(unittest.TestCase):
         self.assertIn("48 to 72 hours", ctx["empirical_estimate_hours"])
         self.assertIn("causal_disclaimer", ctx)
 
+    def test_deterministic_swarm_recovery_and_obstacle_avoidance_regression(self):
+        from src.swarm_activation import SwarmActivationEngine
+        act_engine = SwarmActivationEngine()
+        obstacles = {(7, 8), (7, 9), (7, 10), (14, 12), (14, 13), (14, 14)}
+
+        # 1. Deterministic grid mapping & obstacle avoidance
+        for st_id in ["YMN-DEL-ORB-01", "01570500", "01576000", "TEST-STATION-99"]:
+            pos1 = act_engine._station_to_grid(st_id)
+            pos2 = act_engine._station_to_grid(st_id)
+            self.assertEqual(pos1, pos2, f"Station mapping must be deterministic for {st_id}")
+            self.assertNotIn(pos1, obstacles, f"Position {pos1} collides with obstacle")
+            self.assertNotIn((pos1[0] + 1, pos1[1] + 1), obstacles, "Offset position collides with obstacle")
+
+        # 2. Replay failure recovery determinism across multiple executions
+        for _ in range(5):
+            res = self.engine.execute_replay("EVENT-IN-YAMUNA-2023", step_index=4, simulate_failure=True)
+            self.assertEqual(res.get("status", "success"), "success")
+            frame4 = res["timeline_frames"][-1]
+            fe = frame4["simulated_swarm_response"]["failure_event"]
+            self.assertIsNotNone(fe)
+            self.assertGreater(len(fe["reassigned_missions"]), 0)
+            self.assertGreater(len(fe["reallocations"]), 0)
+            self.assertNotEqual(fe["disconnected_agent"], fe["reallocations"][0]["agent_id"])
+
 if __name__ == "__main__":
     unittest.main()
 
