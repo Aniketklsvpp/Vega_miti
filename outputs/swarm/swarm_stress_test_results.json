@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "timestamp": "2026-11-05T05:02:43Z",
+    "timestamp": "2026-11-05T05:56:14Z",
     "framework": "VEGA-MITI Swarm Stress Test & Reliability Audit",
     "target_host": "http://127.0.0.1:8000",
     "environment": "SIMULATION"
@@ -292,51 +292,51 @@
         {
           "name": "burst_request_stability_30_calls",
           "passed": true,
-          "average_latency_ms": 10.33,
-          "details": "Executed 30 consecutive status requests with 100% success rate (mean 10.33 ms)."
+          "average_latency_ms": 15.4,
+          "details": "Executed 30 consecutive status requests with 100% success rate (mean 15.4 ms)."
         }
       ]
     }
   },
   "performance_benchmarks": {
     "mission_allocation_latency_ms": {
-      "mean": 0.038,
-      "min": 0.004,
-      "max": 0.145
+      "mean": 0.066,
+      "min": 0.003,
+      "max": 0.422
     },
     "swarm_cycle_step_latency_ms": {
-      "mean": 0.012,
-      "min": 0.011,
+      "mean": 0.009,
+      "min": 0.005,
       "max": 0.017
     },
     "mission_reassignment_latency_ms": {
-      "mean": 0.023,
-      "min": 0.006,
-      "max": 0.086
+      "mean": 0.01,
+      "min": 0.003,
+      "max": 0.042
     },
     "api_endpoint_latencies": {
       "/api/swarm/status": {
-        "p50_ms": 15.4,
-        "mean_ms": 14.1,
-        "p95_ms": 27.85
+        "p50_ms": 2.66,
+        "mean_ms": 8.92,
+        "p95_ms": 27.94
       },
       "/api/swarm/agents": {
-        "p50_ms": 5.01,
-        "mean_ms": 6.88,
-        "p95_ms": 16.18
+        "p50_ms": 15.26,
+        "mean_ms": 13.66,
+        "p95_ms": 28.71
       },
       "/api/swarm/missions": {
-        "p50_ms": 15.27,
-        "mean_ms": 11.64,
-        "p95_ms": 26.67
+        "p50_ms": 14.68,
+        "mean_ms": 12.45,
+        "p95_ms": 27.25
       },
       "/api/swarm/benchmarks": {
-        "p50_ms": 16.26,
-        "mean_ms": 15.51,
-        "p95_ms": 29.37
+        "p50_ms": 6.03,
+        "mean_ms": 12.45,
+        "p95_ms": 27.47
       }
     },
-    "hundred_cycle_simulation_total_ms": 3.56
+    "hundred_cycle_simulation_total_ms": 3.41
   },
   "edge_case_results": {},
   "failures_and_fixes": []

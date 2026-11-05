@@ -1,0 +1,267 @@
+{
+  "evaluation_title": "VEGA-MITI Advanced ML Optimization Report",
+  "timestamp": "2026-11-05T05:52:00Z",
+  "held_out_stations": [
+    "08158000",
+    "09095500",
+    "09180500",
+    "09380000",
+    "12119000",
+    "14211720"
+  ],
+  "training_stations": [
+    "01570500",
+    "01638500",
+    "01646500",
+    "02037500",
+    "02146000",
+    "02169500",
+    "02202500",
+    "03234500",
+    "03374100",
+    "05484500",
+    "05527500",
+    "05586100",
+    "06192500",
+    "07144100",
+    "07196500",
+    "08116650"
+  ],
+  "held_out_sample_count": 4380,
+  "training_sample_count": 11680,
+  "primary_selected_model": {
+    "model_type": "FlowWeightedExtraTrees",
+    "feature_count": 46,
+    "hyperparameters": {
+      "n_estimators": 150,
+      "max_depth": 15,
+      "min_samples_split": 4,
+      "min_samples_leaf": 2,
+      "max_features": 0.85,
+      "sample_weight_power": 0.25,
+      "random_state": 42
+    },
+    "metrics": {
+      "overall_rmse": 10053.7389,
+      "extreme_rmse": 23234.4783,
+      "mae": 6008.623,
+      "r2": 0.5476,
+      "composite_score": 12188.0881,
+      "n_total": 4380,
+      "n_extreme": 440,
+      "model_name": "Flow-Weighted ExtraTrees (Optimal Single Model)"
+    },
+    "improvement_vs_baseline": {
+      "overall_rmse_reduction_cfs": 1323.55,
+      "overall_rmse_reduction_pct": 11.63,
+      "extreme_rmse_reduction_cfs": 942.4,
+      "extreme_rmse_reduction_pct": 3.9,
+      "mae_reduction_cfs": 1215.39,
+      "mae_reduction_pct": 16.82,
+      "r2_gain": 0.127
+    }
+  },
+  "secondary_selected_ensemble": {
+    "model_type": "FlowWeightedEnsemble",
+    "alpha": 0.9,
+    "metrics": {
+      "overall_rmse": 10023.6255,
+      "extreme_rmse": 23871.446,
+      "mae": 5871.4481,
+      "r2": 0.5503,
+      "composite_score": 12339.671,
+      "n_total": 4380,
+      "n_extreme": 440,
+      "model_name": "Flow-Weighted Hydrological Ensemble (alpha=0.90)"
+    }
+  },
+  "group_kfold_cv_results": {
+    "folds": [
+      {
+        "overall_rmse": 16622.1444,
+        "extreme_rmse": 38533.5891,
+        "mae": 9599.5827,
+        "r2": 0.2806,
+        "composite_score": 20126.0454,
+        "n_total": 2920,
+        "n_extreme": 293,
+        "fold": 1
+      },
+      {
+        "overall_rmse": 4012.8723,
+        "extreme_rmse": 6951.5055,
+        "mae": 2803.8896,
+        "r2": -1.5538,
+        "composite_score": 4251.3785,
+        "n_total": 2190,
+        "n_extreme": 219,
+        "fold": 2
+      },
+      {
+        "overall_rmse": 5897.3142,
+        "extreme_rmse": 13792.3896,
+        "mae": 3189.2199,
+        "r2": 0.6563,
+        "composite_score": 7127.9236,
+        "n_total": 2190,
+        "n_extreme": 219,
+        "fold": 3
+      },
+      {
+        "overall_rmse": 5271.1194,
+        "extreme_rmse": 14306.7846,
+        "mae": 2896.0173,
+        "r2": 0.4305,
+        "composite_score": 6975.3818,
+        "n_total": 2190,
+        "n_extreme": 219,
+        "fold": 4
+      },
+      {
+        "overall_rmse": 6156.9459,
+        "extreme_rmse": 11711.3324,
+        "mae": 3829.5896,
+        "r2": 0.7622,
+        "composite_score": 6734.4736,
+        "n_total": 2190,
+        "n_extreme": 220,
+        "fold": 5
+      }
+    ],
+    "mean": {
+      "overall_rmse": 7592.08,
+      "extreme_rmse": 17059.12,
+      "mae": 4463.66,
+      "r2": 0.1152,
+      "composite_score": 9043.04
+    }
+  },
+  "station_level_results": {
+    "08158000": {
+      "sample_count": 730,
+      "flow_weighted_et": {
+        "overall_rmse": 11047.714,
+        "extreme_rmse": 4235.6078,
+        "mae": 8468.0684,
+        "r2": -91.8031,
+        "composite_score": 7383.3816,
+        "n_total": 730,
+        "n_extreme": 73
+      },
+      "flow_weighted_ensemble": {
+        "overall_rmse": 10123.6157,
+        "extreme_rmse": 3697.2994,
+        "mae": 7707.4154,
+        "r2": -76.9271,
+        "composite_score": 6700.1192,
+        "n_total": 730,
+        "n_extreme": 73
+      }
+    },
+    "09095500": {
+      "sample_count": 730,
+      "flow_weighted_et": {
+        "overall_rmse": 5073.1132,
+        "extreme_rmse": 6599.804,
+        "mae": 3377.4058,
+        "r2": -0.8881,
+        "composite_score": 4684.6677,
+        "n_total": 730,
+        "n_extreme": 73
+      },
+      "flow_weighted_ensemble": {
+        "overall_rmse": 4983.1469,
+        "extreme_rmse": 6879.9474,
+        "mae": 3297.1355,
+        "r2": -0.8217,
+        "composite_score": 4716.6701,
+        "n_total": 730,
+        "n_extreme": 73
+      }
+    },
+    "09180500": {
+      "sample_count": 730,
+      "flow_weighted_et": {
+        "overall_rmse": 8638.2518,
+        "extreme_rmse": 20242.585,
+        "mae": 6425.0027,
+        "r2": -0.3661,
+        "composite_score": 10813.0768,
+        "n_total": 730,
+        "n_extreme": 73
+      },
+      "flow_weighted_ensemble": {
+        "overall_rmse": 8461.0976,
+        "extreme_rmse": 20644.5862,
+        "mae": 6088.8598,
+        "r2": -0.3106,
+        "composite_score": 10795.5869,
+        "n_total": 730,
+        "n_extreme": 73
+      }
+    },
+    "09380000": {
+      "sample_count": 730,
+      "flow_weighted_et": {
+        "overall_rmse": 6751.1504,
+        "extreme_rmse": 14752.6604,
+        "mae": 5265.4848,
+        "r2": -2.0622,
+        "composite_score": 8179.3552,
+        "n_total": 730,
+        "n_extreme": 74
+      },
+      "flow_weighted_ensemble": {
+        "overall_rmse": 6906.6073,
+        "extreme_rmse": 15104.8719,
+        "mae": 5493.2912,
+        "r2": -2.2049,
+        "composite_score": 8392.7627,
+        "n_total": 730,
+        "n_extreme": 74
+      }
+    },
+    "12119000": {
+      "sample_count": 730,
+      "flow_weighted_et": {
+        "overall_rmse": 1098.7088,
+        "extreme_rmse": 1487.754,
+        "mae": 859.3074,
+        "r2": -3.1895,
+        "composite_score": 1057.6712,
+        "n_total": 730,
+        "n_extreme": 74
+      },
+      "flow_weighted_ensemble": {
+        "overall_rmse": 995.8834,
+        "extreme_rmse": 1299.769,
+        "mae": 778.8747,
+        "r2": -2.442,
+        "composite_score": 944.059,
+        "n_total": 730,
+        "n_extreme": 74
+      }
+    },
+    "14211720": {
+      "sample_count": 730,
+      "flow_weighted_et": {
+        "overall_rmse": 18364.9924,
+        "extreme_rmse": 50593.5759,
+        "mae": 11656.4687,
+        "r2": 0.4847,
+        "composite_score": 24850.5162,
+        "n_total": 730,
+        "n_extreme": 73
+      },
+      "flow_weighted_ensemble": {
+        "overall_rmse": 18847.7021,
+        "extreme_rmse": 52100.7683,
+        "mae": 11863.1122,
+        "r2": 0.4573,
+        "composite_score": 25537.3609,
+        "n_total": 730,
+        "n_extreme": 73
+      }
+    }
+  }
+}

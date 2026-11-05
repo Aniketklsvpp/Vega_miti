@@ -1,0 +1,10 @@
+model_name,overall_rmse,extreme_rmse,mae,r2,composite_score
+Previous Baseline (Reported),11377.29,24176.88,7224.01,0.4206,13809.89
+Config A (In-Repo HistGB Log1p 24-Feat),13654.35,30891.04,7539.82,0.1654,16235.36
+Config B (In-Repo ExtraTrees Raw 18-Feat),15509.22,27894.13,9424.86,-0.0767,16456.9
+1-Day Lag Persistence (Gauged Basins Only),2337.91,5513.88,715.24,0.9755,2722.62
+Climatological Historical Mean,15013.44,36406.27,8255.54,-0.009,18578.37
+Enhanced ExtraTrees (Unweighted 46-Feat),10137.82,24330.34,6043.99,0.54,12557.63
+HistGradientBoosting Log1p (46-Feat),11631.3641,29974.8192,5765.1195,0.3944,14794.0711
+Flow-Weighted ExtraTrees (Optimal Single Model),10053.7389,23234.4783,6008.623,0.5476,12188.0881
+Flow-Weighted Hydrological Ensemble (alpha=0.90),10023.6255,23871.446,5871.4481,0.5503,12339.671
