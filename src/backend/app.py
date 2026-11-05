@@ -1,9 +1,9 @@
-from typing import Optional, List, Dict, Any
-from pathlib import Path
-import pandas as pd
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from typing import List, Dict, Any, Optional
+import pandas as pd
+from pathlib import Path
 
 from src.prediction_service import PredictionService
 from src.risk_engine import FloodRiskEngine
@@ -11,9 +11,9 @@ from src.hydrological_evaluation import HydrologicalEvaluator
 from src.swarm_api import router as swarm_router
 
 app = FastAPI(
-    title="VEGA-MITI Unified Hydrological Intelligence & Swarm API",
-    version="1.0.0",
-    description="Operational Flood Prediction, Risk Classification, Hydrological Evaluation, and Swarm Simulation API"
+    title="VEGA-MITI Unified Hydrology & Swarm Intelligence Platform",
+    description="Unified API combining river discharge prediction, flood risk evaluation, and DELTA-SWARM autonomous multi-agent simulation.",
+    version="2.0.0"
 )
 
 app.add_middleware(
@@ -21,10 +21,8 @@ app.add_middleware(
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
-
-app.include_router(swarm_router)
 
 pred_service = PredictionService()
 risk_engine = FloodRiskEngine()
@@ -38,35 +36,31 @@ class PredictionRequest(BaseModel):
     records: Optional[List[Dict[str, Any]]] = None
 
 def make_envelope(data=None, error=None, status="success"):
-    return {
-        "status": status,
-        "data": data,
-        "error": error
-    }
+    if error:
+        return {"status": "error", "error": error}
+    return {"status": status, "data": data}
 
 @app.get("/api/health")
 def get_health():
     return make_envelope(data={
-        "service": "VEGA-MITI Unified Hydrological & Swarm Intelligence API",
         "status": "HEALTHY",
-        "version": "1.0.0",
-        "models_loaded": {
-            "config_A": "HistGradientBoostingRegressor (log1p target, 24 features)",
-            "config_B": "ExtraTreesRegressor (raw target, 18 past features)"
-        },
-        "station_count": len(risk_engine.station_thresholds),
-        "dataset_observations": 16060,
+        "service": "VEGA-MITI Unified Backend",
         "swarm_simulation": "ACTIVE",
-        "swarm_endpoints_mounted": 11
+        "models_loaded": {
+            "config_a": pred_service.model_a is not None,
+            "config_b": pred_service.model_b is not None
+        },
+        "hydrology_calibrated_stations": len(risk_engine.station_thresholds)
     })
 
 @app.get("/api/stations")
 def get_stations():
-    meta_path = Path("data/processed/station_metadata.csv")
-    if not meta_path.is_file():
-        raise HTTPException(status_code=500, detail="Station metadata not found.")
+    df_meta = pred_service._get_station_metadata()
+    if df_meta.empty:
+        df_train = pred_service._get_train_data()
+        unique_st = sorted(df_train["station_id"].unique())
+        df_meta = pd.DataFrame([{"station_id": s, "station_name": f"Station {s}"} for s in unique_st])
         
-    df_meta = pd.read_csv(meta_path, dtype={"station_id": str})
     df_meta["station_id"] = df_meta["station_id"].astype(str).str.zfill(8)
     if risk_engine.station_thresholds:
         df_meta = df_meta[df_meta["station_id"].isin(risk_engine.station_thresholds.keys())]
@@ -144,7 +138,7 @@ def get_station_history(
             "temp_max_c": float(row["temp_max_c"]) if pd.notna(row.get("temp_max_c")) else None,
             "temp_min_c": float(row["temp_min_c"]) if pd.notna(row.get("temp_min_c")) else None,
             "soil_moisture": float(row["soil_moisture"]) if pd.notna(row.get("soil_moisture")) else None,
-            "risk_level": risk_info["risk_level"] if risk_info else "NORMAL"
+            "risk_level": risk_info["risk_level"] if risk_info else "UNKNOWN"
         })
         
     return make_envelope(data={
@@ -197,28 +191,51 @@ def post_predict(req: PredictionRequest):
     return make_envelope(data=res["data"])
 
 @app.get("/api/risk/{station_id}")
-def get_station_risk(station_id: str, basis: Optional[str] = Query("observed")):
+def get_station_risk(
+    station_id: str,
+    basis: Optional[str] = Query("observed"),
+    date: Optional[str] = Query(None)
+):
     df_all = pred_service._get_train_data()
     sub = df_all[df_all["station_id"].astype(str) == str(station_id).strip()]
     if sub.empty:
         raise HTTPException(status_code=404, detail=f"Station '{station_id}' not found.")
         
+    if date:
+        date_sub = sub[sub["date"].astype(str) == str(date).strip()]
+        if not date_sub.empty:
+            sub = date_sub
+            
     latest_row = sub.sort_values("date").iloc[-1]
-    actual_discharge = float(latest_row["discharge_cfs"])
+    actual_discharge = float(latest_row["discharge_cfs"]) if pd.notna(latest_row.get("discharge_cfs")) else None
     dt_str = str(latest_row["date"])
     
     pred_res = pred_service.predict_station(station_id, start_date=dt_str, end_date=dt_str, config="A")
-    pred_val = pred_res["data"]["predictions"][0]["predicted_discharge_cfs"] if pred_res.get("status") == "success" and pred_res.get("data", {}).get("predictions") else actual_discharge
+    pred_val = pred_res["data"]["predictions"][0]["predicted_discharge_cfs"] if pred_res.get("status") == "success" and pred_res.get("data", {}).get("predictions") else None
     
     eval_discharge = pred_val if str(basis).lower() == "predicted" else actual_discharge
     risk_info = risk_engine.classify_discharge(station_id, eval_discharge, date=dt_str)
     
+    obs_risk = risk_engine.classify_discharge(station_id, actual_discharge)
+    pred_risk = risk_engine.classify_discharge(station_id, pred_val)
+
     risk_info["assessment_basis"] = "PREDICTED" if str(basis).lower() == "predicted" else "OBSERVED"
-    risk_info["actual_discharge_cfs"] = round(actual_discharge, 2)
-    risk_info["predicted_discharge_cfs"] = round(pred_val, 2)
-    risk_info["observed_risk_level"] = risk_engine.classify_discharge(station_id, actual_discharge)["risk_level"]
-    risk_info["predicted_risk_level"] = risk_engine.classify_discharge(station_id, pred_val)["risk_level"]
-    risk_info["risk_basis_discrepancy"] = "MISMATCH" if risk_info["predicted_risk_level"] != risk_info["observed_risk_level"] else "ALIGNED"
+    risk_info["actual_discharge_cfs"] = round(actual_discharge, 2) if actual_discharge is not None else None
+    risk_info["predicted_discharge_cfs"] = round(pred_val, 2) if pred_val is not None else None
+    risk_info["flow_value_evaluated_cfs"] = round(eval_discharge, 2) if eval_discharge is not None else None
+    risk_info["flow_value_source"] = "ml_model_config_a" if str(basis).lower() == "predicted" else "observed_gauge"
+    risk_info["observed_risk_level"] = obs_risk["risk_level"]
+    risk_info["predicted_risk_level"] = pred_risk["risk_level"]
+
+    if obs_risk["risk_level"] == "UNKNOWN" or pred_risk["risk_level"] == "UNKNOWN":
+        risk_info["risk_basis_discrepancy"] = "INSUFFICIENT_DATA"
+        risk_info["discrepancy_note"] = "Hydrological sensor telemetry or model prediction unavailable."
+    elif obs_risk["risk_level"] != pred_risk["risk_level"]:
+        risk_info["risk_basis_discrepancy"] = "MISMATCH"
+        risk_info["discrepancy_note"] = f"Observed risk is {obs_risk['risk_level']} while predicted risk is {pred_risk['risk_level']}."
+    else:
+        risk_info["risk_basis_discrepancy"] = "ALIGNED"
+        risk_info["discrepancy_note"] = "Observed and predicted risk assessments are aligned."
     
     return make_envelope(data=risk_info)
 
@@ -234,3 +251,6 @@ def get_hydrology_evaluation(config: str = Query("A")):
             
     rep = evaluator.run_full_evaluation(config=config)
     return make_envelope(data=rep)
+
+
+app.include_router(swarm_router)

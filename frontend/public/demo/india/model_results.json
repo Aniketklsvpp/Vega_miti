@@ -1,0 +1,52 @@
+{
+  "model_name": "HydroBoost-Prototype-Transferred",
+  "validation_strategy": "Zero-Shot Cross-Continent Transfer (Trained on US Data)",
+  "overall": {
+    "rmse": 188.45,
+    "mae": 112.30,
+    "r2": 0.792
+  },
+  "extreme": {
+    "rmse": 412.18,
+    "threshold_definition": "90th percentile historical daily discharge (top 10% events)"
+  },
+  "per_station": [
+    {
+      "station_id": "IN_0101",
+      "rmse": 195.4,
+      "mae": 120.2,
+      "r2": 0.812,
+      "extreme_threshold_cfs": 2200.0
+    },
+    {
+      "station_id": "IN_0102",
+      "rmse": 172.1,
+      "mae": 105.4,
+      "r2": 0.825,
+      "extreme_threshold_cfs": 1950.0
+    },
+    {
+      "station_id": "IN_0103",
+      "rmse": 210.6,
+      "mae": 134.0,
+      "r2": 0.764,
+      "extreme_threshold_cfs": 2800.0
+    },
+    {
+      "station_id": "IN_0104",
+      "rmse": 184.2,
+      "mae": 108.5,
+      "r2": 0.789,
+      "extreme_threshold_cfs": 2100.0
+    },
+    {
+      "station_id": "IN_0105",
+      "rmse": 179.9,
+      "mae": 93.4,
+      "r2": 0.770,
+      "extreme_threshold_cfs": 1850.0
+    }
+  ],
+  "generated_at": "2026-11-04T12:00:00Z"
+}
+

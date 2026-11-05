@@ -1,32 +1,38 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react'
-import type { AdapterStatus } from '../types/data'
+import type { AdapterStatus, AnalysisTab, RegionType, SceneType } from '../types/data'
 import { loadRiverIntelligenceData } from '../adapter/dataAdapter'
-
-export type TabType = 'overview' | 'station' | 'trust' | 'spotlight'
 
 interface RiverDataContextValue {
   status: AdapterStatus
-  activeTab: TabType
-  setActiveTab: (tab: TabType) => void
+  scene: SceneType
+  setScene: (scene: SceneType) => void
+  region: RegionType
+  setRegion: (region: RegionType) => void
+  activeTab: AnalysisTab
+  setActiveTab: (tab: AnalysisTab) => void
   selectedStationId: string | null
   setSelectedStationId: (id: string | null) => void
+  switchRegionAndEnterMap: (r: RegionType) => void
+  returnToGlobe: () => void
   reload: () => void
 }
 
 const RiverDataContext = createContext<RiverDataContextValue | null>(null)
 
 export const RiverDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [status, setStatus] = useState<AdapterStatus>({ status: 'loading' })
-  const [activeTab, setActiveTab] = useState<TabType>('overview')
+  const [scene, setScene] = useState<SceneType>('map')
+  const [region, setRegion] = useState<RegionType>('usa')
+  const [activeTab, setActiveTab] = useState<AnalysisTab>('dashboard')
   const [selectedStationId, setSelectedStationId] = useState<string | null>(null)
+  const [status, setStatus] = useState<AdapterStatus>({ status: 'loading' })
 
   const reload = useCallback(() => {
     setStatus({ status: 'loading' })
-    loadRiverIntelligenceData().then((res) => {
+    loadRiverIntelligenceData(region).then((res) => {
       if (res.success) {
         setStatus({ status: 'ready', data: res.payload })
         if (res.payload.stations.length > 0) {
-          setSelectedStationId((prev) => prev ?? res.payload.stations[0].station_id)
+          setSelectedStationId(res.payload.stations[0].station_id)
         }
       } else {
         setStatus({
@@ -37,20 +43,36 @@ export const RiverDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         })
       }
     })
-  }, [])
+  }, [region])
 
   useEffect(() => {
     reload()
   }, [reload])
 
+  const switchRegionAndEnterMap = useCallback((r: RegionType) => {
+    setRegion(r)
+    setActiveTab('map')
+    setScene('map')
+  }, [])
+
+  const returnToGlobe = useCallback(() => {
+    setScene('globe')
+  }, [])
+
   return (
     <RiverDataContext.Provider
       value={{
         status,
+        scene,
+        setScene,
+        region,
+        setRegion,
         activeTab,
         setActiveTab,
         selectedStationId,
         setSelectedStationId,
+        switchRegionAndEnterMap,
+        returnToGlobe,
         reload,
       }}
     >
@@ -66,4 +88,3 @@ export function useRiverData(): RiverDataContextValue {
   }
   return ctx
 }
-

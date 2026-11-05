@@ -4,6 +4,7 @@ import type {
   EnrichedStation,
   ModelResults,
   PredictionRow,
+  RegionType,
   StationMetadata,
   ValidationPredictionRow,
 } from '../types/data'
@@ -29,24 +30,42 @@ async function tryFetchJson(url: string): Promise<unknown | null> {
   }
 }
 
-export async function loadRiverIntelligenceData(): Promise<
+export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Promise<
   { success: true; payload: AppDataPayload } | { success: false; error: string; missingField?: string; file?: string }
 > {
   let isDemo = false
-  let metaRaw = await tryFetchText('/data/station_metadata.csv')
-  let predRaw = await tryFetchText('/data/predictions.csv')
-  let valRaw = await tryFetchText('/data/validation_predictions.csv')
-  let modelRaw = await tryFetchJson('/data/model_results.json')
+  const isPrototype = region === 'india'
 
-  if (!metaRaw || !predRaw || !valRaw || !modelRaw) {
+  let metaRaw: string | null = null
+  let predRaw: string | null = null
+  let valRaw: string | null = null
+  let modelRaw: unknown | null = null
+  let prefix = ''
+
+  if (region === 'usa') {
+    metaRaw = (await tryFetchText('/data/station_metadata.csv')) || (await tryFetchText('/data/station_coverage.csv'))
+    predRaw = await tryFetchText('/data/predictions.csv')
+    valRaw = await tryFetchText('/data/validation_predictions.csv')
+    modelRaw = await tryFetchJson('/data/model_results.json')
+
+    if (!metaRaw || !predRaw || !valRaw || !modelRaw) {
+      isDemo = true
+      prefix = '/demo/usa/'
+      metaRaw = await tryFetchText('/demo/usa/station_metadata.csv')
+      predRaw = await tryFetchText('/demo/usa/predictions.csv')
+      valRaw = await tryFetchText('/demo/usa/validation_predictions.csv')
+      modelRaw = await tryFetchJson('/demo/usa/model_results.json')
+    } else {
+      prefix = '/data/'
+    }
+  } else {
     isDemo = true
-    metaRaw = await tryFetchText('/demo/station_metadata.csv')
-    predRaw = await tryFetchText('/demo/predictions.csv')
-    valRaw = await tryFetchText('/demo/validation_predictions.csv')
-    modelRaw = await tryFetchJson('/demo/model_results.json')
+    prefix = '/demo/india/'
+    metaRaw = await tryFetchText('/demo/india/station_metadata.csv')
+    predRaw = await tryFetchText('/demo/india/predictions.csv')
+    valRaw = await tryFetchText('/demo/india/validation_predictions.csv')
+    modelRaw = await tryFetchJson('/demo/india/model_results.json')
   }
-
-  const prefix = isDemo ? '/demo/' : '/data/'
 
   if (!metaRaw) {
     return { success: false, error: `Could not load ${prefix}station_metadata.csv`, file: 'station_metadata.csv' }
@@ -64,13 +83,11 @@ export async function loadRiverIntelligenceData(): Promise<
   const metaParsed = Papa.parse<Record<string, string>>(metaRaw.trim(), { header: true, skipEmptyLines: true })
   const metaVal = validateCsvColumns('station_metadata.csv', metaParsed.meta.fields || [], [
     'station_id',
-    'station_name',
-    'latitude',
-    'longitude',
-    'state',
-    'river_name',
+    ['station_name', 'name'],
+    ['latitude', 'lat'],
+    ['longitude', 'lon', 'long'],
   ])
-  if (!metaVal.valid) {
+  if (metaVal.valid === false) {
     return { success: false, error: metaVal.error, missingField: metaVal.missingField, file: 'station_metadata.csv' }
   }
 
@@ -78,9 +95,9 @@ export async function loadRiverIntelligenceData(): Promise<
   const predVal = validateCsvColumns('predictions.csv', predParsed.meta.fields || [], [
     'station_id',
     'date',
-    'discharge_cfs',
+    ['discharge_cfs', 'predicted_discharge_cfs', 'predicted'],
   ])
-  if (!predVal.valid) {
+  if (predVal.valid === false) {
     return { success: false, error: predVal.error, missingField: predVal.missingField, file: 'predictions.csv' }
   }
 
@@ -88,10 +105,10 @@ export async function loadRiverIntelligenceData(): Promise<
   const valVal = validateCsvColumns('validation_predictions.csv', valParsed.meta.fields || [], [
     'station_id',
     'date',
-    'actual',
-    'predicted',
+    ['actual', 'actual_discharge_cfs'],
+    ['predicted', 'predicted_discharge_cfs'],
   ])
-  if (!valVal.valid) {
+  if (valVal.valid === false) {
     return {
       success: false,
       error: valVal.error,
@@ -101,7 +118,7 @@ export async function loadRiverIntelligenceData(): Promise<
   }
 
   const modelVal = validateModelResults('model_results.json', modelRaw)
-  if (!modelVal.valid) {
+  if (modelVal.valid === false) {
     return { success: false, error: modelVal.error, missingField: modelVal.missingField, file: 'model_results.json' }
   }
 
@@ -109,35 +126,40 @@ export async function loadRiverIntelligenceData(): Promise<
   const metadataMap = new Map<string, StationMetadata>()
 
   for (const row of metaParsed.data) {
-    if (!row.station_id) continue
-    metadataMap.set(row.station_id.trim(), {
-      station_id: row.station_id.trim(),
-      station_name: (row.station_name || row.station_id).trim(),
-      latitude: Number.parseFloat(row.latitude) || 0,
-      longitude: Number.parseFloat(row.longitude) || 0,
+    const id = (row.station_id || row.site_no || '').trim()
+    if (!id) continue
+    metadataMap.set(id, {
+      station_id: id,
+      station_name: (row.station_name || row.name || id).trim(),
+      latitude: Number.parseFloat(row.latitude || row.lat) || 0,
+      longitude: Number.parseFloat(row.longitude || row.lon || row.long) || 0,
       state: (row.state || '').trim(),
-      river_name: (row.river_name || '').trim(),
+      river_name: (row.river_name || row.station_name || 'USGS Catchment').trim(),
     })
   }
 
   const predictions: PredictionRow[] = []
   for (const row of predParsed.data) {
     if (!row.station_id || !row.date) continue
+    const discharge =
+      Number.parseFloat(row.discharge_cfs || row.predicted_discharge_cfs || row.predicted) || 0
     predictions.push({
       station_id: row.station_id.trim(),
       date: row.date.trim(),
-      discharge_cfs: Number.parseFloat(row.discharge_cfs) || 0,
+      discharge_cfs: discharge,
     })
   }
 
   const validationPredictions: ValidationPredictionRow[] = []
   for (const row of valParsed.data) {
     if (!row.station_id || !row.date) continue
+    const act = Number.parseFloat(row.actual || row.actual_discharge_cfs) || 0
+    const pred = Number.parseFloat(row.predicted || row.predicted_discharge_cfs) || 0
     validationPredictions.push({
       station_id: row.station_id.trim(),
       date: row.date.trim(),
-      actual: Number.parseFloat(row.actual) || 0,
-      predicted: Number.parseFloat(row.predicted) || 0,
+      actual: act,
+      predicted: pred,
     })
   }
 
@@ -149,6 +171,19 @@ export async function loadRiverIntelligenceData(): Promise<
   const stationMetricMap = new Map<string, (typeof modelResults.per_station)[0]>()
   for (const sm of modelResults.per_station) {
     stationMetricMap.set(sm.station_id, sm)
+  }
+
+  for (const p of predictions) {
+    if (!metadataMap.has(p.station_id)) {
+      metadataMap.set(p.station_id, {
+        station_id: p.station_id,
+        station_name: `Gauging Station ${p.station_id}`,
+        latitude: 40.0,
+        longitude: -80.0,
+        state: 'US',
+        river_name: 'Monitored Basin',
+      })
+    }
   }
 
   const currentValues = Array.from(latestPredByStation.values()).sort((a, b) => a - b)
@@ -177,7 +212,9 @@ export async function loadRiverIntelligenceData(): Promise<
   return {
     success: true,
     payload: {
+      region,
       isDemo,
+      isPrototype,
       stations,
       metadataMap,
       predictions,
@@ -186,4 +223,3 @@ export async function loadRiverIntelligenceData(): Promise<
     },
   }
 }
-

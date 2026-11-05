@@ -34,74 +34,74 @@ export const PeakComparison: React.FC<PeakComparisonProps> = ({ validationRows, 
           stationName: name,
           residual: error,
           pctError,
-          label: `${row.date} (${row.station_id.replace('STN_', '')})`,
+          label: `${row.date} (${row.station_id})`,
         }
       })
   }, [validationRows, stationNameMap])
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-2xl bg-white border border-[#DCE4E9] shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+          <div className="p-2 rounded-lg bg-[#EAF0F3] text-[#28A6A1]">
             <BarChart2 className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-100 tracking-tight">Peak Event Validation Audit</h2>
-            <p className="text-xs text-slate-400">Comparing top historical peak discharge events against model estimates</p>
+            <h2 className="text-base font-bold text-[#19364A] tracking-tight">Peak Event Validation Audit</h2>
+            <p className="text-xs text-[#647786]">Comparing top historical peak discharge events against model estimates</p>
           </div>
         </div>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium bg-purple-500/10 text-purple-300 border border-purple-500/30">
-          <AlertCircle className="w-3.5 h-3.5 text-purple-400" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#F3E8FF] text-[#7E22CE] border border-[#E9D5FF] shadow-xs">
+          <AlertCircle className="w-3.5 h-3.5 text-[#7E22CE]" />
           <span>HISTORICAL VALIDATION DATA ONLY</span>
         </div>
       </div>
 
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-        <h3 className="text-sm font-bold text-slate-200 tracking-tight font-mono uppercase">
+      <div className="bg-white border border-[#DCE4E9] rounded-2xl p-6 shadow-xs space-y-4">
+        <h3 className="text-sm font-bold text-[#19364A] tracking-tight uppercase">
           Top 8 Highest Observed Discharge Days (Actual vs Predicted)
         </h3>
 
         <div className="h-[360px] w-full pt-2">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={topPeakRows} margin={{ top: 20, right: 30, left: 10, bottom: 25 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
               <XAxis
                 dataKey="label"
-                stroke="#64748b"
-                tick={{ fill: '#94a3b8', fontSize: 11, fontFamily: 'ui-monospace, monospace' }}
+                stroke="#647786"
+                tick={{ fill: '#647786', fontSize: 11, fontFamily: 'system-ui, sans-serif' }}
               />
               <YAxis
-                stroke="#64748b"
-                tick={{ fill: '#94a3b8', fontSize: 11, fontFamily: 'ui-monospace, monospace' }}
+                stroke="#647786"
+                tick={{ fill: '#647786', fontSize: 11, fontFamily: 'system-ui, sans-serif' }}
                 unit=" cfs"
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0f172a',
-                  borderColor: '#334155',
+                  backgroundColor: '#FFFFFF',
+                  borderColor: '#DCE4E9',
                   borderRadius: '8px',
-                  color: '#f8fafc',
+                  color: '#19364A',
                   fontSize: '12px',
-                  fontFamily: 'ui-monospace, monospace',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
                 }}
               />
-              <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '12px', color: '#94a3b8' }} />
-              <Bar dataKey="actual" name="Historical Actual (cfs)" fill="#a855f7" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="predicted" name="Model Estimate (cfs)" fill="#38bdf8" radius={[4, 4, 0, 0]} />
+              <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: '12px', color: '#19364A' }} />
+              <Bar dataKey="actual" name="Historical Observed (cfs)" fill="#19364A" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="predicted" name="Model Estimate (cfs)" fill="#28A6A1" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
-        <h3 className="text-sm font-bold text-slate-200 tracking-tight font-mono uppercase mb-4">
+      <div className="bg-white border border-[#DCE4E9] rounded-2xl p-6 shadow-xs">
+        <h3 className="text-sm font-bold text-[#19364A] tracking-tight uppercase mb-4">
           Peak Event Residual Audit Log
         </h3>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs font-mono">
+          <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 uppercase tracking-wider">
+              <tr className="border-b border-[#DCE4E9] text-[#647786] uppercase tracking-wider font-semibold">
                 <th className="py-2.5 px-3">Date</th>
                 <th className="py-2.5 px-3">Station</th>
                 <th className="py-2.5 px-3 text-right">Actual (cfs)</th>
@@ -111,25 +111,25 @@ export const PeakComparison: React.FC<PeakComparisonProps> = ({ validationRows, 
                 <th className="py-2.5 px-3 text-center">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-[#DCE4E9]">
               {topPeakRows.map((row) => (
-                <tr key={`${row.station_id}-${row.date}`} className="hover:bg-slate-800/50 transition">
-                  <td className="py-3 px-3 font-semibold text-slate-200">{row.date}</td>
-                  <td className="py-3 px-3 text-cyan-400">
-                    <div>{row.station_id}</div>
-                    <div className="text-[10px] text-slate-400 font-sans">{row.stationName}</div>
+                <tr key={`${row.station_id}-${row.date}`} className="hover:bg-[#F5F7F8] transition">
+                  <td className="py-3 px-3 font-semibold text-[#19364A]">{row.date}</td>
+                  <td className="py-3 px-3">
+                    <div className="font-mono font-bold text-[#28A6A1]">{row.station_id}</div>
+                    <div className="text-[11px] text-[#647786]">{row.stationName}</div>
                   </td>
-                  <td className="py-3 px-3 text-right font-bold text-purple-300">{row.actual.toFixed(1)}</td>
-                  <td className="py-3 px-3 text-right font-bold text-cyan-300">{row.predicted.toFixed(1)}</td>
-                  <td className="py-3 px-3 text-right text-slate-200">
+                  <td className="py-3 px-3 text-right font-mono font-bold text-[#19364A]">{row.actual.toFixed(1)}</td>
+                  <td className="py-3 px-3 text-right font-mono font-bold text-[#28A6A1]">{row.predicted.toFixed(1)}</td>
+                  <td className="py-3 px-3 text-right font-mono text-[#19364A]">
                     {row.residual > 0 ? `+${row.residual.toFixed(1)}` : row.residual.toFixed(1)}
                   </td>
                   <td className="py-3 px-3 text-right">
                     <span
-                      className={`px-1.5 py-0.5 rounded ${
+                      className={`px-1.5 py-0.5 rounded font-mono text-[10px] font-semibold ${
                         Math.abs(Number(row.pctError)) < 10
-                          ? 'bg-emerald-950/60 text-emerald-400'
-                          : 'bg-amber-950/60 text-amber-400'
+                          ? 'bg-[#E6F4F1] text-[#28A6A1] border border-[#BCE5DD]'
+                          : 'bg-[#FFF7ED] text-[#D97745] border border-[#FFEDD5]'
                       }`}
                     >
                       {row.pctError}%
@@ -138,9 +138,9 @@ export const PeakComparison: React.FC<PeakComparisonProps> = ({ validationRows, 
                   <td className="py-3 px-3 text-center">
                     <button
                       onClick={() => onSelectStation(row.station_id)}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] transition"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#EAF0F3] hover:bg-[#DCE4E9] text-[#19364A] text-xs font-semibold transition"
                     >
-                      View <ArrowUpRight className="w-3 h-3" />
+                      View <ArrowUpRight className="w-3.5 h-3.5 text-[#28A6A1]" />
                     </button>
                   </td>
                 </tr>
@@ -152,4 +152,3 @@ export const PeakComparison: React.FC<PeakComparisonProps> = ({ validationRows, 
     </div>
   )
 }
-

@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Synced runtime data from outputs/
+public/data/
+
+# Cesium runtime static assets
+public/cesium/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,82 +1,196 @@
-import React from 'react'
-import { Activity, AlertTriangle, BarChart3, Database, Layers, MapPin, RefreshCw, ShieldCheck } from 'lucide-react'
-import { useRiverData, type TabType } from '../../context/RiverDataContext'
+import React, { useState } from 'react'
+import { ChevronDown, RefreshCw } from 'lucide-react'
+import { useRiverData } from '../../context/RiverDataContext'
+import type { AnalysisTab } from '../../types/data'
 
 export const Header: React.FC = () => {
-  const { status, activeTab, setActiveTab, reload } = useRiverData()
-  const isDemo = status.status === 'ready' && status.data.isDemo
+  const {
+    scene,
+    setScene,
+    region,
+    activeTab,
+    setActiveTab,
+    switchRegionAndEnterMap,
+    reload,
+  } = useRiverData()
 
-  const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
-    { id: 'overview', label: 'River Intelligence', icon: <MapPin className="w-4 h-4" /> },
-    { id: 'station', label: 'Station Hydrograph', icon: <Activity className="w-4 h-4" /> },
-    { id: 'trust', label: 'Model Trust Panel', icon: <ShieldCheck className="w-4 h-4" /> },
-    { id: 'spotlight', label: 'Peak Spotlight', icon: <BarChart3 className="w-4 h-4" /> },
+  const [regionMenuOpen, setRegionMenuOpen] = useState(false)
+
+  // When on catchment map or deeper analysis, show analysis tabs matching Image 2
+  const isCatchmentView = activeTab === 'map' || activeTab === 'station' || activeTab === 'trust' || activeTab === 'flood'
+
+  const dashboardTabs = [
+    { id: 'dashboard' as AnalysisTab, label: 'Dashboard' },
+    { id: 'map' as AnalysisTab, label: 'Globe' },
+    { id: 'swarm' as AnalysisTab, label: 'Swarm' },
+    { id: 'missions' as AnalysisTab, label: 'Missions' },
+    { id: 'replay' as AnalysisTab, label: 'Replay' },
+    { id: 'benchmarks' as AnalysisTab, label: 'Evaluation' },
+    { id: 'station' as AnalysisTab, label: 'Data' },
+  ]
+
+  const catchmentTabs = [
+    { id: 'dashboard' as AnalysisTab, label: 'Dashboard' },
+    { id: 'globe' as const, label: 'Globe' },
+    { id: 'map' as AnalysisTab, label: 'Catchment Map' },
+    { id: 'station' as AnalysisTab, label: 'Station Hydrograph' },
+    { id: 'trust' as AnalysisTab, label: 'Model Trust' },
+    { id: 'flood' as AnalysisTab, label: 'Flood Intelligence' },
   ]
 
   return (
-    <header className="border-b border-slate-800/80 bg-[#090d14]/95 backdrop-blur sticky top-0 z-50 px-6 py-3.5 transition-all">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
-          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 via-sky-600/10 to-transparent border border-cyan-500/30 text-cyan-400 shadow-inner">
-            <Layers className="w-5 h-5 animate-pulse" />
-            <div className="absolute -inset-0.5 rounded-xl bg-cyan-400/20 blur-sm -z-10" />
+    <header className="bg-white px-4 sm:px-8 lg:px-12 py-4 border-b border-black/5 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* Brand Logo & Title */}
+        <button
+          onClick={() => {
+            setActiveTab('dashboard')
+            setScene('map')
+          }}
+          className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
+        >
+          <div className="w-10 h-10 flex items-center justify-center">
+            {/* Custom organic double-wave logo in vibrant blue matching reference */}
+            <svg
+              className="w-9 h-9 text-[#2563EB] transition-transform group-hover:scale-105"
+              viewBox="0 0 36 36"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 20C7 11 12 11 16 20C20 29 25 29 29 20C31 15.5 33 15 35 17"
+                stroke="#2563EB"
+                strokeWidth="5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold tracking-wider text-lg text-slate-100 uppercase font-mono">
-                VEGA<span className="text-cyan-400">_</span>MITI
-              </span>
-              <span className="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-mono border border-slate-700/60">
-                FLOODCAST
-              </span>
+            <div className="font-black text-xl tracking-tight text-black leading-none">
+              VEGA-MITI
             </div>
-            <p className="text-xs text-slate-400 tracking-tight">River Discharge Predictive Intelligence</p>
+            <div className="text-[11px] text-black/60 font-medium tracking-tight mt-0.5">
+              Flood Intelligence & Swarm Coordination
+            </div>
           </div>
-        </div>
+        </button>
 
-        <nav className="flex items-center gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-slate-800">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.id
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium rounded-lg transition-all ${
-                  isActive
-                    ? 'bg-slate-800 text-cyan-300 shadow-sm border border-cyan-500/30 font-semibold'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-                }`}
-              >
-                {tab.icon}
-                {tab.label}
-              </button>
-            )
-          })}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          {isDemo ? (
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-amber-500/10 text-amber-400 border border-amber-500/30">
-              <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-              <span>DEMO DATA</span>
-            </div>
+        {/* Minimal Rounded Pill Navigation matching Reference Images 1 & 2 */}
+        <div className="flex flex-wrap items-center gap-2">
+          {!isCatchmentView ? (
+            // Reference Image 1 Pills
+            dashboardTabs.map((t) => {
+              const isActive = (activeTab === 'dashboard' && t.id === 'dashboard') ||
+                               (activeTab === t.id && t.id !== 'dashboard')
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => {
+                    if (t.id === 'map') {
+                      switchRegionAndEnterMap(region)
+                    } else {
+                      setActiveTab(t.id)
+                      setScene('map')
+                    }
+                  }}
+                  className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition cursor-pointer ${
+                    isActive
+                      ? 'bg-black text-white shadow-xs'
+                      : 'bg-white text-black border border-black/30 hover:border-black hover:bg-black/5'
+                  }`}
+                >
+                  {t.label}
+                </button>
+              )
+            })
           ) : (
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-              <Database className="w-3.5 h-3.5 text-emerald-400" />
-              <span>LIVE OUTPUTS</span>
-            </div>
+            // Reference Image 2 Pills
+            <>
+              {catchmentTabs.map((t) => {
+                const isActive = t.id === 'globe'
+                  ? scene === 'globe'
+                  : activeTab === t.id && scene !== 'globe'
+
+                return (
+                  <button
+                    key={t.id}
+                    onClick={() => {
+                      if (t.id === 'globe') {
+                        setScene('globe')
+                      } else if (t.id === 'dashboard') {
+                        setActiveTab('dashboard')
+                        setScene('map')
+                      } else {
+                        setActiveTab(t.id)
+                        setScene('map')
+                      }
+                    }}
+                    className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-semibold transition cursor-pointer whitespace-nowrap ${
+                      isActive
+                        ? 'bg-black text-white shadow-xs'
+                        : 'bg-white text-black border border-black/30 hover:border-black hover:bg-black/5'
+                    }`}
+                  >
+                    {t.label}
+                  </button>
+                )
+              })}
+
+              <div className="h-5 w-[1px] bg-black/25 mx-1 hidden sm:block" />
+
+              {/* Region Selector Pill matching Image 2 */}
+              <div className="relative">
+                <button
+                  onClick={() => setRegionMenuOpen(!regionMenuOpen)}
+                  className="px-4 py-1.5 sm:py-2 rounded-full text-xs font-semibold bg-white text-black border border-black/30 hover:border-black flex items-center gap-1.5 transition cursor-pointer"
+                >
+                  <span>Region: {region === 'india' ? 'India' : 'USA'}</span>
+                  <ChevronDown className="w-3.5 h-3.5 text-black/70" />
+                </button>
+
+                {regionMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-black/20 rounded-2xl shadow-xl py-1 z-50">
+                    <button
+                      onClick={() => {
+                        switchRegionAndEnterMap('usa')
+                        setRegionMenuOpen(false)
+                      }}
+                      className={`w-full px-4 py-2 text-left text-xs font-semibold flex items-center justify-between hover:bg-black/5 cursor-pointer ${
+                        region === 'usa' ? 'text-[#2563EB] font-bold' : 'text-black'
+                      }`}
+                    >
+                      <span>USA (22 Stations)</span>
+                      {region === 'usa' && <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />}
+                    </button>
+                    <button
+                      onClick={() => {
+                        switchRegionAndEnterMap('india')
+                        setRegionMenuOpen(false)
+                      }}
+                      className={`w-full px-4 py-2 text-left text-xs font-semibold flex items-center justify-between hover:bg-black/5 cursor-pointer ${
+                        region === 'india' ? 'text-[#2563EB] font-bold' : 'text-black'
+                      }`}
+                    >
+                      <span>India (Catchment Demo)</span>
+                      {region === 'india' && <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
           )}
 
+          {/* Quick Telemetry Refresh */}
           <button
             onClick={reload}
-            title="Reload data outputs"
-            className="p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 border border-slate-700/60 transition"
+            title="Refresh hydrological telemetry"
+            className="p-2 rounded-full text-black hover:bg-black/5 border border-black/20 transition cursor-pointer"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
     </header>
   )
 }
-

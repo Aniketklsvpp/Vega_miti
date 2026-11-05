@@ -1,17 +1,50 @@
-import type { ModelResults } from '../types/data'
+import type { ModelResults, StationModelResult } from '../types/data'
+
+export type CsvValidationSuccess = {
+  valid: true
+  error?: never
+  missingField?: never
+}
+
+export type CsvValidationFailure = {
+  valid: false
+  error: string
+  missingField: string
+}
+
+export type CsvValidationResult = CsvValidationSuccess | CsvValidationFailure
+
+export type ModelValidationSuccess = {
+  valid: true
+  data: ModelResults
+  error?: never
+  missingField?: never
+}
+
+export type ModelValidationFailure = {
+  valid: false
+  error: string
+  missingField: string
+  data?: never
+}
+
+export type ModelValidationResult = ModelValidationSuccess | ModelValidationFailure
 
 export function validateCsvColumns(
   filename: string,
   headers: string[],
-  requiredColumns: string[]
-): { valid: true } | { valid: false; error: string; missingField: string } {
+  requiredColumns: (string | string[])[]
+): CsvValidationResult {
   const normalizedHeaders = headers.map((h) => h.trim().toLowerCase())
-  for (const col of requiredColumns) {
-    if (!normalizedHeaders.includes(col.toLowerCase())) {
+  for (const colOption of requiredColumns) {
+    const options = Array.isArray(colOption) ? colOption : [colOption]
+    const matched = options.some((opt) => normalizedHeaders.includes(opt.toLowerCase()))
+    if (!matched) {
+      const primary = options[0]
       return {
         valid: false,
-        missingField: col,
-        error: `File ${filename} is missing required column: "${col}". Found: [${headers.join(', ')}]`,
+        missingField: primary,
+        error: `File ${filename} is missing required column: "${primary}". Found: [${headers.join(', ')}]`,
       }
     }
   }
@@ -21,7 +54,7 @@ export function validateCsvColumns(
 export function validateModelResults(
   filename: string,
   data: unknown
-): { valid: true; data: ModelResults } | { valid: false; error: string; missingField: string } {
+): ModelValidationResult {
   if (!data || typeof data !== 'object') {
     return {
       valid: false,
@@ -30,9 +63,44 @@ export function validateModelResults(
     }
   }
 
-  const obj = data as Record<string, unknown>
+  const obj = data as Record<string, any>
 
-  const requiredRootKeys = ['model_name', 'validation_strategy', 'overall', 'extreme', 'per_station', 'generated_at']
+  if (obj.aggregate_metrics && obj.per_station_metrics) {
+    const agg = obj.aggregate_metrics
+    const perStation: StationModelResult[] = []
+
+    for (const [stnId, metrics] of Object.entries(obj.per_station_metrics as Record<string, any>)) {
+      perStation.push({
+        station_id: stnId,
+        rmse: Number(metrics.overall_rmse ?? metrics.rmse ?? 0),
+        mae: Number(metrics.mae ?? 0),
+        r2: Number(metrics.r2 ?? 0),
+        extreme_threshold_cfs: Number(metrics.extreme_threshold_cfs ?? 1500),
+      })
+    }
+
+    const normalized: ModelResults = {
+      model_name: String(obj.model_name || 'ExtraTrees (Raw)'),
+      validation_strategy: String(obj.validation_method || obj.validation_strategy || 'LeaveOneGroupOut'),
+      overall: {
+        rmse: Number(agg.overall_rmse ?? agg.rmse ?? 0),
+        mae: Number(agg.mae ?? 0),
+        r2: Number(agg.r2 ?? 0),
+      },
+      extreme: {
+        rmse: Number(agg.extreme_rmse ?? 0),
+        threshold_definition: String(
+          obj.extreme?.threshold_definition || '90th percentile historical daily discharge (top 10% events)'
+        ),
+      },
+      per_station: perStation,
+      generated_at: String(obj.training_timestamp || obj.generated_at || new Date().toISOString()),
+    }
+
+    return { valid: true, data: normalized }
+  }
+
+  const requiredRootKeys = ['model_name', 'overall', 'extreme', 'per_station']
   for (const key of requiredRootKeys) {
     if (!(key in obj)) {
       return {
@@ -63,11 +131,11 @@ export function validateModelResults(
   }
 
   const extreme = obj.extreme as Record<string, unknown> | undefined
-  if (!extreme || typeof extreme.rmse !== 'number' || typeof extreme.threshold_definition !== 'string') {
+  if (!extreme || typeof extreme.rmse !== 'number') {
     return {
       valid: false,
-      missingField: 'extreme',
-      error: `File ${filename} missing "extreme.rmse" (number) or "extreme.threshold_definition" (string)`,
+      missingField: 'extreme.rmse',
+      error: `File ${filename} missing "extreme.rmse" (number)`,
     }
   }
 
@@ -79,19 +147,5 @@ export function validateModelResults(
     }
   }
 
-  for (let i = 0; i < obj.per_station.length; i++) {
-    const stn = obj.per_station[i] as Record<string, unknown>
-    for (const stnKey of ['station_id', 'rmse', 'mae', 'r2', 'extreme_threshold_cfs']) {
-      if (!(stnKey in stn)) {
-        return {
-          valid: false,
-          missingField: `per_station[${i}].${stnKey}`,
-          error: `File ${filename} per_station entry at index ${i} is missing "${stnKey}"`,
-        }
-      }
-    }
-  }
-
   return { valid: true, data: data as ModelResults }
 }
-
