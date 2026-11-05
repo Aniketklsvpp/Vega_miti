@@ -90,7 +90,7 @@ class SwarmActivationEngine:
                 missions.append({
                     "mission_id": f"MSN-{uuid.uuid4().hex[:6].upper()}",
                     "mission_type": "DOWNSTREAM_SURVEILLANCE",
-                    "priority": 1,
+                    "priority": 2,
                     "target_station_id": st_id,
                     "station_id": st_id,
                     "discharge_cfs": discharge,
@@ -99,7 +99,7 @@ class SwarmActivationEngine:
                     "is_simulated": True,
                     "coordinate_frame": "SIMULATED_20X20_GRID",
                     "target_position": (self._station_to_grid(st_id)[0] + 1, self._station_to_grid(st_id)[1] + 1),
-                    "required_capabilities": ["AREA_SURVEILLANCE"],
+                    "required_capabilities": ["TERRAIN_RECON", "AREA_SURVEILLANCE"],
                     "estimated_duration_sec": 180,
                     "status": "PENDING"
                 })
@@ -157,7 +157,13 @@ class SwarmActivationEngine:
         return missions
 
     def _station_to_grid(self, station_id):
-        hash_val = hash(str(station_id))
-        x = (hash_val % 16) + 2
-        y = ((hash_val // 16) % 16) + 2
-        return (abs(x), abs(y))
+        import hashlib
+        digest = hashlib.md5(str(station_id).encode("utf-8")).hexdigest()
+        h_val = int(digest[:8], 16)
+        x = (h_val % 14) + 3
+        y = ((h_val // 14) % 14) + 3
+        obstacles = {(7, 8), (7, 9), (7, 10), (14, 12), (14, 13), (14, 14)}
+        while (x, y) in obstacles or (x + 1, y + 1) in obstacles or (x - 1, y) in obstacles:
+            x = (x + 1) % 18 + 1
+            y = (y + 1) % 18 + 1
+        return (x, y)

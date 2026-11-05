@@ -87,7 +87,7 @@ export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Pro
     ['latitude', 'lat'],
     ['longitude', 'lon', 'long'],
   ])
-  if (!metaVal.valid) {
+  if (metaVal.valid === false) {
     return { success: false, error: metaVal.error, missingField: metaVal.missingField, file: 'station_metadata.csv' }
   }
 
@@ -97,7 +97,7 @@ export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Pro
     'date',
     ['discharge_cfs', 'predicted_discharge_cfs', 'predicted'],
   ])
-  if (!predVal.valid) {
+  if (predVal.valid === false) {
     return { success: false, error: predVal.error, missingField: predVal.missingField, file: 'predictions.csv' }
   }
 
@@ -108,7 +108,7 @@ export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Pro
     ['actual', 'actual_discharge_cfs'],
     ['predicted', 'predicted_discharge_cfs'],
   ])
-  if (!valVal.valid) {
+  if (valVal.valid === false) {
     return {
       success: false,
       error: valVal.error,
@@ -118,7 +118,7 @@ export async function loadRiverIntelligenceData(region: RegionType = 'usa'): Pro
   }
 
   const modelVal = validateModelResults('model_results.json', modelRaw)
-  if (!modelVal.valid) {
+  if (modelVal.valid === false) {
     return { success: false, error: modelVal.error, missingField: modelVal.missingField, file: 'model_results.json' }
   }
 

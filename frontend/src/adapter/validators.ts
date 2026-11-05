@@ -1,10 +1,40 @@
 import type { ModelResults, StationModelResult } from '../types/data'
 
+export type CsvValidationSuccess = {
+  valid: true
+  error?: never
+  missingField?: never
+}
+
+export type CsvValidationFailure = {
+  valid: false
+  error: string
+  missingField: string
+}
+
+export type CsvValidationResult = CsvValidationSuccess | CsvValidationFailure
+
+export type ModelValidationSuccess = {
+  valid: true
+  data: ModelResults
+  error?: never
+  missingField?: never
+}
+
+export type ModelValidationFailure = {
+  valid: false
+  error: string
+  missingField: string
+  data?: never
+}
+
+export type ModelValidationResult = ModelValidationSuccess | ModelValidationFailure
+
 export function validateCsvColumns(
   filename: string,
   headers: string[],
   requiredColumns: (string | string[])[]
-): { valid: true } | { valid: false; error: string; missingField: string } {
+): CsvValidationResult {
   const normalizedHeaders = headers.map((h) => h.trim().toLowerCase())
   for (const colOption of requiredColumns) {
     const options = Array.isArray(colOption) ? colOption : [colOption]
@@ -24,7 +54,7 @@ export function validateCsvColumns(
 export function validateModelResults(
   filename: string,
   data: unknown
-): { valid: true; data: ModelResults } | { valid: false; error: string; missingField: string } {
+): ModelValidationResult {
   if (!data || typeof data !== 'object') {
     return {
       valid: false,

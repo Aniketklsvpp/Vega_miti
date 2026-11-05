@@ -286,6 +286,7 @@ def evaluate_adaptive():
     res = run_coordination_comparison(sample_missions)
     return envelope(res["adaptive_strategy"])
 
+@router.get("/benchmarks")
 @router.post("/evaluate/compare")
 def compare_strategies():
     sample_missions = [
